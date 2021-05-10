@@ -29,9 +29,9 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
-		logger.info("/ 요청");
+		logger.info("/ 요청!");
 
-        return "home";        //  슬래시에 대해 이걸로 인덱스 찾아가게 함.
+        return "forward:index.jsp";        //  슬래시에 대해 이걸로 인덱스 찾아가게 함.
         // Servers 하위에 있는 web.xml에서 웰컴파일 지정하던 것을 여기서 직접 설정해줌.
 	}
 	
