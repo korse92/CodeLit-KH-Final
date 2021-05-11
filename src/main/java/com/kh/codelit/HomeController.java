@@ -30,7 +30,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
 		logger.info("/요청합니다 !!!!!!!!!!!@#@$@$ㄴ!!!!");
-
+		logger.info("/풀리$@$ㄴ!!!!");
         return "forward:index.jsp";        //  �뒳�옒�떆�뿉 ���빐 �씠嫄몃줈 �씤�뜳�뒪 李얠븘媛�寃� �븿.
         // Servers �븯�쐞�뿉 �엳�뒗 web.xml�뿉�꽌 �쎇而댄뙆�씪 吏��젙�븯�뜕 寃껋쓣 �뿬湲곗꽌 吏곸젒 �꽕�젙�빐以�.
 	}
