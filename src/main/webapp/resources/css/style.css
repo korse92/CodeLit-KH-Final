@@ -1,0 +1,30 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'SEBANG_Gothic_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {font-family:'SEBANG_Gothic_Regular', '휴먼모음T', sans-serif;}
+/* section, aside {padding:2.5rem 0;}
+footer {padding: 10px;} */
+
+/********** 전체컨테이너 **********/
+div#container	{}
+
+/********** header **********/
+
+header nav.navbar 
+{
+    background-color: #b8b5ff;
+    box-shadow: 0 2px 4px 0 #edeef7;
+    /* 인프런 그림자 0 2px 4px 0 hsl(0deg 0% 81% / 50%) */
+    color: #e4fbff;
+}
+
+
+/********** content **********/
+section#content		{min-height:600px;}
+
+/********** footer **********/
+footer	{background-color:#f8f9fa; background-clip:content-box; min-height:95px;}

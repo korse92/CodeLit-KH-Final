@@ -1,0 +1,45 @@
+.rollingPage {
+    width: 30rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid rgb(199, 195, 195);
+    border-radius: 5px;
+}
+.rollingHead {
+    margin-top: 1rem;
+    width: 10rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.rollingHead p {
+    color: black;
+    font-size: 1rem;
+    padding-bottom: 2px;
+}
+.rolling {
+    margin-top: 1rem;
+    width: 40rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.rolling li {
+    font-size: 1rem;
+    list-style: none;
+    line-height: 35px;
+}
+.rolling a {
+    display: block;
+    text-decoration: none;
+    color: rgb(218, 151, 27);
+}
+.rolling a:hover {
+    color: rgb(172, 117, 15);
+}
