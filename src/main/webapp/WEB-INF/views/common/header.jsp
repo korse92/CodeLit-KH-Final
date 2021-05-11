@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -9,70 +9,128 @@
 <meta charset="UTF-8">
 <title>${param.title}</title>
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	crossorigin="anonymous"></script>
 
-<!-- bootstrap js: jquery load 이후에 작성할것.-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+	crossorigin="anonymous"></script>
 
-<!-- bootstrap css -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+	rel="stylesheet" crossorigin="anonymous">
+<!-- Font Awesome(아이콘) CSS -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
 
-<!-- 사용자작성 css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/style.css" />
+<!-- 사용자작성 JS -->
+<script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
+
+<!-- 사용자작성 CSS -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 
 <!-- redirectAttr.addFlashAttribute의 저장된 속성값 사용(1회용) -->
 <c:if test="${not empty msg}">
-<script>
+	<script>
 alert("${msg}");
 </script>
 </c:if>
 </head>
 <body>
-<div id="container">
 	<header>
-		<div id="header-container">
-			<h2>${param.title}</h2>
-		</div>
-		<!-- https://getbootstrap.com/docs/4.0/components/navbar/ -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/logo-spring.png" alt="스프링로고" width="50px" />
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-		  	</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav mr-auto">
-			    	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/boardList.do">게시판</a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/memo/memo.do">메모AOP</a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/menu/menu.do">메뉴REST</a></li>
-                    <!-- 데모메뉴 DropDown -->
-                    <!--https://getbootstrap.com/docs/4.1/components/navbar/#supported-content-->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Demo
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/demo/devForm.do">Dev 등록</a>
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/demo/devList.do">Dev 목록</a>
-                        </div>
-				    </li>
-			    </ul>
-			    <%-- 1.로그인 하지 않은 경우 --%>
-			    <c:if test="${loginMember == null}">
-			    <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="location.href='${pageContext.request.contextPath}/member/login.do';">로그인</button>
-                &nbsp;
-                <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.do';">회원가입</button>
-			    </c:if>
-			    <%-- 2.로그인한 경우 --%>
-			    <c:if test="${loginMember != null}">
-			    	<span><a href="${pageContext.request.contextPath}/member/memberDetail.do">${loginMember.name}</a>님, 안녕하세요.</span>
-			    	&nbsp;
-			    	<button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="location.href='${pageContext.request.contextPath}/member/logout.do';">로그아웃</button>
-			    </c:if>			    
-			 </div>
+
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="container">
+				<a class="navbar-brand me-4" href="#">CodeL!t</a>
+
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarMain"
+					aria-controls="navbarMain" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse col-sm-2" id="navbarMain">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown mx-2">
+							<a 	class="nav-link dropdown-toggle" href="#"
+								id="navlinkDropdownCommunity" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false"> 커뮤니티 </a>
+							<ul class="dropdown-menu" id="dropdownCommunity"
+								aria-labelledby="navlinkDropdownCommunity">
+								<li><a class="dropdown-item" href="#">공지사항</a></li>
+								<li><a class="dropdown-item" href="#">공부게시판</a></li>
+							</ul></li>
+						<li class="nav-item dropdown mx-2"><a
+							class="nav-link dropdown-toggle" href="#"
+							id="navlinkDropdownLecture" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false"> 강의 </a>
+							<ul class="dropdown-menu" id="dropdownLecture"
+								aria-labelledby="navlinkDropdownLecture">
+								<li><a class="dropdown-item" href="#">프런트</a></li>
+								<li><a class="dropdown-item" href="#">백엔드</a></li>
+								<li><a class="dropdown-item" href="#">빅데이터</a></li>
+							</ul></li>
+						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="collapse navbar-collapse justify-content-end"
+					id="navbarMain">
+					<ul class="navbar-nav">
+						<li class="nav-item m-1"><a	class="btn btn-warning nav-link text-light"	href="../html/login.html">Sign In</a></li>
+						<!-- 로그인 Modal 버전 -->
+						<!-- <li class="nav-item m-1">
+             <a class="btn btn-warning nav-link text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In(Modal)</a>
+           </li> -->
+						<li class="nav-item m-1"><a
+							class="btn btn-primary nav-link text-light" href="#">Sign Up</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</nav>
+
+		<!-- 로그인 Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h5 class="modal-title text-center" id="exampleModalLabel">CodeL!t</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"	aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form action="#" method="POST">
+							<table class="col-10 offset-1">
+								<tr>
+									<td colspan="3"><input type="text my-4 p-1"
+										class="form-control" name="id" placeholder="아이디"></td>
+									<td rowspan="2" colspan="2">
+										<button type="submit" class="btn btn-warning btn-xl py-4">로그인</button>
+									</td>
+								</tr>
+								<tr colspan="3">
+									<td><input type="password" class="form-control p-1"
+										name="password" placeholder="패스워드"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div class="modal-footer">
+
+						<p>추가내용</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</header>
+
 	<section id="content">
+	<!-- header.jsp 끝 -->
