@@ -8,6 +8,7 @@
 src/main/resources/data-source.properties
 
 ### Eclipse ###
+.project
 .classpath
 .metadata
 bin/
