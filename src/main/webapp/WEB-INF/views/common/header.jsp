@@ -124,13 +124,29 @@ alert("${msg}");
 			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
-				                  <li><a class="dropdown-item" href="#">프로필</a></li>
-				                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
-				                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
-				                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
-				                  <li><a class="dropdown-item" href="#">장바구니</a></li>
-				                  <li><a class="dropdown-item" href="#">결제내역</a></li>
-				                  <li><a class="dropdown-item" href="#">강사 신청</a></li>
+								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
+					                  <li><a class="dropdown-item" href="#">프로필</a></li>
+					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
+					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
+					                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
+					                  <li><a class="dropdown-item" href="#">장바구니</a></li>
+					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('TEACHER')">
+				                  		<hr/>
+					                  <li><a class="dropdown-item" href="#">강의등록</a></li>
+					                  <li><a class="dropdown-item" href="#">정산내역</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('ADMIN')">
+				                  		<li><a class="dropdown-item" href="#">강사 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="#">강의 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="#">강의 관리</a></li>
+				                  		<li><a class="dropdown-item" href="#">회원 관리</a></li>
+				                  		<li><a class="dropdown-item" href="#">알림</a></li>
+				                  </sec:authorize>
 				                </ul>
 			              	</li>
 			             	<li>
