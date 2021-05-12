@@ -129,6 +129,9 @@ alert("${msg}");
 				                  <li><a class="dropdown-item" href="#">장바구니</a></li>
 				                  <li><a class="dropdown-item" href="#">결제내역</a></li>
 				                  <li><a class="dropdown-item" href="#">강사 신청</a></li>
+				                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의관리 게시판</a></li>
+				                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청리스트</a></li>
+				                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강의자 신청 리스트</a></li>
 				                </ul>
 			              	</li>
 			             	<li>
