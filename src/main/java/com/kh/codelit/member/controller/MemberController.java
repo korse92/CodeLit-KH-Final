@@ -13,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	@GetMapping("/memberEnroll.do")
-	public void memberEnroll() {}
+	public void memberEnroll() {
+		log.debug("회원가입");
+	}
 	
 	@GetMapping("/memberLogin.do")
 	public void memberLogin() {}
