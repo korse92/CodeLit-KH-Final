@@ -27,8 +27,8 @@
 	rel="stylesheet" crossorigin="anonymous">
 <!-- Font Awesome(아이콘) CSS -->
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+	integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
 	crossorigin="anonymous">
 
 <!-- 사용자작성 JS -->
@@ -49,7 +49,7 @@ alert("${msg}");
 
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="container">
-				<a class="navbar-brand me-4" href="#">CodeL!t</a>
+				<a class="navbar-brand me-4" href="${pageContext.request.contextPath}">CodeL!t</a>
 
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarMain"
@@ -104,7 +104,7 @@ alert("${msg}");
 				<!-- 일반 사용자 로그인 -->
 				<sec:authorize access="isAuthenticated()">
 							
-					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarSupportedContent">
+					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarMain">
 			            <ul class="navbar-nav">
 			            	<li class="nav-item">
 			                	<span class="fs-4 text-light">
@@ -121,14 +121,32 @@ alert("${msg}");
 			                  		메뉴
 			                	</a>
 			                	<ul class="dropdown-menu me-5 pe-5" id="dropdown3" aria-labelledby="navbarDropdown3">
-				                  <li><a class="dropdown-item" href="#">로그아웃</a></li>
-				                  <li><a class="dropdown-item" href="#">프로필</a></li>
-				                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
-				                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
-				                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
-				                  <li><a class="dropdown-item" href="#">장바구니</a></li>
-				                  <li><a class="dropdown-item" href="#">결제내역</a></li>
-				                  <li><a class="dropdown-item" href="#">강사 신청</a></li>
+			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
+									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
+								  </form:form>
+								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
+					                  <li><a class="dropdown-item" href="#">프로필</a></li>
+					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
+					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
+					                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
+					                  <li><a class="dropdown-item" href="#">장바구니</a></li>
+					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('TEACHER')">
+				                  		<hr/>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
+					                  <li><a class="dropdown-item" href="#">정산내역</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('ADMIN')">
+				                  		<li><a class="dropdown-item" href="#">강사 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="#">강의 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="#">강의 관리</a></li>
+				                  		<li><a class="dropdown-item" href="#">회원 관리</a></li>
+				                  		<li><a class="dropdown-item" href="#">알림</a></li>
+				                  </sec:authorize>
 				                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의관리 게시판</a></li>
 				                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청리스트</a></li>
 				                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강의자 신청 리스트</a></li>
@@ -138,8 +156,9 @@ alert("${msg}");
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
-			                	<a class="nav-link" href="#" id="alertsDropdown">
-			                    	<img src="../images/alert.png" id="alarm" alt="">
+			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
+			                    	<i class="fas fa-bell my-auto"></i>
+			                    	<i class="far fa-bell my-auto"></i>
 			                    	<!-- 알림 여부에 따라 아이콘 바꾸기 -->
 			                    	<span class="badge badge-danger badge-counter"></span>
 			                	</a>
@@ -178,7 +197,6 @@ alert("${msg}");
 						</form>
 					</div>
 					<div class="modal-footer">
-
 						<p>추가내용</p>
 					</div>
 				</div>

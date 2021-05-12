@@ -1,6 +1,5 @@
 package com.kh.codelit.member.model.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
