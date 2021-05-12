@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="security">
+
+	<select id="selectOneMember" resultMap="memberMap">
+		select 
+		    *
+		from 
+		    member m
+		  left join
+		    authorities a
+		        on m.member_id = a.member_id
+		where 
+		    m.member_id = #{id}
+	</select>
+
+	<resultMap id="memberMap" type="member">
+		<id column="member_id" property="memberId"/>
+		<result column="member_pw" property="memberPw"/>
+		<result column="member_profile" property="memberProfile"/>
+		<result column="member_re_proflie" property="memberReProfile"/>
+		<collection property="authorities" ofType="simpleGrantedAuthority">
+			<constructor>
+				<arg column="auth" javaType="string"/>
+			</constructor>
+		</collection>
+	</resultMap>
+
+</mapper>
