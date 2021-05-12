@@ -27,8 +27,8 @@
 	rel="stylesheet" crossorigin="anonymous">
 <!-- Font Awesome(아이콘) CSS -->
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+	integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
 	crossorigin="anonymous">
 
 <!-- 사용자작성 JS -->
@@ -49,7 +49,7 @@ alert("${msg}");
 
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="container">
-				<a class="navbar-brand me-4" href="#">CodeL!t</a>
+				<a class="navbar-brand me-4" href="${pageContext.request.contextPath}">CodeL!t</a>
 
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarMain"
@@ -104,7 +104,7 @@ alert("${msg}");
 				<!-- 일반 사용자 로그인 -->
 				<sec:authorize access="isAuthenticated()">
 							
-					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarSupportedContent">
+					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarMain">
 			            <ul class="navbar-nav">
 			            	<li class="nav-item">
 			                	<span class="fs-4 text-light">
@@ -130,15 +130,23 @@ alert("${msg}");
 				                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
 				                  <li><a class="dropdown-item" href="#">장바구니</a></li>
 				                  <li><a class="dropdown-item" href="#">결제내역</a></li>
+				                  <sec:authorize access="hasRole('USER') && !hasRole('TEACHER')">
 				                  <li><a class="dropdown-item" href="#">강사 신청</a></li>
+				                  </sec:authorize>
+				                  
+				                  <hr/>
+				                  <sec:authorize access="hasRole('TEACHER')">
+				                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의 등록</a></li>
+				                  </sec:authorize>
 				                </ul>
 			              	</li>
 			             	<li>
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
-			                	<a class="nav-link" href="#" id="alertsDropdown">
-			                    	<img src="../images/alert.png" id="alarm" alt="">
+			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
+			                    	<i class="fas fa-bell my-auto"></i>
+			                    	<i class="far fa-bell my-auto"></i>
 			                    	<!-- 알림 여부에 따라 아이콘 바꾸기 -->
 			                    	<span class="badge badge-danger badge-counter"></span>
 			                	</a>
