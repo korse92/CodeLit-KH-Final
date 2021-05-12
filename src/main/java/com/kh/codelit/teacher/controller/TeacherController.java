@@ -26,4 +26,8 @@ public class TeacherController {
 		return "teacher/teacherRequest";
 	}
 	
+	@GetMapping("/lectureEnroll.do")
+	public void lectureEnroll() {}
+	
+	
 }
