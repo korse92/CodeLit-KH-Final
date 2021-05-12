@@ -1,10 +1,51 @@
 @charset "UTF-8";
 
-/* 회원 가입 */
-div#enroll-container { width:500px; }
-div#enroll-container input, div#enroll-container select { margin-bottom:10px; }
-div#enroll-container table th { text-align:right; padding-right:10px; }
-div#enroll-container table td { text-align:left; }
+section, aside, footer {padding:10px;}
+  .container {margin: 0px auto;}
+
+ * {
+   /* 박스모델에 패팅과 보더의 사이즈를 아이템 너비와 높이에 포함해 달라고 말하는 것 */
+   box-sizing: border-box;
+ }
+
+ /********** 전체컨테이너 **********/
+ div#container {
+ }
+ 
+ /********** 회원가입(memberEnroll) **********/
+.container-signup {
+  margin: 100px auto;
+  width: 50%;
+}
+
+.container-signup h5 {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.signup-input {
+}
+
+.social {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.social button {
+  display: block;
+  margin: 0;
+  width: 100%;
+}
+
+button#google {
+  background-color: #e94235;
+}
+
+button#kakao {
+  background-color: #ffdc00;
+}
+
 
 
 /* 중복아이디체크관련 */
