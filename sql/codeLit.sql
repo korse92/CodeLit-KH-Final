@@ -718,8 +718,4 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-
-
-
-
-
+select object_name from user_objects where object_type = 'TABLE';
