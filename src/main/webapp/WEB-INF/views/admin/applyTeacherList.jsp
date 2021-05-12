@@ -10,7 +10,7 @@
 <section class="container">
   <div class="page-header">
    <div class="row mt-5">
-     <h2 class=" jb-larger mt-3 col-sm-3">강의자 신청 리스트</h2>
+     <h2 class=" jb-larger m-3 col-sm-3">강의자 신청 목록</h2>
    </div>
 	<table class="table mt-3 col-sm text-center">
 	<thead class="thead-light">
@@ -35,7 +35,7 @@
 	          <td>2021/05/05</td>
 	          <td>
 	             <button type="button" class="btn btn-secondary btn-sm">취소</button>
-	             <button type="button" class="btn btn-warning btn-sm">수락</button>
+	             <button type="button" class="btn btn-warning btn-sm">승인</button>
 	          </td>
 	        </tr>
 	</table>

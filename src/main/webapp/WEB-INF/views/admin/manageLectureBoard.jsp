@@ -75,7 +75,8 @@ $(() => {
 	       	      
 	       	 
 	          <td>
-	             <button type="button" class="btn btn-warning btn-sm" href="${pageContext.request.contextPath}/admin/rejectTeacherRight.do">권한 해지</button>
+	             <%-- <button type="button" a class="btn btn-warning btn-sm" href="${pageContext.request.contextPath}/admin/rejectTeacherRight.do">권한 해지</a></button> --%>
+	             <button type="button" a class="btn btn-warning btn-sm" onclick="location.href='${pageContext.request.contextPath}/admin/rejectTeacherRight.do';">권한 해지</button>
 	             <button type="button" class="btn btn-secondary btn-sm">취소</button>
 	          </td>
 	        </tr>

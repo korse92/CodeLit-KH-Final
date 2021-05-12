@@ -20,10 +20,7 @@
 <!-- bootstrap css -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-
-
 <title>강사 권한 해지</title>
-
     <script>
       // jquery onload 함수
       $(() => {
@@ -41,35 +38,26 @@
 <body>
       <!-- Modal시작 -->
       <!-- https://getbootstrap.com/docs/4.1/components/modal/#live-demo -->
-      <div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+      <form:form
+        action="${pageContext.request.contextPath}/admin/rejectTeacherRight.do"
+        method="post">
+      <div class="modal fade" id="rejectTeacherRight" tabindex="-1" role="dialog"
         aria-labelledby="rejectTeacherRightLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="rejectTeacherRight">권한해지</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <!--로그인폼 -->
-            <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
-            <form:form
-              action="${pageContext.request.contextPath}/admin/rejectTeacherRight.do"
-              method="post">
-              <div class="modal-body">
-                <br /> 
-                <input
-                  type="textarea" class="form-control"
-                  placeholder="해지 사유" required>
+            <!--폼 -->
+           <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
+	              <div class="modal-body">
+					<p class="text-center mt-5"> 강사 권한을 정말 해지하시겠습니까?</p>
+	              </div>
+					<div class="d-grid gap-2 d-md-flex m-3 justify-content-md-end">
+		                <button type="submit" class="btn btn-outline-danger m-2">해지</button>
+		                <button type="button" class="btn btn-outline-primary m-2" data-dismiss="modal">취소</button>
+					</div>
               </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-outline-success">해지</button>
-                <button type="button" class="btn btn-outline-success" data-dismiss="modal">취소</button>
-              </div>
-            </form:form>
           </div>
-        </div>
-      </div>
+       </div>
+    </form:form>
       <!-- Modal 끝-->
 </body>
 </html>
