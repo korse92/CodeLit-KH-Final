@@ -47,6 +47,7 @@
 		<interceptor>
 			<!-- contextPath 이하 모든 url -->
 			<mapping path="/**"/>
+			<exclude-mapping path="/resources/*"/>
 			<beans:bean id="loggerinterceptor" class="com.kh.codelit.common.interceptor.LoggerInterceptor"/>
 		</interceptor>
 		<!-- <interceptor>
