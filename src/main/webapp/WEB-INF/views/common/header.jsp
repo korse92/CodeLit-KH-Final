@@ -121,7 +121,9 @@ alert("${msg}");
 			                  		메뉴
 			                	</a>
 			                	<ul class="dropdown-menu me-5 pe-5" id="dropdown3" aria-labelledby="navbarDropdown3">
-				                  <li><a class="dropdown-item" href="#">로그아웃</a></li>
+			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
+									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
+								  </form:form>
 				                  <li><a class="dropdown-item" href="#">프로필</a></li>
 				                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
 				                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
@@ -175,7 +177,6 @@ alert("${msg}");
 						</form>
 					</div>
 					<div class="modal-footer">
-
 						<p>추가내용</p>
 					</div>
 				</div>
