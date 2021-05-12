@@ -718,8 +718,13 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
+--------------------------------
+-- 추가된 쿼리들
+--------------------------------
 
-
-
-
-
+insert into member values ('admin', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
+insert into authorities values ('ROLE_ADMIN', 'admin');
+insert into authorities values ('ROLE_USER', 'admin');
+commit;
+select * from member;
+select * from authorities;

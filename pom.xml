@@ -170,7 +170,7 @@
 		    <scope>provided</scope>
 		</dependency> -->
 		
-		<!-- #7. 스프링  security 프레임워크 의존 -->
+		<!-- #7. 스프링  security 프레임워크 의존 ( + security#1. )-->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
