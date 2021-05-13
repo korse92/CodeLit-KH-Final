@@ -1,3 +1,4 @@
+
 package com.kh.codelit.lecture.model.dao;
 
 import java.util.List;
@@ -7,6 +8,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
+@Slf4j
 @Repository
 public class LectureDaoImpl implements LectureDao {
 	

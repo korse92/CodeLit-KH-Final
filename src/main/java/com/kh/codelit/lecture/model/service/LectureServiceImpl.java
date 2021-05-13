@@ -10,14 +10,18 @@ import com.kh.codelit.lecture.model.dao.LectureDao;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
+
 @Service
+@Slf4j
 public class LectureServiceImpl implements LectureService {
 	
 	@Autowired
 	private LectureDao lectureDao;
-	
+
 	private static List<Map<String, Object>> categoryListInstance;//싱글톤 객체로 처리
+	
+	
 
 	@Override
 	public List<Map<String, Object>> selectCategoryListInstance() {
@@ -28,5 +32,4 @@ public class LectureServiceImpl implements LectureService {
 		
 		return categoryListInstance;
 	}
-
 }
