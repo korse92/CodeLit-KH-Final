@@ -10,7 +10,13 @@
 
 <!-- Font Awesome(아이콘) CSS -->
 <script src="https://kit.fontawesome.com/0e3c91e1c6.js" crossorigin="anonymous"></script>
-<section class="container-signup">
+<head>
+    <meta charset="utf-8" />
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="58001672943-vf21bvk8p312h3gs59o3p1m7geopjpl9.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+  <section class="container-signup">
     <h5>회원가입</h5>
 
     <!-- 메일/비밀번호 입력 -->
@@ -53,4 +59,8 @@
 						alt="" style="width: 15px;"></button>
     </div>
 
+
+
+
+  </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

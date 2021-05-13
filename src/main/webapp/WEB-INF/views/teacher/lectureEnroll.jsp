@@ -36,10 +36,10 @@
 			</div>
 			<input type="hidden" name="memberId">
 			<div class="row">
-				<div class="col-2 align-self-center">
+				<div class="col-sm-2 align-self-center">
 					<label class="form-label" for="lectureName">강의 제목</label>
 				</div>
-				<div class="col-4">
+				<div class="col-sm-4">
 					<select class="form-select" name="refLecCatNo" required>
 						<option value="" disabled selected>카테고리 선택</option>
 						<option value="1">백앤드</option>
@@ -48,16 +48,16 @@
 						<option value="4">보안</option>
 					</select>
 				</div>
-				<div class="col-6">
+				<div class="col-sm-6">
 					<input class="form-control" type="text" name="lectureName"
-						id="lectureName" placeholder="강의 이름" required>
+						id="lectureName" placeholder="강의 제목" required>
 				</div>
 			</div>
 			<div class="row justify-content-between">
-				<div class="col-2 align-self-center">
+				<div class="col-sm-2 align-self-center">
 					<label class="form-label">강의 종류</label>
 				</div>
-				<div class="col-auto">
+				<div class="col-sm-auto">
 					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType1" required>
 					<label class="form-check-label me-3" for="lectureType1">일반 강의</label>
 					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType2">
@@ -65,28 +65,28 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-2 align-self-center">
+				<div class="col-sm-2 align-self-center">
 					<label class="form-label" for="lecturePrice">수강료</label>
 				</div>
-				<div class="col">
+				<div class="col-sm">
 					<input class="form-control" type="number" name="lecturePrice"
 						id="lecturePrice" required>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-2 align-self-center">
+				<div class="col-sm-2 align-self-center">
 					<label class="form-label" for="lectureHandout">첨부파일</label>
 				</div>
-				<div class="col">
+				<div class="col-sm">
 					<input class="form-control" type="file" name="lectureHandout"
 						id="lectureHandout">
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-2 align-self-center">
+				<div class="col-sm-2 align-self-center">
 					<label class="form-label" for="lectureThumbnail">썸네일</label>
 				</div>
-				<div class="col">
+				<div class="col-sm">
 					<img
 						src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image"
 						class="img-thumbnail w-100" id="thumbImage" alt="썸네일 이미지">
@@ -96,7 +96,7 @@
 				</div>
 			</div>
 			<div class="row form-group justify-content-end">
-				<div class="col-auto">
+				<div class="col-sm-auto">
 					<input class="btn btn-warning btn" type="reset" value="취소 or 뒤로">
 					<input class="btn btn-primary" type="submit" value="다음">
 				</div>
