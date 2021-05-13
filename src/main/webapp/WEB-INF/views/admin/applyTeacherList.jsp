@@ -35,7 +35,7 @@
 	          <td>2021/05/05</td>
 	          <td>
 	             <button type="button" class="btn btn-secondary btn-sm">취소</button>
-	             <button type="button" class="btn btn-warning btn-sm">승인</button>
+	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveTeacher.do';">승인</button>
 	          </td>
 	        </tr>
 	</table>

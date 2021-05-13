@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.codelit.admin.model.service.AdminService;
+import com.kh.codelit.common.HelloSpringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,12 +34,11 @@ public class adminController {
 	 */
 	@GetMapping("/applyTeacherList.do")
 	public void applyTeacherList() {}
+	
 	/*
 	 * @GetMapping("/applyTeacherList.do") public void
 	 * applyTeacherList(@RequestParam(defaultValue = "1") int cPage, Model model,
-	 * HttpServletRequest request) {
-	 * 
-	 * //cPage: 현재페이지 값이 안넘어가도 기본값 1이 있어서 오류 발생안함
+	 * HttpServletRequest request) { //cPage: 현재페이지 값이 안넘어가도 기본값 1이 있어서 오류 발생안함
 	 * 
 	 * //1. 사용자 입력값 처리 int numPerPage = 5; //한페이지당 몇개
 	 * 
@@ -46,7 +47,7 @@ public class adminController {
 	 * Map<String, Object> param = new HashMap<>(); param.put("numPerPage",
 	 * numPerPage); param.put("cPage", cPage);
 	 * 
-	 * //2. 업무로직 List<teacher> list = adminService.applyTeacherList(param);
+	 * //2. 업무로직 List<ApplyTeacher> list = adminService.applyTeacherList(param);
 	 * log.debug("list = {}" ,list );
 	 * 
 	 * //a. contents영역의 페이징처리 -> mybatis의 rowBounds이용 //b. pageBar 영역의 페이징처리 int
@@ -60,10 +61,9 @@ public class adminController {
 	 * model.addAttribute("pageBar",pageBar);
 	 * 
 	 * }
+	 * 
+	 * 
 	 */
-	
-	
-	
 	
 	
 	
@@ -103,7 +103,36 @@ public class adminController {
 	public void rejectTeacherRight_() {
 		log.debug("강사 권한 해지 {}", "도착");
 	}
+	@GetMapping("/approveTeacher.do")
+	public void approveTeacher() {
+		
+	}
+	@PostMapping("/approveTeacher.do")
+	public void approveTeacher_() {
+		
+	}
+	@GetMapping("/approveLecture.do")
+	public void approveLecture() {
+		
+	}
+	@PostMapping("/approveLecture.do")
+	public void approveLecture_() {
+		
+	}
 	
+	//검색창
+	/*
+	 * @GetMapping("/searchByAdmin.do")
+	 * 
+	 * @ResponseBody public List<Map<String, Object>> searchByAdmin(@RequestParam
+	 * String searchByAdmin) { log.debug("searchByAdmin = {}", searchByAdmin);
+	 * 
+	 * List<Map<String, Object>>list =
+	 * adminService.selectAllBySearching(searchByAdmin); log.debug("list = {}",
+	 * list);
+	 * 
+	 * return list; }
+	 */
 	
 
 

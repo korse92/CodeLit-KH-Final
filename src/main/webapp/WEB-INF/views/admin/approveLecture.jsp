@@ -20,11 +20,11 @@
 <!-- bootstrap css -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-<title>강사 권한 해지</title>
+<title>강사 신청 승인</title>
     <script>
       // jquery onload 함수
       $(() => {
-        $("#rejectTeacherRight")
+        $("#approveLecture")
           .modal()
           .on('hide.bs.modal', e => {
             // modal 비활성화시 (X, 취소, 모달외 영역 클릭)
@@ -39,21 +39,21 @@
       <!-- Modal시작 -->
       <!-- https://getbootstrap.com/docs/4.1/components/modal/#live-demo -->
       <form:form
-        action="${pageContext.request.contextPath}/admin/rejectTeacherRight.do"
+        action="${pageContext.request.contextPath}/admin/approveLecture.do"
         method="post">
-      <div class="modal fade" id="rejectTeacherRight" tabindex="-1" role="dialog"
-        aria-labelledby="rejectTeacherRightLabel" aria-hidden="true">
+      <div class="modal fade" id="approveLecture" tabindex="-1" role="dialog"
+        aria-labelledby="approveLectureLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <!--폼 -->
            <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
 	              <div class="modal-body">
-					<p class="text-center mt-5"> 해당 강의를 정말 정지하시겠습니까?</p>
+					<p class="text-center mt-5"> 해당 강의신청을 승인하시겠습니까?</p>
 	              </div>
 					<div class="d-grid gap-2 d-md-flex m-3 justify-content-md-end">
-		                <button type="submit" class="btn btn-outline-danger m-2">정지</button>
-		                <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='${pageContext.request.contextPath}/admin/manageLectureBoard.do';">취소</button>
-		                <!-- 취소 버튼 클릭시 강의관리게시판페이지로 이동처리 or 모달창 없앨거면 data-dismiss="modal" 속성 주기  -->
+		                <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='${pageContext.request.contextPath}/admin/applyLectureList.do';">취소</button>
+		                <button type="submit" class="btn btn-outline-danger m-2">승인</button>
+		                <!-- 취소 버튼 클릭시 강의관리게시판페이지로 이동처리 필요 or 모달창 없앨거면 data-dismiss="modal" 속성 주기  -->
 					</div>
               </div>
           </div>
