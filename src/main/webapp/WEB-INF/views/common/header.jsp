@@ -98,7 +98,7 @@ alert("${msg}");
 	             <a class="btn btn-warning nav-link text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In(Modal)</a>
 	           </li> -->
 							<li class="nav-item m-1"><a
-								class="btn btn-primary nav-link text-light" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.do';">Sign Up</a>
+								class="btn btn-primary nav-link text-light" href="${pageContext.request.contextPath}/member/memberEnroll.do">Sign Up</a>
 							</li>
 						</ul>
 					</div>
