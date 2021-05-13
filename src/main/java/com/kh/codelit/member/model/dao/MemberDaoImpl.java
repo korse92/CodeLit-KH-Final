@@ -1,5 +1,7 @@
 package com.kh.codelit.member.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,12 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		log.debug("memberDao id={}", id);
 		return session.selectOne("member.selectOneMember", id);
+	}
+
+	@Override
+	public int updateMemberProfile(Map<String, String> map) {
+
+		return session.update("member.updateMemberProfile", map);
 	}
 
 }
