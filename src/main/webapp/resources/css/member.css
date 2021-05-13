@@ -46,10 +46,22 @@ button#kakao {
   background-color: #ffdc00;
 }
 
+ /********** 중복아이디(chkIdDupl) **********/
+div#memberId { 
+	position:relative;
+}
 
+div#memberId span.guide { 
+	display:none; 
+	font-size:12px; 
+	position:absolute; 
+	top:12px; 
+	right:10px;
+}
 
-/* 중복아이디체크관련 */
-div#memberId-container { position:relative; padding:0px; }
-div#memberId-container span.guide { display:none; font-size:12px; position:absolute; top:12px; right:10px; }
-div#memberId-container span.ok { color:green; }
-div#memberId-container span.error { color:red; }
+div#memberId span.ok { 
+	color:green; 
+}
+div#memberId span.no { 
+	color:red; 
+}

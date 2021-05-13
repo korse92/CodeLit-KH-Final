@@ -71,8 +71,11 @@
         <!-- 이메일 -->
         <div class="row mb-3">
           <label for="id" class="col-sm-3 col-form-label">이메일(아이디)</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="id" name="memberId" required>
+          <div class="col-sm-9" id="memberId">
+            <input type="text" class="form-control" id="id" name="id" required>
+            <span class="guide ok">이 아이디는 사용 가능합니다.</span>
+            <span class="guide no">이 아이디는 이미 사용중입니다.</span>
+            <input type="hidden" id=idValid" value="0"/>
           </div>
         </div>
         <div class="row mb-3">
@@ -85,7 +88,7 @@
         <div class="row mb-3">
           <label for="password" class="col-sm-3 col-form-label">비밀번호</label>
           <div class="col-sm-9">
-            <input type="password" class="form-control" id="password" name="memberPw" required>
+            <input type="password" class="form-control" id="password" name="password" required>
           </div>
         </div>
         <div class="row mb-3">
@@ -95,7 +98,7 @@
           </div>
         </div>
         <button type="submit" class="btn btn-primary col-12 mt-3 mb-5" id="submit">가입하기</button>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+        <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
       </form>
 
     </div>
@@ -113,6 +116,42 @@
   </section>
 
 <script>
+/* 아이디 중복 확인 */
+$("#id").keyup(e => {
+	const id = $(e.target).val();
+	const $no = $(".guide.no");
+	const $ok = $(".guide.ok");
+	const $idValid = $("#idValid");
+	
+	//아이디 처음 작성하거나, 다시 작성하는 경우
+	if(id.length < 4){
+		$(".guide").hide();
+		$idValid.val(0);
+		return;
+	}
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/member/chkIdDupl.do",
+		data: {id},
+		success: data => {
+			console.log(data);
+			if(data.usable){
+				$no.hide();
+				$ok.show();
+				$idValid.val(1);
+			}
+			else{
+				$no.show();
+				$ok.hide();
+				$idValid.val(0);
+			}
+		},
+		error: (xhr, status, err) => {
+			console.log(xhr, status, err);
+		}
+	});
+});
+
 /* 아이디 확인 */
 $("#chkId").blur(function(){
 	var $id = $("#id"), $chkId = $("#chkId");
