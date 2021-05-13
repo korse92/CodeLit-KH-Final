@@ -10,7 +10,13 @@
 
 <!-- Font Awesome(아이콘) CSS -->
 <script src="https://kit.fontawesome.com/0e3c91e1c6.js" crossorigin="anonymous"></script>
-<div class="container-signup">
+<head>
+    <meta charset="utf-8" />
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="58001672943-vf21bvk8p312h3gs59o3p1m7geopjpl9.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+  <section class="container-signup">
     <h5>회원가입</h5>
 
     <!-- 메일/비밀번호 입력 -->
@@ -52,5 +58,9 @@
       <button type="submit" class="btn btn-primary col-5 mt-1 mb-1" id="kakao">카카오 가입&nbsp;<img src="${pageContext.request.contextPath}/resources/images/kakao.png"
 						alt="" style="width: 15px;"></button>
     </div>
-</div>
+
+
+
+
+  </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
