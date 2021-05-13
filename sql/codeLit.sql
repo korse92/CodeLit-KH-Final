@@ -750,5 +750,6 @@ insert into authorities values ('ROLE_USER', 'teacher');
 
 
 commit;
+select * from lecture_category;
 select * from member;
 select * from authorities;

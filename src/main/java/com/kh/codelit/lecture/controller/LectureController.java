@@ -12,7 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class LectureController {
-
+	
 	@Autowired
-	private LectureService lectureService;
+	private LectureService lectureService;	
+
 }

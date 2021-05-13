@@ -19,11 +19,21 @@ public class LectureServiceImpl implements LectureService {
 	@Autowired
 	private LectureDao lectureDao;
 
+	private static List<Map<String, Object>> categoryListInstance;//싱글톤 객체로 처리
+	
 	@Override
 	public List<Map<String, Object>> selectCategoryList() {
 		
 		return lectureDao.selectCategoryList();
 	}
 
-	
+	@Override
+	public List<Map<String, Object>> selectCategoryListInstance() {
+		if(categoryListInstance == null) {
+			categoryListInstance = lectureDao.selectCategoryList();
+			log.debug("인스턴스 생성");
+		}
+		
+		return categoryListInstance;
+	}
 }

@@ -7,5 +7,5 @@ public interface LectureService {
 
 	List<Map<String, Object>> selectCategoryList();
 
-
+	List<Map<String, Object>> selectCategoryListInstance();
 }
