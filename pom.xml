@@ -170,7 +170,7 @@
 		    <scope>provided</scope>
 		</dependency> -->
 		
-		<!-- #7. 스프링  security 프레임워크 의존 -->
+		<!-- #7. 스프링  security 프레임워크 의존 ( + security#1. )-->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -186,6 +186,11 @@
 			<artifactId>spring-security-config</artifactId>
 	        <version>${org.springframework.security-version}</version>		
 		</dependency>
+		<!-- 
+			org.apache.jasper.JasperException: 
+			The absolute uri: [http://www.springframework.org/security/tags] cannot be resolved in either web.xml or the jar files deployed with this application 
+			security taglib 오류시, 해당 jar를 직접 WebApp Libraries에 추가할 것.
+		-->
 		<dependency>
 	        <groupId>org.springframework.security</groupId>
 	        <artifactId>spring-security-taglibs</artifactId>

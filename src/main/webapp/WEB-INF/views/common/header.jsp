@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%-- 로그인 검증용 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,19 +84,69 @@ alert("${msg}");
 					</ul>
 				</div>
 
-				<div class="collapse navbar-collapse justify-content-end"
-					id="navbarMain">
-					<ul class="navbar-nav">
-						<li class="nav-item m-1"><a	class="btn btn-warning nav-link text-light"	href="../html/login.html">Sign In</a></li>
-						<!-- 로그인 Modal 버전 -->
-						<!-- <li class="nav-item m-1">
-             <a class="btn btn-warning nav-link text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In(Modal)</a>
-           </li> -->
-						<li class="nav-item m-1"><a
-							class="btn btn-primary nav-link text-light" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.do';">Sign Up</a>
-						</li>
-					</ul>
-				</div>
+				<!-- 비로그인 -->
+				<sec:authorize access="isAnonymous()">
+					<div class="collapse navbar-collapse justify-content-end"
+						id="navbarMain">
+						<ul class="navbar-nav">
+							<li class="nav-item m-1"><a	class="btn btn-warning nav-link text-light"	href="${pageContext.request.contextPath}/member/memberLogin.do">Sign In</a></li>
+							<!-- 로그인 Modal 버전 -->
+							<!-- <li class="nav-item m-1">
+	             <a class="btn btn-warning nav-link text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In(Modal)</a>
+	           </li> -->
+							<li class="nav-item m-1"><a
+								class="btn btn-primary nav-link text-light" onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.do';">Sign Up</a>
+							</li>
+						</ul>
+					</div>
+				</sec:authorize>
+				
+				<!-- 일반 사용자 로그인 -->
+				<sec:authorize access="isAuthenticated()">
+							
+					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarSupportedContent">
+			            <ul class="navbar-nav">
+			            	<li class="nav-item">
+			                	<span class="fs-4 text-light">
+			                		<sec:authentication property="principal.username"/>
+<%-- 									<sec:authentication property="principal.authorities"/> --%>
+			                	</span>
+			                	<span class="fs-5 text-light">&nbsp;님</span>
+			              	</li>
+			              	<li>
+			                	&nbsp;&nbsp;&nbsp;&nbsp;
+			              	</li>
+			              	<li class="nav-item dropdown">
+			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			                  		메뉴
+			                	</a>
+			                	<ul class="dropdown-menu me-5 pe-5" id="dropdown3" aria-labelledby="navbarDropdown3">
+			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
+									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
+								  </form:form>
+				                  <li><a class="dropdown-item" href="#">프로필</a></li>
+				                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
+				                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
+				                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
+				                  <li><a class="dropdown-item" href="#">장바구니</a></li>
+				                  <li><a class="dropdown-item" href="#">결제내역</a></li>
+				                  <li><a class="dropdown-item" href="#">강사 신청</a></li>
+				                </ul>
+			              	</li>
+			             	<li>
+			                	&nbsp;&nbsp;&nbsp;
+			              	</li>
+			              	<li class="nav-item">
+			                	<a class="nav-link" href="#" id="alertsDropdown">
+			                    	<img src="../images/alert.png" id="alarm" alt="">
+			                    	<!-- 알림 여부에 따라 아이콘 바꾸기 -->
+			                    	<span class="badge badge-danger badge-counter"></span>
+			                	</a>
+			              	</li>
+			            </ul>
+			         </div>
+				</sec:authorize>
+				
 			</div>
 		</nav>
 
@@ -123,7 +177,6 @@ alert("${msg}");
 						</form>
 					</div>
 					<div class="modal-footer">
-
 						<p>추가내용</p>
 					</div>
 				</div>
