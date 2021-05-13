@@ -3,18 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lecture">
-
-	<select id="selectCategoryList" resultMap="categoryMap">
-		select *
-		from lecture_category
-	</select>
-	<resultMap id="categoryMap" type="map">
-		<id property="lecCatNo" column="lec_cat_no" />
-		<result property="lecCatName" column="lec_cat_name" />
-	</resultMap>
 	
-</mapper>
-<mapper namespace="lecture">
 	<select id="selectCategoryList" resultType="map">
 		select
 			lec_cat_no "no",
@@ -24,17 +13,16 @@
 		order by
 			lec_cat_no
 	</select>
-</mapper>
-<mapper namespace="lecture">
-	<select id="selectCategoryList" resultType="map">
-		select
-			lec_cat_no "no",
-			lec_cat_name "name"
-		from
-			lecture_category
-		order by
-			lec_cat_no
-	</select>
+	
+<!-- 	<select id="selectCategoryList" resultMap="categoryMap"> -->
+<!-- 		select * -->
+<!-- 		from lecture_category -->
+<!-- 	</select> -->
+<!-- 	<resultMap id="categoryMap" type="map"> -->
+<!-- 		<id property="lecCatNo" column="lec_cat_no" /> -->
+<!-- 		<result property="lecCatName" column="lec_cat_name" /> -->
+<!-- 	</resultMap> -->
+
 </mapper>
 
 
