@@ -7,12 +7,12 @@
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<!DOCTYPE html>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 등록" name="title"/>
 </jsp:include>
 <!-- 컨텐츠 시작 -->
 <!-- 개인 CSS, JS 위치 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
 <style>
 .form-group .row {
 	margin-top: 1rem;
@@ -22,11 +22,18 @@
 .form-group .form-label {
 	margin-bottom: 0px;
 }
+
+img#thumbImage {
+	width: 450px;
+	height: 300px;
+}
 </style>
 
 <div class="container">
-	<div class="mt-5 mx-auto form-group" style="width: fit-content;">
-		<form name="lectureEnrollFrm" action="" method="post"
+	<div class="mt-5 mx-auto form-group" style="width:fit-content;">
+		<form:form name="lectureEnrollFrm"
+			action="${pageContext.request.contextPath}/teacher/lectureEnroll.do?${_csrf.parameterName}=${_csrf.token}"
+			method="post"
 			enctype="multipart/form-data">
 			<div class="row justify-content-center">
 				<!-- col-auto : 내부요소 크기에 맞게 컬럼 크기 맞춤 -->
@@ -58,10 +65,10 @@
 					<label class="form-label">강의 종류</label>
 				</div>
 				<div class="col-sm-auto">
-					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType1" required>
+					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType1" value="V" required>
 					<label class="form-check-label me-3" for="lectureType1">일반 강의</label>
 					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType2">
-					<label class="form-check-label"	for="lectureType2">스트리밍 강의</label>
+					<label class="form-check-label"	for="lectureType2" value="S">스트리밍 강의</label>
 				</div>
 			</div>
 			<div class="row">
@@ -86,7 +93,7 @@
 				<div class="col-sm-2 align-self-center">
 					<label class="form-label" for="lectureThumbnail">썸네일</label>
 				</div>
-				<div class="col-sm">
+				<div class="col-sm-10">
 					<img
 						src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image"
 						class="img-thumbnail w-100" id="thumbImage" alt="썸네일 이미지">
@@ -95,16 +102,38 @@
 						id="lectureThumbnail">
 				</div>
 			</div>
-			<div class="row form-group justify-content-end">
-				<div class="col-sm-auto">
-					<input class="btn btn-warning btn" type="reset" value="취소 or 뒤로">
-					<input class="btn btn-primary" type="submit" value="다음">
+			<div class="row">
+				<label class="form-label mb-2" for="">강의 소개글</label>
+				<div class="col-sm">
+					<textarea name="lectureIntro" id="lectureIntro" class="form-control"></textarea>
+				</div>
+			</div>
+			<div id="selectedVideo" class="row">
+				<div class="row">
+					<div class="col-sm-2 align-self-center">
+						<label class="form-label" for="lectureGuideline">가이드라인</label>
+					</div>
+					<div class="col-sm">
+						<input class="form-control" type="number" name="lectureGuideline" max="10"
+							id="lectureGuideline" placeholder="권장하는 하루에 들을 영상 개수(없을 시 기본값 1, 최대 10)">
+					</div>
 				</div>
 			</div>
 			
-	
-	
-		</form>
+			<div id="selectedStreaming" class="d-none row">
+				<label class="form-label mb-2" for="">강의일정</label>
+				<div class="col-sm">
+					<p>풀캘린더 들어갈곳</p>
+					<input type="hidden" name="streamingDateList" />
+				</div>
+			</div>
+			<div class="row form-group justify-content-end">
+				<div class="col-sm-auto">
+					<input class="btn btn-warning btn" type="reset" value="리셋">
+					<input class="btn btn-primary" type="submit" value="등록 요청">
+				</div>
+			</div>
+		</form:form>
 	</div>
 </div>
 <script>
@@ -135,6 +164,14 @@
   $("[name=lectureEnrollFrm").on('reset', e => {
     document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
   });
+  
+  //ckeditor 생성
+  CKEDITOR.replace('lectureIntro', {
+	  height: 500
+  });
+  
+  CKEDITOR.instances.lectureIntro.getData();
+
 </script>
 
 <!-- 컨텐츠 끝 -->

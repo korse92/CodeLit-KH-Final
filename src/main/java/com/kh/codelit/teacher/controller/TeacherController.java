@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.member.model.vo.Member;
@@ -59,5 +61,11 @@ public class TeacherController {
 	@GetMapping("/lectureEnroll.do")
 	public void lectureEnroll() {}
 	
+	
+	@PostMapping("/lectureEnroll.do")
+	public String lectureEnroll(RedirectAttributes redirectAttr) {
+		log.debug("핸들러요청");
+		return null;
+	}
 	
 }
