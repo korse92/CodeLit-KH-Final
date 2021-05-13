@@ -753,3 +753,5 @@ commit;
 select * from lecture_category;
 select * from member;
 select * from authorities;
+
+desc member;
