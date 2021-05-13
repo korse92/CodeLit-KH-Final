@@ -43,7 +43,7 @@ public class TeacherController {
 			log.debug("loginMember = {}", loginMember);
 			mav.addObject("loginMember", loginMember);
 			
-			List<Map<String, Object>> list = lectureService.selectCategoryList();
+			List<Map<String, Object>> list = lectureService.selectCategoryListInstance();
 			mav.addObject("catList", list);
 			
 			mav.setViewName("teacher/teacherRequest");

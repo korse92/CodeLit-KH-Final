@@ -132,7 +132,7 @@
                             <select class="form-select" aria-label="희망분야" name="refLecCatNo" id="refLecCatNo">
                               <option selected>카테고리 선택</option>
                               <c:forEach items="${catList}" var="list">
-                              	<option value="${list.lecCatNo}">${list.lecCatName}</option>
+                              	<option value="${list.no}">${list.name}</option>
                               </c:forEach>
                             </select>
                         </td>
