@@ -5,6 +5,11 @@ import org.springframework.stereotype.Controller;
 
 import com.kh.codelit.lecture.model.service.LectureService;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
+@Slf4j
 @Controller
 public class LectureController {
 	
