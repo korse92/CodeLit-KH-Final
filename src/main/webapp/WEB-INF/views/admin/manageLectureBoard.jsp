@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title></title>
 <script>
+
 //CORS를 위한 Origin 변수처리
 const menuRestApiHost = "http://localhost:9090/codelit";
 

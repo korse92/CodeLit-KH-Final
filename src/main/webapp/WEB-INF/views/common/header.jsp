@@ -200,8 +200,6 @@ alert("${msg}");
 				</div>
 			</div>
 		</div>
-
 	</header>
-
 	<section id="content">
 	<!-- header.jsp 끝 -->
