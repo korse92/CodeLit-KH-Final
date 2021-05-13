@@ -27,8 +27,8 @@
 	rel="stylesheet" crossorigin="anonymous">
 <!-- Font Awesome(아이콘) CSS -->
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+	integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
 	crossorigin="anonymous">
 
 <!-- 사용자작성 JS -->
@@ -49,7 +49,7 @@ alert("${msg}");
 
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="container">
-				<a class="navbar-brand me-4" href="#">CodeL!t</a>
+				<a class="navbar-brand me-4" href="${pageContext.request.contextPath}">CodeL!t</a>
 
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarMain"
@@ -63,24 +63,27 @@ alert("${msg}");
 						<li class="nav-item dropdown mx-2">
 							<a 	class="nav-link dropdown-toggle" href="#"
 								id="navlinkDropdownCommunity" role="button"
-								data-bs-toggle="dropdown" aria-expanded="false"> 커뮤니티 </a>
+								data-bs-toggle="dropdown" aria-expanded="false">커뮤니티</a>
 							<ul class="dropdown-menu" id="dropdownCommunity"
 								aria-labelledby="navlinkDropdownCommunity">
 								<li><a class="dropdown-item" href="#">공지사항</a></li>
 								<li><a class="dropdown-item" href="#">공부게시판</a></li>
-							</ul></li>
-						<li class="nav-item dropdown mx-2"><a
-							class="nav-link dropdown-toggle" href="#"
-							id="navlinkDropdownLecture" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false"> 강의 </a>
+							</ul>
+						</li>
+						<li class="nav-item dropdown mx-2">
+							<a
+								class="nav-link dropdown-toggle" href="#"
+								id="navlinkDropdownLecture" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">강의</a>
 							<ul class="dropdown-menu" id="dropdownLecture"
 								aria-labelledby="navlinkDropdownLecture">
-								<li><a class="dropdown-item" href="#">프런트</a></li>
-								<li><a class="dropdown-item" href="#">백엔드</a></li>
-								<li><a class="dropdown-item" href="#">빅데이터</a></li>
-							</ul></li>
-						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do">모든 강의</a></li>
+								<c:forEach items="${categoryList}" var="category">
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${catecory.no}">${category.name}</a></li>
+								</c:forEach>
+							</ul>
 						</li>
+						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a></li>
 					</ul>
 				</div>
 
@@ -104,7 +107,7 @@ alert("${msg}");
 				<!-- 일반 사용자 로그인 -->
 				<sec:authorize access="isAuthenticated()">
 							
-					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarSupportedContent">
+					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarMain">
 			            <ul class="navbar-nav">
 			            	<li class="nav-item">
 			                	<span class="fs-4 text-light">
@@ -124,21 +127,38 @@ alert("${msg}");
 			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
-				                  <li><a class="dropdown-item" href="#">프로필</a></li>
-				                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
-				                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
-				                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
-				                  <li><a class="dropdown-item" href="#">장바구니</a></li>
-				                  <li><a class="dropdown-item" href="#">결제내역</a></li>
-				                  <li><a class="dropdown-item" href="#">강사 신청</a></li>
+								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
+					                  <li><a class="dropdown-item" href="#">프로필</a></li>
+					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
+					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
+					                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
+					                  <li><a class="dropdown-item" href="#">장바구니</a></li>
+					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('TEACHER')">
+				                  		<hr/>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
+					                  <li><a class="dropdown-item" href="#">정산내역</a></li>
+				                  </sec:authorize>
+				                  <sec:authorize access="hasRole('ADMIN')">
+				                  		<li><a class="dropdown-item" href="#">강사 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="#">강의 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="#">강의 관리</a></li>
+				                  		<li><a class="dropdown-item" href="#">회원 관리</a></li>
+				                  		<li><a class="dropdown-item" href="#">알림</a></li>
+				                  </sec:authorize>
 				                </ul>
 			              	</li>
 			             	<li>
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
-			                	<a class="nav-link" href="#" id="alertsDropdown">
-			                    	<img src="../images/alert.png" id="alarm" alt="">
+			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
+			                    	<i class="fas fa-bell my-auto"></i>
+			                    	<i class="far fa-bell my-auto"></i>
 			                    	<!-- 알림 여부에 따라 아이콘 바꾸기 -->
 			                    	<span class="badge badge-danger badge-counter"></span>
 			                	</a>
