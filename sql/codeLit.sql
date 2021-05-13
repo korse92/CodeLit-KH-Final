@@ -748,10 +748,20 @@ insert into member values ('teacher', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKA
 insert into authorities values ('ROLE_TEACHER', 'teacher');
 insert into authorities values ('ROLE_USER', 'teacher');
 
+insert into member values ('test', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
+insert into authorities values ('ROLE_USER', 'test');
+----------
 
+insert into lecture_category values(lec_cat_no.nextval, '프런트');
+insert into lecture_category values(lec_cat_no.nextval, '백엔드');
+insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
+----------
+delete from teacher where ref_member_id = 'test';
 commit;
 select * from lecture_category;
 select * from member;
 select * from authorities;
 
 desc member;
+select * from teacher;
+select * from authorities;

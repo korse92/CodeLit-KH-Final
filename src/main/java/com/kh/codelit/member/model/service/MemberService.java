@@ -10,6 +10,9 @@ public interface MemberService extends UserDetailsService{
 	String ROLE_USER = "USER";
 	String ROLE_ADMIN = "ADMIN";
 	String ROLE_TEACHER = "TEACHER";
+
 	int insertMember(Member member);
+
+	Member selectOneMember(String refMemberId);
 
 }
