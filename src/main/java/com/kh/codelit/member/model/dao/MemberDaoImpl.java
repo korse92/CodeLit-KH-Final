@@ -27,8 +27,12 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int insertMember(Member member) {
+		return session.insert("member.insertMember", member);
+	}
+	
+	@Override
 	public int updateMemberProfile(Map<String, String> map) {
-
 		return session.update("member.updateMemberProfile", map);
 	}
 

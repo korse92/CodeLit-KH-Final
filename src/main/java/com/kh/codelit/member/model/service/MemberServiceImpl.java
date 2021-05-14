@@ -32,11 +32,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+
+	@Override
+	public int insertMember(Member member) {
+		return memberDao.insertMember(member);
+	}
+
 	// 아이디를 통해 멤버 테이블 한 줄 가져오는 메소드
 	@Override
 	public Member selectOneMember(String id) {
 		
 		return memberDao.selectOneMember(id);
+
 	}
+	
 
 }

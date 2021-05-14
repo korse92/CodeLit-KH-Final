@@ -760,5 +760,8 @@ delete from teacher where ref_member_id = 'test';
 commit;
 select * from lecture_category;
 select * from member;
+select * from authorities;
+
+desc member;
 select * from teacher;
 select * from authorities;
