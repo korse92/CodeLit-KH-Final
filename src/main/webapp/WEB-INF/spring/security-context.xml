@@ -17,6 +17,7 @@
 	
 	<!-- #6. HttpSecurity 설정 -->
 	<http auto-config="true">
+
 	
 	<!-- 	<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함.
@@ -27,6 +28,15 @@
 	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />	    
 	    <intercept-url pattern="/**" access="isAuthenticated()" />
 	     -->
+
+
+		<!-- <intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함.
+		<intercept-url pattern="/member/memberLogin.do" access="isAnonymous()" />
+		<intercept-url pattern="/member/**" access="isAuthenticated()"/>
+		<intercept-url pattern="/board/**" access="hasRole('USER')"/>
+	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />	    
+	    <intercept-url pattern="/**" access="isAuthenticated()" /> -->
 
 <!-- 		<intercept-url pattern="/" access="permitAll" /> -->
 <!-- 		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함. -->

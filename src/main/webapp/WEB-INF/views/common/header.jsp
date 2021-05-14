@@ -63,24 +63,27 @@ alert("${msg}");
 						<li class="nav-item dropdown mx-2">
 							<a 	class="nav-link dropdown-toggle" href="#"
 								id="navlinkDropdownCommunity" role="button"
-								data-bs-toggle="dropdown" aria-expanded="false"> 커뮤니티 </a>
+								data-bs-toggle="dropdown" aria-expanded="false">커뮤니티</a>
 							<ul class="dropdown-menu" id="dropdownCommunity"
 								aria-labelledby="navlinkDropdownCommunity">
 								<li><a class="dropdown-item" href="#">공지사항</a></li>
 								<li><a class="dropdown-item" href="#">공부게시판</a></li>
-							</ul></li>
-						<li class="nav-item dropdown mx-2"><a
-							class="nav-link dropdown-toggle" href="#"
-							id="navlinkDropdownLecture" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false"> 강의 </a>
+							</ul>
+						</li>
+						<li class="nav-item dropdown mx-2">
+							<a
+								class="nav-link dropdown-toggle" href="#"
+								id="navlinkDropdownLecture" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">강의</a>
 							<ul class="dropdown-menu" id="dropdownLecture"
 								aria-labelledby="navlinkDropdownLecture">
-								<li><a class="dropdown-item" href="#">프런트</a></li>
-								<li><a class="dropdown-item" href="#">백엔드</a></li>
-								<li><a class="dropdown-item" href="#">빅데이터</a></li>
-							</ul></li>
-						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do">모든 강의</a></li>
+								<c:forEach items="${categoryList}" var="category">
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${catecory.no}">${category.name}</a></li>
+								</c:forEach>
+							</ul>
 						</li>
+						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a></li>
 					</ul>
 				</div>
 
@@ -141,12 +144,13 @@ alert("${msg}");
 					                  <li><a class="dropdown-item" href="#">정산내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('ADMIN')">
-				                  		<li><a class="dropdown-item" href="#">강사 신청 목록</a></li>
-				                  		<li><a class="dropdown-item" href="#">강의 신청 목록</a></li>
-				                  		<li><a class="dropdown-item" href="#">강의 관리</a></li>
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청 목록</a></li>
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의 관리</a></li>
 				                  		<li><a class="dropdown-item" href="#">회원 관리</a></li>
 				                  		<li><a class="dropdown-item" href="#">알림</a></li>
 				                  </sec:authorize>
+				                  
 				                </ul>
 			              	</li>
 			             	<li>

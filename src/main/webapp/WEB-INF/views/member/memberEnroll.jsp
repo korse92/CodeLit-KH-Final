@@ -10,7 +10,7 @@
 
 <!-- Font Awesome(아이콘) CSS -->
 <script src="https://kit.fontawesome.com/0e3c91e1c6.js" crossorigin="anonymous"></script>
-<section class="container-signup">
+<div class="container-signup">
     <h5>회원가입</h5>
 
     <!-- 메일/비밀번호 입력 -->
@@ -52,5 +52,5 @@
       <button type="submit" class="btn btn-primary col-5 mt-1 mb-1" id="kakao">카카오 가입&nbsp;<img src="${pageContext.request.contextPath}/resources/images/kakao.png"
 						alt="" style="width: 15px;"></button>
     </div>
-
+</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

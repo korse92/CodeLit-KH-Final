@@ -1,4 +1,9 @@
+
 ADROP TABLE "MEMBER" CASCADE CONSTRAINTS;
+
+
+DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
+
 CREATE TABLE "MEMBER" (
 	"MEMBER_ID"	VARCHAR2(20)		NOT NULL,
 	"MEMBER_PW"	VARCHAR2(300)		NOT NULL,
@@ -739,6 +744,16 @@ NOCACHE;
 insert into member values ('admin', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
 insert into authorities values ('ROLE_ADMIN', 'admin');
 insert into authorities values ('ROLE_USER', 'admin');
+
+insert into member values ('user', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
+insert into authorities values ('ROLE_USER', 'user');
+
+insert into member values ('teacher', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
+insert into authorities values ('ROLE_TEACHER', 'teacher');
+insert into authorities values ('ROLE_USER', 'teacher');
+
+
 commit;
+select * from lecture_category;
 select * from member;
 select * from authorities;
