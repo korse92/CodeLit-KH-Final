@@ -41,6 +41,37 @@ public class AdminDaoImpl implements AdminDao {
 	 * return session.selectOne("admin.getTotalContents"); //1행 1열짜리값 얻어오기 }
 	 */
 
+	
+	@Override
+	public List<Map<String, Object>> selectAllBySearching(String searchByAdmin) {
+		return session.selectList("admin.selectAllBySearching", searchByAdmin);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> applyTeacherList() {
+		return session.selectList("admin.applyTeacherList");
+	}
+
+
+	@Override
+	public int approveTeacher(String id) {
+		return session.insert("admin.approveTeacher", id);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> applyLectureList() {
+		return session.selectList("admin.applyLectureList");
+	}
+
+
+	@Override
+	public int approveLecture(String id) {
+		return session.update("admin.approveLecture", id);
+	}
+
+	
 
 
 }

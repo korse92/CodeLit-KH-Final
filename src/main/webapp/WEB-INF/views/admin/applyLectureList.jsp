@@ -15,29 +15,32 @@
 	<table class="table mt-3 col-sm text-center">
 	<thead class="thead-light">
 	    <tr>
-	      <th scope="col">번호</th>
 	      <th scope="col">카테고리</th>
-	      <th scope="col">아이디</th>
-	      <th scope="col">신청자</th>
-	      <th scope="col">GitHub</th>
-	      <th scope="col">날짜</th>
+	      <th scope="col">강사 아이디</th>
+	      <th scope="col">강의 링크</th>
 	      <th scope="col">비고</th>
 	    </tr>
+	   <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
+	  <c:if test="${empty list}">
+	    <tr>
+			<td colspan="14" style="text-align:center;">조회된 데이터가 없습니다.</td>
+		</tr>
+	  </c:if>
 	 </thead>
 	  <tbody>
+	  	<c:if test="${!empty list}">
+	  	 <c:forEach items="list" var="lectureList">
 	       <tr>
-	          <td>0</td>
-	          <td>백엔드</td>
-	          <td>jisuco</td>
-	          <td>김지수</td>
-	        <%--  <td><a href="${}">/github/jisu0011</a></td> --%>
-	        <!-- <a href="https://github.com/"/> -->
-	          <td>2021/05/05</td>
+	          <td>${lectureList.lecCatName}</td>
+	          <td>${lectureList.refMemberId}</td>
+	          <td>${lectureList.lectureId}</td>
 	          <td>
 	             <button type="button" class="btn btn-secondary btn-sm">취소</button>
-	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do'">승인</button>
+	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?id=${lectureList.refMemberId}'">승인</button>
 	          </td>
 	        </tr>
+	  	 </c:forEach>
+	  	</c:if> 
 	</table>
 	
 		<!-- 페이지 바 -->

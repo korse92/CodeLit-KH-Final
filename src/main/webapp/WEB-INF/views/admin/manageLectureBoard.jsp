@@ -10,63 +10,41 @@
 <title></title>
 <script>
 
-//CORS를 위한 Origin 변수처리
+// 카테고리
+
 const menuRestApiHost = "http://localhost:9090/codelit";
 
-function displayResultTable(selector, data){
-	const $container = $(selector);
-	const $table = $("<table></table>").addClass("table");
-	const $header = $("<tr><th>번호</th><th>음식점</th><th>메뉴명</th><th>가격</th><th>타입</th><th>맛</th></tr>")
-	$table.append($header);
+window.onload = function() {
 	
-	if(data.length > 0){
-		$(data).each((i, {id, restaurant, name, price, type, taste}) =>{
-			const tr = `<tr>
-				<td>\${id}</td>
-				<td>\${restaurant}</td>
-				<td>\${name}</td>
-				<td>\${price}</td>
-				<td>\${type}</td>
-				<td>\${taste}</td>
-			</tr>`; 
-			$table.append(tr);
-		});		
-	}
-	else {
-		$table.append("<tr><td colspan='6'>조회된 결과가 없습니다.</td></tr>");
-	}
-	
-	$container.html($table);
-}
-
-// 카테고리
 $("#typeSelector").change(e => {
       	const type = $(e.target).val();
       	console.log(type); //사용자가 선택한 값이 잘 넘어오는지 확인
       	
       	$.ajax({
-      		url: `\${menuRestApiHost}/menus/\${type}`,
+      		url: `\${menuRestApiHost}/admin/\${type}`,    //${type} 은 브라우저와서 실행되야 하므로 escaping처리
       		dataType: "json",
       		success(data){
       			console.log(data);
-      			displayResultTable("#menuType-result", data);
+      			
       		},
       		error(xhr, status, err){
       			console.log(xhr, status, err);
       		}
       	})
     });
-	        
+}         
 
 
 //검색
-
-$( "#searchByAdmin" ).autocomplete({
+$("#searchByAdmin").autocomplete({
      source : function(request, response){
+    	 //서버 통신 이후 success메소드에서 response 호출 할 것!
+    	 console.log(request); //사용자 입력값
+    	 console.log(response); 
     
    //ajax 호출
    $.ajax({
-   	url:`${pageContext.request.contextPath}/board/searchByAdmin.do`,
+   	url:`${pageContext.request.contextPath}/admin/searchByAdmin.do`,
        data : {
    	  	searchTitle : request.term
    	  	
@@ -74,7 +52,7 @@ $( "#searchByAdmin" ).autocomplete({
    	//method : "GET"   //기본값 -> 생략가능
    	//dataType : "json" //유연하게 처리해줌 -> 생략가능
    	 success(data){
-   		//console.log(data);   //map ->기본 배열의 요소를 변형해서 새로운 배열 생성가능한 메소드
+   		console.log(data);   //map ->기본 배열의 요소를 변형해서 새로운 배열 생성가능한 메소드
    						      //map은 callback 함수를 각각의 요소에 대해 한번씩 순서대로 불러 그 함수의 반환값으로 새로운 배열을 만듭니다. 
    		 var res = $.map(data, (board) => ({
  				  label: board.title,
@@ -130,19 +108,27 @@ $(() => {
         <div class="mt-4 col-sm-2">
           <select class="form-select" id="typeSelector">
             <option value="" selected>카테고리</option>
-            <option value="fe">프론트엔드</option>
-            <option value="be">백엔드</option>
-            <option value="dt">빅데이터</option>
+             <%-- <c:forEach items="${catList}" var="list">
+              	<option value="${list.no}">${list.name}</option>
+              </c:forEach>
+             --%>
+             <option value="fe"  ${param.searchType eq 'fe' ? 'selected' : ''}>프론트 엔드</option>
+            <option value="be"  ${param.searchType eq 'be' ? 'selected' : ''}>백엔드</option>
+            <option value="dt"  ${param.searchType eq 'dt' ? 'selected' : ''}>빅데이터</option> 
+            
+            
+         <%--  <c:forEach items="${categoryList}" var="category">
+          <option class="select-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do/${category.no}">${category.name}</option>
+          </c:forEach --%>>
           </select>
+          
         </div>
-        <div class="result" id="menuType-result"></div>
-        
         <div class="col-4 mt-4">
           <div class="input-group">  
             <div class="form-outline">
-              <input type="search" id="searchByAdmin" class="form-control"  placeholder="강의자 / 강의명"/>              
+              <input type="search" id="searchByAdmin" name="searchKeyword" class="form-control"  placeholder="강의자 / 강의명" value="${param.searchKeyword}" required/>              
              </div>
-            <button type="button" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -159,6 +145,15 @@ $(() => {
 	      <th scope="col">강의 링크</th>
 	      <th scope="col">비고</th>
 	    </tr>
+	    <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 하세요 -->
+	<c:if test="${empty list}">
+	<tr>
+		<td colspan="14" style="text-align:center;">조회된 데이터가 없습니다.</td>
+	</tr>
+	</c:if>
+	<c:if test="${not empty list}">
+	<c:forEach items="${list}" var="lec" varStatus="vs">
+	<tr>
 	 </thead>
 	  <tbody>
 	       <tr>
@@ -173,6 +168,8 @@ $(() => {
 	             <button type="button" a class="btn btn-warning btn-sm" onclick="location.href='${pageContext.request.contextPath}/admin/rejectTeacherRight.do';">정지</button>
 	          </td>
 	        </tr>
+	      </c:forEach>
+		</c:if>
 	</table>
 	
 		<!-- 페이지 바 -->

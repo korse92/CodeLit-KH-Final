@@ -13,7 +13,7 @@
 	<jsp:param value="teacherRequest" name="title"/>
 </jsp:include>
 
-    <script>
+ <script>
         window.onload = function() {
 
             let upFile = document.getElementById('upFile');
@@ -27,11 +27,9 @@
               }
 
             });
-
-
         }
 
-    </script>
+</script>
     
     <style>
         #alarm {
@@ -131,7 +129,7 @@
                         <td colspan="5">
                             <select class="form-select" aria-label="희망분야" name="refLecCatNo" id="refLecCatNo">
                               <option selected>카테고리 선택</option>
-                              <c:forEach items="${catList}" var="list">
+                              <c:forEach items="${categoryList}" var="list">
                               	<option value="${list.no}">${list.name}</option>
                               </c:forEach>
                             </select>

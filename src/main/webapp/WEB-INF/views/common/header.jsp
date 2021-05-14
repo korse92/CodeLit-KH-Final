@@ -79,7 +79,7 @@ alert("${msg}");
 								aria-labelledby="navlinkDropdownLecture">
 								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do">모든 강의</a></li>
 								<c:forEach items="${categoryList}" var="category">
-									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${catecory.no}">${category.name}</a></li>
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
 								</c:forEach>
 							</ul>
 						</li>

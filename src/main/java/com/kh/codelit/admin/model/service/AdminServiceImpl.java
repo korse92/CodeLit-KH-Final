@@ -15,4 +15,29 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminDao adminDao;
 
+	@Override
+	public List<Map<String, Object>> selectAllBySearching(String searchByAdmin) {
+		return adminDao.selectAllBySearching(searchByAdmin);
+	}
+
+	@Override
+	public List<Map<String, Object>> applyTeacherList() {
+		return adminDao.applyTeacherList();
+	}
+
+	@Override
+	public int approveTeacher(String id) {
+		return adminDao.approveTeacher(id);
+	}
+
+	@Override
+	public List<Map<String, Object>> applyLectureList() {
+		return adminDao.applyLectureList();
+	}
+
+	@Override
+	public int approveLecture(String id) {
+		return adminDao.approveLecture(id);
+	}
+
 }

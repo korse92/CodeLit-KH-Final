@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.codelit.admin.model.service.AdminService;
 import com.kh.codelit.common.HelloSpringUtils;
@@ -32,8 +34,7 @@ public class adminController {
 	/**
 	 * 강의자 신청 리스트
 	 */
-	@GetMapping("/applyTeacherList.do")
-	public void applyTeacherList() {}
+	
 	
 	/*
 	 * @GetMapping("/applyTeacherList.do") public void
@@ -78,19 +79,107 @@ public class adminController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//강의 신청 목록
 	@GetMapping("/applyLectureList.do")
-	public void applyLectureList() {
+	public ModelAndView applyLectureList(ModelAndView mav) {
+		
+	try {
+		List<Map<String,Object>> list = adminService.applyLectureList(); 
+		log.debug("list={}",list);
+		
+		mav.addObject("list", list);
+		mav.setViewName("/admin/applyLectureList");
+		
+	}catch(Exception e){
+		//1 로깅 작업
+		 log.error(e.getMessage(), e);
+		 //2 다시 spring container에 던져줄것
+		 throw e;
+	}
+		return mav;
+	}
+	
+	
+	//모달에서 강의 승인
+	@GetMapping("/approveLecture.do")
+	public void approveLecture(@RequestParam String id, Model model) {
+		
+		model.addAttribute("id", id);
 		
 	}
+	
+	//모달에서 보낸 강의승인폼
+	@PostMapping("/approveLecture.do")
+	public String approveLecture_(@RequestParam String id, RedirectAttributes redirectAttr) {
+		
+	String msg = null;
+	try {	
+		int result = adminService.approveLecture(id);
+		msg = "강의 승인에 성공하였습니다";
+		
+	}catch (Exception e) {
+		msg = "승인에 실패하였습니다";
+		throw e;
+	}
+		redirectAttr.addAttribute("msg", msg);
+		
+		return "redirect:/admin/approveLecture.do";
+		
+	}
+	
+	
+	
+	/**
+	 * 강사 신청목록페이지 섹션
+	 */
+	
+	//강사신청 목록 출력
+	@GetMapping("/applyTeacherList.do")
+	public ModelAndView applyTeacherList(ModelAndView mav) {
+	try {	
+		List<Map<String,Object>> list = adminService.applyTeacherList();
+		log.debug("list ={}", list);
+		
+		mav.addObject("list", list);
+		mav.setViewName("/admin/applyTeacherList");
+	
+	}catch(Exception e) {
+		 //1 로깅 작업
+		 log.error(e.getMessage(), e);
+		 //2 다시 spring container에 던져줄것
+		 throw e;
+	}
+		return mav;
+	}
+	
+	
+	
+	@GetMapping("/approveTeacher.do")
+	public void approveTeacher(@RequestParam String id, Model model) {
+		
+		model.addAttribute("id", id);
+		
+	}
+	
+	//모달에서 보낸 강사 승인폼
+	@PostMapping("/approveTeacher.do")
+	public String approveTeacher_(@RequestParam String id, RedirectAttributes redirectAttr) {
+		
+	String msg = null;
+	try {	
+		int result = adminService.approveTeacher(id);
+		msg = "승인에 성공하였습니다";
+		
+	}catch (Exception e) {
+		msg = "승인에 실패하였습니다";
+		throw e;
+	}
+		redirectAttr.addAttribute("msg", msg);
+		
+		return "redirect:/admin/applyTeacherList.do";
+		
+	}
+	
 	@GetMapping("/manageLectureBoard.do")
 	public void manageLectureBoard() {
 		
@@ -103,37 +192,24 @@ public class adminController {
 	public void rejectTeacherRight_() {
 		log.debug("강사 권한 해지 {}", "도착");
 	}
-	@GetMapping("/approveTeacher.do")
-	public void approveTeacher() {
-		
-	}
-	@PostMapping("/approveTeacher.do")
-	public void approveTeacher_() {
-		
-	}
-	@GetMapping("/approveLecture.do")
-	public void approveLecture() {
-		
-	}
-	@PostMapping("/approveLecture.do")
-	public void approveLecture_() {
-		
-	}
 	
-	//검색창
-	/*
-	 * @GetMapping("/searchByAdmin.do")
-	 * 
-	 * @ResponseBody public List<Map<String, Object>> searchByAdmin(@RequestParam
-	 * String searchByAdmin) { log.debug("searchByAdmin = {}", searchByAdmin);
-	 * 
-	 * List<Map<String, Object>>list =
-	 * adminService.selectAllBySearching(searchByAdmin); log.debug("list = {}",
-	 * list);
-	 * 
-	 * return list; }
-	 */
 	
-
+	
+	
+	
+	
+	
+  //검색창
+  @GetMapping("/searchByAdmin.do")
+  @ResponseBody 
+  public List<Map<String, Object>> searchByAdmin(@RequestParam String searchByAdmin){
+	  
+  log.debug("searchByAdmin = {}", searchByAdmin);
+  List<Map<String, Object>>list = adminService.selectAllBySearching(searchByAdmin); 
+  log.debug("list = {}", list);
+  
+  return list; 
+  
+    }
 
 }

@@ -48,6 +48,7 @@
             <!--폼 -->
            <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
 	              <div class="modal-body">
+	              <input type="hidden" name="id" value="${id}">
 					<p class="text-center mt-5"> 해당 강사신청을 승인하시겠습니까?</p>
 	              </div>
 					<div class="d-grid gap-2 d-md-flex m-3 justify-content-md-end">
