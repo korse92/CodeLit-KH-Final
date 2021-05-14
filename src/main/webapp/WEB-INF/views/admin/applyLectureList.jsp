@@ -3,9 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%--form:form 태그용 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 신청리스트" name="title"/>
 </jsp:include>
+
+<script>
+
+function deleteLecture(id) {
+	if(confirm(`\${id}의 강의를 거절하시겠습니까?`)){
+		
+	  var $frm = $(document.deleteLectureFrm);
+	  $frm.find("[name=id]").val(id);
+	  $frm.submit();
+	}
+
+}
+
+</script>
 <div class="container">
 <section class="container">
   <div class="page-header">
@@ -35,13 +53,18 @@
 	          <td>${lectureList.refMemberId}</td>
 	          <td>${lectureList.lectureId}</td>
 	          <td>
-	             <button type="button" class="btn btn-secondary btn-sm">취소</button>
 	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?id=${lectureList.refMemberId}'">승인</button>
+	             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteLecture('${lectureList.refMemberId}');">거절</button>
 	          </td>
 	        </tr>
 	  	 </c:forEach>
 	  	</c:if> 
 	</table>
+	  <form:form name="deleteLectureFrm" 
+	  		action="${pageContext.request.contextPath}/admin/deleteLecture.do"
+	  		method="POST"	>
+	  	<input type="hidden" name="id">
+	  </form:form>	    	
 	
 		<!-- 페이지 바 -->
 	     <ul class="pagination d-flex justify-content-center">

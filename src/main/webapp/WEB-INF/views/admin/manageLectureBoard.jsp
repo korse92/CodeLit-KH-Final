@@ -3,13 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title></title>
-<script>
 
+<%--form:form 태그용 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="강의 관리 게시판" name="title"/>
+</jsp:include>
 // 카테고리
 
 const menuRestApiHost = "http://localhost:9090/codelit";

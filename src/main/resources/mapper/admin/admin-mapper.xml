@@ -74,5 +74,25 @@
 	where id = #{id}
 	
 	</update>
+	
+	<delete id="deleteTeacher">
+	
+	delete from
+		teacher
+	where
+		ref_member_id = #{id}
+	
+	
+	</delete>
+	
+	<update id="deleteLecture">
+	update 
+		lecture
+	set 
+     	lecture_accept_yn ='N'
+	where 
+		ref_member_id = #{id}
+	
+	</update>
 
 </mapper>

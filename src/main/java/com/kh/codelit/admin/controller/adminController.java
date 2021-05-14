@@ -174,11 +174,74 @@ public class adminController {
 		msg = "승인에 실패하였습니다";
 		throw e;
 	}
-		redirectAttr.addAttribute("msg", msg);
+		redirectAttr.addFlashAttribute("msg", msg);
 		
 		return "redirect:/admin/applyTeacherList.do";
 		
 	}
+	
+	//강사 승인 취소 -> 삭제처리
+	@PostMapping("/deleteTeacher.do")
+	public String deleteTeacher(@RequestParam String id, RedirectAttributes redirectAttr) {
+		String msg = null;
+		log.debug("id = {}", id);
+		
+	try {
+		
+		int result = adminService.deleteTeacher(id);
+		msg = "강사 신청 거절에 성공하였습니다.";
+		log.debug("result={}", result);
+	}catch(Exception e) {
+		msg = "강사 신청 거절에 실패하였습니다";
+		throw e;
+	}
+		redirectAttr.addFlashAttribute("msg", msg); //session에 담았다가 다음 redirect떄 불러오는것 | addAttribute : redirect시 경로를 /spring?msg=수정성공 이런식으로 넘어감
+		return  "redirect:/admin/applyTeacherList.do";
+	}
+	
+	
+	//강의 신청 목록에서 삭제처리
+	@PostMapping("/deleteLecture")
+	public String deleteLecture(@RequestParam String id, RedirectAttributes redirectAttr) {
+		String msg = null;
+	try {
+		
+		int result = adminService.deleteLecture(id);
+		msg = "강의 신청 거절에 성공하였습니다.";
+	
+	}catch(Exception e) {
+		msg = "강사 신청 거절에 실패하였습니다";
+		throw e;
+	}
+		
+		redirectAttr.addFlashAttribute("msg", msg);
+		return "redirect:/admin/applyLectureList.do";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("/manageLectureBoard.do")
 	public void manageLectureBoard() {

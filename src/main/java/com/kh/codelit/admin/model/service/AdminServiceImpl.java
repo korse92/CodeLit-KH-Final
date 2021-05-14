@@ -40,4 +40,14 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.approveLecture(id);
 	}
 
+	@Override
+	public int deleteTeacher(String id) {
+		return adminDao.deleteTeacher(id);
+	}
+
+	@Override
+	public int deleteLecture(String id) {
+		return adminDao.deleteLecture(id);
+	}
+
 }

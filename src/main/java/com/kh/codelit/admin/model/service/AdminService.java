@@ -16,5 +16,9 @@ public interface AdminService {
 
 	int approveLecture(String id);
 
+	int deleteTeacher(String id);
+
+	int deleteLecture(String id);
+
 	
 }

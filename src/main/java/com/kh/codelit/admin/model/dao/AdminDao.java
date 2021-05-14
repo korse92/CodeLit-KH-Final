@@ -15,6 +15,10 @@ public interface AdminDao {
 
 	int approveLecture(String id);
 
+	int deleteTeacher(String id);
+
+	int deleteLecture(String id);
+
 
 	
 

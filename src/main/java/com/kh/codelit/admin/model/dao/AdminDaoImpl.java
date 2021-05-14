@@ -71,6 +71,18 @@ public class AdminDaoImpl implements AdminDao {
 		return session.update("admin.approveLecture", id);
 	}
 
+
+	@Override
+	public int deleteTeacher(String id) {
+		return session.delete("admin.deleteTeacher", id);
+	}
+
+
+	@Override
+	public int deleteLecture(String id) {
+		return session.delete("admin.deleteLecture", id);
+	}
+
 	
 
 
