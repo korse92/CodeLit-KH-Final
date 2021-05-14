@@ -1,20 +1,35 @@
 package com.kh.codelit.teacher.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
+import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.service.TeacherService;
+import com.kh.codelit.teacher.model.vo.Teacher;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,7 +107,7 @@ public class TeacherController {
 			
 			if(upFile.isEmpty()) {
 				
-				result = teacherService.insertTeacherRequest(teacher);
+				//result = teacherService.insertTeacherRequest(teacher);
 				
 			} else {
 				
@@ -105,6 +120,10 @@ public class TeacherController {
 				// 리네임드파일 생성
 				File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
 				
+				log.debug("upFile = {}", upFile);
+				log.debug("renamedFile = {}", renamedFile);
+				
+				
 				// 오리지널네임과 리네임 담은 맵객체 생성
 				Map<String, String> map = new HashMap<>();
 				map.put("memberProfile", upFile.getOriginalFilename());
@@ -112,7 +131,7 @@ public class TeacherController {
 				map.put("id", teacher.getRefMemberId());
 				
 				// 티처 정보 및 파일네임을 담은 메소드
-				result = teacherService.insertTeacherRequest(teacher, map);
+				//result = teacherService.insertTeacherRequest(teacher, map);
 				
 				if(oldFile != null) oldFile.delete(); // 기존 파일 삭제
 				upFile.transferTo(renamedFile);	// 업로드한 파일데이터를 지정한 파일에 저장한다.				
