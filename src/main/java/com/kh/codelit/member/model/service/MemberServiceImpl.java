@@ -45,6 +45,22 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectOneMember(id);
 
 	}
+
+
+
+	/* 구글 로그인 */
+	@Override
+	public Member loginByGoogle(Member member) {
+		return memberDao.loginByGoogle(member.getMemberId(), member.getMemberPw());
+	}
+
+
+	/* 구글 회원가입 */
+	@Override
+	public int insertMemberByGoogle(Member member) {
+		log.debug("insertMemberByGoogleService = {}", member);
+		return memberDao.insertMemberByGoogle(member);
+	}
 	
 
 }

@@ -67,8 +67,8 @@ public class adminController {
 	 */
 	
 	
-	
-	
+	@GetMapping("/manageMemberIndex.do")
+	public void manageMemberIndex() {}
 	
 	
 	
