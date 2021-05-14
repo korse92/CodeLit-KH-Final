@@ -8,6 +8,10 @@ public interface MemberDao {
 
 	Member selectOneMember(String id);
 
+
+	int insertMember(Member member);
+
 	int updateMemberProfile(Map<String, String> map);
+
 
 }
