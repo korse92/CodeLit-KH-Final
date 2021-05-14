@@ -21,8 +21,6 @@ public class LectureServiceImpl implements LectureService {
 
 	private static List<Map<String, Object>> categoryListInstance;//싱글톤 객체로 처리
 	
-	
-
 	@Override
 	public List<Map<String, Object>> selectCategoryListInstance() {
 		if(categoryListInstance == null) {
