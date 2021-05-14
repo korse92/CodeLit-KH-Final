@@ -756,6 +756,7 @@ insert into lecture_category values(lec_cat_no.nextval, '프런트');
 insert into lecture_category values(lec_cat_no.nextval, '백엔드');
 insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
 ----------
+
 delete from teacher where ref_member_id = 'test';
 commit;
 select * from lecture_category;

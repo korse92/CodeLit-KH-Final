@@ -147,7 +147,7 @@ alert("${msg}");
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청 목록</a></li>
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의 관리</a></li>
-				                  		<li><a class="dropdown-item" href="#">회원 관리</a></li>
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do">회원 관리</a></li>
 				                  		<li><a class="dropdown-item" href="#">알림</a></li>
 				                  </sec:authorize>
 				                  
