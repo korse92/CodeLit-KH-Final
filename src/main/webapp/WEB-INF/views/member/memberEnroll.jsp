@@ -22,7 +22,64 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/api:client.js"></script>
 	<script>
+	//구글 로그인 api
 	var googleUser = {};
+	var startApp = function() {
+	  gapi.load('auth2', function(){
+	    // Retrieve the singleton for the GoogleAuth library and set up the client.
+	    auth2 = gapi.auth2.init({
+	      client_id: '58001672943-vf21bvk8p312h3gs59o3p1m7geopjpl9.apps.googleusercontent.com',
+	      cookiepolicy: 'single_host_origin',
+	    });
+	    attachSignin(document.getElementById('google'));
+	  });
+	};
+	
+	//구글 로그인 api2
+	function attachSignin(element) {
+	  //console.log(element.id);
+	  auth2.attachClickHandler(element, {},
+	      function(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+		  var id_token = googleUser.getAuthResponse().id_token;
+			console.log('ID: ' + profile.getId());
+			console.log('ID_Token: ' + id_token);
+			console.log('Name: ' + profile.getName());
+			console.log('Email: ' + profile.getEmail());
+
+ 			/* $(function() {
+ 				var mail = profile.getEmail();
+ 				var index = mail.indexOf("@");
+ 				var id = mail.substring(0, index);
+				$.ajax({
+					url: "${pageContext.request.contextPath}/member/insertMemberByGoogle.do",
+					type: 'get',
+					data: {
+						"memberId" : id,
+						"memberPw" : "1234"
+					},
+					success: function(data) {
+						alert("구글아이디로 로그인 되었습니다.");
+						location.href="/codelit";
+					}
+				})
+			}); */
+	      },
+	      function(error) {
+	        alert(JSON.stringify(error, undefined, 2));
+	      });
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*	var googleUser = {};
 	var startApp = function() {
 	  gapi.load('auth2', function(){
 	    // Retrieve the singleton for the GoogleAuth library and set up the client.
@@ -36,7 +93,7 @@
 	  });
 	};
 	
-	function attachSignin(element) {
+ 	function attachSignin(element) {
 	  console.log(element.id);
 	  auth2.attachClickHandler(element, {},
 	      function(googleUser) {
@@ -49,7 +106,7 @@
 	      });
 	}
 	
-/* 	var onSignIn = function(googleUser) {
+ 	var onSignIn = function(googleUser) {
 		  var profile = googleUser.getBasicProfile();
 		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 		  console.log('Name: ' + profile.getName());
