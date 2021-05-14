@@ -90,52 +90,52 @@ public class MemberController {
 	}
 	
 	/* 구글 로그인 */
-//	@ResponseBody
-//	@GetMapping("/insertMemberByGoogle.do")
-//	public String insertMemberByGoogle(@ModelAttribute Member member, HttpSession session, RedirectAttributes redirectAttr, Member gmember) {
-//		//구글 로그인
-////		member = memberService.loginByGoogle(member);
-//		String member_ajaxName = gmember.getMemberId();
-//		log.info("gmemberController = {}", gmember);
-//		log.info("memberController = {}", member);
-//		log.info("member_ajaxId = {}", member_ajaxName);
-//
-//		try {		
+	@ResponseBody
+	@GetMapping("/insertMemberByGoogle.do")
+	public String insertMemberByGoogle(Member member, HttpSession session, RedirectAttributes redirectAttr, Member gmember) {
+		//구글 로그인
+//		member = memberService.loginByGoogle(member);
+		String member_ajaxName = gmember.getMemberId();
+		log.info("gmemberController = {}", gmember);
+		log.info("memberController = {}", member);
+		log.info("member_ajaxId = {}", member_ajaxName);
+
+		try {		
+			//구글 회원가입
+			int result = memberService.insertMemberByGoogle(member);
+			String msg =  result > 0 ? "회원가입 되었습니다." : "회원가입에 실패하였습니다.";		
+			//2. 사용자 피드백 준비 및 리다이렉트
+			redirectAttr.addFlashAttribute("msg", msg);
+			log.debug("msg = {}", msg);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw e;
+		}
+			
+			//구글 로그인
+//			member = memberService.loginByGoogle(member);
+//			session.setAttribute("memberId", member.getMemberId());
+//			redirectAttr.addFlashAttribute("gmember", member);
+
+		
+//		if(member_ajaxId.equals(member.getMemberId())) { //DB에 아이디가 존재할 경우
+//			//구글 로그인
+//			memberService.loginByGoogle(member);
+//			session.setAttribute("memberId", member.getMemberId());
+//			redirectAttr.addFlashAttribute("gmember", member);
+//		} else { //DB에 아이디가 존재하지 않을 경우
 //			//구글 회원가입
-//			int result = memberService.insertMemberByGoogle(member);
-//			String msg =  result > 0 ? "회원가입 되었습니다." : "회원가입에 실패하였습니다.";		
-//			//2. 사용자 피드백 준비 및 리다이렉트
-//			redirectAttr.addFlashAttribute("msg", msg);
-//			log.debug("msg = {}", msg);
-//		} catch (Exception e) {
-//			log.error(e.getMessage(), e);
-//			throw e;
-//		}
+//			memberService.insertMemberByGoogle(member);
 //			
 //			//구글 로그인
-////			member = memberService.loginByGoogle(member);
-////			session.setAttribute("memberId", member.getMemberId());
-////			redirectAttr.addFlashAttribute("gmember", member);
-//
-//		
-////		if(member_ajaxId.equals(member.getMemberId())) { //DB에 아이디가 존재할 경우
-////			//구글 로그인
-////			memberService.loginByGoogle(member);
-////			session.setAttribute("memberId", member.getMemberId());
-////			redirectAttr.addFlashAttribute("gmember", member);
-////		} else { //DB에 아이디가 존재하지 않을 경우
-////			//구글 회원가입
-////			memberService.insertMemberByGoogle(member);
-////			
-////			//구글 로그인
-////			member = memberService.loginByGoogle(member);
-////			session.setAttribute("memberId", member.getMemberId());
-////			redirectAttr.addFlashAttribute("gmember", member);
-////			
-////		}
-//		
-//		return "redirect:/";
-//	}
+//			member = memberService.loginByGoogle(member);
+//			session.setAttribute("memberId", member.getMemberId());
+//			redirectAttr.addFlashAttribute("gmember", member);
+//			
+//		}
+		
+		return "redirect:/";
+	}
 	
 	@GetMapping("/memberLogin.do")
 	public void memberLogin() {}
