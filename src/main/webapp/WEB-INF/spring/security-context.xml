@@ -18,6 +18,7 @@
 	<!-- #6. HttpSecurity 설정 -->
 	<http auto-config="true">
 
+
 	
 	<!-- 	<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함.
