@@ -85,8 +85,10 @@
 
         <div id="registerDiv">
             
-            <form action="#" method="POST" id="teachRegisterFrm">
-        
+            <form action="${pageContext.request.contextPath}/teacher/teacherRequest.do?${_csrf.parameterName}=${_csrf.token}" 
+            		method="POST" id="teachRegisterFrm"
+            		enctype="multipart/form-data" >
+        		<input type="hidden" value="${loginMember.memberId}" name="refMemberId" readonly/>
                 <table id="teach" class="text-center row">
                     <tr>
                         <td rowspan="2" colspan="2" class="td">
