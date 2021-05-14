@@ -10,9 +10,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 관리 게시판" name="title"/>
 </jsp:include>
-// 카테고리
+<script>
 
-const menuRestApiHost = "http://localhost:9090/codelit";
+// 카테고리
+/* const menuRestApiHost = "http://localhost:9090/codelit";
 
 window.onload = function() {
 	
@@ -81,7 +82,7 @@ $("#searchByAdmin").autocomplete({
 
 
 
-
+ */
 $(() => {
 	$("#rejectTeacherRight")
 	.modal()
@@ -96,9 +97,7 @@ $(() => {
 </script>
 
 </head>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="강의 관리 게시판" name="title"/>
-</jsp:include>
+<!-- 컨텐츠 시작 -->
 <div class="container">
 	<section class="container">
       <div class="page-header">

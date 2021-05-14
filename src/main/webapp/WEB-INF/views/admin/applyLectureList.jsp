@@ -24,6 +24,7 @@ function deleteLecture(id) {
 }
 
 </script>
+<!-- 컨텐츠 시작 -->
 <div class="container">
 <section class="container">
   <div class="page-header">
