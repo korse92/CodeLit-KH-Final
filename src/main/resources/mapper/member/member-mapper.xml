@@ -14,6 +14,27 @@
 		null
 	)
 	</insert>
+	
+	<insert id="insertMemberByGoogle">
+	insert into
+		member
+	values(
+		#{memberId},
+		#{memberPw},
+		null,
+		null
+	)
+	</insert>
+	
+<!-- 	<select id="loginByGoogle" resultType="member">
+		select
+			*
+		from
+			member
+		where
+			member_id = #{memberId},
+			member_pw = #{memberPw}
+	</select> -->
 
 	<select id="selectOneMember" resultType="member">
 		select *
