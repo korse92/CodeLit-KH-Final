@@ -15,4 +15,8 @@ public interface MemberService extends UserDetailsService{
 
 	Member selectOneMember(String refMemberId);
 
+	Member loginByGoogle(Member member);
+
+	int insertMemberByGoogle(Member member);
+
 }

@@ -98,7 +98,7 @@
           </div>
         </div>
         <button type="submit" class="btn btn-primary col-12 mt-3 mb-5" id="submit">가입하기</button>
-        <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       </form>
 
     </div>
@@ -160,7 +160,6 @@ $("#chkId").blur(function(){
 		$id.select();
 	}
 });
-
 /* 패스워드 확인 */
 $("#chkPassword").blur(function(){
 	var $password = $("#password"), $chkPassword = $("#chkPassword");
@@ -169,17 +168,14 @@ $("#chkPassword").blur(function(){
 		$password.select();
 	}
 });
-
 /* 회원 등록 유효성 검사 */
 $("[name=memberEnrollFrm]").submit(function(){
-
 	var $id = $("#id");
 	if(/^\w{4,}$/.test($id.val()) == false) {
 		alert("아이디는 최소 4자리이상이어야 합니다.");
 		$id.focus();
 		return false;
 	}
-
 	//중복검사여부
 	var $idValid = $("#idValid");
 	if($idValid.val() == 0){
@@ -189,8 +185,6 @@ $("[name=memberEnrollFrm]").submit(function(){
 	
 	return true;
 });
-
-
 </script>  
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

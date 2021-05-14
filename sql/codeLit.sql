@@ -765,3 +765,11 @@ select * from authorities;
 desc member;
 select * from teacher;
 select * from authorities;
+
+--test
+insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
+
+delete from member where member_id = 'crai9159';
+
+update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
+commit;

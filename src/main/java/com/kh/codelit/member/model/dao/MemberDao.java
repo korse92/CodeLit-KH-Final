@@ -14,4 +14,10 @@ public interface MemberDao {
 	int updateMemberProfile(Map<String, String> map);
 
 
+	Member loginByGoogle(String memberId, String memberPw);
+
+
+	int insertMemberByGoogle(Member member);
+
+
 }
