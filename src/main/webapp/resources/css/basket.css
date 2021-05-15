@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+#orderDiv1 {
+    width: 70rem;
+    margin: auto;
+}
+
+#orderDiv_left {
+    width: 50rem;
+    /* border: 1px solid black; */
+}
+
+#orderDiv_right {
+    width: 20rem;
+    min-height: 15rem;
+}
+
+h2 {
+    margin-top: 5rem;
+    padding-left: 3rem;
+}
+
+#lectureImg {
+    width: 13rem;
+    height: 7rem;
+}
+
+.or_lec {
+    width: 45rem;
+}
+
+.bt {
+    background-color: #b8b5ff;
+}
