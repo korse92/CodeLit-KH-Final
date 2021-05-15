@@ -270,8 +270,18 @@ COMMENT ON COLUMN "AUTHORITIES"."MEMBER_ID" IS '회원가입시 필수';
 
 
 
+-- remember-me 관련테이블 persistent_logins
+drop table persistent_logins;
+create table persistent_logins (
+    username varchar2(64) not null,
+    series varchar2(64) primary key,
+    token varchar2(64) not null, -- username, password, expiry time 등을 hashing한 값
+    last_used timestamp not null
+);
 
-
+--================================
+-- PK
+--================================
 ALTER TABLE "MEMBER" ADD CONSTRAINT "PK_MEMBER" PRIMARY KEY (
 	"MEMBER_ID"
 );
@@ -345,6 +355,10 @@ ALTER TABLE "AUTHORITIES" ADD CONSTRAINT "PK_AUTHORITIES" PRIMARY KEY (
 	"MEMBER_ID"
 );
 
+
+--================================
+-- FK
+--================================
 ALTER TABLE "LECTURE" ADD CONSTRAINT "FK_LEC_CAT_TO_LEC_1" FOREIGN KEY (
 	"REF_LEC_CAT_NO"
 )
@@ -744,14 +758,54 @@ insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
 ----------
 
 delete from teacher where ref_member_id = 'test';
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 commit;
 select * from lecture_category;
 select * from member;
 select * from authorities;
 
+<<<<<<< HEAD
 
+desc member;
+select * from teacher;
+select * from authorities;
+
+--test
+insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
+
+delete from member where member_id = 'crai9159';
+
+update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
+commit;
+
+create sequence SEQ_NOTICE_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_STD_BRD_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_COMMENT_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+=======
 desc member;
 select * from teacher;
 select * from authorities;

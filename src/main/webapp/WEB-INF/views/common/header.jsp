@@ -157,8 +157,7 @@ alert("${msg}");
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
-			                	<a class="nav-link" href="#" id="alertsDropdown">
-			                    	<%-- <img src="${pageContext.request.contextPath}/resources/images/alert.png" id="alarm" alt=""> --%>
+
 			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
 			                    	<i class="fas fa-bell my-auto"></i>
 			                    	<i class="far fa-bell my-auto"></i>
