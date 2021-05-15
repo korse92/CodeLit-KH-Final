@@ -20,8 +20,6 @@
 	</typeAliases>
 	
 	<typeHandlers>
-		<!-- <typeHandler handler="com.kh.codelit.common.typehandler.StringArrayTypeHandler"/>
-		<typeHandler handler="com.kh.codelit.common.typehandler.BooleanYnTypeHandler"/> -->
 		<!-- 패키지 이하의 모든 클래스를 타입핸들러로 지정 -->
 		<package name="com.kh.codelit.common.typehandler.com"/>
 	</typeHandlers>

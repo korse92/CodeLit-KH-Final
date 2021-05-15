@@ -57,6 +57,19 @@
   		<url-pattern>/*</url-pattern>
   	</filter-mapping>
   	
+  	
+  	
+  	<!-- 멀티파트 폼 포스트 전송시 잡아주기 위한 필터 -->
+<!--   	<filter> -->
+<!--         <display-name>springMultipartFilter</display-name> -->
+<!--         <filter-name>springMultipartFilter</filter-name> -->
+<!--         <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class> -->
+<!--     </filter> -->
+<!--     <filter-mapping> -->
+<!--         <filter-name>springMultipartFilter</filter-name> -->
+<!--         <url-pattern>/*</url-pattern> -->
+<!--     </filter-mapping> -->
+
   	<!-- security#2. Spring Security Filter 등록 --> 
   	<!-- 
   		1. DelegatingFilterProxyRegistrationBean이 DelegatingFilterProxy필터클래스를 "springSecurityFilterChain"이라는 이름의 Filter로 등록

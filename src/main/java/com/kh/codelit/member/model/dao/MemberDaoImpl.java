@@ -1,5 +1,8 @@
 package com.kh.codelit.member.model.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +25,31 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		log.debug("memberDao id={}", id);
 		return session.selectOne("member.selectOneMember", id);
+	}
+
+	@Override
+	public int insertMember(Member member) {
+		log.debug("insertmemberDao = {}", member);
+		return session.insert("member.insertMember", member);
+	}
+	
+	@Override
+	public int updateMemberProfile(Map<String, String> map) {
+		return session.update("member.updateMemberProfile", map);
+	}
+
+	@Override
+	public Member loginByGoogle(String memberId, String memberPw) {
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("memberId", memberId);
+		param.put("memberPw", memberPw);
+		return session.selectOne("member.loginByGoogle", param);
+	}
+
+	@Override
+	public int insertMemberByGoogle(Member member) {
+		log.debug("insertMemberByGoogleDao = {}", member);
+		return session.insert("member.insertMemberByGoogle", member);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.kh.codelit.member.model.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,5 +30,37 @@ public class MemberServiceImpl implements MemberService {
 			throw new UsernameNotFoundException(id);
 		return member;
 	}
+
+
+
+	@Override
+	public int insertMember(Member member) {
+		return memberDao.insertMember(member);
+	}
+
+	// 아이디를 통해 멤버 테이블 한 줄 가져오는 메소드
+	@Override
+	public Member selectOneMember(String id) {
+		
+		return memberDao.selectOneMember(id);
+
+	}
+
+
+
+	/* 구글 로그인 */
+	@Override
+	public Member loginByGoogle(Member member) {
+		return memberDao.loginByGoogle(member.getMemberId(), member.getMemberPw());
+	}
+
+
+	/* 구글 회원가입 */
+	@Override
+	public int insertMemberByGoogle(Member member) {
+		log.debug("insertMemberByGoogleService = {}", member);
+		return memberDao.insertMemberByGoogle(member);
+	}
+	
 
 }

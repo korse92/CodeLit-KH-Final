@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+<!-- 
+ 	<select id="selectAllBySearching" resultMap="searchMap">
+ 		select
+ 			*
+ 		from
+ 			lecture
+ 		where
+		 	${searchType} like '%' || #{searchKeyword} || '%'
+
+ 	</select>
+	 컬럼명과 키값을 바인딩. 
+	<resultMap type="map" id="searchMap">
+	 <id column="id" property="empId"/>id :pk용
+	 <result column="ref_member_id" property="refMemberId"/> 
+	 <result column="lecture_name" property="lectureName"/> 
+	 <result column="ref_member_id" property="refMemberId"/> 
+	 <result column="ref_member_id" property="refMemberId"/> 
+	 </resultMap> -->
+
+	<select id="applyTeacherList" resultMap="TeacherListMap">
+		select
+   			 *
+		from
+    		teacher left join lecture_category
+       			 on ref_lec_cat_no = lec_cat_no
+         		  left join (select * from authorities where auth = 'ROLE_TEACHER')
+          			on ref_member_id = member_id
+		where auth is null
+			
+	
+	</select>
+	<resultMap type="map" id="TeacherListMap">
+		<id column="ref_member_id" property="refMemberId"/>
+		<result column="lec_cat_name" property="lecCatName" />
+		<result column="teacher_name" property="teacherName" />
+		<result column="teacher_link" property="teacherLink" />
+	</resultMap>
+	
+	<insert id="approveTeacher">
+	
+	insert into
+			authorities values ('ROLE_TEACHER', #{id})
+	</insert>
+	
+	<select id="applyLectureList" resultMap="LectureListMap">
+	
+	select 
+		*
+    from
+       	lecture left join lecture_category
+         	on lecture_no = lec_cat_no
+	where lecture_accept_yn = 'W'
+	
+	</select>
+	
+	<resultMap type="map" id="LectureListMap">
+	
+	<id column="ref_member_id" property="refMemberId"/>
+	<result column="lec_cat_name" property="lecCatName" />
+	<result column="lecture_id" property="lectureId"/>
+	</resultMap>
+	
+	
+	<update id="approveLecture">
+	update
+    	lecture
+	set 
+     	lecture_accept_yn ='Y'
+	where id = #{id}
+	
+	</update>
+	
+	<delete id="deleteTeacher">
+	
+	delete from
+		teacher
+	where
+		ref_member_id = #{id}
+	
+	
+	</delete>
+	
+	<update id="deleteLecture">
+	update 
+		lecture
+	set 
+     	lecture_accept_yn ='N'
+	where 
+		ref_member_id = #{id}
+	
+	</update>
+
+</mapper>

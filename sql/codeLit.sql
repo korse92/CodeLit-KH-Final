@@ -1,3 +1,4 @@
+
 DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
 CREATE TABLE "MEMBER" (
 	"MEMBER_ID"	VARCHAR2(20)		NOT NULL,
@@ -725,6 +726,64 @@ NOCACHE;
 insert into member values ('admin', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
 insert into authorities values ('ROLE_ADMIN', 'admin');
 insert into authorities values ('ROLE_USER', 'admin');
+
+insert into member values ('user', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
+insert into authorities values ('ROLE_USER', 'user');
+
+insert into member values ('teacher', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
+insert into authorities values ('ROLE_TEACHER', 'teacher');
+insert into authorities values ('ROLE_USER', 'teacher');
+
+insert into member values ('test', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
+insert into authorities values ('ROLE_USER', 'test');
+----------
+
+insert into lecture_category values(lec_cat_no.nextval, '프런트');
+insert into lecture_category values(lec_cat_no.nextval, '백엔드');
+insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
+----------
+
+delete from teacher where ref_member_id = 'test';
+
+
 commit;
+select * from lecture_category;
 select * from member;
 select * from authorities;
+
+
+desc member;
+select * from teacher;
+select * from authorities;
+
+--test
+insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
+
+delete from member where member_id = 'crai9159';
+
+update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
+commit;
+
+create sequence SEQ_NOTICE_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_STD_BRD_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_COMMENT_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;

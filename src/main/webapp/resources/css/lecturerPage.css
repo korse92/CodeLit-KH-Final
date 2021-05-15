@@ -1,0 +1,8 @@
+section, aside, footer {padding:10px;}
+#alarm {
+  width: 25px; 
+  height: 25px;
+}
+.jb-larger { 
+  font-weight: 900;
+}
