@@ -2,4 +2,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="attachment"></mapper>
+<mapper namespace="attachment">
+
+	<insert id="insertAttachment">
+		insert into
+			attachment
+		values(
+			seq_attach_no.nextval,
+			#{refContentsNo},
+			#{originalFilename},
+			#{renamedFilename},
+			#{refContentsGroupCode}
+		)
+	</insert>
+	
+</mapper>
