@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.codelit.attachment.model.dao.AttachDao;
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.lecture.model.dao.LectureDao;
 import com.kh.codelit.lecture.model.vo.Lecture;
 
@@ -28,7 +29,7 @@ public class LectureServiceImpl implements LectureService {
 	
 	@Override
 	public List<Map<String, Object>> selectCategoryListInstance() {
-		if(categoryListInstance == null) {
+		if(categoryListInstance == null || categoryListInstance.isEmpty()) {
 			categoryListInstance = lectureDao.selectCategoryList();
 			log.debug("categoryListInstance 생성 = {}", categoryListInstance);
 		}
@@ -43,6 +44,13 @@ public class LectureServiceImpl implements LectureService {
 		//1. lecture객체 등록
 		result = lectureDao.insertLecture(lecture);
 		log.debug("lecture.no = {}", lecture.getLectureNo());//insert한 lecture 번호 확인
+		
+		if(!lecture.getAttachList().isEmpty()) {
+			for(Attachment attach : lecture.getAttachList()) {
+				attach.setRefContentsNo(lecture.getLectureNo());
+				result = attachDao.insertAttachment(attach);
+			}
+		}
 		
 		return result;
 	}
