@@ -48,11 +48,12 @@
             <!--폼 -->
            <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
 	              <div class="modal-body">
-					<p class="text-center mt-5"> 강사 권한을 정말 해지하시겠습니까?</p>
+					<p class="text-center mt-5"> 해당 강의를 정말 정지하시겠습니까?</p>
 	              </div>
 					<div class="d-grid gap-2 d-md-flex m-3 justify-content-md-end">
-		                <button type="submit" class="btn btn-outline-danger m-2">해지</button>
-		                <button type="button" class="btn btn-outline-primary m-2" data-dismiss="modal">취소</button>
+		                <button type="submit" class="btn btn-outline-danger m-2">정지</button>
+		                <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='${pageContext.request.contextPath}/admin/manageLectureBoard.do';">취소</button>
+		                <!-- 취소 버튼 클릭시 강의관리게시판페이지로 이동처리 or 모달창 없앨거면 data-dismiss="modal" 속성 주기  -->
 					</div>
               </div>
           </div>

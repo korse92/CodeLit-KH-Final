@@ -39,7 +39,7 @@
 
 <!-- redirectAttr.addFlashAttribute의 저장된 속성값 사용(1회용) -->
 <c:if test="${not empty msg}">
-	<script>
+<script>
 alert("${msg}");
 </script>
 </c:if>
@@ -66,7 +66,7 @@ alert("${msg}");
 								data-bs-toggle="dropdown" aria-expanded="false">커뮤니티</a>
 							<ul class="dropdown-menu" id="dropdownCommunity"
 								aria-labelledby="navlinkDropdownCommunity">
-								<li><a class="dropdown-item" href="#">공지사항</a></li>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/admin/adminBoardList.do">공지사항</a></li>
 								<li><a class="dropdown-item" href="#">공부게시판</a></li>
 							</ul>
 						</li>
@@ -79,7 +79,7 @@ alert("${msg}");
 								aria-labelledby="navlinkDropdownLecture">
 								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do">모든 강의</a></li>
 								<c:forEach items="${categoryList}" var="category">
-									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${catecory.no}">${category.name}</a></li>
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
 								</c:forEach>
 							</ul>
 						</li>
@@ -123,7 +123,7 @@ alert("${msg}");
 			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 			                  		메뉴
 			                	</a>
-			                	<ul class="dropdown-menu me-5 pe-5" id="dropdown3" aria-labelledby="navbarDropdown3">
+			                	<ul class="dropdown-menu" id="dropdown3" aria-labelledby="navbarDropdown3">
 			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
@@ -157,6 +157,7 @@ alert("${msg}");
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
+
 			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
 			                    	<i class="fas fa-bell my-auto"></i>
 			                    	<i class="far fa-bell my-auto"></i>
@@ -203,8 +204,6 @@ alert("${msg}");
 				</div>
 			</div>
 		</div>
-
 	</header>
-
 	<section id="content">
 	<!-- header.jsp 끝 -->

@@ -1,0 +1,82 @@
+section, aside, footer {padding:10px;}
+#alarm {
+  width: 25px; 
+  height: 25px;
+}
+.jb-larger { 
+  font-weight: 900;
+}
+.board-title{
+  font-weight: 700;
+}
+.board-container{
+  border-top: 0.2em solid gray;
+  border-bottom: 0.2em solid gray;
+}
+.content-title{
+  font-weight: 700;
+}
+.content{
+  padding: 10px 5px 5px 10px;
+}
+.board-footer{
+  margin-top: 30px;
+  margin-right: 30px;
+  float: right;
+}
+.pagination-span{
+    position: absolute;
+    left: 40%;
+  }
+  .board-write{
+    float: right;
+  }
+  .board-title{
+    font-weight: 700;
+  }
+  .title-group{
+    margin : 0.7em 0;
+  }
+  .content-title{
+    font-weight: 700;
+    display: block;
+  }
+  .content{
+    margin: 1.1em 0.7em;
+  }
+  .board-footer{
+    margin-top: 3em;
+    margin-right: 2em;
+    float: right;
+  }
+  #photo_img {
+    max-width: 8rem;
+    max-height: 8rem;
+    margin : 1em 0 0 1em;
+  }
+  
+  #upFile {
+    width: 14rem;
+    margin: 1rem 0rem 1rem 3rem;
+  }
+  
+.comment{
+    display: block;
+    margin: 60px 60px;
+  }
+  .comment-title{
+    font-weight: 900;
+  }
+  .comment-btn{
+    float: right;
+  }
+  .detail-img{
+    display: block;
+    margin: 0 auto;
+  }
+  .comment-submit-btn{
+    float : right;
+  }
+  .comment-form-group{
+    margin-bottom: 5em;
+  }
