@@ -758,17 +758,11 @@ insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
 ----------
 
 delete from teacher where ref_member_id = 'test';
-<<<<<<< HEAD
 
-
-=======
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 commit;
 select * from lecture_category;
 select * from member;
 select * from authorities;
-
-<<<<<<< HEAD
 
 desc member;
 select * from teacher;
