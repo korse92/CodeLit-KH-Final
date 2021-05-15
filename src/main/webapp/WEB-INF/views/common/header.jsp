@@ -66,7 +66,7 @@ alert("${msg}");
 								data-bs-toggle="dropdown" aria-expanded="false">커뮤니티</a>
 							<ul class="dropdown-menu" id="dropdownCommunity"
 								aria-labelledby="navlinkDropdownCommunity">
-								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/admin/adminBoardList.do">공지사항</a></li>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/noticeList.do">공지사항</a></li>
 								<li><a class="dropdown-item" href="#">공부게시판</a></li>
 							</ul>
 						</li>
