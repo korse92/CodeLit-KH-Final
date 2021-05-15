@@ -66,7 +66,7 @@ alert("${msg}");
 								data-bs-toggle="dropdown" aria-expanded="false">커뮤니티</a>
 							<ul class="dropdown-menu" id="dropdownCommunity"
 								aria-labelledby="navlinkDropdownCommunity">
-								<li><a class="dropdown-item" href="#">공지사항</a></li>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/admin/adminBoardList.do">공지사항</a></li>
 								<li><a class="dropdown-item" href="#">공부게시판</a></li>
 							</ul>
 						</li>
@@ -147,7 +147,7 @@ alert("${msg}");
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청 목록</a></li>
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의 관리</a></li>
-				                  		<li><a class="dropdown-item" href="#">회원 관리</a></li>
+				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do">회원 관리</a></li>
 				                  		<li><a class="dropdown-item" href="#">알림</a></li>
 				                  </sec:authorize>
 				                  
@@ -157,6 +157,7 @@ alert("${msg}");
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
+
 			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
 			                    	<i class="fas fa-bell my-auto"></i>
 			                    	<i class="far fa-bell my-auto"></i>
@@ -203,8 +204,6 @@ alert("${msg}");
 				</div>
 			</div>
 		</div>
-
 	</header>
-
 	<section id="content">
 	<!-- header.jsp 끝 -->

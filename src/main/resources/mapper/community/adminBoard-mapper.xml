@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<select id="getListCount" resultType="_int" >
+		SELECT
+			COUNT(*)
+		FROM
+			notice
+	</select>
+
+	<select id="noticeList" resultType="notice">
+		SELECT
+			rownum,
+			n.*
+		FROM
+			notice n
+		order by
+			rownum
+		desc
+	</select>
+	
+	<select id="selectOneNotice" resultType="notice">
+		SELECT
+			*
+		FROM
+			notice
+		WHERE
+			notice_no = #{noticeNo}
+	</select>
+		
+
+	<insert id="insertBoard">
+		INSERT INTO
+		notice(
+			notice_no,
+			ref_member_id,
+			notice_title,
+			notice_content,
+			notice_date,
+			notice_count
+			)
+		values(
+			SEQ_NOTICE_NO.NEXTVAL,
+			#{refMemberId},
+			#{noticeTitle},
+			#{noticeContent},
+			default,
+			0
+		)
+	</insert>
+	<delete id="delete">
+		DELETE
+		FROM
+			notice
+		where
+			notice_no = #{noticeNo}
+	</delete>
+	<update id="update">
+		update 
+		    notice
+		set 
+		    notice_title = #{noticeTitle},
+		    notice_content = #{noticeContent},
+		    notice_date = default
+		where
+		    notice_no = #{noticeNo}
+	</update>
+</mapper>

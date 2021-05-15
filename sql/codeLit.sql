@@ -733,6 +733,30 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
+create sequence SEQ_NOTICE_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_STD_BRD_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_COMMENT_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
 --------------------------------
 -- 추가된 쿼리들
 --------------------------------
@@ -756,7 +780,9 @@ insert into lecture_category values(lec_cat_no.nextval, '프런트');
 insert into lecture_category values(lec_cat_no.nextval, '백엔드');
 insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
 ----------
+
 delete from teacher where ref_member_id = 'test';
+
 commit;
 select * from lecture_category;
 select * from member;
@@ -772,7 +798,25 @@ insert into contents_group values('N', '공지사항', '/resources/upload/notice
 insert into contents_group values('SB', '공부 게시판', '/resources/upload/studyBoard');
 commit;
 
-commit;
-
 select * from contents_group;
 select * from attachment;
+
+--test
+insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
+
+delete from member where member_id = 'crai9159';
+
+update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
+commit;
+
+desc member;
+select * from teacher;
+select * from authorities;
+
+--test
+insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
+
+delete from member where member_id = 'crai9159';
+
+update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
+commit;
