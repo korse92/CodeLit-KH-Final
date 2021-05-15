@@ -7,8 +7,6 @@ import com.kh.codelit.teacher.model.vo.Teacher;
 
 import java.util.Map;
 
-
-
 public interface AdminDao {
 
 
@@ -31,6 +29,11 @@ public interface AdminDao {
 	int deleteTeacher(String id);
 
 	int deleteLecture(String id);
+
+	List<Map<String, Object>> selectAllLecture(Map<String, Object> param);
+
+	int getTotalContents();
+
 
 	
 

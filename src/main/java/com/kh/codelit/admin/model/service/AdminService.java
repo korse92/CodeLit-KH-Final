@@ -9,7 +9,6 @@ import com.kh.codelit.teacher.model.vo.Teacher;
 import java.util.Map;
 
 
-
 public interface AdminService {
 
 
@@ -34,4 +33,9 @@ public interface AdminService {
 
 	int deleteLecture(String id);
 
+	List<Map<String, Object>> selectAllLecture(Map<String, Object> param);
+
+	int getTotalContents();
+
+	
 }

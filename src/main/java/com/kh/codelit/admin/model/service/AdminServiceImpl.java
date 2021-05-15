@@ -72,4 +72,14 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.deleteLecture(id);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectAllLecture(Map<String, Object> param) {
+		return adminDao.selectAllLecture(param);
+	}
+
+	@Override
+	public int getTotalContents() {
+		return adminDao.getTotalContents();
+	}
+
 }
