@@ -27,12 +27,12 @@ import com.kh.codelit.community.adminBoard.model.vo.Notice;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/community/admin")
+@RequestMapping("/community")
 @Slf4j
 public class AdminBoardController {
 	
 	@Autowired
-	private AdminBoardService service; 
+	private AdminBoardService service;
 	
 	@GetMapping("/adminBoardList.do")
 	public void selectBoard(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request) {
