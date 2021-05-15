@@ -14,14 +14,9 @@
 			lec_cat_no
 	</select>
 	
-<!-- 	<select id="selectCategoryList" resultMap="categoryMap"> -->
-<!-- 		select * -->
-<!-- 		from lecture_category -->
-<!-- 	</select> -->
-<!-- 	<resultMap id="categoryMap" type="map"> -->
-<!-- 		<id property="lecCatNo" column="lec_cat_no" /> -->
-<!-- 		<result property="lecCatName" column="lec_cat_name" /> -->
-<!-- 	</resultMap> -->
+	<insert id="insertLecture">
+		insert into
+	</insert>
 
 </mapper>
 

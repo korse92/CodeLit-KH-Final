@@ -39,7 +39,7 @@
 
 <!-- redirectAttr.addFlashAttribute의 저장된 속성값 사용(1회용) -->
 <c:if test="${not empty msg}">
-	<script>
+<script>
 alert("${msg}");
 </script>
 </c:if>
@@ -123,7 +123,7 @@ alert("${msg}");
 			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 			                  		메뉴
 			                	</a>
-			                	<ul class="dropdown-menu me-5 pe-5" id="dropdown3" aria-labelledby="navbarDropdown3">
+			                	<ul class="dropdown-menu" id="dropdown3" aria-labelledby="navbarDropdown3">
 			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>

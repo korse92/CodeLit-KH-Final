@@ -210,7 +210,7 @@ CREATE TABLE "ATTACHMENT" (
 	"REF_CONTENTS_NO"	NUMBER		NOT NULL,
 	"ORIGINAL_FILENAME"	VARCHAR2(200)		NOT NULL,
 	"RENAMED_FILENAME"	VARCHAR2(200)		NOT NULL,
-	"REF_CONTENTS_GROUP_NO"	VARCHAR2(3)		NOT NULL
+	"REF_CONTENTS_GROUP_CODE"	VARCHAR2(3)		NOT NULL
 );
 
 COMMENT ON COLUMN "ATTACHMENT"."ATTACH_NO" IS 'SEQ_ATTACH_NO';
@@ -218,7 +218,7 @@ COMMENT ON COLUMN "ATTACHMENT"."REF_CONTENTS_NO" IS '어느 컨텐츠의  첨부
 
 DROP TABLE "CONTENTS_GROUP" CASCADE CONSTRAINTS;
 CREATE TABLE "CONTENTS_GROUP" (
-	"CONTENTS_GROUP_NO"	VARCHAR2(3)		NOT NULL,
+	"CONTENTS_GROUP_CODE"	VARCHAR2(3)		NOT NULL,
 	"CONTENTS_GROUP_NAME"	VARCHAR2(20)		NOT NULL,
 	"CONTENTS_ATTACH_PATH"	VARCHAR2(100)		NOT NULL
 );
@@ -733,6 +733,30 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
+create sequence SEQ_NOTICE_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_STD_BRD_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_COMMENT_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
 --------------------------------
 -- 추가된 쿼리들
 --------------------------------
@@ -768,6 +792,15 @@ desc member;
 select * from teacher;
 select * from authorities;
 
+--컨텐츠 그룹
+insert into contents_group values('LH', '강의 첨부파일', '/resources/upload/lecture/handouts');
+insert into contents_group values('N', '공지사항', '/resources/upload/notice');
+insert into contents_group values('SB', '공부 게시판', '/resources/upload/studyBoard');
+commit;
+
+select * from contents_group;
+select * from attachment;
+
 --test
 insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
 
@@ -776,30 +809,6 @@ delete from member where member_id = 'crai9159';
 update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
 commit;
 
-create sequence SEQ_NOTICE_NO
-START WITH 1
-INCREMENT BY 1
-NOMINVALUE
-NOMAXVALUE
-NOCYCLE
-NOCACHE;
-
-create sequence SEQ_STD_BRD_NO
-START WITH 1
-INCREMENT BY 1
-NOMINVALUE
-NOMAXVALUE
-NOCYCLE
-NOCACHE;
-
-create sequence SEQ_COMMENT_NO
-START WITH 1
-INCREMENT BY 1
-NOMINVALUE
-NOMAXVALUE
-NOCYCLE
-NOCACHE;
-=======
 desc member;
 select * from teacher;
 select * from authorities;
@@ -811,27 +820,3 @@ delete from member where member_id = 'crai9159';
 
 update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
 commit;
-
-create sequence SEQ_NOTICE_NO
-START WITH 1
-INCREMENT BY 1
-NOMINVALUE
-NOMAXVALUE
-NOCYCLE
-NOCACHE;
-
-create sequence SEQ_STD_BRD_NO
-START WITH 1
-INCREMENT BY 1
-NOMINVALUE
-NOMAXVALUE
-NOCYCLE
-NOCACHE;
-
-create sequence SEQ_COMMENT_NO
-START WITH 1
-INCREMENT BY 1
-NOMINVALUE
-NOMAXVALUE
-NOCYCLE
-NOCACHE;
