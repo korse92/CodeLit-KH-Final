@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.codelit.lecture.model.vo.Lecture;
+
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -22,6 +24,11 @@ public class LectureDaoImpl implements LectureDao {
 	@Override
 	public List<Map<String, Object>> selectCategoryList() {
 		return session.selectList("lecture.selectCategoryList");
+	}
+
+	@Override
+	public int insertLecture(Lecture lecture) {
+		return session.insert("lecture.insertLecture", lecture);
 	}
 
 }

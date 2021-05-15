@@ -2,6 +2,7 @@ package com.kh.codelit.teacher.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +26,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.kh.codelit.attachment.model.exception.AttachmentException;
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
+import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.service.TeacherService;
@@ -179,9 +184,91 @@ public class TeacherController {
 	
 	
 	@PostMapping("/lectureEnroll.do")
-	public String lectureEnroll(RedirectAttributes redirectAttr) {
-		log.debug("핸들러요청");
-		return null;
+	public String lectureEnroll(
+			@ModelAttribute Lecture lecture,
+			@RequestParam(required = false) MultipartFile lectureThumbnail,
+			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
+			HttpServletRequest request,
+			@AuthenticationPrincipal Member member,
+			RedirectAttributes redirectAttr) {
+		
+		try {
+			log.debug("lecture(빈 필드값 Set 전) = {}", lecture);
+			
+			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set			
+			String thumbnailsSaveDirectory =
+					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_THUMBNAIL);
+			String handoutsSaveDirectory =
+					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_HANDOUT);
+			
+			File dirThumb = new File(thumbnailsSaveDirectory);
+			if(!dirThumb.exists()) {
+				dirThumb.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
+			}
+			
+			File dirHandout = new File(handoutsSaveDirectory);
+			if(!dirHandout.exists()) {
+				dirHandout.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
+			}			
+			
+			if(!lectureThumbnail.isEmpty() || !(lectureThumbnail.getSize() == 0)) {
+				log.debug("lectureThumbnail = {}", lectureThumbnail);
+				log.debug("lectureThumbnail.name = {}", lectureThumbnail.getOriginalFilename());
+				log.debug("lectureThumbnail.size = {}", lectureThumbnail.getSize());				
+				
+				//저장할 파일명 생성
+				File renamedFile = HelloSpringUtils.getRenamedFile(thumbnailsSaveDirectory, lectureThumbnail.getOriginalFilename());
+				//파일 저장
+//				lectureThumbnail.transferTo(renamedFile);
+				
+				lecture.setLectureThumbOrigin(lectureThumbnail.getOriginalFilename());
+				lecture.setLectureThumbRenamed(renamedFile.getName());
+			}			
+			
+			List<Attachment> attachList = new ArrayList<>();
+			
+			for(MultipartFile lectureHandout : lectureHandouts) {
+				if(lectureHandout.isEmpty() || lectureHandout.getSize() == 0)
+					continue;
+				
+				log.debug("lectureHandout = {}", lectureHandouts);
+				log.debug("lectureHandout.name = {}", lectureHandout.getOriginalFilename());
+				log.debug("lectureHandout.size = {}", lectureHandout.getSize());				
+				
+				//저장할 파일명 생성
+				File renamedFile = HelloSpringUtils.getRenamedFile(handoutsSaveDirectory, lectureHandout.getOriginalFilename());
+				//파일 저장
+				//lectureHandout.transferTo(renamedFile);
+				//Attachment객체 생성
+				Attachment attach = new Attachment();
+				attach.setOriginalFilename(lectureHandout.getOriginalFilename());
+				attach.setRenamedFilename(renamedFile.getName());
+				attach.setRefContentsGroupCode(Attachment.CODE_LECTURE_HANDOUT);
+				
+				attachList.add(attach);				
+			}
+			
+			
+			//1. 업무로직
+			lecture.setAttachList(attachList);
+			lecture.setRefMemberId(member.getMemberId());
+			log.debug("lecture(빈 필드값 Set 후) = {}", lecture);
+			
+			//int result = lectureService.insertLecture(lecture);
+			
+			//2. 사용자 피드백
+//			String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
+//			redirectAttr.addFlashAttribute("msg", msg);			
+			
+		} catch (IllegalStateException e) {
+			log.error("첨부파일 등록 오류!", e);
+			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
+		} catch (Exception e) {
+			log.error("강의 등록 오류!", e);
+			throw e;
+		}
+		
+		return "redirect:/teacher/lectureEnroll.do";
 	}
 	
 }

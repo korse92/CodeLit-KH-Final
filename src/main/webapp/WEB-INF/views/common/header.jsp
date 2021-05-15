@@ -39,7 +39,7 @@
 
 <!-- redirectAttr.addFlashAttribute의 저장된 속성값 사용(1회용) -->
 <c:if test="${not empty msg}">
-	<script>
+<script>
 alert("${msg}");
 </script>
 </c:if>
