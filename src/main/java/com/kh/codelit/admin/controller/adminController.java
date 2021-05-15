@@ -1,6 +1,5 @@
 package com.kh.codelit.admin.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +12,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import com.kh.codelit.admin.model.service.AdminService;
+
+import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.teacher.model.vo.Teacher;
+
 import com.kh.codelit.common.HelloSpringUtils;
 
 import lombok.extern.slf4j.Slf4j;
+
+
 
 @Controller
 @RequestMapping("/admin")
@@ -70,13 +81,65 @@ public class adminController {
 	@GetMapping("/manageMemberIndex.do")
 	public void manageMemberIndex() {}
 	
+	@GetMapping("/manageMember.do")
+	public ModelAndView manageMember(
+				ModelAndView mav
+			) {
+		
+		try {
+			List<Member> list = adminService.selectMemberList();
+			mav.addObject("memberList", list);
+			mav.setViewName("/admin/manageMember");
+		} catch(Exception e) {
+			mav.addObject("msg", "호출에 문제가 있습니다.");
+			mav.setViewName("/");
+		}
+		
+		return mav;
+	}
 	
 	
+	@PostMapping("/deleteMember.do")
+	public String deleteMember(
+				@RequestParam String memberId,
+				HttpServletRequest request
+			) {
+			
+		log.debug("deleteMember = {}", memberId);
+		String msg = null;
+		
+		try {
+			int result = adminService.deleteMember(memberId);
+			msg = "id : " + memberId + " - 탈퇴처리에 성공하였습니다.";
+			
+		} catch(Exception e) {
+			msg = "id : " + memberId + " - 탈퇴처리에 실패하였습니다.";
+			throw e;
+		}
+		
+		FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+		flashMap.put("msg", msg);
+		
+		return "redirect:/admin/manageMember.do";
+	}
 	
-	
-	
-	
-	
+	@GetMapping("/manageTeacher.do")
+	public ModelAndView manageTeacher(
+				ModelAndView mav
+			
+			) {
+		
+		try {
+			List<Teacher> list = adminService.selectTeacherList();
+			mav.addObject("teacherList", list);
+			mav.setViewName("/admin/manageTeacher");
+		} catch (Exception e) {
+			
+			throw e;
+		}
+		
+		return mav;
+	}
 	
 	
 	//강의 신청 목록
