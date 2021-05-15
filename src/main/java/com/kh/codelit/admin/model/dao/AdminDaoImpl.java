@@ -83,6 +83,28 @@ public class AdminDaoImpl implements AdminDao {
 		return session.delete("admin.deleteLecture", id);
 	}
 
+
+	@Override
+	public List<Map<String, Object>> selectAllLecture(Map<String, Object> param) {
+		//강의 관리게시판 : myBatis의 rowBounds -> 페이징 기능
+		//offSet : 건너뛸 행 수
+		//limit : 한 페이지당 게시물 수 (= numPerPage)
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("admin.selectAllLecture", null, rowBounds);
+	}
+
+
+	@Override
+	public int getTotalContents() {
+		//카운트 그룹함수로 1행 1열짜리 갖고올거임
+		return session.selectOne("admin.getTotalContents");
+	}
+
 	
 
 

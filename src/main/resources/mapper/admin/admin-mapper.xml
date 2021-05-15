@@ -95,4 +95,26 @@
 	
 	</update>
 
+	<select id="selectAllLecture" resultMap="LectureListMap">
+	select
+		 *
+    from
+    	lecture
+	
+	</select>
+	
+	<select id="getTotalContents" resultType="_int">
+	
+	select
+		count(*)
+	from
+		lecture
+	where 
+		lecture_accept_yn = 'Y'
+	
+	</select>
+	
+	
+	
+
 </mapper>
