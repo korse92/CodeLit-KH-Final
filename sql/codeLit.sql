@@ -758,6 +758,7 @@ insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
 ----------
 
 delete from teacher where ref_member_id = 'test';
+
 commit;
 select * from lecture_category;
 select * from member;
@@ -774,3 +775,63 @@ delete from member where member_id = 'crai9159';
 
 update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
 commit;
+
+create sequence SEQ_NOTICE_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_STD_BRD_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_COMMENT_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+=======
+desc member;
+select * from teacher;
+select * from authorities;
+
+--test
+insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
+
+delete from member where member_id = 'crai9159';
+
+update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
+commit;
+
+create sequence SEQ_NOTICE_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_STD_BRD_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+create sequence SEQ_COMMENT_NO
+START WITH 1
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE;

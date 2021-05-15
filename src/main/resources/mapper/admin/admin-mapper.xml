@@ -12,6 +12,17 @@
  		where
 		 	${searchType} like '%' || #{searchKeyword} || '%'
 
+
+	<select id="selectMemberList" resultMap="memberMap">
+		select 
+		    *
+		from 
+		    member m
+		  left join
+		    authorities a
+		        on m.member_id = a.member_id
+	</select>
+
  	</select>
 	 컬럼명과 키값을 바인딩. 
 	<resultMap type="map" id="searchMap">
@@ -22,6 +33,30 @@
 	 <result column="ref_member_id" property="refMemberId"/> 
 	 </resultMap> -->
 
+	<resultMap id="memberMap" type="member">
+		<id column="member_id" property="memberId"/>
+		<result column="member_pw" property="memberPw"/>
+		<result column="member_profile" property="memberProfile"/>
+		<result column="member_re_proflie" property="memberReProfile"/>
+		<collection property="authorities" ofType="simpleGrantedAuthority">
+			<constructor>
+				<arg column="auth" javaType="string"/>
+			</constructor>
+		</collection>
+	</resultMap>
+
+	<delete id="deleteMember">
+		delete from member
+		where member_id = #{memberId}
+	</delete>
+	<select id="selectTeacherList" resultType="teacher">
+		select *
+		from teacher t
+				left join (select * from authorities where auth = 'ROLE_TEACHER') a
+				on t.ref_member_id = a.member_id
+		where a.auth = 'ROLE_TEACHER'
+	</select>
+
 	<select id="applyTeacherList" resultMap="TeacherListMap">
 		select
    			 *
@@ -31,9 +66,8 @@
          		  left join (select * from authorities where auth = 'ROLE_TEACHER')
           			on ref_member_id = member_id
 		where auth is null
-			
-	
 	</select>
+	
 	<resultMap type="map" id="TeacherListMap">
 		<id column="ref_member_id" property="refMemberId"/>
 		<result column="lec_cat_name" property="lecCatName" />
@@ -42,57 +76,47 @@
 	</resultMap>
 	
 	<insert id="approveTeacher">
-	
-	insert into
-			authorities values ('ROLE_TEACHER', #{id})
+		insert into
+				authorities values ('ROLE_TEACHER', #{id})
 	</insert>
 	
 	<select id="applyLectureList" resultMap="LectureListMap">
-	
-	select 
-		*
-    from
-       	lecture left join lecture_category
-         	on lecture_no = lec_cat_no
-	where lecture_accept_yn = 'W'
-	
+		select 
+			*
+	    from
+	       	lecture left join lecture_category
+	         	on lecture_no = lec_cat_no
+		where lecture_accept_yn = 'W'
 	</select>
 	
 	<resultMap type="map" id="LectureListMap">
-	
-	<id column="ref_member_id" property="refMemberId"/>
-	<result column="lec_cat_name" property="lecCatName" />
-	<result column="lecture_id" property="lectureId"/>
+		<id column="ref_member_id" property="refMemberId"/>
+		<result column="lec_cat_name" property="lecCatName" />
+		<result column="lecture_id" property="lectureId"/>
 	</resultMap>
 	
-	
 	<update id="approveLecture">
-	update
-    	lecture
-	set 
-     	lecture_accept_yn ='Y'
-	where id = #{id}
-	
+		update
+	    	lecture
+		set 
+	     	lecture_accept_yn ='Y'
+		where id = #{id}
 	</update>
 	
 	<delete id="deleteTeacher">
-	
-	delete from
-		teacher
-	where
-		ref_member_id = #{id}
-	
-	
+		delete from
+			teacher
+		where
+			ref_member_id = #{id}
 	</delete>
 	
 	<update id="deleteLecture">
-	update 
-		lecture
-	set 
-     	lecture_accept_yn ='N'
-	where 
-		ref_member_id = #{id}
-	
+		update 
+			lecture
+		set 
+	     	lecture_accept_yn ='N'
+		where 
+			ref_member_id = #{id}
 	</update>
 
 	<select id="selectAllLecture" resultMap="LectureListMap">
