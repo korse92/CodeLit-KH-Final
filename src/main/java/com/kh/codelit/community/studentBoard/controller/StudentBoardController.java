@@ -9,7 +9,7 @@ import com.kh.codelit.community.adminBoard.model.service.AdminBoardService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/community/student")
+@RequestMapping("/community")
 @Slf4j
 public class StudentBoardController {
 	

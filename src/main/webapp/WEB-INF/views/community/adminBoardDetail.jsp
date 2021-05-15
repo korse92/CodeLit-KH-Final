@@ -29,9 +29,9 @@
         </div>
         <div class="board-footer">
           <!-- 관리자-->
-          <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/admin/adminBoardUpdate.do?noticeNo=${notice.noticeNo}'">수정</button>
-          <button type="button" class="btn btn-danger delete-btn" onclick="location.href='${pageContext.request.contextPath}/community/admin/delete.do?noticeNo=${notice.noticeNo}'">삭제</button>
-          <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/admin/adminBoardList.do'">목록으로</button>
+          <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/adminBoardUpdate.do?noticeNo=${notice.noticeNo}'">수정</button>
+          <button type="button" class="btn btn-danger delete-btn" onclick="location.href='${pageContext.request.contextPath}/community/admindelete.do?noticeNo=${notice.noticeNo}'">삭제</button>
+          <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/adminBoardList.do'">목록으로</button>
         </div>
             
       </div>

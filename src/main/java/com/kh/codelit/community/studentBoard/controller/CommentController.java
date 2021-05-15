@@ -1,10 +1,10 @@
-package com.kh.codelit.community.studentBoard.comment.controller;
+package com.kh.codelit.community.studentBoard.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.codelit.community.studentBoard.comment.model.service.CommentService;
+import com.kh.codelit.community.studentBoard.model.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 

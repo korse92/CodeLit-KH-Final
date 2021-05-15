@@ -1,4 +1,4 @@
-package com.kh.codelit.community.studentBoard.comment.model.vo;
+package com.kh.codelit.community.studentBoard.model.vo;
 
 import java.util.Date;
 
