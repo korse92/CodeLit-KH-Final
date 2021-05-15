@@ -39,7 +39,7 @@ function checkContent() {
 	return true;
 }
 </script>
-  	<div class="container">
+  	<div class="container content-container">
         <div class="row mt-5">
           <h2 class=" jb-larger mt-3 col-sm-5">공지사항</h2>
         </div>
@@ -64,7 +64,7 @@ function checkContent() {
               	</div>
             </div>
           </div>
-          <div class="board-footer">
+          <div class="boardList-footer mt-2">
             <!-- 관리자-->
             <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeList.do'">취소</button>
             <button type="submit" class="btn btn-primary complete-btn">완료</button>

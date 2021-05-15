@@ -1,12 +1,11 @@
-package com.kh.codelit.community.notice.model.service;
-
+package com.kh.codelit.community.notice.model.dao;
 
 import java.util.List;
 import java.util.Map;
 
 import com.kh.codelit.community.notice.model.vo.Notice;
 
-public interface AdminBoardService {
+public interface NoticeDAO {
 
 	int insertBoard(Notice notice);
 
@@ -19,4 +18,7 @@ public interface AdminBoardService {
 	int delete(int noticeNo);
 
 	int update(Notice notice);
+
+	int updateCnt(int noticeNo);
+
 }

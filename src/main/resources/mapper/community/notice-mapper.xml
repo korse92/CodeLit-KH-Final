@@ -67,4 +67,12 @@
 		where
 		    notice_no = #{noticeNo}
 	</update>
+	<update id="updateCnt">
+		update
+			notice
+		set
+			notice_count = notice_count+1
+		where
+			notice_no = #{noticeNo}
+	</update>
 </mapper>

@@ -3,17 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
 </jsp:include>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css">
-	<div class="container">
+	<div class="container" style="height: 700px;">
         <div class="row mt-5">
-          <h2 class=" jb-larger mt-3 col-2">공지사항</h2>
+          <h2 class=" jb-larger mt-1 col-2">공지사항</h2>
         </div>
-        <div class="row mt-3 header">
+        <div class="row mt-1 header">
           <h5 class="col-1 board-title">제목</h5>
           <p class="col-3">${notice.noticeTitle}</p>
           <h5>${notice.noticeCount}</h5>
@@ -29,11 +31,23 @@
         </div>
         <div class="board-footer">
           <!-- 관리자-->
+     	<sec:authorize access="hasRole('ADMIN')">
           <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeUpdate.do?noticeNo=${notice.noticeNo}'">수정</button>
-          <button type="button" class="btn btn-danger delete-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeDelete.do?noticeNo=${notice.noticeNo}'">삭제</button>
+          <button type="button" class="btn btn-danger delete-btn" onclick="del()">삭제</button>
+        </sec:authorize>
+        
           <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeList.do'">목록으로</button>
         </div>
             
       </div>
 
+	<script type="text/javascript">
+		function del(){
+			if(confirm("삭제 해??")){
+				location.href=`${pageContext.request.contextPath}/community/noticeDelete.do?noticeNo=${notice.noticeNo}`;
+			} else{
+				return false;
+			}
+		}
+	</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

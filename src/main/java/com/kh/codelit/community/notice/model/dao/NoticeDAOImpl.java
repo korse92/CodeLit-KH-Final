@@ -14,8 +14,7 @@ import com.kh.codelit.community.notice.model.vo.Notice;
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
-@Slf4j
-public class AdminBoardDAOImpl implements AdminBoardDAO {
+public class NoticeDAOImpl implements NoticeDAO {
 
 	@Autowired
 	private SqlSessionTemplate session;
@@ -58,8 +57,13 @@ public class AdminBoardDAOImpl implements AdminBoardDAO {
 
 	@Override
 	public int update(Notice notice) {
-		log.debug("notice DAO ======={}", notice);
 		return session.update("notice.update", notice);
+	}
+
+
+	@Override
+	public int updateCnt(int noticeNo) {
+		return session.update("notice.updateCnt", noticeNo);
 	}
 	
 

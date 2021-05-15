@@ -1,5 +1,5 @@
 package com.kh.codelit.community.student.model.service;
 
-public interface StudentBoardService {
+public interface StudentService {
 
 }

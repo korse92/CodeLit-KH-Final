@@ -67,7 +67,7 @@ alert("${msg}");
 							<ul class="dropdown-menu" id="dropdownCommunity"
 								aria-labelledby="navlinkDropdownCommunity">
 								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/noticeList.do">공지사항</a></li>
-								<li><a class="dropdown-item" href="#">공부게시판</a></li>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/studentList.do">공부게시판</a></li>
 							</ul>
 						</li>
 						<li class="nav-item dropdown mx-2">

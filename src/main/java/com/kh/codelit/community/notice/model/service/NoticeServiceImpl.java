@@ -7,15 +7,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.codelit.community.notice.model.dao.AdminBoardDAO;
+import com.kh.codelit.community.notice.model.dao.NoticeDAO;
 import com.kh.codelit.community.notice.model.vo.Notice;
 
 
 @Service
-public class AdminBoardServiceImpl implements AdminBoardService {
+public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
-	private AdminBoardDAO dao;
+	private NoticeDAO dao;
 	
 
 	@Override
@@ -50,6 +50,12 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 	@Override
 	public int update(Notice notice) {
 		return dao.update(notice);
+	}
+
+
+	@Override
+	public int updateCnt(int noticeNo) {
+		return dao.updateCnt(noticeNo);
 	}
 
 

@@ -1,5 +1,5 @@
 package com.kh.codelit.community.student.model.dao;
 
-public interface StudentBoardDAO {
+public interface StudentDAO {
 
 }

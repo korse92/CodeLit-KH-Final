@@ -40,8 +40,8 @@ function checkContent() {
 }
 </script>
 
-    <div class="container">
-        <div class="row mt-5">
+    <div class="container content-container">
+        <div class="row mt-3">
           <h2 class=" jb-larger mt-3 col-sm-3">공지사항</h2>
         </div>
         <!-- 파일전송-->
@@ -58,11 +58,14 @@ function checkContent() {
           <div class="board-container">
             <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
             <div class="form-group content">
-              <textarea class="form-control" name="noticeContent" id="noticeContent" rows="10">${notice.noticeContent}</textarea>
-              <input class="form-control-file mt-3" type="file">
+              <textarea class="form-control" name="noticeContent" id="noticeContent" rows="10"></textarea>
+              	<div class="custom-file">
+	              	<img src="" alt="" id="photo_img">
+	                <input type="file" class="custom-file-input" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
+              	</div>
             </div>
           </div>
-          <div class="board-footer">
+          <div class="boardList-footer mt-2">
             <!-- 관리자-->
             <input name="noticeNo" type="hidden" value="${notice.noticeNo}">
             <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeList.do'">취소</button>

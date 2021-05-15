@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.codelit.common.HelloSpringUtils;
-import com.kh.codelit.community.notice.model.service.AdminBoardService;
+import com.kh.codelit.community.notice.model.service.NoticeService;
 import com.kh.codelit.community.notice.model.vo.Notice;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,10 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/community")
 @Slf4j
-public class AdminBoardController {
+public class noticeController {
 	
 	@Autowired
-	private AdminBoardService service;
+	private NoticeService service;
 	
 	@GetMapping("/noticeList.do")
 	public void selectBoard(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request) {
@@ -66,6 +66,7 @@ public class AdminBoardController {
 				@RequestParam(required = false) MultipartFile upFile,
 				HttpServletRequest request,
 				Model model,
+				RedirectAttributes redirect,
 				Principal pri) {
 		log.debug("upFile = {}", upFile);
 		String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/community");
@@ -78,29 +79,34 @@ public class AdminBoardController {
 		notice.setRefMemberId(pri.getName());
 
 		int result = service.insertBoard(notice);
-		
+		String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
+		redirect.addFlashAttribute("msg",msg);
 		return "redirect:/community/noticeList.do";
 	}
 	@GetMapping(value = {"/noticeDetail.do", "/noticeUpdate.do"})
 	public void selectOneNotice(@RequestParam int noticeNo, Model model) {
+		
+		int result = service.updateCnt(noticeNo);
 		Notice notice = service.selectOneNotice(noticeNo);
-	 	model.addAttribute("notice",notice);
+		model.addAttribute("notice",notice);
 	}
 	
 	@GetMapping("/noticeDelete.do")
 	public String deleteNotice(@RequestParam int noticeNo, RedirectAttributes redirect) {
 		int result = service.delete(noticeNo);
 		String msg = result > 0 ?"삭제 성공" : "삭제 실패";
-		redirect.addAttribute("msg", msg);
+		redirect.addFlashAttribute("msg", msg);
 		return "redirect:/community/noticeList.do";
 	}
+	
 	@PostMapping("/noticeUpdate.do")
 	public String updateNotice(@ModelAttribute Notice notice, RedirectAttributes redirect) {
+		log.debug("notice = {}", notice);
 		int result = service.update(notice);
 		String msg = result > 0 ? "수정 성공":"수정 실패";
-		redirect.addAttribute("msg",msg);
+		redirect.addFlashAttribute("msg",msg);
 		
-		return "forward:/community/noticeDetail.do";
+		return "redirect:/community/noticeDetail.do?noticeNo="+notice.getNoticeNo();
 	}
 }
 	
