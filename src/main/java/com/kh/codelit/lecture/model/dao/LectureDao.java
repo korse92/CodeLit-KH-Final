@@ -11,4 +11,8 @@ public interface LectureDao {
 
 	int insertLecture(Lecture lecture);
 
+	List<Lecture> selectLectureList(Map<String, Object> param);
+
+	int getTotalContents(Integer catNo);
+
 }
