@@ -129,7 +129,7 @@
         <div class="row mb-3">
           <label for="id" class="col-sm-3 col-form-label">이메일(아이디)</label>
           <div class="col-sm-9" id="memberId">
-            <input type="text" class="form-control" id="id" name="id" required>
+            <input type="text" class="form-control" id="id" name="memberId" required>
             <span class="guide ok">이 아이디는 사용 가능합니다.</span>
             <span class="guide no">이 아이디는 이미 사용중입니다.</span>
             <input type="hidden" id=idValid" value="0"/>
@@ -145,7 +145,7 @@
         <div class="row mb-3">
           <label for="password" class="col-sm-3 col-form-label">비밀번호</label>
           <div class="col-sm-9">
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="memberPw" required>
           </div>
         </div>
         <div class="row mb-3">

@@ -10,11 +10,11 @@ import java.util.Map;
 public interface AdminDao {
 
 
-	List<Member> selectMemberList();
+	List<Member> selectMemberList(Map<String, Object> param);
 
 	int deleteMember(String memberId);
 
-	List<Teacher> selectTeacherList();
+	List<Teacher> selectTeacherList(Map<String, Object> param);
 
 	List<Map<String, Object>> selectAllBySearching(String searchByAdmin);
 
@@ -33,6 +33,10 @@ public interface AdminDao {
 	List<Map<String, Object>> selectAllLecture(Map<String, Object> param);
 
 	int getTotalContents();
+
+	int selectMemberCount(Map<String, Object> param);
+
+	int selectTeacherCount(Map<String, Object> param);
 
 
 	
