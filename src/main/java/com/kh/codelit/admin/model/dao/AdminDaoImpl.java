@@ -26,9 +26,17 @@ public class AdminDaoImpl implements AdminDao {
 	
 	
 	@Override
-	public List<Member> selectMemberList() {
+	public List<Member> selectMemberList(Map<String, Object> param) {
 
-		return session.selectList("admin.selectMemberList");
+		int cPage = (int)param.get("cPage");
+		
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit; // 1 -> 0, 2 -> 5, 3 -> 10....
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		String keyword = (String)param.get("keyword");
+		
+		return session.selectList("admin.selectMemberList", param, rowBounds);			
 	}
 
 	@Override
@@ -38,9 +46,18 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public List<Teacher> selectTeacherList() {
+	public List<Teacher> selectTeacherList(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit; // 1 -> 0, 2 -> 5, 3 -> 10....
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		String keyword = (String)param.get("keyword");
+		
+		return session.selectList("admin.selectTeacherList", param, rowBounds);
 
-		return session.selectList("admin.selectTeacherList");
 	}
 	
 	
@@ -49,26 +66,6 @@ public class AdminDaoImpl implements AdminDao {
 	 * - offset : 건너뛸 행수
 	 * - limit : 한페이지당 게시물수
 	 */
-	/*
-	 * @Override public List<ApplyTeacher> applyTeacherList(Map<String, Object>
-	 * param) { //mybaits의 페이징 기능 : rowBounds 객체 생성 //첫인자(건너뛸 행 수): offset | 두번쨰
-	 * 인자(한 페이징당 게시물 수) : limit(=numPerPage)
-	 * 
-	 * int cPage = (int)param.get("cPage");
-	 * 
-	 * int limit = (int)param.get("numPerPage"); int offset = (cPage - 1) * limit;
-	 * //1페이지에 0, 2페이지에5, 3페이지에 10,,,, -> int offset = (cPage - 1) * limit;
-	 * RowBounds rowBounds = new RowBounds(offset, limit);
-	 * 
-	 * return session.selectList("admin.applyTeacherList", null, rowBounds);
-	 * 
-	 * }
-	 * 
-	 * @Override public int getTotalContents() {
-	 * 
-	 * return session.selectOne("admin.getTotalContents"); //1행 1열짜리값 얻어오기 }
-	 */
-
 	
 	@Override
 	public List<Map<String, Object>> selectAllBySearching(String searchByAdmin) {
@@ -89,14 +86,14 @@ public class AdminDaoImpl implements AdminDao {
 
 
 	@Override
-	public List<Map<String, Object>> applyLectureList() {
+	public List<Map<Integer, Object>> applyLectureList() {
 		return session.selectList("admin.applyLectureList");
 	}
 
 
 	@Override
-	public int approveLecture(String id) {
-		return session.update("admin.approveLecture", id);
+	public int approveLecture(int no) {
+		return session.update("admin.approveLecture", no);
 	}
 
 
@@ -107,8 +104,8 @@ public class AdminDaoImpl implements AdminDao {
 
 
 	@Override
-	public int deleteLecture(String id) {
-		return session.delete("admin.deleteLecture", id);
+	public int deleteLecture(int no) {
+		return session.delete("admin.deleteLecture", no);
 	}
 
 
@@ -118,6 +115,7 @@ public class AdminDaoImpl implements AdminDao {
 		//offSet : 건너뛸 행 수
 		//limit : 한 페이지당 게시물 수 (= numPerPage)
 		int cPage = (int)param.get("cPage");
+		
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
 		
@@ -132,6 +130,18 @@ public class AdminDaoImpl implements AdminDao {
 		//카운트 그룹함수로 1행 1열짜리 갖고올거임
 		return session.selectOne("admin.getTotalContents");
 	}
+
+	@Override
+	public List<Map<String, Object>> searchCategory(int type) {
+		return session.selectList("admin.searchCategory", type);
+	}
+
+	@Override
+	public int rejectPlayingLecture(int no) {
+		return session.update("admin.rejectPlayingLecture", no);
+	}
+
+
 
 	
 

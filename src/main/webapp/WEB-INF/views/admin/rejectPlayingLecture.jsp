@@ -24,7 +24,7 @@
     <script>
       // jquery onload 함수
       $(() => {
-        $("#rejectTeacherRight")
+        $("#rejectPlayingLecture")
           .modal()
           .on('hide.bs.modal', e => {
             // modal 비활성화시 (X, 취소, 모달외 영역 클릭)
@@ -39,20 +39,21 @@
       <!-- Modal시작 -->
       <!-- https://getbootstrap.com/docs/4.1/components/modal/#live-demo -->
       <form:form
-        action="${pageContext.request.contextPath}/admin/rejectTeacherRight.do"
+        action="${pageContext.request.contextPath}/admin/rejectPlayingLecture.do"
         method="post">
-      <div class="modal fade" id="rejectTeacherRight" tabindex="-1" role="dialog"
-        aria-labelledby="rejectTeacherRightLabel" aria-hidden="true">
+      <div class="modal fade" id="rejectPlayingLecture" tabindex="-1" role="dialog"
+        aria-labelledby="rejectPlayingLectureLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <!--폼 -->
            <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
 	              <div class="modal-body">
+	              <input type="hidden" name="no" value="${no}">
 					<p class="text-center mt-5"> 해당 강의를 정말 정지하시겠습니까?</p>
 	              </div>
 					<div class="d-grid gap-2 d-md-flex m-3 justify-content-md-end">
-		                <button type="submit" class="btn btn-outline-danger m-2">정지</button>
 		                <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='${pageContext.request.contextPath}/admin/manageLectureBoard.do';">취소</button>
+		                <button type="submit" class="btn btn-outline-danger m-2">정지</button>
 		                <!-- 취소 버튼 클릭시 강의관리게시판페이지로 이동처리 or 모달창 없앨거면 data-dismiss="modal" 속성 주기  -->
 					</div>
               </div>

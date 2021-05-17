@@ -13,15 +13,6 @@
 		 	${searchType} like '%' || #{searchKeyword} || '%'
 
 
-	<select id="selectMemberList" resultMap="memberMap">
-		select 
-		    *
-		from 
-		    member m
-		  left join
-		    authorities a
-		        on m.member_id = a.member_id
-	</select>
 
  	</select>
 	 컬럼명과 키값을 바인딩. 
@@ -80,27 +71,31 @@
 				authorities values ('ROLE_TEACHER', #{id})
 	</insert>
 	
-	<select id="applyLectureList" resultMap="LectureListMap">
+	 <select id="applyLectureList" resultMap="LectureListMap">
 		select 
-			*
-	    from
-	       	lecture left join lecture_category
-	         	on lecture_no = lec_cat_no
+       		 *
+		from
+   			 lecture left join lecture_category
+       		 on ref_lec_cat_no = lec_cat_no
 		where lecture_accept_yn = 'W'
 	</select>
 	
 	<resultMap type="map" id="LectureListMap">
-		<id column="ref_member_id" property="refMemberId"/>
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="lec_cat_no" property="lecCatNo" />
 		<result column="lec_cat_name" property="lecCatName" />
-		<result column="lecture_id" property="lectureId"/>
-	</resultMap>
-	
+		<result column="lecture_name" property="lectureName"/>
+		<result column="ref_member_id" property="refMemberId"/>
+	</resultMap> 
+
+	 
+
 	<update id="approveLecture">
 		update
 	    	lecture
 		set 
 	     	lecture_accept_yn ='Y'
-		where id = #{id}
+		where lecture_no = #{no}
 	</update>
 	
 	<delete id="deleteTeacher">
@@ -116,14 +111,19 @@
 		set 
 	     	lecture_accept_yn ='N'
 		where 
-			ref_member_id = #{id}
+			lecture_no = #{no}
 	</update>
 
 	<select id="selectAllLecture" resultMap="LectureListMap">
 	select
-		 *
+        rownum,
+		 l.*
     from
-    	lecture
+    	lecture l
+    where 
+    	lecture_accept_yn = 'Y'
+	order by 
+		rownum desc
 	
 	</select>
 	
@@ -138,7 +138,56 @@
 	
 	</select>
 	
-	
-	
+	<select id="selectMemberCount" resultType="_int">
+		select count(*)
+		from member m
+			left join (select * from authorities where auth = 'ROLE_ADMIN') a
+			on m.member_id = a.member_id
+		<where>
+			auth is null
+			<if test="keyword != null and keyword != ''">
+				and
+					m.member_id like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
 
+	<select id="selectTeacherCount" resultType="_int">
+		select count(*)
+		from teacher t
+				left join (select * from authorities where auth = 'ROLE_TEACHER') a
+				on t.ref_member_id = a.member_id
+		<where>
+			auth = 'ROLE_TEACHER'
+			<if test="keyword != null and keyword != ''">
+				and
+					t.ref_member_id like '%' || #{keyword} || '%'
+			</if>
+			<if test="category != null">
+				and
+					t.ref_lec_cat_no = #{category}
+			</if>
+		</where>
+	</select>
+	
+	<select id="searchCategory" resultMap="LectureListMap">
+	<!-- 이클립스의 emp_mapper참고 -->
+	select 
+    	 c.lec_cat_name,
+   		 l.ref_member_id,
+   		 l.lecture_name
+	from lecture l full join lecture_category c
+            on l.lecture_no = c.lec_cat_no
+	<where>l.ref_lec_cat_no = #{type} and l.lecture_accept_yn  = 'Y'
+	</where>	
+	
+	</select>
+	
+	<update id="rejectPlayingLecture">
+	update
+    	lecture
+	set lecture_accept_yn = 'N'
+	where lecture_no = #{no}
+	
+	</update>
 </mapper>

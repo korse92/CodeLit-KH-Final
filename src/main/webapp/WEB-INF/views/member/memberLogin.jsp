@@ -77,8 +77,9 @@
 	              </div>
 	              <div class="modal-footer justify-content-between">
 	              	<div>
-						<input type="checkbox" class="form-check-input" name="remember-me" id="remember-me"/>
-						<label for="remember-me" class="form-check-label">Remember me</label>
+						<input type="hidden" class="form-check-input" name="remember-me" id="remember-me" value="true"/>
+<!-- 						<input type="checkbox" class="form-check-input" name="remember-me" id="remember-me"/> -->
+<!-- 						<label for="remember-me" class="form-check-label">Remember me</label> -->
 					</div>
 					<div>
 		                <button type="submit" class="btn btn-outline-primary">로그인</button>

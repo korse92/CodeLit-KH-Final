@@ -72,7 +72,16 @@
 					
 				});
 				
-			}
+				
+				
+				const searchBtn = document.getElementById("searchBtn");
+				searchBtn.addEventListener('click', function(e) {
+					
+					var searchKeyword = document.getElementById("memberSearchKeyword").value;
+					location.href=`${pageContext.request.contextPath}/admin/manageMember.do?keyword=\${searchKeyword}`;
+				});
+				
+			};
 		</script>
 
 
@@ -93,9 +102,9 @@
             <div class="col-4 mt-4">
               <div class="input-group">
                 <div class="form-outline">
-                  <input type="search" id="form1" class="form-control"  placeholder="아이디 포함값 검색"/>              
+                  <input type="search" id="memberSearchKeyword" class="form-control"  placeholder="아이디 포함값 검색"/>              
                 </div>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" id="searchBtn">
                   <i class="fas fa-search"></i>
                 </button>
               </div>
@@ -108,6 +117,7 @@
                 <tr>
                   <th scope="col">번호</th>
                   <th scope="col">아이디</th>
+                  <th scope="col">강사 여부</th>
                   <th scope="col">수강 강좌</th>
                   <th scope="col">탈퇴 처리</th>
                 </tr>
@@ -117,6 +127,13 @@
                 <tr>
                     <td>${vs.count}</td>
                     <td><a href="#">${member.memberId}</a></td>
+                    <td>
+                    	<c:forEach items="${member.authorities}" var="auth" >
+                    	<c:if test='${auth eq "ROLE_TEACHER"}'>
+                    		취득
+                    	</c:if>
+                    	</c:forEach>
+                    </td>
                     <td>대기</td>
                     <td>
                     	<form:form method="POST" class="deleteMemberFrm"
@@ -131,19 +148,8 @@
             </table>
           </div>
   
-              <div class="mt-5">
-                <span class="pagination-span">
-                  <ul class="pagination board-paging pull-right">
-                    <li class="page-item"><a class="page-link" href="#">&#60</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&#62</a></li>
-                  </ul>
-                </span>
-              </div>
+				${pageBar}
+              
             </div>
 
         </div> <!-- 컨테이너-->
