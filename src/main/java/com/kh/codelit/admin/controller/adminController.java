@@ -1,5 +1,6 @@
 package com.kh.codelit.admin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -182,7 +184,7 @@ public class adminController {
 	public ModelAndView applyLectureList(ModelAndView mav) {
 
 		try {
-			List<Map<String, Object>> list = adminService.applyLectureList();
+			List<Map<Integer, Object>> list = adminService.applyLectureList();
 			log.debug("list={}", list);
 
 			mav.addObject("list", list);
@@ -199,28 +201,29 @@ public class adminController {
 
 	// 모달에서 강의 승인
 	@GetMapping("/approveLecture.do")
-	public void approveLecture(@RequestParam String id, Model model) {
-
-		model.addAttribute("id", id);
+	public void approveLecture(@RequestParam int no, Model model) {
+		//log.debug("getapproveLecture no = {}", no); 잘나옴
+		model.addAttribute("no", no);
+		
 
 	}
 
 	// 모달에서 보낸 강의승인폼
 	@PostMapping("/approveLecture.do")
-	public String approveLecture_(@RequestParam String id, RedirectAttributes redirectAttr) {
-
+	public String approveLecture_(@RequestParam int no, RedirectAttributes redirectAttr) {
+		log.debug("approveLecture no = {}", no);  //안나옴
 		String msg = null;
 		try {
-			int result = adminService.approveLecture(id);
+			int result = adminService.approveLecture(no);
 			msg = "강의 승인에 성공하였습니다";
 
 		} catch (Exception e) {
-			msg = "승인에 실패하였습니다";
+			msg = "강의 승인에 실패하였습니다";
 			throw e;
 		}
-		redirectAttr.addAttribute("msg", msg);
+		redirectAttr.addFlashAttribute("msg", msg);
 
-		return "redirect:/admin/approveLecture.do";
+		return "redirect:/admin/applyLectureList.do";
 
 	}
 
@@ -295,11 +298,11 @@ public class adminController {
 
 	// 강의 신청 목록에서 삭제처리
 	@PostMapping("/deleteLecture")
-	public String deleteLecture(@RequestParam String id, RedirectAttributes redirectAttr) {
+	public String deleteLecture(@RequestParam int no, RedirectAttributes redirectAttr) {
 		String msg = null;
 		try {
 
-			int result = adminService.deleteLecture(id);
+			int result = adminService.deleteLecture(no);
 			msg = "강의 신청 거절에 성공하였습니다.";
 
 		} catch (Exception e) {
@@ -316,7 +319,7 @@ public class adminController {
 			HttpServletRequest request) {
 
 		// 1 .사용자 입력값
-		int numPerPage = 5;
+		int numPerPage = 10;
 		// log.debug("cPage= {}", cPage);
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
@@ -330,9 +333,9 @@ public class adminController {
 		// b. pageBar 영역
 		int totalContents = adminService.getTotalContents();
 		// log.debug("totalContents = {}", totalContents);
-		String url = request.getRequestURI();
-		// log.debug("url = {}",url);
-		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		String uri = request.getRequestURI();
+		// log.debug("uri = {}",uri);
+		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, uri);
 		log.debug("pageBar = {}", pageBar);
 		// 3. jsp처리 위임 model.addAttribute("list",list);
 		model.addAttribute("list", list);
@@ -340,29 +343,61 @@ public class adminController {
 
 	}
 
-	@GetMapping("/rejectTeacherRight.do")
-	public void rejectTeacherRight() {
+	@GetMapping("/rejectPlayingLecture.do")
+	public void rejectPlayingLecture() {
 
 	}
 
-	@PostMapping("/rejectTeacherRight.do")
-	public void rejectTeacherRight_() {
+	@PostMapping("/rejectPlayingLecture.do")
+	public String rejectPlayingLecture_(@RequestParam int no, RedirectAttributes redirectAttr) {
 		log.debug("강사 권한 해지 {}", "도착");
-	}
+		
+		String msg = null;
+		try {
+			int result = adminService.rejectPlayingLecture(no);
+			msg = "강의 정지에 성공하였습니다";
 
-	// 검색창
-	@GetMapping("/searchKeyword.do")
-	@ResponseBody
-	public List<Map<String, Object>> searchKeyword(@RequestParam String searchKeyword) {
+		} catch (Exception e) {
+			msg = "강의 정지에 실패하였습니다";
+			throw e;
+		}
+		redirectAttr.addFlashAttribute("msg", msg);
 
-		log.debug("searchKeyword = {}", searchKeyword);
-		List<Map<String, Object>> categoryList = adminService.selectAllBySearching(searchKeyword);
-		log.debug("categoryList = {}", categoryList);
-
-		return categoryList;
-
-	}
+		return "redirect:/admin/manageLectureBoard.do";
 	
-	//@GetMapping("/searchCategory.do/{}")
+		
+	}
+
+	
+	
+	
+	// 검색창
+	/*
+	 * @GetMapping("/searchKeyword.do")
+	 * 
+	 * @ResponseBody public List<Map<String, Object>> searchKeyword(@RequestParam
+	 * String searchKeyword) {
+	 * 
+	 * log.debug("searchKeyword = {}", searchKeyword); List<Map<String, Object>>
+	 * categoryList = adminService.selectAllBySearching(searchKeyword);
+	 * log.debug("categoryList = {}", categoryList);
+	 * 
+	 * return categoryList;
+	 * 
+	 * }
+	 */
+	
+	@GetMapping("/searchCategory.do/{type}")
+	@ResponseBody
+	public List<Map<String, Object>> searchCategory(@PathVariable int type) {
+		log.debug("type = {}", type);
+		
+		List<Map<String, Object>> list = adminService.searchCategory(type);
+		//new ArrayList<Map<String,Object>>();
+		//Map<String, Object> map = new HashMap<>();
+		log.debug("list", list);
+		
+		return list;
+	}
 
 }
