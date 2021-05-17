@@ -25,6 +25,7 @@ public class Lecture {
 	private String lectureAcceptYn;
 	private int lectureGuideline;
 	
+	//첨부파일 관련
 	private int attachCount;				//첨부파일 개수
 	private List<Attachment> attachList;
 	

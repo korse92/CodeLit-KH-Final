@@ -54,4 +54,16 @@ public class LectureServiceImpl implements LectureService {
 		
 		return result;
 	}
+
+	@Override
+	public List<Lecture> selectLectureList(Map<String, Object> param) {
+		return lectureDao.selectLectureList(param);
+	}
+
+	@Override
+	public int getTotalContents(Integer catNo) {
+		return lectureDao.getTotalContents(catNo);
+	}
+	
+	
 }
