@@ -41,5 +41,9 @@ public interface AdminService {
 
 	int rejectPlayingLecture(int no);
 
+	int selecMemberCount(Map<String, Object> param);
+
+	int selectTeacherCount(Map<String, Object> param);
+
 	
 }

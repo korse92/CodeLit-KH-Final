@@ -92,4 +92,17 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.rejectPlayingLecture(no);
 	}
 	
+	@Override
+	public int selecMemberCount(Map<String, Object> param) {
+		
+		return adminDao.selectMemberCount(param);
+	}
+
+	@Override
+	public int selectTeacherCount(Map<String, Object> param) {
+
+		return adminDao.selectTeacherCount(param);
+	}
+
+
 }

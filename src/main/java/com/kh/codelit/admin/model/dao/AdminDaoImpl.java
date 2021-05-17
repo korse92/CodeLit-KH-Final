@@ -1,22 +1,23 @@
 package com.kh.codelit.admin.model.dao;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.List;
-
-
-
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.vo.Teacher;
 
+import lombok.extern.slf4j.Slf4j;
 
+
+
+@Slf4j
 @Repository
 public class AdminDaoImpl implements AdminDao {
 	
@@ -115,7 +116,6 @@ public class AdminDaoImpl implements AdminDao {
 		//offSet : 건너뛸 행 수
 		//limit : 한 페이지당 게시물 수 (= numPerPage)
 		int cPage = (int)param.get("cPage");
-		
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
 		
@@ -142,6 +142,18 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 
+
+	@Override
+	public int selectMemberCount(Map<String, Object> param) {
+		
+		return session.selectOne("admin.selectMemberCount", param);
+	}
+
+	@Override
+	public int selectTeacherCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectTeacherCount", param);
+	}
 
 	
 

@@ -38,6 +38,10 @@ public interface AdminDao {
 
 	int rejectPlayingLecture(int no);
 
+	int selectMemberCount(Map<String, Object> param);
+
+	int selectTeacherCount(Map<String, Object> param);
+
 
 	
 
