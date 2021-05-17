@@ -251,8 +251,7 @@
 		    <groupId>org.apache.tomcat.embed</groupId>
 		    <artifactId>tomcat-embed-jasper</artifactId>
 		    <version>8.5.61</version>
-		</dependency>
-	    
+		</dependency>  
 		
 	</dependencies>
     <build>

@@ -180,7 +180,8 @@ public class TeacherController {
 	
 	
 	@GetMapping("/lectureEnroll.do")
-	public void lectureEnroll() {}
+	public void lectureEnroll() {
+	}
 	
 	
 	@PostMapping("/lectureEnroll.do")
@@ -189,11 +190,11 @@ public class TeacherController {
 			@RequestParam(required = false) MultipartFile lectureThumbnail,
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
 			HttpServletRequest request,
-			@AuthenticationPrincipal Member member,
+			Authentication authentication,
 			RedirectAttributes redirectAttr) {
 		
 		try {
-			log.debug("lecture(빈 필드값 Set 전) = {}", lecture);
+			log.debug("lecture(필드값 Set 전) = {}", lecture);
 			
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set			
 			String thumbnailsSaveDirectory =
@@ -219,7 +220,7 @@ public class TeacherController {
 				//저장할 파일명 생성
 				File renamedFile = HelloSpringUtils.getRenamedFile(thumbnailsSaveDirectory, lectureThumbnail.getOriginalFilename());
 				//파일 저장
-//				lectureThumbnail.transferTo(renamedFile);
+				lectureThumbnail.transferTo(renamedFile);
 				
 				lecture.setLectureThumbOrigin(lectureThumbnail.getOriginalFilename());
 				lecture.setLectureThumbRenamed(renamedFile.getName());
@@ -238,7 +239,7 @@ public class TeacherController {
 				//저장할 파일명 생성
 				File renamedFile = HelloSpringUtils.getRenamedFile(handoutsSaveDirectory, lectureHandout.getOriginalFilename());
 				//파일 저장
-				//lectureHandout.transferTo(renamedFile);
+				lectureHandout.transferTo(renamedFile);
 				//Attachment객체 생성
 				Attachment attach = new Attachment();
 				attach.setOriginalFilename(lectureHandout.getOriginalFilename());
@@ -251,16 +252,16 @@ public class TeacherController {
 			
 			//1. 업무로직
 			lecture.setAttachList(attachList);
-			lecture.setRefMemberId(member.getMemberId());
-			log.debug("lecture(빈 필드값 Set 후) = {}", lecture);
+			lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
+			log.debug("lecture(필드값 Set 후) = {}", lecture);
 			
-			//int result = lectureService.insertLecture(lecture);
+			int result = lectureService.insertLecture(lecture);
 			
 			//2. 사용자 피드백
-//			String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
-//			redirectAttr.addFlashAttribute("msg", msg);			
+			String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
+			redirectAttr.addFlashAttribute("msg", msg);			
 			
-		} catch (IllegalStateException e) {
+		} catch (IOException | IllegalStateException e) {
 			log.error("첨부파일 등록 오류!", e);
 			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
 		} catch (Exception e) {

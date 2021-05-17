@@ -65,8 +65,8 @@ img#thumbImage {
 				<div class="col-sm-auto">
 					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType1" value="V" required>
 					<label class="form-check-label me-3" for="lectureType1">일반 강의</label>
-					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType2">
-					<label class="form-check-label"	for="lectureType2" value="S">스트리밍 강의</label>
+					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType2" value="S">
+					<label class="form-check-label"	for="lectureType2">스트리밍 강의</label>
 				</div>
 			</div>
 			<div class="row">
@@ -103,7 +103,7 @@ img#thumbImage {
 			<div class="row">
 				<label class="form-label mb-2" for="">강의 소개글</label>
 				<div class="col-sm">
-					<textarea name="lectureIntro" id="lectureIntro" class="form-control"></textarea>
+					<textarea name="lectureIntro" id="lectureIntro" class="form-control" required></textarea>
 				</div>
 			</div>
 			<div id="selectedVideo" class="row">
