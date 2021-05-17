@@ -772,8 +772,23 @@ NOCYCLE
 NOCACHE;
 
 --=============================================
+-- PL/SQL
+--=============================================
+create or replace trigger trg_auth
+    after
+    insert on member
+    for each row
+begin
+    insert into authorities
+    values ('ROLE_USER', :new.member_id);
+end;
+/
+
+
+--=============================================
 -- 테스트 데이터 insert문
 --=============================================
+
 
 --회원
 insert into member values ('admin', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
