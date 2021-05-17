@@ -3,6 +3,12 @@ section, aside, footer {padding:10px;}
   width: 25px; 
   height: 25px;
 }
+.content-container{
+	height:510px;
+}
+.List-container{
+	height:610px;
+}
 .jb-larger { 
   font-weight: 900;
 }
@@ -13,16 +19,12 @@ section, aside, footer {padding:10px;}
   border-top: 0.2em solid gray;
   border-bottom: 0.2em solid gray;
 }
+
 .content-title{
   font-weight: 700;
 }
 .content{
   padding: 10px 5px 5px 10px;
-}
-.board-footer{
-  margin-top: 30px;
-  margin-right: 30px;
-  float: right;
 }
 .pagination-span{
     position: absolute;
@@ -30,9 +32,6 @@ section, aside, footer {padding:10px;}
   }
   .board-write{
     float: right;
-  }
-  .board-title{
-    font-weight: 700;
   }
   .title-group{
     margin : 0.7em 0;
@@ -44,22 +43,24 @@ section, aside, footer {padding:10px;}
   .content{
     margin: 1.1em 0.7em;
   }
+  .boardList-footer{
+  	float:right;
+  }
   .board-footer{
-    margin-top: 3em;
-    margin-right: 2em;
     float: right;
+    margin: 1.5rem 1rem;
   }
   #photo_img {
     max-width: 8rem;
     max-height: 8rem;
-    margin : 1em 0 0 1em;
-  }
+/*     margin : 1em 0 0 1em;
+ */  }
   
   #upFile {
     width: 14rem;
     margin: 1rem 0rem 1rem 3rem;
   }
-  
+
 .comment{
     display: block;
     margin: 60px 60px;
