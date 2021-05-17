@@ -65,15 +65,23 @@ public class noticeController {
 				@ModelAttribute Notice notice,
 				@RequestParam(required = false) MultipartFile upFile,
 				HttpServletRequest request,
-				Model model,
 				RedirectAttributes redirect,
 				Principal pri) {
+		
 		log.debug("upFile = {}", upFile);
 		String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/community");
+		
+		
+		
 		File dir = new File(saveDirectory);
 		if(!dir.exists())
 			dir.mkdir();
 		
+		//
+		if(upFile.isEmpty() || upFile.getSize() == 0) {
+//			continue;			
+		}
+		File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
 		
 		
 		notice.setRefMemberId(pri.getName());

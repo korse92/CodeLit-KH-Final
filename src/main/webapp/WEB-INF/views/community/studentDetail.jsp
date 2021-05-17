@@ -22,11 +22,7 @@
          <h5 class="content-title">내용</h5>
            <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
            <img class="detail-img" src="../images/testImage.jpg" alt="페페이미지" value="">
-           <p class="content">
-             Lorem ipsum dolasdasdasdasdasdasdasdasdasdr
-             sit amet consectetur adipisicing elit. Est perferendis accusamus ex voluptates optio impedit consequuntur voluptatibus laudantium facilis eos rem libero, id
-             sunt dolorum repellendus? Omnis laborum impedit a.
-           </p>          
+           <p class="content"></p>          
        </div>
          <div class="board-footer">
            <!-- 관리자-->
