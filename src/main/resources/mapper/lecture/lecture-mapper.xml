@@ -13,14 +13,29 @@
 			lec_cat_no
 	</select>
 	
-<!-- 	<select id="selectCategoryList" resultMap="categoryMap"> -->
-<!-- 		select * -->
-<!-- 		from lecture_category -->
-<!-- 	</select> -->
-<!-- 	<resultMap id="categoryMap" type="map"> -->
-<!-- 		<id property="lecCatNo" column="lec_cat_no" /> -->
-<!-- 		<result property="lecCatName" column="lec_cat_name" /> -->
-<!-- 	</resultMap> -->
+	<insert id="insertLecture">
+		insert into
+			lecture
+		values (
+			seq_lec_no.nextval,
+			#{refLecCatNo},
+			#{refMemberId},
+			#{lectureName},
+			#{lectureType},
+			#{lectureIntro},
+			#{lectureThumbOrigin},
+			#{lectureThumbRenamed},
+			#{lecturePrice},
+			default,
+			#{lectureGuideline}			
+		)
+		<selectKey resultType="_int" keyProperty="lectureNo" order="AFTER">
+			select
+				seq_lec_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
 
 
 </mapper>

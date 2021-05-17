@@ -39,7 +39,7 @@
 
 <!-- redirectAttr.addFlashAttribute의 저장된 속성값 사용(1회용) -->
 <c:if test="${not empty msg}">
-	<script>
+<script>
 alert("${msg}");
 </script>
 </c:if>
@@ -66,8 +66,8 @@ alert("${msg}");
 								data-bs-toggle="dropdown" aria-expanded="false">커뮤니티</a>
 							<ul class="dropdown-menu" id="dropdownCommunity"
 								aria-labelledby="navlinkDropdownCommunity">
-								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/admin/adminBoardList.do">공지사항</a></li>
-								<li><a class="dropdown-item" href="#">공부게시판</a></li>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/noticeList.do">공지사항</a></li>
+								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/community/studentList.do">공부게시판</a></li>
 							</ul>
 						</li>
 						<li class="nav-item dropdown mx-2">
@@ -123,7 +123,7 @@ alert("${msg}");
 			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 			                  		메뉴
 			                	</a>
-			                	<ul class="dropdown-menu me-5 pe-5" id="dropdown3" aria-labelledby="navbarDropdown3">
+			                	<ul class="dropdown-menu" id="dropdown3" aria-labelledby="navbarDropdown3">
 			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
@@ -131,8 +131,8 @@ alert("${msg}");
 					                  <li><a class="dropdown-item" href="#">프로필</a></li>
 					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
 					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
-					                  <li><a class="dropdown-item" href="#">찜 목록</a></li>
-					                  <li><a class="dropdown-item" href="#">장바구니</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/pick.do">찜 목록</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/basket.do">장바구니</a></li>
 					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">

@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+section, aside, footer {padding:10px;}
+
+.container {margin: 0px auto;}
+
+* {
+  /* 박스모델에 패팅과 보더의 사이즈를 아이템 너비와 높이에 포함해 달라고 말하는 것 */
+  box-sizing: border-box;
+}
+
+/********** 전체컨테이너 **********/
+div#container {
+}
+
+/********** 섹션 container-pick **********/
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+button,
+button:focus {
+  cursor: pointer;
+}
+
+/********** orderBy **********/
+.dropdown button {
+    background-color: white;
+    color: black;
+}
+
+/********** pick **********/
+.pick {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+/********** pick-lecture **********/
+.lecture {
+    display: flex;
+    width: 20%;
+    height: 350px;
+}
+
+.lecture .show {
+    width: 100%;
+    border: 1px solid #b8b5ff;
+    border-radius: 5%;
+    position: relative;
+    margin: 0px;
+}
+
+.lecture .show .info {
+    display: flex;
+    flex-direction: column;
+}
+
+.lecture .show .info span {
+    padding: 10px;
+}
+
+.lecture .show .img img {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5%;
+}
+
+.lecture .hide {
+    width: 20%;
+    height: 350px;
+    position: absolute;
+    display: none;
+    background-color: black;
+    opacity: 0.8; 
+    border-radius: 5%;
+}
+
+.lecture .hide .link_info {
+	padding: 20px;
+}
+
+.lecture .hide .link_info a {
+	width: 100%
+}
+
+.lecture .hide .link_info .moreInfo .info {
+    color: white;
+}
+
+.lecture .hide .addLecture {
+    text-align: end;
+    margin-top: 20px;
+}
+
+.lecture .hide .addLecture button {
+    border: 1px solid white;
+    margin: 5px;
+}
+
+.lecture .show:hover + .hide {
+    display: block;
+}

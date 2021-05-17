@@ -79,7 +79,7 @@
 		<access-denied-handler error-page="/error/accessDenied.do"/>
 		
 		<!-- csrf[disabled=false] 기본값. 모든 post요청은 csrf토큰 값을 인증해야 한다. -->
-	    <csrf disabled="false"/>
+	    <!-- <csrf disabled="false"/> -->
 	</http>
 	
 	<authentication-manager>

@@ -32,19 +32,25 @@
       </style>
       
       <script>
-      	const member = document.getElementById("manageMember");
-      	const teacher = document.getElementById("manageTeacher");
-      	const order = document.getElementById("manageOrder");
       
-      	member.addEventListener('click', function() {
-      		location.href="${pageContext.request.contextPath}/admin/manageMember.do";
-      	});
-      	teacher.addEventListener('click', function() {
-      		location.href="${pageContext.request.contextPath}/admin/manageTeacher.do";
-      	});
-      	order.addEventListener('click', function() {
-      		location.href="${pageContext.request.contextPath}/admin/manageOrder.do";
-      	});
+      	window.onload = function() {
+      		
+	      	const member = document.getElementById("manageMember");
+	      	const teacher = document.getElementById("manageTeacher");
+	      	const order = document.getElementById("manageOrder");
+	      	
+	      	member.addEventListener('click', function() {
+	      		location.href="${pageContext.request.contextPath}/admin/manageMember.do";
+	      	});
+	      	teacher.addEventListener('click', function() {
+	      		location.href="${pageContext.request.contextPath}/admin/manageTeacher.do";
+	      	});
+	      	order.addEventListener('click', function() {
+	      		location.href="${pageContext.request.contextPath}/admin/manageOrder.do";
+	      	});
+      		
+      	}
+      
       	
       	
       </script>

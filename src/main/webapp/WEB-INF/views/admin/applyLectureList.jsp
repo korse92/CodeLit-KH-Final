@@ -66,7 +66,13 @@ function deleteLecture(id) {
 	  		method="POST"	>
 	  	<input type="hidden" name="id">
 	  </form:form>	    	
-	
+	 <!-- 페이지 바 -->
+	  <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
+	 	<c:if test="${!empty list}">
+		 <div>
+		  ${pageBar}
+		 </div>
+		</c:if>
 		<!-- 페이지 바 -->
 	     <ul class="pagination d-flex justify-content-center">
 	       <li class="page-item"><a class="page-link" href="#"><</a></li>
