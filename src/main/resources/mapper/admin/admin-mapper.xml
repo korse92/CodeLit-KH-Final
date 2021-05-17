@@ -13,18 +13,9 @@
 		 	${searchType} like '%' || #{searchKeyword} || '%'
 
 
-	<select id="selectMemberList" resultMap="memberMap">
-		select 
-		    *
-		from 
-		    member m
-		  left join
-		    authorities a
-		        on m.member_id = a.member_id
-	</select>
 
  	</select>
-	 컬럼명과 키값을 바인딩. 
+
 	<resultMap type="map" id="searchMap">
 	 <id column="id" property="empId"/>id :pk용
 	 <result column="ref_member_id" property="refMemberId"/> 
@@ -33,6 +24,24 @@
 	 <result column="ref_member_id" property="refMemberId"/> 
 	 </resultMap> -->
 
+	<select id="selectMemberList" resultMap="memberMap">
+		select 
+			*
+		from 
+			member m
+		    	left join authorities a
+		        	on m.member_id = a.member_id
+		<where>
+		m.member_id not in 
+		    (select member_id from authorities where auth = 'ROLE_ADMIN')
+		    <if test="keyword != null and keyword != ''">
+		    and
+		    	m.member_id like '%' || #{keyword} || '%'
+		    </if>		
+		</where>
+	
+	</select>
+	
 	<resultMap id="memberMap" type="member">
 		<id column="member_id" property="memberId"/>
 		<result column="member_pw" property="memberPw"/>
@@ -49,12 +58,22 @@
 		delete from member
 		where member_id = #{memberId}
 	</delete>
-	<select id="selectTeacherList" resultType="teacher">
+	<select id="selectTeacherList" resultType="teacher">	
 		select *
 		from teacher t
 				left join (select * from authorities where auth = 'ROLE_TEACHER') a
 				on t.ref_member_id = a.member_id
-		where a.auth = 'ROLE_TEACHER'
+		<where>
+		a.auth = 'ROLE_TEACHER'
+		<if test="keyword != null and keyword != ''">
+			and
+				t.ref_member_id like '%' || #{keyword} || '%'
+		</if>
+		<if test="category != null and category != ''">
+			and
+				t.ref_lec_cat_no = #{category}
+		</if>
+		</where>
 	</select>
 
 	<select id="applyTeacherList" resultMap="TeacherListMap">
@@ -138,7 +157,35 @@
 	
 	</select>
 	
-	
-	
+	<select id="selectMemberCount" resultType="_int">
+		select count(*)
+		from member m
+			left join (select * from authorities where auth = 'ROLE_ADMIN') a
+			on m.member_id = a.member_id
+		<where>
+			auth is null
+			<if test="keyword != null and keyword != ''">
+				and
+					m.member_id like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
 
+	<select id="selectTeacherCount" resultType="_int">
+		select count(*)
+		from teacher t
+				left join (select * from authorities where auth = 'ROLE_TEACHER') a
+				on t.ref_member_id = a.member_id
+		<where>
+			auth = 'ROLE_TEACHER'
+			<if test="keyword != null and keyword != ''">
+				and
+					t.ref_member_id like '%' || #{keyword} || '%'
+			</if>
+			<if test="category != null">
+				and
+					t.ref_lec_cat_no = #{category}
+			</if>
+		</where>
+	</select>
 </mapper>

@@ -49,16 +49,38 @@ public class adminController {
 	
 	@GetMapping("/manageMember.do")
 	public ModelAndView manageMember(
-				ModelAndView mav
+				@RequestParam(defaultValue = "1") int cPage,
+				@RequestParam(required = false) String keyword,
+				ModelAndView mav,
+				HttpServletRequest request
 			) {
 		
+		int numPerPage = 10;
+		Map<String, Object> param = new HashMap<>();
+		param.put("cPage", cPage);
+		param.put("numPerPage", numPerPage);
+		param.put("keyword", keyword);			
+		
 		try {
-			List<Member> list = adminService.selectMemberList();
+			
+			int totalContents = adminService.selecMemberCount(param);
+			List<Member> list = adminService.selectMemberList(param);
+			log.debug("manageMember = {}", list);
+			
+			String url = request.getRequestURI();
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+			
 			mav.addObject("memberList", list);
+			mav.addObject("pageBar", pageBar);
 			mav.setViewName("/admin/manageMember");
+			
 		} catch(Exception e) {
-			mav.addObject("msg", "호출에 문제가 있습니다.");
-			mav.setViewName("/");
+			throw e;
+			
+//			FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+//			flashMap.put("msg", "회원관리 페이지 호출에 문제가 있습니다.");
+//			
+//			mav.setViewName("redirect:/");
 		}
 		
 		return mav;
@@ -91,13 +113,34 @@ public class adminController {
 	
 	@GetMapping("/manageTeacher.do")
 	public ModelAndView manageTeacher(
-				ModelAndView mav
-			
+				ModelAndView mav,
+				@RequestParam(defaultValue = "1") int cPage,
+				@RequestParam(required = false) String keyword,
+				@RequestParam(required = false) String category,
+				HttpServletRequest request
 			) {
 		
+		int numPerPage = 10;
+
+		Map<String, Object> param = new HashMap<>();
+		param.put("numPerPage", numPerPage);
+		param.put("cPage", cPage);
+		param.put("keyword", keyword);
+		if("주 강의분야".equals(category) || category == null) {
+			param.put("category", null);		
+		} else {
+			param.put("category", Integer.parseInt(category));			
+		}
+		
 		try {
-			List<Teacher> list = adminService.selectTeacherList();
+			int totalContents = adminService.selectTeacherCount(param);
+			List<Teacher> list = adminService.selectTeacherList(param);
+			
+			String url = request.getRequestURI();
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+			
 			mav.addObject("teacherList", list);
+			mav.addObject("pageBar", pageBar);
 			mav.setViewName("/admin/manageTeacher");
 		} catch (Exception e) {
 			
@@ -107,6 +150,32 @@ public class adminController {
 		return mav;
 	}
 	
+	@GetMapping("/manageOrder.do")
+	public ModelAndView manageOrder(
+				ModelAndView mav,
+				@RequestParam(defaultValue = "1") int cPage,
+				@RequestParam(required = false) String searchId,
+				@RequestParam(required = false) String searchName,
+				@RequestParam(required = false) String searchLecture
+			) {
+		
+		int numPerPage = 10;
+		Map<String, Object> param = new HashMap<>();
+		param.put("numPerPage", numPerPage);
+		param.put("cPage", cPage);
+		param.put("searchId", searchId);
+		param.put("searchName", searchName);
+		param.put("searchLecture", searchLecture);
+		
+		try {
+//			int totalContents = adminService.selectMemberOrderCount(param);
+//			List<Map<String, Object>> memberOrderList = adminService.selectMemberOrderList();
+		} catch(Exception e) {
+			throw e;
+		}
+		
+		return mav;
+	}
 	
 	//강의 신청 목록
 	@GetMapping("/applyLectureList.do")

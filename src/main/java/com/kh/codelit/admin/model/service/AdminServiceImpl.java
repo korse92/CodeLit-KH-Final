@@ -21,9 +21,9 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 
-	public List<Member> selectMemberList() {
+	public List<Member> selectMemberList(Map<String, Object> param) {
 		
-		return adminDao.selectMemberList();
+		return adminDao.selectMemberList(param);
 	}
 
 	@Override
@@ -33,9 +33,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Teacher> selectTeacherList() {
+	public List<Teacher> selectTeacherList(Map<String, Object> param) {
 		
-		return adminDao.selectTeacherList();
+		return adminDao.selectTeacherList(param);
 	}
 
 	public List<Map<String, Object>> selectAllBySearching(String searchByAdmin) {
@@ -81,5 +81,18 @@ public class AdminServiceImpl implements AdminService {
 	public int getTotalContents() {
 		return adminDao.getTotalContents();
 	}
+
+	@Override
+	public int selecMemberCount(Map<String, Object> param) {
+		
+		return adminDao.selectMemberCount(param);
+	}
+
+	@Override
+	public int selectTeacherCount(Map<String, Object> param) {
+
+		return adminDao.selectTeacherCount(param);
+	}
+
 
 }

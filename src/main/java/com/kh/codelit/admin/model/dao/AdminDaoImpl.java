@@ -1,22 +1,23 @@
 package com.kh.codelit.admin.model.dao;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.List;
-
-
-
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.vo.Teacher;
 
+import lombok.extern.slf4j.Slf4j;
 
+
+
+@Slf4j
 @Repository
 public class AdminDaoImpl implements AdminDao {
 	
@@ -26,9 +27,17 @@ public class AdminDaoImpl implements AdminDao {
 	
 	
 	@Override
-	public List<Member> selectMemberList() {
+	public List<Member> selectMemberList(Map<String, Object> param) {
 
-		return session.selectList("admin.selectMemberList");
+		int cPage = (int)param.get("cPage");
+		
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit; // 1 -> 0, 2 -> 5, 3 -> 10....
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		String keyword = (String)param.get("keyword");
+		
+		return session.selectList("admin.selectMemberList", param, rowBounds);			
 	}
 
 	@Override
@@ -38,9 +47,18 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public List<Teacher> selectTeacherList() {
+	public List<Teacher> selectTeacherList(Map<String, Object> param) {
+		
+		int cPage = (int)param.get("cPage");
+		
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit; // 1 -> 0, 2 -> 5, 3 -> 10....
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		String keyword = (String)param.get("keyword");
+		
+		return session.selectList("admin.selectTeacherList", param, rowBounds);
 
-		return session.selectList("admin.selectTeacherList");
 	}
 	
 	
@@ -131,6 +149,18 @@ public class AdminDaoImpl implements AdminDao {
 	public int getTotalContents() {
 		//카운트 그룹함수로 1행 1열짜리 갖고올거임
 		return session.selectOne("admin.getTotalContents");
+	}
+
+	@Override
+	public int selectMemberCount(Map<String, Object> param) {
+		
+		return session.selectOne("admin.selectMemberCount", param);
+	}
+
+	@Override
+	public int selectTeacherCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.selectTeacherCount", param);
 	}
 
 	

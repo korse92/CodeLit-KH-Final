@@ -210,7 +210,7 @@ CREATE TABLE "ATTACHMENT" (
 	"REF_CONTENTS_NO"	NUMBER		NOT NULL,
 	"ORIGINAL_FILENAME"	VARCHAR2(200)		NOT NULL,
 	"RENAMED_FILENAME"	VARCHAR2(200)		NOT NULL,
-	"REF_CONTENTS_GROUP_CODE"	VARCHAR2(3)		NOT NULL
+	"REF_CONTENTS_GROUP_NO"	VARCHAR2(3)		NOT NULL
 );
 
 COMMENT ON COLUMN "ATTACHMENT"."ATTACH_NO" IS 'SEQ_ATTACH_NO';
@@ -218,7 +218,7 @@ COMMENT ON COLUMN "ATTACHMENT"."REF_CONTENTS_NO" IS '어느 컨텐츠의  첨부
 
 DROP TABLE "CONTENTS_GROUP" CASCADE CONSTRAINTS;
 CREATE TABLE "CONTENTS_GROUP" (
-	"CONTENTS_GROUP_CODE"	VARCHAR2(3)		NOT NULL,
+	"CONTENTS_GROUP_NO"	VARCHAR2(3)		NOT NULL,
 	"CONTENTS_GROUP_NAME"	VARCHAR2(20)		NOT NULL,
 	"CONTENTS_ATTACH_PATH"	VARCHAR2(100)		NOT NULL
 );
@@ -343,7 +343,7 @@ ALTER TABLE "ATTACHMENT" ADD CONSTRAINT "PK_ATTACHMENT" PRIMARY KEY (
 );
 
 ALTER TABLE "CONTENTS_GROUP" ADD CONSTRAINT "PK_CONTENTS_GROUP" PRIMARY KEY (
-	"CONTENTS_GROUP_CODE"
+	"CONTENTS_GROUP_NO"
 );
 
 ALTER TABLE "LECTURE_CHAPTER" ADD CONSTRAINT "PK_LECTURE_CHAPTER" PRIMARY KEY (
@@ -588,10 +588,10 @@ REFERENCES "LECTURE_CATEGORY" (
 );
 
 ALTER TABLE "ATTACHMENT" ADD CONSTRAINT "FK_CONTENTS_GRP_TO_ATTACH_1" FOREIGN KEY (
-	"REF_CONTENTS_GROUP_CODE"
+	"REF_CONTENTS_GROUP_NO"
 )
 REFERENCES "CONTENTS_GROUP" (
-	"CONTENTS_GROUP_CODE"
+	"CONTENTS_GROUP_NO"
 );
 
 ALTER TABLE "PAY_LECTURE" ADD CONSTRAINT "FK_PAYMENT_TO_PAY_LECTURE_1" FOREIGN KEY (
@@ -645,8 +645,7 @@ on delete cascade;
 ------------------------
 -- sequence
 ------------------------
-DROP SEQUENCE SEQ_LEC_NO;
-CREATE SEQUENCE SEQ_LEC_NO
+create sequence SEQ_LEC_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -654,8 +653,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_LEC_CAT_NO;
-CREATE SEQUENCE SEQ_LEC_CAT_NO
+create sequence SEQ_LEC_CAT_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -663,8 +661,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_BASKET_NO;
-CREATE SEQUENCE SEQ_BASKET_NO
+create sequence seq_basket_no
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -672,8 +669,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_PICK_NO;
-CREATE SEQUENCE SEQ_PICK_NO
+create sequence seq_pick_no
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -681,8 +677,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_MSG_NO;
-CREATE SEQUENCE SEQ_MSG_NO
+create sequence seq_msg_no
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -690,8 +685,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_COUNSEL_NO;
-CREATE SEQUENCE SEQ_COUNSEL_NO
+create sequence seq_counsel_no
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -699,8 +693,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_CHAT_NO;
-CREATE SEQUENCE SEQ_CHAT_NO
+create sequence SEQ_CHAT_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -708,8 +701,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_PAY_NO;
-CREATE SEQUENCE SEQ_PAY_NO
+create sequence seq_pay_no
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -717,8 +709,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_LEC_PART_NO;
-CREATE SEQUENCE SEQ_LEC_PART_NO
+create sequence SEQ_LEC_PART_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -726,8 +717,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_LEC_CHAPTER_NO;
-CREATE SEQUENCE SEQ_LEC_CHAPTER_NO
+create sequence SEQ_LEC_CHAPTER_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -735,8 +725,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_ATTACH_NO;
-CREATE SEQUENCE SEQ_ATTACH_NO
+create sequence SEQ_ATTACH_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -744,8 +733,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_NOTICE_NO;
-CREATE SEQUENCE SEQ_NOTICE_NO
+create sequence SEQ_NOTICE_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -753,8 +741,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_STD_BRD_NO;
-CREATE SEQUENCE SEQ_STD_BRD_NO
+create sequence SEQ_STD_BRD_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
@@ -762,14 +749,26 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
-DROP SEQUENCE SEQ_COMMENT_NO;
-CREATE SEQUENCE SEQ_COMMENT_NO
+create sequence SEQ_COMMENT_NO
 START WITH 1
 INCREMENT BY 1
 NOMINVALUE
 NOMAXVALUE
 NOCYCLE
 NOCACHE;
+
+--------------------------------
+-- PL/SQL
+--------------------------------
+create or replace trigger trg_auth
+    after
+    insert on member
+    for each row
+begin
+    insert into authorities
+    values ('ROLE_USER', :new.member_id);
+end;
+/
 
 --------------------------------
 -- 추가된 쿼리들
@@ -790,30 +789,14 @@ insert into member values ('test', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUI
 insert into authorities values ('ROLE_USER', 'test');
 ----------
 
-insert into lecture_category values(seq_lec_cat_no.nextval, '프런트');
-insert into lecture_category values(seq_lec_cat_no.nextval, '백엔드');
-insert into lecture_category values(seq_lec_cat_no.nextval, '빅데이터');
+insert into lecture_category values(lec_cat_no.nextval, '프런트');
+insert into lecture_category values(lec_cat_no.nextval, '백엔드');
+insert into lecture_category values(lec_cat_no.nextval, '빅데이터');
 ----------
 
-delete from teacher where ref_member_id = 'test';
 
-commit;
-select * from lecture_category;
-select * from member;
-select * from authorities;
 
-desc member;
-select * from teacher;
-select * from authorities;
-
---컨텐츠 그룹
-insert into contents_group values('LH', '강의 첨부파일', '/resources/upload/lecture/handouts');
-insert into contents_group values('N', '공지사항', '/resources/upload/notice');
-insert into contents_group values('SB', '공부 게시판', '/resources/upload/studyBoard');
-commit;
-
-select * from contents_group;
-select * from attachment;
+----------
 
 --test
 insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
@@ -823,14 +806,3 @@ delete from member where member_id = 'crai9159';
 update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
 commit;
 
-desc member;
-select * from teacher;
-select * from authorities;
-
---test
-insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
-
-delete from member where member_id = 'crai9159';
-
-update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
-commit;

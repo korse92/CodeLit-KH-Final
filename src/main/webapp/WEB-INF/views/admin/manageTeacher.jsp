@@ -57,7 +57,7 @@
 		<script>
 			window.onload = function() {
 				
-				let $del = $('.deleteMemberFrm');
+				let $del = $('.deleteTeacherFrm');
 				
 				$del.each(function(i, elem) {
 					
@@ -99,7 +99,7 @@
 					        	</select>
 		            		</td>
 		            		<td class="col-3">
-		            			<input type="search" id="form1" class="form-control offset-1"  placeholder="아이디"/>              
+		            			<input type="search" id="form1" name="keyword" class="form-control offset-1"  placeholder="아이디"/>              
 		            		</td>
 		            		<td>
 			               		<button type="submit" class="btn btn-primary offset-4" id="searchBtn">
@@ -118,12 +118,13 @@
           </div>
           
           <div class="mt-4">
-            <table class="table text-center" id="memberBoardTable">
+            <table class="table text-center" id="teacherBoardTable">
               <thead class="table-primary">
                 <tr>
                   <th scope="col">번호</th>
+                  <th scope="col">주 강의분야</th>
                   <th scope="col">아이디</th>
-                  <th scope="col">수강 강좌</th>
+                  <th scope="col">개설강의</th>
                   <th scope="col">탈퇴 처리</th>
                 </tr>
               </thead>
@@ -131,8 +132,19 @@
               	<c:forEach items="${teacherList}" var="teacher" varStatus="vs">
                 <tr>
                     <td>${vs.count}</td>
-                    <td><a href="#">${teacher.refMemberId}</a></td>
-                    <td>대기</td>
+                    <td>
+						<c:forEach items="${categoryList}" var="cat">
+							<c:if test="${teacher.refLecCatNo eq cat.no}">
+								${cat.name}
+							</c:if>
+						</c:forEach>
+                    </td>
+                    <td>${teacher.refMemberId}</td>
+                    <td>
+                    	<a href="#">
+                    		개설강의 표시
+                    	</a>
+                    </td>
                     <td>
                     	<form:form method="POST" class="deleteTeacherFrm"
                     				action="${pageContext.request.contextPath}/admin/deleteTeacher.do">
@@ -146,19 +158,7 @@
             </table>
           </div>
   
-              <div class="mt-5">
-                <span class="pagination-span">
-                  <ul class="pagination board-paging pull-right">
-                    <li class="page-item"><a class="page-link" href="#">&#60</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&#62</a></li>
-                  </ul>
-                </span>
-              </div>
+				${pageBar}
             </div>
 
         </div> <!-- 컨테이너-->
