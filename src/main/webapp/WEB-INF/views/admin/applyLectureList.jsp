@@ -13,11 +13,11 @@
 
 <script>
 
-function deleteLecture(id) {
-	if(confirm(`\${id}의 강의를 거절하시겠습니까?`)){
+function deleteLecture(no) {
+	if(confirm(`강의 신청을 거절하시겠습니까?`)){
 		
 	  var $frm = $(document.deleteLectureFrm);
-	  $frm.find("[name=id]").val(id);
+	  $frm.find("[name=no]").val(no);
 	  $frm.submit();
 	}
 
@@ -34,6 +34,7 @@ function deleteLecture(id) {
 	<table class="table mt-3 col-sm text-center">
 	<thead class="thead-light">
 	    <tr>
+	     <td class="" style="display:none">강의 번호</td>
 	      <th scope="col">카테고리</th>
 	      <th scope="col">강사 아이디</th>
 	      <th scope="col">강의 링크</th>
@@ -48,14 +49,15 @@ function deleteLecture(id) {
 	 </thead>
 	  <tbody>
 	  	<c:if test="${!empty list}">
-	  	 <c:forEach items="list" var="lectureList">
+	  	 <c:forEach items="${list}" var="lectureList">
 	       <tr>
+	          <td style="display:none">${lectureList.lectureNo}</td>
 	          <td>${lectureList.lecCatName}</td>
 	          <td>${lectureList.refMemberId}</td>
-	          <td>${lectureList.lectureId}</td>
+	          <td><a href="#">${lectureList.lectureId}</a></td>
 	          <td>
-	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?id=${lectureList.refMemberId}'">승인</button>
-	             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteLecture('${lectureList.refMemberId}');">거절</button>
+	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?no=${lectureList.lectureNo}';">승인</button>
+	             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteLecture('${lectureList.lectureNo}');">거절</button>
 	          </td>
 	        </tr>
 	  	 </c:forEach>
@@ -64,7 +66,7 @@ function deleteLecture(id) {
 	  <form:form name="deleteLectureFrm" 
 	  		action="${pageContext.request.contextPath}/admin/deleteLecture.do"
 	  		method="POST"	>
-	  	<input type="hidden" name="id">
+	  	<input type="hidden" name="no">
 	  </form:form>	    	
 	 <!-- 페이지 바 -->
 	  <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
@@ -73,16 +75,6 @@ function deleteLecture(id) {
 		  ${pageBar}
 		 </div>
 		</c:if>
-		<!-- 페이지 바 -->
-	     <ul class="pagination d-flex justify-content-center">
-	       <li class="page-item"><a class="page-link" href="#"><</a></li>
-	       <li class="page-item"><a class="page-link" href="#">1</a></li>
-	       <li class="page-item active"><a class="page-link" href="#">2</a></li>
-	       <li class="page-item"><a class="page-link" href="#">3</a></li>
-	       <li class="page-item"><a class="page-link" href="#">4</a></li>
-	       <li class="page-item"><a class="page-link" href="#">5</a></li>
-	       <li class="page-item"><a class="page-link" href="#">></a></li>
-	     </ul>
 </div>
 </section>
 </div>    

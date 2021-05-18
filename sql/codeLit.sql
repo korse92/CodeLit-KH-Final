@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 
 ADROP TABLE "MEMBER" CASCADE CONSTRAINTS;
 
 
+=======
+--=============================================
+-- 테이블 CREATE문
+--=============================================
+>>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
 
 CREATE TABLE "MEMBER" (
@@ -272,15 +278,13 @@ CREATE TABLE "AUTHORITIES" (
 
 COMMENT ON COLUMN "AUTHORITIES"."MEMBER_ID" IS '회원가입시 필수';
 
-
-
 -- remember-me 관련테이블 persistent_logins
-drop table persistent_logins;
-create table persistent_logins (
-    username varchar2(64) not null,
-    series varchar2(64) primary key,
-    token varchar2(64) not null, -- username, password, expiry time 등을 hashing한 값
-    last_used timestamp not null
+DROP TABLE PERSISTENT_LOGINS;
+CREATE TABLE PERSISTENT_LOGINS (
+    USERNAME VARCHAR2(64) NOT NULL,
+    SERIES VARCHAR2(64) PRIMARY KEY,
+    TOKEN VARCHAR2(64) NOT NULL, -- username, password, expiry time 등을 hashing한 값
+    LAST_USED TIMESTAMP NOT NULL
 );
 
 --================================
@@ -376,7 +380,7 @@ ALTER TABLE "LECTURE" ADD CONSTRAINT "FK_MEMBER_TO_LECTURE_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "BASKET" ADD CONSTRAINT "FK_LECTURE_TO_BASKET_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -384,7 +388,7 @@ ALTER TABLE "BASKET" ADD CONSTRAINT "FK_LECTURE_TO_BASKET_1" FOREIGN KEY (
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "BASKET" ADD CONSTRAINT "FK_MEMBER_TO_BASKET_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -392,7 +396,7 @@ ALTER TABLE "BASKET" ADD CONSTRAINT "FK_MEMBER_TO_BASKET_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "PICK" ADD CONSTRAINT "FK_MEMBER_TO_PICK_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -400,7 +404,7 @@ ALTER TABLE "PICK" ADD CONSTRAINT "FK_MEMBER_TO_PICK_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "PICK" ADD CONSTRAINT "FK_LECTURE_TO_PICK_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -408,7 +412,7 @@ ALTER TABLE "PICK" ADD CONSTRAINT "FK_LECTURE_TO_PICK_1" FOREIGN KEY (
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "MESSENGER" ADD CONSTRAINT "FK_MEMBER_TO_MESSENGER_1" FOREIGN KEY (
 	"REF_WRITER_ID"
@@ -416,7 +420,7 @@ ALTER TABLE "MESSENGER" ADD CONSTRAINT "FK_MEMBER_TO_MESSENGER_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete set null;
+ON DELETE SET NULL;
 
 ALTER TABLE "MESSENGER" ADD CONSTRAINT "FK_MEMBER_TO_MESSENGER_2" FOREIGN KEY (
 	"REF_RECEIVER_ID"
@@ -424,7 +428,7 @@ ALTER TABLE "MESSENGER" ADD CONSTRAINT "FK_MEMBER_TO_MESSENGER_2" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "NOTICE" ADD CONSTRAINT "FK_MEMBER_TO_NOTICE_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -432,7 +436,7 @@ ALTER TABLE "NOTICE" ADD CONSTRAINT "FK_MEMBER_TO_NOTICE_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete set null;
+ON DELETE SET NULL;
 
 ALTER TABLE "STUDY_BOARD" ADD CONSTRAINT "FK_MEMBER_TO_STUDY_BOARD_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -440,7 +444,7 @@ ALTER TABLE "STUDY_BOARD" ADD CONSTRAINT "FK_MEMBER_TO_STUDY_BOARD_1" FOREIGN KE
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "STUDY_BOARD" ADD CONSTRAINT "FK_LEC_TO_STUDY_BRD_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -448,7 +452,7 @@ ALTER TABLE "STUDY_BOARD" ADD CONSTRAINT "FK_LEC_TO_STUDY_BRD_1" FOREIGN KEY (
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete set null;
+ON DELETE SET NULL;
 
 ALTER TABLE "COUNSEL" ADD CONSTRAINT "FK_MEMBER_TO_COUNSEL_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -456,7 +460,7 @@ ALTER TABLE "COUNSEL" ADD CONSTRAINT "FK_MEMBER_TO_COUNSEL_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete set null;
+ON DELETE SET NULL;
 -- 일반 회원 삭제시에 해당 아이디의 질문과 거기에 달린 답변 삭제 trigger 필요
 
 ALTER TABLE "COUNSELING_CHAT" ADD CONSTRAINT "FK_MEMBER_TO_COUNSEL_CHAT_1" FOREIGN KEY (
@@ -465,7 +469,7 @@ ALTER TABLE "COUNSELING_CHAT" ADD CONSTRAINT "FK_MEMBER_TO_COUNSEL_CHAT_1" FOREI
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 -- 웹소켓 고려 (db 고민)
 
 ALTER TABLE "COUNSELING_CHAT" ADD CONSTRAINT "FK_MEMBER_TO_COUNSEL_CHAT_2" FOREIGN KEY (
@@ -474,7 +478,7 @@ ALTER TABLE "COUNSELING_CHAT" ADD CONSTRAINT "FK_MEMBER_TO_COUNSEL_CHAT_2" FOREI
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 -- 웹소켓 고려 (db 고민)
 
 ALTER TABLE "PAYMENT" ADD CONSTRAINT "FK_MEMBER_TO_PAYMENT_1" FOREIGN KEY (
@@ -483,7 +487,7 @@ ALTER TABLE "PAYMENT" ADD CONSTRAINT "FK_MEMBER_TO_PAYMENT_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete set null;
+ON DELETE SET NULL;
 
 ALTER TABLE "LECTURE_PART" ADD CONSTRAINT "FK_LEC_TO_LEC_PART_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -491,7 +495,7 @@ ALTER TABLE "LECTURE_PART" ADD CONSTRAINT "FK_LEC_TO_LEC_PART_1" FOREIGN KEY (
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 
 ALTER TABLE "STUDY_COMMENT" ADD CONSTRAINT "FK_STUDY_BRD_TO_STUDY_CMT_1" FOREIGN KEY (
@@ -500,7 +504,7 @@ ALTER TABLE "STUDY_COMMENT" ADD CONSTRAINT "FK_STUDY_BRD_TO_STUDY_CMT_1" FOREIGN
 REFERENCES "STUDY_BOARD" (
 	"STD_BRD_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 
 
@@ -510,7 +514,7 @@ ALTER TABLE "STUDY_COMMENT" ADD CONSTRAINT "FK_MEMBER_TO_STUDY_COMMENT_1" FOREIG
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete set null;
+ON DELETE SET NULL;
 
 ALTER TABLE "SEARCH" ADD CONSTRAINT "FK_MEMBER_TO_SEARCH_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -518,7 +522,7 @@ ALTER TABLE "SEARCH" ADD CONSTRAINT "FK_MEMBER_TO_SEARCH_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "LECTURE_COMMENT" ADD CONSTRAINT "FK_LECTURE_TO_LEC_CMT_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -526,7 +530,7 @@ ALTER TABLE "LECTURE_COMMENT" ADD CONSTRAINT "FK_LECTURE_TO_LEC_CMT_1" FOREIGN K
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "LECTURE_COMMENT" ADD CONSTRAINT "FK_MEMBER_TO_LEC_CMT_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -534,7 +538,7 @@ ALTER TABLE "LECTURE_COMMENT" ADD CONSTRAINT "FK_MEMBER_TO_LEC_CMT_1" FOREIGN KE
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete set null;
+ON DELETE SET NULL;
 
 ALTER TABLE "LECTURE_CLICK" ADD CONSTRAINT "FK_LECTURE_TO_LEC_CLK_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -542,7 +546,7 @@ ALTER TABLE "LECTURE_CLICK" ADD CONSTRAINT "FK_LECTURE_TO_LEC_CLK_1" FOREIGN KEY
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "LECTURE_CLICK" ADD CONSTRAINT "FK_MEMBER_TO_LEC_CLK_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -550,7 +554,7 @@ ALTER TABLE "LECTURE_CLICK" ADD CONSTRAINT "FK_MEMBER_TO_LEC_CLK_1" FOREIGN KEY 
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "LECTURE_PROGRESS" ADD CONSTRAINT "FK_MEMBER_TO_LEC_PROG_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -558,7 +562,7 @@ ALTER TABLE "LECTURE_PROGRESS" ADD CONSTRAINT "FK_MEMBER_TO_LEC_PROG_1" FOREIGN 
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "LECTURE_PROGRESS" ADD CONSTRAINT "FK_LEC_TO_LEC_PROG_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -566,7 +570,7 @@ ALTER TABLE "LECTURE_PROGRESS" ADD CONSTRAINT "FK_LEC_TO_LEC_PROG_1" FOREIGN KEY
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "LECTURE_PROGRESS" ADD CONSTRAINT "FK_LEC_CHAP_TO_LEC_PROG_1" FOREIGN KEY (
 	"REF_LEC_CHAPTER_NO"
@@ -574,7 +578,7 @@ ALTER TABLE "LECTURE_PROGRESS" ADD CONSTRAINT "FK_LEC_CHAP_TO_LEC_PROG_1" FOREIG
 REFERENCES "LECTURE_CHAPTER" (
 	"LEC_CHAPTER_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "TEACHER" ADD CONSTRAINT "FK_MEMBER_TO_TEACHER_1" FOREIGN KEY (
 	"REF_MEMBER_ID"
@@ -582,7 +586,7 @@ ALTER TABLE "TEACHER" ADD CONSTRAINT "FK_MEMBER_TO_TEACHER_1" FOREIGN KEY (
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "TEACHER" ADD CONSTRAINT "FK_LEC_CAT_TO_TEACH_1" FOREIGN KEY (
 	"REF_LEC_CAT_NO"
@@ -604,7 +608,7 @@ ALTER TABLE "PAY_LECTURE" ADD CONSTRAINT "FK_PAYMENT_TO_PAY_LECTURE_1" FOREIGN K
 REFERENCES "PAYMENT" (
 	"PAY_CODE"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "PAY_LECTURE" ADD CONSTRAINT "FK_LECTURE_TO_PAY_LECTURE_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -612,7 +616,7 @@ ALTER TABLE "PAY_LECTURE" ADD CONSTRAINT "FK_LECTURE_TO_PAY_LECTURE_1" FOREIGN K
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete set null;
+ON DELETE SET NULL;
 
 ALTER TABLE "LECTURE_CHAPTER" ADD CONSTRAINT "FK_LEC_PART_TO_LEC_CHAP_1" FOREIGN KEY (
 	"REF_LEC_PART_NO"
@@ -620,7 +624,7 @@ ALTER TABLE "LECTURE_CHAPTER" ADD CONSTRAINT "FK_LEC_PART_TO_LEC_CHAP_1" FOREIGN
 REFERENCES "LECTURE_PART" (
 	"LECTURE_PART_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "STREAMING_DATE" ADD CONSTRAINT "FK_LEC_TO_STREAM_DATE_1" FOREIGN KEY (
 	"REF_LECTURE_NO"
@@ -628,7 +632,7 @@ ALTER TABLE "STREAMING_DATE" ADD CONSTRAINT "FK_LEC_TO_STREAM_DATE_1" FOREIGN KE
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "LEC_STREAMING_SESSION" ADD CONSTRAINT "FK_LEC_TO_LEC_STREAM_SESSION_1" FOREIGN KEY (
 	"LECTURE_NO"
@@ -636,7 +640,7 @@ ALTER TABLE "LEC_STREAMING_SESSION" ADD CONSTRAINT "FK_LEC_TO_LEC_STREAM_SESSION
 REFERENCES "LECTURE" (
 	"LECTURE_NO"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
 ALTER TABLE "AUTHORITIES" ADD CONSTRAINT "FK_MEMBER_TO_AUTHORITIES_1" FOREIGN KEY (
 	"MEMBER_ID"
@@ -644,11 +648,11 @@ ALTER TABLE "AUTHORITIES" ADD CONSTRAINT "FK_MEMBER_TO_AUTHORITIES_1" FOREIGN KE
 REFERENCES "MEMBER" (
 	"MEMBER_ID"
 )
-on delete cascade;
+ON DELETE CASCADE;
 
-------------------------
+--=============================================
 -- sequence
-------------------------
+--=============================================
 DROP SEQUENCE SEQ_LEC_NO;
 CREATE SEQUENCE SEQ_LEC_NO
 START WITH 1
@@ -775,10 +779,26 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
---------------------------------
--- 추가된 쿼리들
---------------------------------
+--=============================================
+-- PL/SQL
+--=============================================
+create or replace trigger trg_auth
+    after
+    insert on member
+    for each row
+begin
+    insert into authorities
+    values ('ROLE_USER', :new.member_id);
+end;
+/
 
+
+--=============================================
+-- 테스트 데이터 insert문
+--=============================================
+
+
+--회원
 insert into member values ('admin', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
 insert into authorities values ('ROLE_ADMIN', 'admin');
 insert into authorities values ('ROLE_USER', 'admin');
@@ -792,49 +812,38 @@ insert into authorities values ('ROLE_USER', 'teacher');
 
 insert into member values ('test', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
 insert into authorities values ('ROLE_USER', 'test');
-----------
 
+-- 강의 카테고리
 insert into lecture_category values(seq_lec_cat_no.nextval, '프런트');
 insert into lecture_category values(seq_lec_cat_no.nextval, '백엔드');
 insert into lecture_category values(seq_lec_cat_no.nextval, '빅데이터');
-----------
-
-delete from teacher where ref_member_id = 'test';
-
-commit;
-select * from lecture_category;
-select * from member;
-select * from authorities;
-
-desc member;
-select * from teacher;
-select * from authorities;
 
 --컨텐츠 그룹
 insert into contents_group values('LH', '강의 첨부파일', '/resources/upload/lecture/handouts');
 insert into contents_group values('N', '공지사항', '/resources/upload/notice');
 insert into contents_group values('SB', '공부 게시판', '/resources/upload/studyBoard');
-commit;
 
-select * from contents_group;
-select * from attachment;
+--강의 테스트 데이터 50개 삽입 프로시저
+begin
+    for n in 1..50 loop
+        insert into
+			lecture
+		values (
+			seq_lec_no.nextval,
+			trunc(dbms_random.value(5,8)),
+			'teacher',
+			'테스트 강의' || n,
+			'V',
+			'테스트 강의' || n || ' 입니다',
+			'banner1.jpg',
+			'20210517_134626520_001.jpg',
+			0,
+			'Y',
+			default
+        );
+    end loop;
+    commit;
+end;
+/
 
---test
-insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
-
-delete from member where member_id = 'crai9159';
-
-update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
-commit;
-
-desc member;
-select * from teacher;
-select * from authorities;
-
---test
-insert into member values('정다미', '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq', null, null);
-
-delete from member where member_id = 'crai9159';
-
-update member set member_pw = '$2a$10$ikaHbg54jTzaRnRAwwthDe6xH.hTE2w7roZDfojFWDNeyybaalzyq' where member_id = 'crai9159';
 commit;

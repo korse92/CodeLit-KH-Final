@@ -73,16 +73,6 @@ function deleteTeacher(id){
 		  ${pageBar}
 		 </div>
 		</c:if>
-		<!-- 페이지 바 -->
-	     <ul class="pagination d-flex justify-content-center">
-	       <li class="page-item"><a class="page-link" href="#"><</a></li>
-	       <li class="page-item"><a class="page-link" href="#">1</a></li>
-	       <li class="page-item active"><a class="page-link" href="#">2</a></li>
-	       <li class="page-item"><a class="page-link" href="#">3</a></li>
-	       <li class="page-item"><a class="page-link" href="#">4</a></li>
-	       <li class="page-item"><a class="page-link" href="#">5</a></li>
-	       <li class="page-item"><a class="page-link" href="#">></a></li>
-	     </ul>
 </div>
 </section>
 </div>

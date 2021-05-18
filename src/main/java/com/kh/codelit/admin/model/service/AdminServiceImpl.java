@@ -21,9 +21,9 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 
-	public List<Member> selectMemberList() {
+	public List<Member> selectMemberList(Map<String, Object> param) {
 		
-		return adminDao.selectMemberList();
+		return adminDao.selectMemberList(param);
 	}
 
 	@Override
@@ -33,9 +33,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Teacher> selectTeacherList() {
+	public List<Teacher> selectTeacherList(Map<String, Object> param) {
 		
-		return adminDao.selectTeacherList();
+		return adminDao.selectTeacherList(param);
 	}
 
 	public List<Map<String, Object>> selectAllBySearching(String searchByAdmin) {
@@ -53,13 +53,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Map<String, Object>> applyLectureList() {
+	public List<Map<Integer, Object>> applyLectureList() {
 		return adminDao.applyLectureList();
 	}
 
 	@Override
-	public int approveLecture(String id) {
-		return adminDao.approveLecture(id);
+	public int approveLecture(int no) {
+		return adminDao.approveLecture(no);
 	}
 
 	@Override
@@ -68,8 +68,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int deleteLecture(String id) {
-		return adminDao.deleteLecture(id);
+	public int deleteLecture(int no) {
+		return adminDao.deleteLecture(no);
 	}
 
 	@Override
@@ -81,5 +81,28 @@ public class AdminServiceImpl implements AdminService {
 	public int getTotalContents() {
 		return adminDao.getTotalContents();
 	}
+
+	@Override
+	public List<Map<String, Object>> searchCategory(int type) {
+		return adminDao.searchCategory(type);
+	}
+
+	@Override
+	public int rejectPlayingLecture(int no) {
+		return adminDao.rejectPlayingLecture(no);
+	}
+	
+	@Override
+	public int selecMemberCount(Map<String, Object> param) {
+		
+		return adminDao.selectMemberCount(param);
+	}
+
+	@Override
+	public int selectTeacherCount(Map<String, Object> param) {
+
+		return adminDao.selectTeacherCount(param);
+	}
+
 
 }

@@ -22,11 +22,11 @@ window.onload = function() {
       	console.log(type); //사용자가 선택한 값이 잘 넘어오는지 확인
       	
       	$.ajax({
-      		url: `\${menuRestApiHost}/admin/\${type}`,  //${type} 은 브라우저와서 실행되야 하므로 escaping처리
+      		url: `${pageContext.request.contextPath}/admin/searchCategory.do/\${type}`,  //${type} 은 브라우저와서 실행되야 하므로 escaping처리
       		dataType: "json",
       		success(data){
-      			console.log(data);
-      			
+      			//console.log(data);
+      			//displayResultTable("#menuType-result", data);
       		},
       		error(xhr, status, err){
       			console.log(xhr, status, err);
@@ -34,9 +34,58 @@ window.onload = function() {
       	});
     });
     
-    
-	/* //검색
-	$("#searchKeyword").autocomplete({
+ //유효성 검사
+ $("#searchBtn").click(e => {
+	 //폼 제출 방지
+	  e.preventDefault();
+	 
+	const typeSelector = $("[name=typeSelector]", e.target).val();
+	const searchKeyword = $("[name= searchKeyword]", e.target).val();
+	 
+	if(!typeSelector || !searchKeyword){
+		alert("검색어를 입력해주세요.");
+		return;
+	}
+	
+ });
+ /* 
+ function displayResultTable(selector, data){
+		const $container = $(selector);
+		const $table = $("<table></table>").addClass("table");
+		const $header = $("<tr><th>글 번호</th><th>카테고리</th><th>강의자 아이디</th><th>강의 링크</th></tr>")
+		
+		const $no = $("[name=no]", e.target).val();
+		const $cat = $("[name=cat]", e.target).val();
+		const $teacherId = $("[name=teacherId]", e.target).val();
+		const $site = $("[name=site]", e.target).val();
+		const $etc = $("[name=etc]", e.target).val();
+		
+		
+		$table.append($header);
+		
+		if(data.length > 0){
+			$(data).each(({no, cat, teacherId, site, etc}) =>{
+				const tr = `<tr>
+					<td>\${no}</td>
+					<td>\${cat}</td>
+					<td>\${teacherId}</td>
+					<td>\${site}</td>
+					<td>\${etc}</td>
+				</tr>`; 
+				$table.append(tr);
+			});		
+		}
+		else {
+			$table.append("<tr><td colspan='6'>조회된 결과가 없습니다.</td></tr>");
+		}
+		
+		$container.html($table);
+	}
+
+
+	
+	 //검색
+ 	$("#searchKeyword").autocomplete({
 	     source : function(request, response){
 	    	 //서버 통신 이후 success메소드에서 response 호출 할 것!
 	    	 console.log(request); //사용자 입력값
@@ -77,13 +126,13 @@ window.onload = function() {
 	   	 location.href = `${pageContext.request.contextPath}/admin/manageLectureBoard.do`;
 	    }
 	    
-	}); */
+	}); 
 	
-	
+	 */
 	
 	
 	$(() => {
-		$("#rejectTeacherRight")
+		$("#rejectPlayingLecture")
 		.modal()
 		.on('hide.bs.modal', e => {
 			//modal 비활성화(X,취소,모달외 영역 클릭시) 이전페이지로 이동한다. //bs의 이벤트핸들링
@@ -91,10 +140,14 @@ window.onload = function() {
 		})
 	});
 	
+	
 	/* $(typeSelector).change(e => {
 		console.log(e.target.value);
 		//href="${pageContext.request.contextPath}/admin/manageLectureBoard.do/${category.no}";
 	}); */
+	
+	
+	
 }         
 
 
@@ -113,29 +166,19 @@ window.onload = function() {
           <h2 class=" jb-larger mt-3 col-sm-3">강의 관리 게시판</h2>
         
         <div class="mt-4 col-sm-2">
-          <select class="form-select" id="typeSelector">
-            <option value="" selected>카테고리</option>
-            <c:forEach items="${categoryList}" var="category">
+          <select class="form-select" id="typeSelector" name="typeSelector">
+            	<option value="" disabled selected>카테고리</option>
+            	<c:forEach items="${categoryList}" var="category">
           	  <option class="select-item" value="${category.no}">${category.name}</option>
             </c:forEach >
           </select>
-            <%--  <option value="fe"  ${param.searchType eq 'fe' ? 'selected' : ''}>프론트 엔드</option>
-             <option value="be"  ${param.searchType eq 'be' ? 'selected' : ''}>백엔드</option>
-             <option value="dt"  ${param.searchType eq 'dt' ? 'selected' : ''}>빅데이터</option> 
-            
-            <c:forEach items="${categoryList}" var="category" >
-            <option value="${category.no}">${category.name}</option>
-            </c:forEach>
-          --%>
-          
-          
         </div>
         <div class="col-4 mt-4">
           <div class="input-group">  
             <div class="form-outline">
-              <input type="search" id="searchKeyword" name="searchKeyword" class="form-control"  placeholder="강의자 / 강의명" value="${param.searchKeyword}" required/>              
+              <input type="search" id="searchKeyword" name="searchKeyword" class="form-control"  placeholder="강의자 / 강의명" value="" required/>              
              </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" id="searchBtn">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -145,10 +188,11 @@ window.onload = function() {
 	<table class="table mt-3 col-sm text-center">
 	<thead class="thead-light">
 	    <tr>
-	      <th scope="col">카테고리</th>
-	      <th scope="col">강의자 아이디</th>
-	      <th scope="col">강의 링크</th>
-	      <th scope="col">비고</th>
+	      <th scope="col" name="no">글 번호</th>
+	      <th scope="col" name="cat">카테고리</th>
+	      <th scope="col" name="teacherId">강의자 아이디</th>
+	      <th scope="col" name="site">강의 링크</th>
+	      <th scope="col" name="etc">비고</th>
 	    </tr>
 	    <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 하세요 -->
 	<c:if test="${empty list}">
@@ -167,7 +211,7 @@ window.onload = function() {
 	       	  <%--<td><a href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의 상세보기</a></td> --%>
 	          <td>
 	          <%--<button type="button" class="btn btn-secondary btn-sm">취소</button> --%>
-	             <button type="button" a class="btn btn-warning btn-sm" onclick="location.href='${pageContext.request.contextPath}/admin/rejectTeacherRight.do';">정지</button>
+	             <button type="button" a class="btn btn-warning btn-sm" onclick="location.href='${pageContext.request.contextPath}/admin/rejectPlayingLecture.do?no=${lec.lectureNo}';">정지</button>
 	          </td>
 	        </tr>
 	      </c:forEach>
@@ -180,15 +224,6 @@ window.onload = function() {
 		  ${pageBar}
 		 </div>
 		</c:if>
-	    <!--  <ul class="pagination d-flex justify-content-center">
-	       <li class="page-item"><a class="page-link" href="#"><</a></li>
-	       <li class="page-item"><a class="page-link" href="#">1</a></li>
-	       <li class="page-item active"><a class="page-link" href="#">2</a></li>
-	       <li class="page-item"><a class="page-link" href="#">3</a></li>
-	       <li class="page-item"><a class="page-link" href="#">4</a></li>
-	       <li class="page-item"><a class="page-link" href="#">5</a></li>
-	       <li class="page-item"><a class="page-link" href="#">></a></li>
-	     </ul> -->
 </div>
 </section>
 
