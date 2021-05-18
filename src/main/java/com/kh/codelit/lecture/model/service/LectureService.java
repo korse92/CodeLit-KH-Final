@@ -10,4 +10,6 @@ public interface LectureService {
 	List<Map<String, Object>> selectCategoryListInstance();
 
 	int insertLecture(Lecture lecture);
+
+	
 }

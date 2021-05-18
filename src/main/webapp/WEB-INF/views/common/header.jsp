@@ -83,7 +83,7 @@ alert("${msg}");
 								</c:forEach>
 							</ul>
 						</li>
-						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a></li>
+						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 					</ul>
 				</div>
 
