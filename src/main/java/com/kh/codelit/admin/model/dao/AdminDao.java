@@ -22,7 +22,7 @@ public interface AdminDao {
 
 	int approveTeacher(String id);
 
-	List<Map<Integer, Object>> applyLectureList();
+	List<Map<String, Object>> applyLectureList();
 
 	int approveLecture(int no);
 
@@ -32,7 +32,7 @@ public interface AdminDao {
 
 	List<Map<String, Object>> selectAllLecture(Map<String, Object> param);
 
-	int getTotalContents();
+	int getTotalContents(Map<String, Object> param);
 
 	List<Map<String, Object>> searchCategory(int type);
 
