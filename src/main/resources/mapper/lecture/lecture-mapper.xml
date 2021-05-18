@@ -37,7 +37,38 @@
 				dual
 		</selectKey>
 	</insert>
-
+	
+	<select id="selectLectureList" resultType="lecture">
+		select 
+			L.*,
+			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = L.lecture_no), 1) "avg_lec_assessment"
+		from lecture L
+		<where>
+		    lecture_accept_yn = 'Y'
+		<!--
+			if 태그에서 파라미터를 getter로 가져오기 때문에 getter가 없는
+			기본형변수나 String객체 등을 파라미터로 넘겼을때는 _parameter로 사용해야 함.
+		-->
+		<if test="_parameter gt 0">
+			and ref_lec_cat_no = #{_parameter}
+		</if>
+		</where>
+		order by
+		    lecture_no
+	</select>
+	
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from
+			lecture
+		<where>
+		<if test="_parameter gt 0">
+			ref_lec_cat_no = #{_parameter}
+		</if>
+		</where>
+	</select>
+	
 </mapper>
 
 
