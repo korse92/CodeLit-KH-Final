@@ -65,5 +65,10 @@ public class LectureController {
 		
 		return "lecture/lectureList";
 	}
+	
+	@GetMapping("/lectureDetail.do")
+	public void lectureDetail(@RequestParam int lectureNo) {
+		
+	}
 
 }
