@@ -36,10 +36,10 @@
 				dual
 		</selectKey>
 	</insert>
-<<<<<<< HEAD
 
 
-=======
+
+
 	
 	<select id="selectLectureList" resultType="lecture">
 		select
@@ -72,7 +72,7 @@
 		</where>
 	</select>
 	
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
+
 </mapper>
 
 
