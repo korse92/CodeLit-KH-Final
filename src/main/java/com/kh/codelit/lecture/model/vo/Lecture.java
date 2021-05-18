@@ -1,6 +1,7 @@
 package com.kh.codelit.lecture.model.vo;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 
@@ -28,5 +29,9 @@ public class Lecture {
 	//첨부파일 관련
 	private int attachCount;				//첨부파일 개수
 	private List<Attachment> attachList;
+	
+	//수강후기 관련
+	private List<Map<String, Object>> lectureCommentList;
+	private double avgLecAssessment;
 	
 }
