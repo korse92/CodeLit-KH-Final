@@ -1,21 +1,18 @@
 package com.kh.codelit.counsel.model.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.codelit.counsel.model.vo.counsel;
+
+
+
 
 @Repository
-public abstract class CounselDAOImpl implements CounselDAO {
+public abstract class CounselDaoImpl implements CounselDao {
 
-	@Autowired
+	@Autowired 
 	private SqlSessionTemplate session;
-
 //	@Override
 //	public List<counsel> counselList(Map<String, Object> param) {
 //		int cPage = (int)param.get("cPage");
