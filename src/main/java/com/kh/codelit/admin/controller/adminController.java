@@ -184,7 +184,7 @@ public class adminController {
 	public ModelAndView applyLectureList(ModelAndView mav) {
 
 		try {
-			List<Map<Integer, Object>> list = adminService.applyLectureList();
+			List<Map<String, Object>> list = adminService.applyLectureList();
 			log.debug("list={}", list);
 
 			mav.addObject("list", list);
@@ -315,42 +315,65 @@ public class adminController {
 	}
 
 	@GetMapping("/manageLectureBoard.do")
-	public void manageLectureBoard(@RequestParam(defaultValue = "1") int cPage, Model model,
-			HttpServletRequest request) {
+	public ModelAndView manageLectureBoard(
+								@RequestParam(defaultValue = "1") int cPage, 
+								ModelAndView mav,
+								@RequestParam(required = false) String searchKeyword,
+								@RequestParam(required = false) String category,
+								HttpServletRequest request) {
 
+		log.debug("searchKeyword = {} ", searchKeyword);
+		log.debug("category = {}", category);
+		
 		// 1 .사용자 입력값
 		int numPerPage = 10;
-		// log.debug("cPage= {}", cPage);
+		
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
-
-		// 2. 업무로직
-		// a. contents 영역 -> mybatis의 rowBounds 사용
-		List<Map<String, Object>> list = adminService.selectAllLecture(param);
-		log.debug("list = {}", list);
-
-		// b. pageBar 영역
-		int totalContents = adminService.getTotalContents();
-		// log.debug("totalContents = {}", totalContents);
-		String uri = request.getRequestURI();
-		// log.debug("uri = {}",uri);
-		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, uri);
-		log.debug("pageBar = {}", pageBar);
-		// 3. jsp처리 위임 model.addAttribute("list",list);
-		model.addAttribute("list", list);
-		model.addAttribute("pageBar", pageBar);
-
+		param.put("searchKeyword", searchKeyword);
+		// log.debug(" manageLectureBoard - param = {}", param);
+		
+		if("카테고리".equals(category) || category == null) {
+			param.put("category", null);		
+		} else {
+			param.put("category", Integer.parseInt(category));			
+		}
+		
+		try {
+	
+			// 2. 업무로직
+			// a. contents 영역 -> mybatis의 rowBounds 사용
+			List<Map<String, Object>> list = adminService.selectAllLecture(param);
+			//log.debug("manageLectureBoard - list = {}", list);
+	
+			// b. pageBar 영역
+			int totalContents = adminService.getTotalContents(param);
+			// log.debug("totalContents = {}", totalContents);
+			String url = request.getRequestURI();
+			// log.debug("url = {}",url);
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+			log.debug("pageBar = {}", pageBar);
+			// 3. jsp처리 위임 model.addAttribute("list",list);
+			mav.addObject("lecBoardList", list);
+			mav.addObject("pageBar", pageBar);
+			mav.setViewName("/admin/manageLectureBoard");
+			
+	} catch (Exception e) {
+		
+		throw e;
 	}
+		return mav;
+  }
 
 	@GetMapping("/rejectPlayingLecture.do")
-	public void rejectPlayingLecture() {
-
+	public void rejectPlayingLecture(@RequestParam int no, Model model) {
+		//log.debug("getapproveLecture no = {}", no); 
+		model.addAttribute("no", no);
 	}
 
 	@PostMapping("/rejectPlayingLecture.do")
 	public String rejectPlayingLecture_(@RequestParam int no, RedirectAttributes redirectAttr) {
-		log.debug("강사 권한 해지 {}", "도착");
 		
 		String msg = null;
 		try {
@@ -369,35 +392,17 @@ public class adminController {
 	}
 
 	
-	
-	
-	// 검색창
 	/*
-	 * @GetMapping("/searchKeyword.do")
+	 * @GetMapping("/searchCategory.do/{type}")
 	 * 
-	 * @ResponseBody public List<Map<String, Object>> searchKeyword(@RequestParam
-	 * String searchKeyword) {
+	 * @ResponseBody public List<Map<String, Object>> searchCategory(@PathVariable
+	 * int type) { log.debug("type = {}", type);
 	 * 
-	 * log.debug("searchKeyword = {}", searchKeyword); List<Map<String, Object>>
-	 * categoryList = adminService.selectAllBySearching(searchKeyword);
-	 * log.debug("categoryList = {}", categoryList);
+	 * List<Map<String, Object>> list = adminService.searchCategory(type); //new
+	 * ArrayList<Map<String,Object>>(); //Map<String, Object> map = new HashMap<>();
+	 * log.debug("list", list);
 	 * 
-	 * return categoryList;
-	 * 
-	 * }
+	 * return list; }
 	 */
-	
-	@GetMapping("/searchCategory.do/{type}")
-	@ResponseBody
-	public List<Map<String, Object>> searchCategory(@PathVariable int type) {
-		log.debug("type = {}", type);
-		
-		List<Map<String, Object>> list = adminService.searchCategory(type);
-		//new ArrayList<Map<String,Object>>();
-		//Map<String, Object> map = new HashMap<>();
-		log.debug("list", list);
-		
-		return list;
-	}
 
 }
