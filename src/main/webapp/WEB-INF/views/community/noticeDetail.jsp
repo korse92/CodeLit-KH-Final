@@ -23,8 +23,9 @@
         </div>
         <div class="board-container">
           <h5 class="content-title">내용</h5>
-            <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
-            <img src="../images/testImage.jpg" alt="페페이미지" value="">
+          	<c:if test="${not empty attach}">
+	            <img src='${pageContext.request.contextPath}${attachPath}'>
+          	</c:if>
             <p class="content">
               ${notice.noticeContent}
             </p>          
@@ -43,7 +44,7 @@
 
 	<script type="text/javascript">
 		function del(){
-			if(confirm("삭제 해??")){
+			if(confirm("삭제 하실거예요?")){
 				location.href=`${pageContext.request.contextPath}/community/noticeDelete.do?noticeNo=${notice.noticeNo}`;
 			} else{
 				return false;

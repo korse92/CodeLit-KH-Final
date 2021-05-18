@@ -2,60 +2,63 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="notice">
-	<select id="getListCount" resultType="_int" >
-		SELECT
-			COUNT(*)
-		FROM
-			notice
-	</select>
+<mapper namespace="studyBoard">
 
-	<select id="noticeList" resultType="notice">
+	<select id="studyBoardList" resultType="studyBoard">
 		select 
-			rownum,n.*
-	    from(
+		    rownum,
+		    n.*
+		from(
 		    select 
 		        * 
 		    from 
-		        notice
+		        study_board
 		    order by 
-		        notice_no 
+		        STD_BRD_NO
 		    asc) n
 		order by
 		    rownum
 		    desc
 	</select>
 	
-	<select id="selectOneNotice" resultType="notice">
+	<select id="getListCount" resultType="_int" >
+		SELECT
+			COUNT(*)
+		FROM
+			study_board
+	</select>
+		<select id="selectOneStudyBoard" resultType="notice">
 		SELECT
 			*
 		FROM
-			notice
+			study_board
 		WHERE
-			notice_no = #{noticeNo}
+			std_brd_no = #{stdBrdNo}
 	</select>
 	
 	<insert id="insertBoard">
 		INSERT INTO
-		notice(
-			notice_no,
+		study_board(
+			std_brd_no,
 			ref_member_id,
-			notice_title,
-			notice_content,
-			notice_date,
-			notice_count
+			ref_lecture_no,
+			std_brd_title,
+			std_brd_content,
+			std_brd_date,
+			std_brd_count
 			)
 		values(
-			SEQ_NOTICE_NO.NEXTVAL,
+			SEQ_STD_BRD_NO.NEXTVAL,
 			#{refMemberId},
-			#{noticeTitle},
-			#{noticeContent},
+			5,
+			#{stdBrdTitle},
+			#{stdBrdContent},
 			default,
 			0
 		)
-		<selectKey resultType="_int" keyProperty="noticeNo" order="AFTER">
+		<selectKey resultType="_int" keyProperty="stdBrdNo" order="AFTER">
 		select
-			SEQ_NOTICE_NO.currval
+			SEQ_STD_BRD_NO.currval
 		from
 			dual
 		</selectKey>
@@ -63,13 +66,13 @@
 	<delete id="delete">
 		DELETE
 		FROM
-			notice
+			study_board
 		where
 			notice_no = #{noticeNo}
 	</delete>
 	<update id="update">
 		update 
-		    notice
+		    study_board
 		set 
 		    notice_title = #{noticeTitle},
 		    notice_content = #{noticeContent},
@@ -79,7 +82,7 @@
 	</update>
 	<update id="updateCnt">
 		update
-			notice
+			study_board
 		set
 			notice_count = notice_count+1
 		where
@@ -109,4 +112,6 @@
 		and 
 			ref_contents_group_no = 'N'
 	</delete>
+
+
 </mapper>

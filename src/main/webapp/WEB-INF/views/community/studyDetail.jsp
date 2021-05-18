@@ -28,7 +28,7 @@
            <!-- 관리자-->
            <button type="button" class="btn btn-primary update-btn">수정</button>
            <button type="button" class="btn btn-danger delete-btn">삭제</button>
-           <button type="button" class="btn btn-primary list-btn" onclick="location.href='./studentBoardList.html'">목록으로</button>
+           <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/studyList.do'">목록으로</button>
          </div>
          <div class="comment">
            <div class="comment-title">댓글</div>
