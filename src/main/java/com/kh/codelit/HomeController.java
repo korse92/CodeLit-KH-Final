@@ -31,23 +31,23 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
-		logger.info("/ 요청!");
-
-        return "forward:index.jsp";        //  슬래시에 대해 이걸로 인덱스 찾아가게 함.
-        // Servers 하위에 있는 web.xml에서 웰컴파일 지정하던 것을 여기서 직접 설정해줌.
+		logger.info("/요청합니다 !!!!!!!!!!!@#@$@$ㄴ!!!!");
+		logger.info("/풀리$@$ㄴ!!!!");
+        return "forward:index.jsp";        //  �뒳�옒�떆�뿉 ���빐 �씠嫄몃줈 �씤�뜳�뒪 李얠븘媛�寃� �븿.
+        // Servers �븯�쐞�뿉 �엳�뒗 web.xml�뿉�꽌 �쎇而댄뙆�씪 吏��젙�븯�뜕 寃껋쓣 �뿬湲곗꽌 吏곸젒 �꽕�젙�빐以�.
 	}
 	
 	/**
-	 * 커맨드객체 이용시 사용자 입력값(String)을 특정필드타입으로 대입할 editor객체를 설정
+	 * 而ㅻ㎤�뱶媛앹껜 �씠�슜�떆 �궗�슜�옄 �엯�젰媛�(String)�쓣 �듅�젙�븘�뱶���엯�쑝濡� ���엯�븷 editor媛앹껜瑜� �꽕�젙
 	 * @param binder
 	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		//Member.birthday:java.sql.Date 타입처리
+		//Member.birthday:java.sql.Date ���엯泥섎━
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
-		//date 입력값을 입력하지않으면 ''으로 넘어와 null로 변환처리가 자동으로 안되어서 커스텀에디터 생성
-		//커스텀에디터 생성 : allowEmpty - true(빈문자열을 null로 변환처리 허용)
+		//date �엯�젰媛믪쓣 �엯�젰�븯吏��븡�쑝硫� ''�쑝濡� �꽆�뼱�� null濡� 蹂��솚泥섎━媛� �옄�룞�쑝濡� �븞�릺�뼱�꽌 而ㅼ뒪���뿉�뵒�꽣 �깮�꽦
+		//而ㅼ뒪���뿉�뵒�꽣 �깮�꽦 : allowEmpty - true(鍮덈Ц�옄�뿴�쓣 null濡� 蹂��솚泥섎━ �뿀�슜)
 		PropertyEditor editor = new CustomDateEditor(sdf, true);
 		binder.registerCustomEditor(java.sql.Date.class, editor);
 		

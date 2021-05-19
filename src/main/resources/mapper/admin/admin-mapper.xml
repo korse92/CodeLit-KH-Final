@@ -151,14 +151,15 @@
     	 l.*
 	 from ( select 
             	*
-       		from lecture l join lecture_category c 
+       		from lecture join lecture_category 
          		on ref_lec_cat_no = lec_cat_no  ) l            
 	<where>
 		lecture_accept_yn = 'Y'		
      <if test="searchKeyword != null and searchKeyword != ''">
        	   and
-       	   		l.ref_member_id like '%' || #{searchKeyword} || '%' 
-     </if>
+       	   		${searchType} like '%' || #{searchKeyword} || '%' 
+
+     </if>  	   		
      <if test="category != null and category != ''">
        	   and 
        	  		l.ref_lec_cat_no = #{category}	   
@@ -233,7 +234,7 @@
 	<update id="rejectPlayingLecture">
 	update
     	lecture
-	set lecture_accept_yn = 'N'
+	set lecture_accept_yn = 'W'
 	where lecture_no = #{no}
 	
 	</update>
