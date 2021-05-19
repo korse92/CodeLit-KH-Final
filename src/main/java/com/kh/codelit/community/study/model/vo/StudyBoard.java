@@ -1,4 +1,4 @@
-package com.kh.codelit.community.student.model.vo;
+package com.kh.codelit.community.study.model.vo;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class StudyBoard {
 
 	private int stdBrdNo;
 	private String refMemberId;
@@ -20,5 +20,6 @@ public class Student {
 	private String stdBrdContent;
 	private Date stdBrdDate;
 	private int stdBrdCount;
-	
+	private int rownum;
+
 }
