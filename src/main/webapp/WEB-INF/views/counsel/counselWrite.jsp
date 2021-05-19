@@ -45,7 +45,7 @@ img#thumbImage {
                 </div>
                 <div class="row">
                   <div class="col-sm-2 align-self-center">
-                    <label class="form-label" for="lectureName">제목</label>
+                    <label class="form-label" for="counselTitle">제목</label>
                   </div>
                   <div class="col-sm-4">
                     <select class="form-select" name="refLecCatNo" required>
@@ -57,8 +57,8 @@ img#thumbImage {
                   </div>
                  
                   <div class="col-sm-6">
-                    <input class="form-control" type="text" name="lectureName"
-                      id="lectureName" placeholder="제목" required>
+                    <input class="form-control" type="text" name="counselTitle"
+                      id="counselTitle" placeholder="제목" required>
                   </div>
                 </div>
                

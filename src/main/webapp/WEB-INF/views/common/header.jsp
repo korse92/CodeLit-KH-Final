@@ -82,8 +82,10 @@ alert("${msg}");
 									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
 								</c:forEach>
 							</ul>
-						</li>
+						</li>  
+						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
+						</sec:authorize>
 					</ul>
 				</div>
 

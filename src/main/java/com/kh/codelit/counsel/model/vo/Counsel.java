@@ -18,14 +18,14 @@ import lombok.Setter;
 @Setter
 public class Counsel {
 	
-	private String CounselNo;
-	private String RefMemberId;
-	private String CounselCategory;
-	private String CounselTitle;
-	private String CounselContent;
-	private int Qno;
-	private String leval;
-	private Date CounselDate;
+	private String counselNo;
+	private String refMemberId;
+	private String counselCategory;
+	private String counselTitle;
+	private String counselContent;
+	private int counselQNo;
+	private String counselLeval;
+	private Date counselDate;
 
 	
 }

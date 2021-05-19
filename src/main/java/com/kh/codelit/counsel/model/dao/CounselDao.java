@@ -4,6 +4,8 @@ import com.kh.codelit.counsel.model.vo.Counsel;
 
 public interface CounselDao {
 
-	int insertBoard(Counsel counsel);
+	
+
+	int insertCounsel(Counsel counsel);
 
 }

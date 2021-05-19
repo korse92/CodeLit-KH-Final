@@ -45,18 +45,18 @@ public class ConuselController {
 	Model model,
 	RedirectAttributes redirect,
 	Principal pri) {
-log.debug("upFile = {}", upFile);
-String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/counsel");
-File dir = new File(saveDirectory);
-if(!dir.exists())
-dir.mkdir();
-counsel.setRefMemberId(pri.getName());
+		log.debug("upFile = {}", upFile);
+		String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/counsel");
+		File dir = new File(saveDirectory);
+		if(!dir.exists())
+		dir.mkdir();
+	counsel.setRefMemberId(pri.getName());
 
-int result = service.insertBoard(counsel);
-String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
-redirect.addFlashAttribute("msg",msg);
+	int result = service.insertCounsel(counsel);
+	String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
+	redirect.addFlashAttribute("msg",msg);
 
-return "redirect:/counsel/counselList.do";
+	return "redirect:/counsel/counselList.do";
 
 
 	}

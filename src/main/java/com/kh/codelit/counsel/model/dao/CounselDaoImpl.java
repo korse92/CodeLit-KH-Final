@@ -11,8 +11,8 @@ public class CounselDaoImpl implements CounselDao {
 	private SqlSessionTemplate session;
 
 	@Override
-	public int insertBoard(Counsel counsel) {
+	public int insertCounsel(Counsel counsel) {
 		
-		return session.insert("counsel.insertBoard",counsel);
+		return session.insert("counsel.insertCounsel",counsel);
 	}
 }

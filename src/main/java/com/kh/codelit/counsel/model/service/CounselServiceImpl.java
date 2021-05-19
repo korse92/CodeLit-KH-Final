@@ -14,8 +14,8 @@ public class CounselServiceImpl implements CounselService{
 	private CounselDao dao;
 
 	@Override
-	public int insertBoard(Counsel counsel) {
+	public int insertCounsel(Counsel counsel) {
 	
-		return dao.insertBoard(counsel);
+		return dao.insertCounsel(counsel);
 	}
 }
