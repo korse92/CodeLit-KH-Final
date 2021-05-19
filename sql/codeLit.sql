@@ -165,7 +165,8 @@ CREATE TABLE "LECTURE_COMMENT" (
 	"REF_LECTURE_NO"	NUMBER		NOT NULL,
 	"REF_MEMBER_ID"	VARCHAR2(20)		NOT NULL,
 	"LEC_ASSESSMENT"	NUMBER		NOT NULL,
-	"LEC_COMMENT"	VARCHAR2(1500)		NOT NULL
+	"LEC_COMMENT"	VARCHAR2(1500)		NOT NULL,
+    "LEC_CMT_ENROLL_DATE"   DATE    DEFAULT sysdate NOT NULL
 );
 
 COMMENT ON COLUMN "LECTURE_COMMENT"."REF_LECTURE_NO" IS 'SEQ_LEC_NO';
@@ -837,5 +838,23 @@ begin
     commit;
 end;
 /
+
+--강의후기 테스트 데이터 150개
+begin
+    for n in 1..150 loop
+        insert into
+			lecture_comment
+		values (
+			trunc(dbms_random.value(3,20)), -- 실제로 있는 강의 번호값 중에 난수 뽑을 것
+			'user', -- 실제로 있는 member_id 쓸것
+			trunc(dbms_random.value(1,6)),
+			'좋은 강의네여',
+			default
+        );
+    end loop;
+    commit;
+end;
+/
+
 
 commit;
