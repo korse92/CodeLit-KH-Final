@@ -4,6 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="counsel">
 
+	<insert id="insertBoard">
+	INSERT INTO
+		counsel
+		values(
+			SEQ_COUNSEL_NO.NEXTVAL,
+			#{refMemberId},
+			#{counselCategory},
+			#{counselTitle},
+			#{counselContent},
+			null,
+			null,
+			#{counselDate}
+		)
 	
+	
+	
+	</insert>
 
 </mapper>
