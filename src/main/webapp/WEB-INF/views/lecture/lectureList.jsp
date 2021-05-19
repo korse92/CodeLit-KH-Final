@@ -32,8 +32,59 @@
 <!-- 컨텐츠 시작 -->
 
 <!-- 개인 CSS, JS 위치 -->
-<aside>
-test
+<link href="${pageContext.request.contextPath}/resources/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-fa.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-svg.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-uni.css" media="all" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
+
+<script>
+$(() => {
+	$("#input-id").rating();
+	
+	$("#input-id").rating({min:1, max:10, step:2, size:'lg'});
+});
+</script>
+
+<input id="input-id" name="input-name" type="number" class="rating" min=1 max=10 step=2 data-size="lg" data-rtl="true">
+<aside class="">
+	<div id="sidebar" class="bg-light m-0 h-100"
+		style="width: 250px;">
+		<a href="/"	class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+			<svg class="bi me-2" width="40" height="32">
+				<use xlink:href="#bootstrap" />
+			</svg>
+			<span class="fs-4">Sidebar</span>
+		</a>
+		<hr>
+		<ul class="nav nav-pills flex-column mb-auto">
+			<li class="nav-item">
+				<a href="#" class="nav-link active" aria-current="page">
+					<svg class="bi me-2" width="16" height="16"><use xlink:href="#home" /></svg> Home
+				</a>
+			</li>
+			<li>
+				<a href="#" class="nav-link link-dark">
+					<svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2" /></svg> Dashboard
+				</a>
+			</li>
+			<li>
+				<a href="#" class="nav-link link-dark">
+					<svg class="bi me-2" width="16" height="16"><use xlink:href="#table" /></svg> Orders
+				</a>
+			</li>
+			<li>
+				<a href="#" class="nav-link link-dark">
+					<svg class="bi me-2" width="16" height="16"><use xlink:href="#grid" /></svg> Products
+				</a>
+			</li>
+			<li>
+				<a href="#" class="nav-link link-dark">
+					<svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle" /></svg> Customers
+				</a>
+			</li>
+		</ul>
+	</div>
 </aside>
 <div class="container my-5">
 	<div class="page-header row">
@@ -71,7 +122,7 @@ test
 		<c:if test="${vs.count % 4 == 1}">
 		<div class="row my-4 px-5">
 		</c:if>
-			<div class="col-3">
+			<div class="col-sm-3">
 				<a href="${pageContext.request.contextPath}/lecture/lectureDetail?no=${lecture.lectureNo}" class="text-decoration-none text-dark">
 					<div class="card mx-auto" style="width: 15rem;">
 						<c:choose>
@@ -79,22 +130,33 @@ test
 							<img
 								src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image"
 								class="card-img-top"
-								alt="...">
+								alt="..."
+								style="height: 10rem;">
 							</c:when>
 							<c:otherwise>
 							<img
 								src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${lecture.lectureThumbRenamed}"
 								class="card-img-top"
-								alt="...">
+								alt="..."
+								style="height: 10rem;">
 							</c:otherwise>
 						</c:choose>
 						<div class="card-body">
 							<h5 class="card-title">${lecture.lectureName}</h5>
 							<p class="card-text">${lecture.refMemberId}</p>
 							<p class="card-text">
-								별점
+								${lecture.avgLecAssessment}
 							</p>
-							<p class="card-text">${lecture.lecturePrice != 0 ? lecture.lecturePrice : "무료"}</p>
+							<p class="card-text">
+							<c:choose>
+								<c:when test="${lecture.lecturePrice == 0}">
+								무료
+								</c:when>
+								<c:otherwise>
+								<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
+								</c:otherwise>
+							</c:choose>
+							</p>
 						</div>
 					</div>
 				</a>
@@ -107,7 +169,6 @@ test
 	<div class="row">
 		${pageBar}
 	</div>
-
 </div>
 <!-- 컨텐츠 끝 -->
 

@@ -42,10 +42,10 @@
 
 	
 	<select id="selectLectureList" resultType="lecture">
-		select
-		    *
-		from
-		    lecture
+		select 
+			L.*,
+			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = L.lecture_no), 1) "avg_lec_assessment"
+		from lecture L
 		<where>
 		    lecture_accept_yn = 'Y'
 		<!--

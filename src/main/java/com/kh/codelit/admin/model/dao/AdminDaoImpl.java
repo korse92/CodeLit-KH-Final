@@ -87,7 +87,7 @@ public class AdminDaoImpl implements AdminDao {
 
 
 	@Override
-	public List<Map<Integer, Object>> applyLectureList() {
+	public List<Map<String, Object>> applyLectureList() {
 		return session.selectList("admin.applyLectureList");
 	}
 
@@ -121,14 +121,14 @@ public class AdminDaoImpl implements AdminDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return session.selectList("admin.selectAllLecture", null, rowBounds);
+		return session.selectList("admin.selectAllLecture",param, rowBounds);
 	}
 
 
 	@Override
-	public int getTotalContents() {
+	public int getTotalContents(Map<String, Object> param) {
 		//카운트 그룹함수로 1행 1열짜리 갖고올거임
-		return session.selectOne("admin.getTotalContents");
+		return session.selectOne("admin.getTotalContents", param);
 	}
 
 	@Override

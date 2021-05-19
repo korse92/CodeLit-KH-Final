@@ -53,7 +53,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Map<Integer, Object>> applyLectureList() {
+	public List<Map<String, Object>> applyLectureList() {
 		return adminDao.applyLectureList();
 	}
 
@@ -78,8 +78,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int getTotalContents() {
-		return adminDao.getTotalContents();
+	public int getTotalContents(Map<String, Object> param) {
+		return adminDao.getTotalContents(param);
 	}
 
 	@Override
