@@ -46,7 +46,6 @@ $(() => {
             <tbody>
             <c:forEach items="${list}" var="list" varStatus="status">
               <tr data-no="${list.noticeNo}">
-			<!--  전체 레코드 수 - ( (현재 페이지 번호 - 1) * 한 페이지당 보여지는 레코드 수 + 현재 게시물 출력 순서 ) -->
                 <td scope="row">${list.rownum}</td>
                 <td>
                 	<c:choose>

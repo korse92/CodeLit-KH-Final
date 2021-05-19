@@ -165,7 +165,8 @@ CREATE TABLE "LECTURE_COMMENT" (
 	"REF_LECTURE_NO"	NUMBER		NOT NULL,
 	"REF_MEMBER_ID"	VARCHAR2(20)		NOT NULL,
 	"LEC_ASSESSMENT"	NUMBER		NOT NULL,
-	"LEC_COMMENT"	VARCHAR2(1500)		NOT NULL
+	"LEC_COMMENT"	VARCHAR2(1500)		NOT NULL,
+    "LEC_CMT_ENROLL_DATE"   DATE    DEFAULT sysdate NOT NULL
 );
 
 COMMENT ON COLUMN "LECTURE_COMMENT"."REF_LECTURE_NO" IS 'SEQ_LEC_NO';
@@ -836,50 +837,23 @@ begin
     end loop;
     commit;
 end;
-/
 
 commit;
 
---쿼리문 테스트
-select * from pick;
-select * from lecture;
-select * from teacher;
+--강의후기 테스트 데이터 150개
+begin
+    for n in 1..150 loop
+        insert into
+			lecture_comment
+		values (
+			trunc(dbms_random.value(3,20)), -- 실제로 있는 강의 번호값 중에 난수 뽑을 것
+			'user', -- 실제로 있는 member_id 쓸것
+			trunc(dbms_random.value(1,6)),
+			'좋은 강의네여',
+			default
+        );
+    end loop;
+    commit;
+end;
 
-select lecture_thumb_renamed, lecture_name, teacher_name, lecture_price, lec_cat_name, lecture_intro
-from pick p, lecture l, lecture_category lc, teacher t
-where p.ref_lecture_no = l.lecture_no and ;
-
-
-
-desc basket;
-insert into pick values('1', 'user', '57', sysdate);
 commit;
-select lecture_thumb_renamed, lecture_name, ref_member_id, lecture_price, ref_lec_cat_no
-from lecture;
-
-select t.teacher_name
-from teacher t, lecture l
-where t.ref_member_id = l.ref_member_id;
-
-select lec_cat_name, lec_cat_no
-from lecture_category lc, lecture l
-where l.ref_lec_cat_no = lc.lec_cat_no;
-
-select lecture_thumb_renamed, lecture_name, teacher_name, lecture_price, lec_cat_name
-from lecture l, teacher t, lecture_category lc
-where (t.ref_member_id = l.ref_member_id) and (l.ref_lec_cat_no = lc.lec_cat_no);
-
-select lecture_thumb_renamed, lecture_name, teacher_name, lecture_price, lec_cat_name
-from lecture l, teacher t, lecture_category lc
-where l.ref_member_id = 'teacher1';
-
-select * from lecture;
-
-select * from teacher;
-select * from member;
-insert into teacher
-values ('teacher', '선생님', '01011111234', '5', 'hello', 'https://github.com/teacher.git', '케이뱅크', '101010101010', '뱅크');
-commit;
-
-insert into lecture
-values ('57', '6', 'teacher1', '자바 풀스택 과정', 'V', '테스트중', 'banner1.jpg', '20210517_134626520_001.jpg', 80000, 'Y', '1'); 

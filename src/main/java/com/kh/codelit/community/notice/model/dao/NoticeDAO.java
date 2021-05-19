@@ -3,6 +3,7 @@ package com.kh.codelit.community.notice.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.notice.model.vo.Notice;
 
 public interface NoticeDAO {
@@ -20,5 +21,11 @@ public interface NoticeDAO {
 	int update(Notice notice);
 
 	int updateCnt(int noticeNo);
+
+	int insertAttachment(Attachment attach);
+
+	Attachment selectAttachment(int noticeNo);
+
+	int deleteAttach(int noticeNo);
 
 }
