@@ -47,6 +47,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->
@@ -84,6 +85,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->
@@ -121,6 +123,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->
@@ -158,6 +161,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->
