@@ -1,13 +1,6 @@
-
-
-ADROP TABLE "MEMBER" CASCADE CONSTRAINTS;
-
-
-
 --=============================================
 -- 테이블 CREATE문
 --=============================================
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
 
 CREATE TABLE "MEMBER" (
