@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.notice.model.dao.NoticeDAO;
 import com.kh.codelit.community.notice.model.vo.Notice;
 
@@ -56,6 +57,24 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int updateCnt(int noticeNo) {
 		return dao.updateCnt(noticeNo);
+	}
+
+
+	@Override
+	public int insertAttachment(Attachment attach) {
+		return dao.insertAttachment(attach);
+	}
+
+
+	@Override
+	public Attachment selectOneAttach(int noticeNo) {
+		return dao.selectAttachment(noticeNo);
+	}
+
+
+	@Override
+	public int deleteAttach(int noticeNo) {
+		return dao.deleteAttach(noticeNo);
 	}
 
 

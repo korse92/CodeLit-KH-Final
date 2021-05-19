@@ -23,6 +23,20 @@ window.onload = function() {
 
   });
 }
+//유효성검사
+function checkContent() {
+	const title = $("[name=stdBrdTitle]");
+	const content = $("[name=stdBrdContent]");
+	if(/^(.|\n)+$/.test(title.val()) == false){
+		alert("제목을 입력하세요");
+		return false;
+	}
+	if(/^(.|\n)+$/.test(content.val()) == false){
+		alert("내용을 입력하세요");
+		return false;
+	}
+	return true;
+}
 </script>
 
     <div class="container">
@@ -30,24 +44,25 @@ window.onload = function() {
           <h2 class=" jb-larger mt-3 col-sm-4">공부 게시판</h2>
         </div>
         <!-- 파일전송-->
-        <form action="">
+         <form action="${pageContext.request.contextPath}/community/studyInsert.do?${_csrf.parameterName}=${_csrf.token}"
+  			enctype="multipart/form-data" 
+        	method="post" 
+        	onsubmit="return checkContent();">
           <div class="row title-group">
             <h5 class="col-sm-2 board-title">제목</h5>
             <div class="col-sm-10">
-              <input class="form-control " type="text" placeholder="title">
+              <input class="form-control " type="text" name="stdBrdTitle" id="stdBrdTitle" placeholder="title">
             </div>
           </div>
           <div class="board-container">
-            <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
             <div class="form-group content">
-              <textarea class="form-control" name="" id=""rows="10" placeholder="content"></textarea>
+              <textarea class="form-control" name="stdBrdContent" id="stdBrdContent"rows="10" placeholder="content"></textarea>
               <img src="" alt="" id="photo_img">
                 <input type="file" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
             </div>
           </div>
           <div class="board-footer">
-            <!-- 관리자-->
-            <button type="button" class="btn btn-danger cancel-btn" onclick="location.href='./studentBoardList.html'">취소</button>
+            <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/commuity/studyList.do'">취소</button>
             <button type="submit" class="btn btn-primary complete-btn">완료</button>
           </div>
         </form>

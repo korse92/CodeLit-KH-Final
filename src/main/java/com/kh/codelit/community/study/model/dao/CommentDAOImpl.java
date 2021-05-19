@@ -1,4 +1,4 @@
-package com.kh.codelit.community.student.model.dao;
+package com.kh.codelit.community.study.model.dao;
 
 import org.springframework.stereotype.Repository;
 
