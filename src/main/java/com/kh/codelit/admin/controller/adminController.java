@@ -320,10 +320,12 @@ public class adminController {
 								ModelAndView mav,
 								@RequestParam(required = false) String searchKeyword,
 								@RequestParam(required = false) String category,
+								@RequestParam(required = false) String searchType,
 								HttpServletRequest request) {
 
 		log.debug("searchKeyword = {} ", searchKeyword);
 		log.debug("category = {}", category);
+		log.debug("searchType = {}", searchType);
 		
 		// 1 .사용자 입력값
 		int numPerPage = 10;
@@ -332,6 +334,7 @@ public class adminController {
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
 		param.put("searchKeyword", searchKeyword);
+		param.put("searchType", searchType);
 		// log.debug(" manageLectureBoard - param = {}", param);
 		
 		if("카테고리".equals(category) || category == null) {
@@ -351,7 +354,18 @@ public class adminController {
 			int totalContents = adminService.getTotalContents(param);
 			// log.debug("totalContents = {}", totalContents);
 			String url = request.getRequestURI();
-			// log.debug("url = {}",url);
+			if(category != null || searchKeyword != null || searchType != null)
+				url += "?category=" + category + "&searchKeyword=" + searchKeyword + "&searchType=" + searchType;
+			
+			Map<String, String[]> paramMap = request.getParameterMap();
+			for(String key : paramMap.keySet()) {
+				log.debug("key = {}", key);
+				String[] valArr = paramMap.get(key);
+				log.debug("valArr = {}", valArr);
+			}
+			
+			log.debug("paramMap = {}", paramMap);
+			log.debug("url = {}",url);
 			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 			log.debug("pageBar = {}", pageBar);
 			// 3. jsp처리 위임 model.addAttribute("list",list);
