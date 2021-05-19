@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -15,7 +17,7 @@ $(() => {
 		var $tr = $(e.target).parent();
 		var no = $tr.data("no");
 		
-		location.href = `${pageContext.request.contextPath}/community/studyDetail.do?stdBrdNo=\${stdBrdNo}`;
+		location.href = `${pageContext.request.contextPath}/community/studyDetail.do?stdBrdNo=\${no}`;
 	});
 });
 </script>
@@ -31,10 +33,11 @@ $(() => {
           
           <c:if test="${not empty list}">
           <div class="mt-4 col-sm-2">
-            <select class="form-select">
-              <option selected>검색</option>
-              <option value="2">제목</option>
-              <option value="3">내용</option>
+            <select class="form-select" id="searchType" name="searchType">
+              <option value="all">전체</option>
+              <option value="t">제목</option>
+              <option value="c">내용</option>
+              <option value="w">내용</option>
             </select>
           </div>
             
@@ -89,7 +92,9 @@ $(() => {
         </div>
       </c:if>
       	<div>
+      	<sec:authorize access="isAuthenticated()">
           <button class="btn btn-primary pull-right board-write" onclick="location.href='${pageContext.request.contextPath}/community/studyWrite.do'">글쓰기</button>
+      	</sec:authorize>
       	</div>
        </div>
 

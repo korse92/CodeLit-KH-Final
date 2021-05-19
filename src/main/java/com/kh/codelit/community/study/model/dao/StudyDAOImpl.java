@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
-import com.kh.codelit.community.notice.model.vo.Notice;
 import com.kh.codelit.community.study.model.vo.StudyBoard;
 
 @Repository
@@ -25,7 +24,7 @@ public class StudyDAOImpl implements StudyDAO {
 
 
 	@Override
-	public List<Notice> studyBoardList(Map<String, Object> param) {
+	public List<StudyBoard> studyBoardList(Map<String, Object> param) {
 		return session.selectList("studyBoard.studyBoardList", param);
 	}
 
@@ -39,6 +38,40 @@ public class StudyDAOImpl implements StudyDAO {
 	@Override
 	public int insertBoard(StudyBoard studyBoard) {
 		return session.insert("studyBoard.insertBoard", studyBoard);
+	}
+
+
+	@Override
+	public int updateCnt(int stdBrdNo) {
+		return session.update("studyBoard.updateCnt",stdBrdNo);
+	}
+
+	@Override
+	public Attachment selectOneAttach(int stdBrdNo) {
+		return session.selectOne("studyBoard.selectOneAttach", stdBrdNo);
+	}
+
+	@Override
+	public StudyBoard selectOneStudy(int stdBrdNo) {
+		return session.selectOne("studyBoard.selectOneStudy",stdBrdNo);
+	}
+
+
+	@Override
+	public int deleteAttach(int stdBrdNo) {
+		return session.delete("studyBoard.deleteAttach", stdBrdNo);
+	}
+
+
+	@Override
+	public int delete(int stdBrdNo) {
+		return session.delete("studyBoard.delete",stdBrdNo);
+	}
+
+
+	@Override
+	public int update(StudyBoard stdBrd) {
+		return session.update("studyBoard.update", stdBrd);
 	}
 
 }

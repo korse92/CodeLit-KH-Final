@@ -124,7 +124,6 @@ public class noticeController {
 	
 	@PostMapping("/noticeUpdate.do")
 	public String updateNotice(@ModelAttribute Notice notice, RedirectAttributes redirect) {
-		log.debug("notice = {}", notice);
 		int result = service.update(notice);
 		String msg = result > 0 ? "수정 성공":"수정 실패";
 		redirect.addFlashAttribute("msg",msg);

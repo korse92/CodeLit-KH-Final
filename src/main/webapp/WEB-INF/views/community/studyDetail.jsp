@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -16,42 +19,71 @@
        </div>
        <div class="row mt-3 header">
          <h5 class="col-1 board-title">제목</h5>
-         <p class="col-3">신규 개설 강의</p>
+         <p class="col-8">${stdBrd.stdBrdTitle}</p>
+         <p class="col-2"><fmt:formatDate value="${stdBrd.stdBrdDate}" pattern="yy/MM/dd HH:mm:ss" /></p>
+         <p class="col-1">${stdBrd.stdBrdCount}</p>
        </div>
        <div class="board-container">
          <h5 class="content-title">내용</h5>
-           <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
-           <img class="detail-img" src="../images/testImage.jpg" alt="페페이미지" value="">
-           <p class="content"></p>          
+          	<c:if test="${not empty attach}">
+	            <img src='${pageContext.request.contextPath}${attachPath}'>
+          	</c:if>
+           <p class="content">
+           	${stdBrd.stdBrdContent}
+           </p>          
        </div>
          <div class="board-footer">
-           <!-- 관리자-->
-           <button type="button" class="btn btn-primary update-btn">수정</button>
-           <button type="button" class="btn btn-danger delete-btn">삭제</button>
+           <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/studyUpdate.do?stdBrdNo=${stdBrd.stdBrdNo}'">수정</button>
+           <button type="button" class="btn btn-danger delete-btn" onclick='del();'>삭제</button>
            <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/studyList.do'">목록으로</button>
          </div>
          <div class="comment">
-           <div class="comment-title">댓글</div>
-           <br>
+<!--            <br>
+           <div class="">
              <h5 class="comment-writer">작성자이름</h5>
-             <span class="comment-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sapiente ratione dolor magnam ullam tempora eum earum ex eligendi ab nisi architecto, incidunt quo amet consequuntur aliquid repellat praesentium qui!</span>
+             <span class="comment-content">
+             	
+             </span>
              <div class="comment-btn">
                <button type="button" class="btn btn-link btn-sm" name="comment-update-btn">수정</button>
                <button type="button" class="btn btn-link btn-sm" name="comment-delete-btn" onclick="commentDelete()">삭제</button>
                <button type="button" class="btn btn-link btn-sm" name="comment-reply-btn" onclick="commentReply()">답글</button>
              </div>
+           </div> -->
+           <div class="comment-title">댓글</div>
+        	<form id="commentForm" name="commentForm">
              <div class="comment-form-group mt-5">
-             <form action="">
-                 <label for="lable">댓글 작성자 이름</label>
-                 <textarea class="form-control rounded-0" rows="2"></textarea>
-                 <input class="btn btn-primary comment-submit-btn" type="submit" value="전송"/>
-               </form>                 
+             	<table class="table">
+             		<tr>
+           				<td>
+	                 		<textarea class="form-control rounded-0" rows="2" id="" name="" placeholder="댓글입력"></textarea>
+                 	 		<input class="btn btn-primary comment-submit-btn" onclick="commentSubmit('${stdBrd.stdBrdNo}')" value="전송"/>
+            			</td>
+             		</tr>
+             	</table>
              </div>
+             <input type="hidden" id="stdBrdNo" name="stdBrdNo" value="${stdBrd.stdBrdNo}">
+        </form>
          </div>
      </div>
 
 
   <script>
+  function commentSubmit(no){
+		$.ajax({
+			type : 'POST',
+			url : "<c:url value='/community/stdBrdInsertComment.do />'",
+			data : $("form[name='commentForm']").serialize(),
+			success : function(data){
+				if(data=="success"){
+					getCommentList();
+					$("#comment").val("");
+				}
+			},
+			error : function(request, status, error)P
+				console.log(error);
+		});  
+	  }
     $("button[name='comment-delete-btn']").on("click", function(){
       confirm("삭제 하시겠습니까?");
     });
@@ -70,6 +102,13 @@
           $(".update-div").hide();
         });
     });
+	function del(){
+		if(confirm("삭제 하실거예요?")){
+			location.href=`${pageContext.request.contextPath}/community/studyDelete.do?stdBrdNo=${stdBrd.stdBrdNo}`;
+		} else{
+			return false;
+		}
+	};
   </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

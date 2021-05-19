@@ -27,7 +27,7 @@
 		FROM
 			study_board
 	</select>
-		<select id="selectOneStudyBoard" resultType="notice">
+		<select id="selectOneStudy" resultType="studyBoard">
 		SELECT
 			*
 		FROM
@@ -68,7 +68,7 @@
 		FROM
 			study_board
 		where
-			notice_no = #{noticeNo}
+			std_brd_no = #{stdBrdNo}
 	</delete>
 	<update id="update">
 		update 
@@ -78,17 +78,17 @@
 		    notice_content = #{noticeContent},
 		    notice_date = default
 		where
-		    notice_no = #{noticeNo}
+		    std_brd_no = #{stdBrdNo}
 	</update>
 	<update id="updateCnt">
 		update
 			study_board
 		set
-			notice_count = notice_count+1
+			std_brd_count = std_brd_count+1
 		where
-			notice_no = #{noticeNo}
+			std_brd_no = #{stdBrdNo}
 	</update>
-	<select id="selectAttachment" resultType="com.kh.codelit.attachment.model.vo.Attachment">
+	<select id="selectOneAttach" resultType="com.kh.codelit.attachment.model.vo.Attachment">
 		select 
 		    a.*,
 		    c.contents_attach_path
@@ -99,18 +99,18 @@
 		ON 
 		    a.ref_contents_group_no = c.contents_group_code
 		where
-		    a.ref_contents_code = #{noticeNo}
+		    a.ref_contents_code = #{stdBrdNo}
 		and 
-			a.ref_contents_group_no = 'N'
+			a.ref_contents_group_no = 'SB'
 	</select>
 	<delete id="deleteAttach">
 		delete 
 		from 
 			attachment 
 		where 
-			ref_contents_code = #{noticeNo} 
+			ref_contents_code = #{stdBrdNo} 
 		and 
-			ref_contents_group_no = 'N'
+			ref_contents_group_no = 'SB'
 	</delete>
 
 
