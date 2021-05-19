@@ -58,10 +58,16 @@ function checkContent() {
           <div class="board-container">
             <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
             <div class="form-group content">
-              <textarea class="form-control" name="noticeContent" id="noticeContent" rows="10"></textarea>
+              <textarea class="form-control" name="noticeContent" id="noticeContent" rows="10">${notice.noticeContent}</textarea>
               	<div class="custom-file">
-	              	<img src="" alt="" id="photo_img">
-	                <input type="file" class="custom-file-input" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
+	              	<c:if test="${not empty attach}">
+	              		<img src="${pageContext.request.contextPath}${attachPath}" alt="" id="photo_img">
+	              	</c:if>
+	              	<c:if test="${empty attach}">
+	              		<img src="" alt="" id="photo_img">	              	
+	              	</c:if>
+	                <input type="file" value="${attach.originalFilename}" class="custom-file-input" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
+              		${attach}
               	</div>
             </div>
           </div>

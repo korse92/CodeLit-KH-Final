@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.notice.model.vo.Notice;
 
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +66,23 @@ public class NoticeDAOImpl implements NoticeDAO {
 	public int updateCnt(int noticeNo) {
 		return session.update("notice.updateCnt", noticeNo);
 	}
-	
+
+
+	@Override
+	public int insertAttachment(Attachment attach) {
+		return session.insert("attachment.insertAttachment", attach);
+	}
+
+
+	@Override
+	public Attachment selectAttachment(int noticeNo) {
+		return session.selectOne("notice.selectAttachment", noticeNo);
+	}
+
+
+	@Override
+	public int deleteAttach(int noticeNo) {
+		return session.delete("notice.deleteAttach", noticeNo);
+	}
 
 }
