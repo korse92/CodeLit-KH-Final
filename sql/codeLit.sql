@@ -838,7 +838,8 @@ begin
     end loop;
     commit;
 end;
-/
+
+commit;
 
 --강의후기 테스트 데이터 150개
 begin
@@ -855,7 +856,5 @@ begin
     end loop;
     commit;
 end;
-/
-
 
 commit;
