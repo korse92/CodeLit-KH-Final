@@ -69,7 +69,7 @@ img#thumbImage {
                     <label class="form-label" for="lectureHandout">첨부파일</label>
                   </div>
                   <div class="col-sm">
-                    <input class="form-control" type="file" name="lectureHandout"
+                    <input class="form-control" type="file" name="cousnelHandout"
                       id="lectureHandout">
                   </div>
                 </div>

@@ -52,9 +52,9 @@ public class ConuselController {
 		dir.mkdir();
 	counsel.setRefMemberId(pri.getName());
 
-	int result = service.insertCounsel(counsel);
-	String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
-	redirect.addFlashAttribute("msg",msg);
+	//int result = service.insertCounsel(counsel);
+//	String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
+//	redirect.addFlashAttribute("msg",msg);
 
 	return "redirect:/counsel/counselList.do";
 
