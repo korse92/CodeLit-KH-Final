@@ -31,7 +31,9 @@ img#thumbImage {
 
 <div class="container">
 	<div class="mt-5 mx-auto form-group" style="width:fit-content;">
-		<form:form name="lectureEnrollFrm"
+		<form:form
+			id="lectureEnrollFrm"
+			name="lectureEnrollFrm"
 			action="${pageContext.request.contextPath}/teacher/lectureEnroll.do"
 			method="post"
 			enctype="multipart/form-data">
