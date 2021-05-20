@@ -125,7 +125,7 @@
                   <th scope="col">주 강의분야</th>
                   <th scope="col">아이디</th>
                   <th scope="col">개설강의</th>
-                  <th scope="col">탈퇴 처리</th>
+                  <th scope="col">권한</th>
                 </tr>
               </thead>
               <tbody>
@@ -149,7 +149,7 @@
                     	<form:form method="POST" class="deleteTeacherFrm"
                     				action="${pageContext.request.contextPath}/admin/deleteTeacher.do">
                     	<input type="hidden" name="memberId" value="${teacher.refMemberId}" />
-                        <button type="submit" class="btn btn-danger text-light">탈퇴</button>
+                        <button type="submit" class="btn btn-danger text-light">권한삭제</button>
                     	</form:form>
                     </td>
                 </tr>
