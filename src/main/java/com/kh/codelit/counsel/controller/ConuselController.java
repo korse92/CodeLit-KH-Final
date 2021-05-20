@@ -35,40 +35,40 @@ public class ConuselController {
 	@Autowired
 	private CounselService service;
 	
-	@GetMapping(value ={"/counselList.do{catNo}","/counselList.do"})
+	@GetMapping("/counselList.do")
 	public String selelctBoard(
-		@PathVariable(required = false) Integer catNo,
 		@RequestParam(defaultValue = "1") int cPage,
 		HttpServletRequest request,
 		Model model) {
-	//1. 사용자 입력값
-	if(catNo == null)
-		catNo = 0;
-	int numPerPage = 10;
-	log.debug("catNo = {}", catNo);
-	log.debug("cPage = {}", cPage);
-	Map<String, Object> param = new HashMap<>();
-	param.put("numPerPage", numPerPage);
-	param.put("catNo", catNo);
-	param.put("cPage", cPage);		
-	
-	//2. 업무로직
-	//a. contents영역
-	List<Counsel> list = service.selectCounselList(param);
-	log.debug("list = {}", list);
-	
-	//b. pageBar영역
-	int totalContents = service.getTotalContents(catNo);
-	String url = request.getRequestURI();
-	log.debug("totalContents = {}", totalContents);
-	log.debug("url = {}", url);
-	String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
-	
-	//3.jsp 위임처리
-	model.addAttribute("list", list);
-	model.addAttribute("pageBar", pageBar);
-	
-	return "counsel/counselList";
+		
+		try {
+			//1. 사용자 입력값
+			int numPerPage = 10;
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("numPerPage", numPerPage);
+			param.put("cPage", cPage);		
+			
+			//2. 업무로직
+			//a. contents영역
+			List<Counsel> list = service.selectCounselList(param);
+			log.debug("list = {}", list);
+			
+			//b. pageBar영역
+			int totalContents = service.getTotalContents();
+			String url = request.getRequestURI();
+			log.debug("url = {}", url);
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+			
+			//3.jsp 위임처리
+			model.addAttribute("list", list);
+			model.addAttribute("pageBar", pageBar);
+			
+		} catch(Exception e) {
+			throw e;
+		}
+		
+		return "counsel/counselList";
 	}
 	
 	
@@ -85,24 +85,30 @@ public class ConuselController {
 			Model model,
 			RedirectAttributes redirectAttr,
 			Authentication authentication) {
-		log.debug("upFile = {}", upFile);
-		String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/counsel");
-		File dir = new File(saveDirectory);
-		if(!dir.exists())
-		dir.mkdir();
 		
-		counsel.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
+		try {
+			log.debug("upFile = {}", upFile);
+			
+			String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/counsel");
+			
+			File dir = new File(saveDirectory);
+			if(!dir.exists())
+				dir.mkdir();
+			
+			counsel.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
+			
+			log.debug("counsel = {}", counsel);
+			
+			int result = service.insertCounsel(counsel);
+			String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
+			redirectAttr.addFlashAttribute("msg",msg);
+			
+		} catch(Exception e) {
+			throw e;
+		}
 		
-		log.debug("counsel = {}", counsel);
-
-		int result = service.insertCounsel(counsel);
-		String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
-		redirectAttr.addFlashAttribute("msg",msg);
-	
 		return "redirect:/counsel/counselList.do";
 
-
 	}
-
 
 }

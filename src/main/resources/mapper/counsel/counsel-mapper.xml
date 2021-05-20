@@ -4,7 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="counsel">
 
-	<insert id="insertCounsel">insert into counsel values(seq_counsel_no.nextval,#{refMemberId},#{counselTitle},#{counselContent},#{counselQNo},1,default)</insert>
+	<insert id="insertCounsel">
+		insert into 
+			counsel 
+		values
+			(seq_counsel_no.nextval,
+			#{refMemberId},
+			#{counselTitle},
+			#{counselContent},
+			#{counselQNo},
+			1,
+			default)
+	</insert>
+	
 	<select id="selectCounselList" resultType="counsel">
 		select 
 			rownum,c.*

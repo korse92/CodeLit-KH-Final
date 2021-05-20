@@ -21,12 +21,12 @@
 
 .form-group .form-label {
 	margin-bottom: 0px;
-	width: 100px;
+	width: 5.4rem;
 }
 
-img#thumbImage {
-	width: 450px;
-	height: 300px;
+#counselContent {
+	padding : 0;
+	min-height: 20rem;
 }
 </style>
 
@@ -48,7 +48,7 @@ img#thumbImage {
                     <label class="form-label" for="counselTitle">제목</label>
                   </div>
                  
-                  <div class="col-sm-6">
+                  <div class="col-sm-10">
                     <input class="form-control" type="text" name="counselTitle"
                       id="counselTitle" placeholder="제목" required>
                   </div>
@@ -67,7 +67,7 @@ img#thumbImage {
                 </div>
                
                 <div class="row">
-				<label class="form-label mb-2" for="">내용</label>
+				<label class="form-label mb-2" for="counselContent">내용</label>
 				<div class="col-sm">
 					<textarea name="counselContent" id="counselContent" class="form-control" required></textarea>
 				</div>
