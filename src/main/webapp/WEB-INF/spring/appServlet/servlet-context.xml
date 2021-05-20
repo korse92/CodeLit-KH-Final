@@ -50,19 +50,6 @@
 			<exclude-mapping path="/resources/**"/>
 			<beans:bean id="loggerinterceptor" class="com.kh.codelit.common.interceptor.LoggerInterceptor"/>
 		</interceptor>
-		<!-- <interceptor>
-			mapping 태그는 여러개 사용가능하다
-			<mapping path="/member/**/*.do"/>
-			<mapping path="/board/**/*.do"/>
-			<exclude-mapping path="/member/login.do"/>
-			<exclude-mapping path="/member/memberEnroll.do"/>
-			<exclude-mapping path="/member/checkIdDuplicate*.do"/>
-			<exclude-mapping path="/board/boardList.do"/>
-			<exclude-mapping path="/board/boardDetail.do"/>
-			<exclude-mapping path="/board/fileDownload.do"/>
-			<exclude-mapping path="/board/searchTitle.do"/>
-			<beans:bean id="loginInterceptor" class="com.kh.codelit.common.interceptor.LoginInterceptor"/>
-		</interceptor> -->
 	</interceptors>
 	
 	<!-- #11.1 annotation aop 작성 -->
