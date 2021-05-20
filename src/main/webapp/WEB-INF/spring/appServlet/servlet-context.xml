@@ -60,17 +60,16 @@
 	-->
 	<aop:aspectj-autoproxy/>
 	
-		
-	<!-- <beans:bean id="csrfSecurityRequestMatcher" class="kr.re.kinac.pfp.component.CsrfSecurityRequestMatcher" /> -->
-
 	<!-- #12.1 파일업로드를 처리할 Resolver클래스 빈등록(빈이름 주의) -->
-	<beans:bean
+ 	<beans:bean
 		id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
-		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음)-->
+		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음) -->
 		<beans:property name="maxUploadSizePerFile" value="524288000" /> <!-- 파일하나당 최대용량은 500MB(500 * 1024 * 1024)이다. 기본값: -1(제한없음) -->
 		<beans:property name="maxInMemorySize" value="10240" /> <!-- 메모리 사용최대용량. 기본값 10240. 이값을 넘어가면, 임시파일로 저장함. -->
 	</beans:bean>
+	
+	
 	
 	<!-- #15.1 @Responsebody사용을 위한 의존 : 빈등록 (스프링 5.x => MappingJackson2HttpMessageConverter) -->
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />

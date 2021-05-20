@@ -12,7 +12,6 @@
 	<beans:bean id="bcryptPasswordEncoder"
 				class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 				
-	<!-- <beans:bean id="csrfSecurityRequestMatcher" class="com.kh.codelit.common.requestmatcher.CsrfSecurityRequestMatcher" /> -->
 	<beans:bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음) -->
 		<beans:property name="maxUploadSizePerFile" value="524288000" /> <!-- 파일하나당 최대용량은 500MB(500 * 1024 * 1024)이다. 기본값: -1(제한없음) -->

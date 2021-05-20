@@ -79,7 +79,7 @@ public class LectureController {
 	}
 	
 	@GetMapping("/lectureDetail.do")
-	public void lectureDetail(@RequestParam int lectureNo) {
+	public void lectureDetail(@RequestParam int no) {
 		
 	}
 
