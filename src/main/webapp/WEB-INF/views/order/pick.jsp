@@ -8,6 +8,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="찜목록" name="title"/>
@@ -38,27 +40,31 @@
     </div>
 
     <div class="pick">
+		<c:forEach items="${pickList}" var="pick" varStatus="vs">
         <div class="lecture">
             <div class="show">
                 <div class="img">
-                    <img src="${pageContext.request.contextPath}/resources/images/banner1.jpg" alt="">
+                	<c:choose>
+                	<c:when test="${empty pick.lectureThumbRenamed}">
+               			<img src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image" alt="...">
+                	</c:when>
+                	<c:otherwise>
+                    	<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${pick.lectureThumbRenamed}" alt="">
+                	</c:otherwise>
+                	</c:choose>
                 </div>
                 <div class="info">
-                    <span class="title">강의제목</span>
-                    <span class="name">강사이름</span>
-                    <span class="price">수강료</span>
-                    <span class="avgLecAssessment">별점</span>
-                <span class="category">카테고리</span>
+                    <span class="title">${pick.lectureName}</span>
+                    <span class="name">${pick.teacherName}</span>
+                    <span class="price">${pick.lecturePrice}</span>
+                    <span class="avgLecAssessment">${pick.avgLecAssessment}</span>
+                	<span class="category">${pick.lecCatName}</span>
                 </div>
             </div> <!-- show -->
             <div class="hide">
                 <div class="link_info">
-                    <a href='http://www.google.com' class="moreInfo">
-                        <span class="info">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Blanditiis porro ipsa ullam, vel sunt omnis culpa. Voluptate, itaque necessitatibus.
-                            Natus reprehenderit et similique autem tempora ad culpa officia ab dolore.
-                        </span>
+                    <a href="${pageContext.request.contextPath}/lecture/lectureDetail?no=${pick.refLectureNo}" class="moreInfo">
+                        <span class="info">${pick.lectureIntro}</span>
                     </a>
                 </div>
                 <ul class="addLecture">
@@ -75,121 +81,8 @@
                 </ul>
             </div> <!--hide -->
         </div> <!-- lecture -->
-
-        <div class="lecture">
-            <div class="show">
-                <div class="img">
-                    <img src="${pageContext.request.contextPath}/resources/images/banner1.jpg" alt="">
-                </div>
-                <div class="info">
-                    <span class="title">강의제목</span>
-                    <span class="name">강사이름</span>
-                    <span class="price">수강료</span>
-                    <span class="avgLecAssessment">별점</span>
-                <span class="category">카테고리</span>
-                </div>
-            </div> <!-- show -->
-            <div class="hide">
-                <div class="link_info">
-                    <a href='http://www.google.com' class="moreInfo">
-                        <span class="info">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Blanditiis porro ipsa ullam, vel sunt omnis culpa. Voluptate, itaque necessitatibus.
-                            Natus reprehenderit et similique autem tempora ad culpa officia ab dolore.
-                        </span>
-                    </a>
-                </div>
-                <ul class="addLecture">
-                    <li>
-                        <button class="btn bt text-light col-8 me-2">
-                            <i class="fas fa-shopping-basket"><span>&nbsp&nbsp장바구니 추가</span></i>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="btn bt text-light col-6 me-2">
-                            <i class="fas fa-heart"><span>&nbsp&nbsp찜 추가</span></i>
-                        </button>
-                    </li>
-                </ul>
-            </div> <!--hide -->
-        </div> <!-- lecture -->
-
-        <div class="lecture">
-            <div class="show">
-                <div class="img">
-                    <img src="${pageContext.request.contextPath}/resources/images/banner1.jpg" alt="">
-                </div>
-                <div class="info">
-                    <span class="title">강의제목</span>
-                    <span class="name">강사이름</span>
-                    <span class="price">수강료</span>
-                    <span class="avgLecAssessment">별점</span>
-                <span class="category">카테고리</span>
-                </div>
-            </div> <!-- show -->
-            <div class="hide">
-                <div class="link_info">
-                    <a href='http://www.google.com' class="moreInfo">
-                        <span class="info">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Blanditiis porro ipsa ullam, vel sunt omnis culpa. Voluptate, itaque necessitatibus.
-                            Natus reprehenderit et similique autem tempora ad culpa officia ab dolore.
-                        </span>
-                    </a>
-                </div>
-                <ul class="addLecture">
-                    <li>
-                        <button class="btn bt text-light col-8 me-2">
-                            <i class="fas fa-shopping-basket"><span>&nbsp&nbsp장바구니 추가</span></i>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="btn bt text-light col-6 me-2">
-                            <i class="fas fa-heart"><span>&nbsp&nbsp찜 추가</span></i>
-                        </button>
-                    </li>
-                </ul>
-            </div> <!--hide -->
-        </div> <!-- lecture -->
-
-        <div class="lecture">
-            <div class="show">
-                <div class="img">
-                    <img src="${pageContext.request.contextPath}/resources/images/banner1.jpg" alt="">
-                </div>
-                <div class="info">
-                    <span class="title">강의제목</span>
-                    <span class="name">강사이름</span>
-                    <span class="price">수강료</span>
-                    <span class="avgLecAssessment">별점</span>
-                <span class="category">카테고리</span>
-                </div>
-            </div> <!-- show -->
-            <div class="hide">
-                <div class="link_info">
-                    <a href='http://www.google.com' class="moreInfo">
-                        <span class="info">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                            Blanditiis porro ipsa ullam, vel sunt omnis culpa. Voluptate, itaque necessitatibus.
-                            Natus reprehenderit et similique autem tempora ad culpa officia ab dolore.
-                        </span>
-                    </a>
-                </div>
-                <ul class="addLecture">
-                    <li>
-                        <button class="btn bt text-light col-8 me-2">
-                            <i class="fas fa-shopping-basket"><span>&nbsp&nbsp장바구니 추가</span></i>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="btn bt text-light col-6 me-2">
-                            <i class="fas fa-heart"><span>&nbsp&nbsp찜 추가</span></i>
-                        </button>
-                    </li>
-                </ul>
-            </div> <!--hide -->
-        </div> <!-- lecture -->
-    </div> <!-- picList -->
+		</c:forEach>
+    </div> <!-- pick -->
 </section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
