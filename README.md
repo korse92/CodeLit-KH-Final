@@ -57,6 +57,3 @@ ide : sts4, vsCode
 
 2021.05.18
 * 강의 관리 페이지 완성
-
-2021.05.21
-* MultipartFilter 필터 적용 완료
