@@ -24,15 +24,19 @@ public interface AdminDao {
 
 	List<Map<String, Object>> applyLectureList();
 
-	int approveLecture(String id);
+	int approveLecture(int no);
 
 	int deleteTeacher(String id);
 
-	int deleteLecture(String id);
+	int deleteLecture(int no);
 
 	List<Map<String, Object>> selectAllLecture(Map<String, Object> param);
 
-	int getTotalContents();
+	int getTotalContents(Map<String, Object> param);
+
+	List<Map<String, Object>> searchCategory(int type);
+
+	int rejectPlayingLecture(int no);
 
 	int selectMemberCount(Map<String, Object> param);
 

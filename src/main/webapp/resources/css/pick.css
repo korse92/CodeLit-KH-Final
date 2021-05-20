@@ -44,7 +44,7 @@ button:focus {
 .lecture {
     display: flex;
     width: 20%;
-    height: 350px;
+    height: 340px;
 }
 
 .lecture .show {
@@ -61,7 +61,7 @@ button:focus {
 }
 
 .lecture .show .info span {
-    padding: 10px;
+    padding: 5px;
 }
 
 .lecture .show .img img {

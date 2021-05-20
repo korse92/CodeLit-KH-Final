@@ -3,26 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
-<!-- 
- 	<select id="selectAllBySearching" resultMap="searchMap">
- 		select
- 			*
- 		from
- 			lecture
- 		where
-		 	${searchType} like '%' || #{searchKeyword} || '%'
-
-
-
- 	</select>
-
-	<resultMap type="map" id="searchMap">
-	 <id column="id" property="empId"/>id :pk용
-	 <result column="ref_member_id" property="refMemberId"/> 
-	 <result column="lecture_name" property="lectureName"/> 
-	 <result column="ref_member_id" property="refMemberId"/> 
-	 <result column="ref_member_id" property="refMemberId"/> 
-	 </resultMap> -->
 
 	<select id="selectMemberList" resultMap="memberMap">
 		select 
@@ -99,27 +79,31 @@
 				authorities values ('ROLE_TEACHER', #{id})
 	</insert>
 	
-	<select id="applyLectureList" resultMap="LectureListMap">
+	 <select id="applyLectureList" resultMap="LectureListMap">
 		select 
-			*
-	    from
-	       	lecture left join lecture_category
-	         	on lecture_no = lec_cat_no
+       		 *
+		from
+   			 lecture left join lecture_category
+       		 on ref_lec_cat_no = lec_cat_no
 		where lecture_accept_yn = 'W'
 	</select>
 	
 	<resultMap type="map" id="LectureListMap">
-		<id column="ref_member_id" property="refMemberId"/>
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="lec_cat_no" property="lecCatNo" />
 		<result column="lec_cat_name" property="lecCatName" />
-		<result column="lecture_id" property="lectureId"/>
-	</resultMap>
-	
+		<result column="lecture_name" property="lectureName"/>
+		<result column="ref_member_id" property="refMemberId"/>
+	</resultMap> 
+
+	 
+
 	<update id="approveLecture">
 		update
 	    	lecture
 		set 
 	     	lecture_accept_yn ='Y'
-		where id = #{id}
+		where lecture_no = #{no}
 	</update>
 	
 	<delete id="deleteTeacher">
@@ -135,26 +119,71 @@
 		set 
 	     	lecture_accept_yn ='N'
 		where 
-			ref_member_id = #{id}
+			lecture_no = #{no}
 	</update>
 
 	<select id="selectAllLecture" resultMap="LectureListMap">
-	select
-		 *
-    from
-    	lecture
-	
+	<!-- select 
+		rownum, l.*
+	from ( select 
+				*
+           from lecture l join lecture_category c 
+           		on ref_lec_cat_no = lec_cat_no
+           			
+     <where>
+     lecture_accept_yn = 'Y'
+     <if test="searchKeyword != null and searchKeyword != ''">
+       	   and
+       	   		l.ref_member_id like '%' || #{searchKeyword} || '%' 
+     </if>
+     <if test="category != null and category != ''">
+       	   and 
+       	  		ref_lec_cat_no = #{category}
+       	   
+    </if>
+    </where>
+	        ) l
+	 order by 
+	 		rownum desc -->
+	 		
+	 		
+	 select 
+    	 l.*
+	 from ( select 
+            	*
+       		from lecture join lecture_category 
+         		on ref_lec_cat_no = lec_cat_no  ) l            
+	<where>
+		lecture_accept_yn = 'Y'		
+     <if test="searchKeyword != null and searchKeyword != ''">
+       	   and
+       	   		${searchType} like '%' || #{searchKeyword} || '%' 
+
+     </if>  	   		
+     <if test="category != null and category != ''">
+       	   and 
+       	  		l.ref_lec_cat_no = #{category}	   
+    </if>
+    </where>
 	</select>
 	
 	<select id="getTotalContents" resultType="_int">
 	
-	select
-		count(*)
-	from
-		lecture
-	where 
-		lecture_accept_yn = 'Y'
-	
+	select count(*)
+	from lecture l
+			left join (select * from lecture_category) c
+        on ref_lec_cat_no = lec_cat_no
+     <where>
+      	lecture_accept_yn ='Y'
+      	<if test="searchKeyword != null and searchKeyword != ''">
+      	and
+      		l.ref_member_id like '%' || #{searchKeyword} || '%'
+      	</if>
+      	<if test="category != null">
+      	and
+      		c.lec_cat_no = #{category}
+      	</if>
+     </where>   
 	</select>
 	
 	<select id="selectMemberCount" resultType="_int">
@@ -188,4 +217,25 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="searchCategory" resultMap="LectureListMap">
+	<!-- 이클립스의 emp_mapper참고 -->
+	select 
+    	 c.lec_cat_name,
+   		 l.ref_member_id,
+   		 l.lecture_name
+	from lecture l full join lecture_category c
+            on l.lecture_no = c.lec_cat_no
+	<where>l.ref_lec_cat_no = #{type} and l.lecture_accept_yn  = 'Y'
+	</where>	
+	
+	</select>
+	
+	<update id="rejectPlayingLecture">
+	update
+    	lecture
+	set lecture_accept_yn = 'W'
+	where lecture_no = #{no}
+	
+	</update>
 </mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="studyBoard">
+
+	<select id="studyBoardList" resultType="studyBoard">
+		select 
+		    rownum,
+		    n.*
+		from(
+		    select 
+		        * 
+		    from 
+		        study_board
+		    order by 
+		        STD_BRD_NO
+		    asc) n
+		order by
+		    rownum
+		    desc
+	</select>
+	
+	<select id="getListCount" resultType="_int" >
+		SELECT
+			COUNT(*)
+		FROM
+			study_board
+	</select>
+		<select id="selectOneStudy" resultType="studyBoard">
+		SELECT
+			*
+		FROM
+			study_board
+		WHERE
+			std_brd_no = #{stdBrdNo}
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO
+		study_board(
+			std_brd_no,
+			ref_member_id,
+			ref_lecture_no,
+			std_brd_title,
+			std_brd_content,
+			std_brd_date,
+			std_brd_count
+			)
+		values(
+			SEQ_STD_BRD_NO.NEXTVAL,
+			#{refMemberId},
+			5,
+			#{stdBrdTitle},
+			#{stdBrdContent},
+			default,
+			0
+		)
+		<selectKey resultType="_int" keyProperty="stdBrdNo" order="AFTER">
+		select
+			SEQ_STD_BRD_NO.currval
+		from
+			dual
+		</selectKey>
+	</insert>
+	<delete id="delete">
+		DELETE
+		FROM
+			study_board
+		where
+			std_brd_no = #{stdBrdNo}
+	</delete>
+	<update id="update">
+		update 
+		    study_board
+		set 
+		    notice_title = #{noticeTitle},
+		    notice_content = #{noticeContent},
+		    notice_date = default
+		where
+		    std_brd_no = #{stdBrdNo}
+	</update>
+	<update id="updateCnt">
+		update
+			study_board
+		set
+			std_brd_count = std_brd_count+1
+		where
+			std_brd_no = #{stdBrdNo}
+	</update>
+	<select id="selectOneAttach" resultType="com.kh.codelit.attachment.model.vo.Attachment">
+		select 
+		    a.*,
+		    c.contents_attach_path
+		from 
+		    attachment a  
+		JOIN 
+		    contents_group c 
+		ON 
+		    a.ref_contents_group_no = c.contents_group_code
+		where
+		    a.ref_contents_code = #{stdBrdNo}
+		and 
+			a.ref_contents_group_no = 'SB'
+	</select>
+	<delete id="deleteAttach">
+		delete 
+		from 
+			attachment 
+		where 
+			ref_contents_code = #{stdBrdNo} 
+		and 
+			ref_contents_group_no = 'SB'
+	</delete>
+
+
+</mapper>

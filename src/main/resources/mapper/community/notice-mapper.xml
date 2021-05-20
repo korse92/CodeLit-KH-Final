@@ -11,14 +11,19 @@
 	</select>
 
 	<select id="noticeList" resultType="notice">
-		SELECT
-			rownum,
-			n.*
-		FROM
-			notice n
+		select 
+			rownum,n.*
+	    from(
+		    select 
+		        * 
+		    from 
+		        notice
+		    order by 
+		        notice_no 
+		    asc) n
 		order by
-			rownum
-		desc
+		    rownum
+		    desc
 	</select>
 	
 	<select id="selectOneNotice" resultType="notice">
@@ -29,8 +34,7 @@
 		WHERE
 			notice_no = #{noticeNo}
 	</select>
-		
-
+	
 	<insert id="insertBoard">
 		INSERT INTO
 		notice(
@@ -49,6 +53,12 @@
 			default,
 			0
 		)
+		<selectKey resultType="_int" keyProperty="noticeNo" order="AFTER">
+		select
+			SEQ_NOTICE_NO.currval
+		from
+			dual
+		</selectKey>
 	</insert>
 	<delete id="delete">
 		DELETE
@@ -75,4 +85,28 @@
 		where
 			notice_no = #{noticeNo}
 	</update>
+	<select id="selectAttachment" resultType="com.kh.codelit.attachment.model.vo.Attachment">
+		select 
+		    a.*,
+		    c.contents_attach_path
+		from 
+		    attachment a  
+		JOIN 
+		    contents_group c 
+		ON 
+		    a.ref_contents_group_no = c.contents_group_code
+		where
+		    a.ref_contents_code = #{noticeNo}
+		and 
+			a.ref_contents_group_no = 'N'
+	</select>
+	<delete id="deleteAttach">
+		delete 
+		from 
+			attachment 
+		where 
+			ref_contents_code = #{noticeNo} 
+		and 
+			ref_contents_group_no = 'N'
+	</delete>
 </mapper>

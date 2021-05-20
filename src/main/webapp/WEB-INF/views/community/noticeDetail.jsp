@@ -17,24 +17,22 @@
         </div>
         <div class="row mt-1 header">
           <h5 class="col-1 board-title">제목</h5>
-          <p class="col-3">${notice.noticeTitle}</p>
-          <h5>${notice.noticeCount}</h5>
-          <fmt:formatDate value="${notice.noticeDate}" pattern="yy/MM/dd HH:mm:ss"/>
+          <p class="col-8">${notice.noticeTitle}</p>
+          <p class="col-2"><fmt:formatDate value="${list.Date}" pattern="yy/MM/dd HH:mm:ss"/></p>
+          <p class="col-1">${notice.noticeCount}</p>
         </div>
         <div class="board-container">
           <h5 class="content-title">내용</h5>
-            <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
-            <img src="../images/testImage.jpg" alt="페페이미지" value="">
+          	<c:if test="${not empty attach}">
+	            <img src='${pageContext.request.contextPath}${attachPath}'>
+          	</c:if>
             <p class="content">
               ${notice.noticeContent}
             </p>          
         </div>
         <div class="board-footer">
-          <!-- 관리자-->
-     	<sec:authorize access="hasRole('ADMIN')">
           <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeUpdate.do?noticeNo=${notice.noticeNo}'">수정</button>
           <button type="button" class="btn btn-danger delete-btn" onclick="del()">삭제</button>
-        </sec:authorize>
         
           <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeList.do'">목록으로</button>
         </div>
@@ -43,7 +41,7 @@
 
 	<script type="text/javascript">
 		function del(){
-			if(confirm("삭제 해??")){
+			if(confirm("삭제 하실거예요?")){
 				location.href=`${pageContext.request.contextPath}/community/noticeDelete.do?noticeNo=${notice.noticeNo}`;
 			} else{
 				return false;

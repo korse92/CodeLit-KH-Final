@@ -2,6 +2,7 @@ package com.kh.codelit.community.notice.controller;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.community.notice.model.service.NoticeService;
 import com.kh.codelit.community.notice.model.vo.Notice;
@@ -33,6 +35,7 @@ public class noticeController {
 	
 	@Autowired
 	private NoticeService service;
+	
 	
 	@GetMapping("/noticeList.do")
 	public void selectBoard(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request) {
@@ -51,8 +54,6 @@ public class noticeController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pageBar", pageBar);
-		
-		
 	}
 	
 	@GetMapping("/noticeWrite.do")
@@ -65,34 +66,56 @@ public class noticeController {
 				@ModelAttribute Notice notice,
 				@RequestParam(required = false) MultipartFile upFile,
 				HttpServletRequest request,
-				Model model,
 				RedirectAttributes redirect,
-				Principal pri) {
-		log.debug("upFile = {}", upFile);
-		String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/community");
+				Principal pri) throws IllegalStateException, IOException {
+		
+		log.debug("================upFile = {}", upFile.getOriginalFilename());
+		String saveDirectory =  request.getServletContext().getRealPath(Attachment.PATH_NOTICE);
+		
 		File dir = new File(saveDirectory);
 		if(!dir.exists())
 			dir.mkdir();
 		
-		
-		
 		notice.setRefMemberId(pri.getName());
 
 		int result = service.insertBoard(notice);
+		log.debug("NO=========================={}", notice.getNoticeNo());
+		if(!upFile.isEmpty() || upFile.getSize() > 0) {
+		
+			File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+			//파일 저장
+			upFile.transferTo(renamedFile);
+			
+			//Attachment객체생성
+			Attachment attach = new Attachment(0,notice.getNoticeNo(),upFile.getOriginalFilename(),renamedFile.getName(),Attachment.CODE_NOTICE,Attachment.PATH_NOTICE);
+			
+			service.insertAttachment(attach);
+		}
+
 		String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
 		redirect.addFlashAttribute("msg",msg);
 		return "redirect:/community/noticeList.do";
 	}
+	
 	@GetMapping(value = {"/noticeDetail.do", "/noticeUpdate.do"})
 	public void selectOneNotice(@RequestParam int noticeNo, Model model) {
-		
+	
 		int result = service.updateCnt(noticeNo);
 		Notice notice = service.selectOneNotice(noticeNo);
 		model.addAttribute("notice",notice);
+		Attachment attach = service.selectOneAttach(noticeNo);
+		if(attach != null) {
+			String attachPath = attach.getContentsAttachPath() +"/"+ attach.getRenamedFilename();
+			model.addAttribute("attachPath", attachPath);
+			model.addAttribute("attach",attach);			
+		}
+		
 	}
+	
 	
 	@GetMapping("/noticeDelete.do")
 	public String deleteNotice(@RequestParam int noticeNo, RedirectAttributes redirect) {
+		int attDel = service.deleteAttach(noticeNo);
 		int result = service.delete(noticeNo);
 		String msg = result > 0 ?"삭제 성공" : "삭제 실패";
 		redirect.addFlashAttribute("msg", msg);
@@ -101,7 +124,6 @@ public class noticeController {
 	
 	@PostMapping("/noticeUpdate.do")
 	public String updateNotice(@ModelAttribute Notice notice, RedirectAttributes redirect) {
-		log.debug("notice = {}", notice);
 		int result = service.update(notice);
 		String msg = result > 0 ? "수정 성공":"수정 실패";
 		redirect.addFlashAttribute("msg",msg);

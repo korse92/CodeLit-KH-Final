@@ -58,8 +58,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int approveLecture(String id) {
-		return adminDao.approveLecture(id);
+	public int approveLecture(int no) {
+		return adminDao.approveLecture(no);
 	}
 
 	@Override
@@ -68,8 +68,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int deleteLecture(String id) {
-		return adminDao.deleteLecture(id);
+	public int deleteLecture(int no) {
+		return adminDao.deleteLecture(no);
 	}
 
 	@Override
@@ -78,10 +78,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int getTotalContents() {
-		return adminDao.getTotalContents();
+	public int getTotalContents(Map<String, Object> param) {
+		return adminDao.getTotalContents(param);
 	}
 
+	@Override
+	public List<Map<String, Object>> searchCategory(int type) {
+		return adminDao.searchCategory(type);
+	}
+
+	@Override
+	public int rejectPlayingLecture(int no) {
+		return adminDao.rejectPlayingLecture(no);
+	}
+	
 	@Override
 	public int selecMemberCount(Map<String, Object> param) {
 		
