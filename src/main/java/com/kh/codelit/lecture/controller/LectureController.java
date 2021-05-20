@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+
+
 import com.kh.codelit.common.HelloSpringUtils;
+
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +34,13 @@ import lombok.extern.slf4j.Slf4j;
 public class LectureController {
 	
 	@Autowired
-	private LectureService lectureService;
+
+	private LectureService lectureService;	
+	
+	
+	
+
+
 	
 	@GetMapping(value = {"/lectureList.do/{catNo}", "/lectureList.do"})
 	public String lectureList(
@@ -70,5 +82,6 @@ public class LectureController {
 	public void lectureDetail(@RequestParam int lectureNo) {
 		
 	}
+
 
 }
