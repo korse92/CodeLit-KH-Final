@@ -175,7 +175,7 @@ alert("${msg}");
 		</nav>
 
 		<!-- 로그인 Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1"
+		<%-- <div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -205,7 +205,7 @@ alert("${msg}");
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --%>
 	</header>
 	<section id="content">
 	<!-- header.jsp 끝 -->

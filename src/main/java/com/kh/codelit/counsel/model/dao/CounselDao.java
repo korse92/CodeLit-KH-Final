@@ -14,6 +14,6 @@ public interface CounselDao {
 
 	List<Counsel> selectCounselList(Map<String, Object> param);
 
-	int getTotalContents(Integer catNo);
+	int getTotalContents(String memberId);
 
 }

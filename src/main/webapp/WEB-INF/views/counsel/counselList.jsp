@@ -16,29 +16,38 @@
 	
 	<sec:authorize access="isAuthenticated()">
 	  <div class="container List-container" >
-	        <div class="row mt-3">
-	          <h2 class=" jb-larger mt-1 col-3">1:1문의 </h2>
-	        </div>
-	        	<form action="">
-		        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      </div>
-				      <div class="modal-body">
-				        ...
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				      </div>
-				    </div>
-				  </div>
+        <div class="row mt-3">
+          <h2 class=" jb-larger mt-1 col-3">1:1문의 </h2>
+        </div>
+
+		<div class="modal fade" id="counselModal" tabindex="-1"
+			aria-labelledby="counselModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="counselModalLabel">고객센터</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<form:form action="${pageContext.request.contextPath}/counsel/counselPasswordCheck.do" method="POST">
+					<div class="modal-body">
+						<tr colspan="3">
+							<td><input type="password" class="form-control p-1"
+								name="password" placeholder="패스워드"></td>
+						</tr>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">닫기</button>
+						<button type="submit" class="btn btn-warning">확인</button>
+		
+					</div>
+					</form:form>
+				</div>
 			</div>
-			</form>
-	        <div class="mt-3">
+		</div>
+
+		<div class="mt-3">
 	          <c:if test="${empty list}">
 	          	<h1 style="text-align: center">등록된 문의가 없습니다..</h1>
 	          </c:if>
@@ -63,7 +72,7 @@
 				                <c:out value="${fn:substring(counsel.counselTitle,0,19)}" />...
 	               		</c:when>
 	               		<c:otherwise>
-	               	  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> <c:out value="${counsel.counselTitle}" />	 </a>
+	               	  <a href="#" data-bs-toggle="modal" data-bs-target="#counselModal"> <c:out value="${counsel.counselTitle}" />	 </a>
 	               		</c:otherwise>
 	                	</c:choose>
 	                </td>

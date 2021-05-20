@@ -35,22 +35,20 @@ public class ConuselController {
 	@Autowired
 	private CounselService service;
 	
-	@GetMapping(value ={"/counselList.do{catNo}","/counselList.do"})
+	@GetMapping("/counselList.do")
 	public String selelctBoard(
-		@PathVariable(required = false) Integer catNo,
 		@RequestParam(defaultValue = "1") int cPage,
 		HttpServletRequest request,
+		Authentication authentication,
 		Model model) {
 	//1. 사용자 입력값
-	if(catNo == null)
-		catNo = 0;
 	int numPerPage = 10;
-	log.debug("catNo = {}", catNo);
+	String memberId = ((Member)authentication.getPrincipal()).getMemberId();
 	log.debug("cPage = {}", cPage);
 	Map<String, Object> param = new HashMap<>();
+	param.put("memberId", memberId);
 	param.put("numPerPage", numPerPage);
-	param.put("catNo", catNo);
-	param.put("cPage", cPage);		
+	param.put("cPage", cPage);
 	
 	//2. 업무로직
 	//a. contents영역
@@ -58,7 +56,7 @@ public class ConuselController {
 	log.debug("list = {}", list);
 	
 	//b. pageBar영역
-	int totalContents = service.getTotalContents(catNo);
+	int totalContents = service.getTotalContents(memberId);
 	String url = request.getRequestURI();
 	log.debug("totalContents = {}", totalContents);
 	log.debug("url = {}", url);
@@ -70,7 +68,6 @@ public class ConuselController {
 	
 	return "counsel/counselList";
 	}
-	
 	
 	@GetMapping("/counselWrite.do")
 	public void counselWrite() {
@@ -102,6 +99,21 @@ public class ConuselController {
 		return "redirect:/counsel/counselList.do";
 
 
+	}
+	
+	@PostMapping("/counselPasswordCheck.do")
+	public String counselPasswordCheck() {
+		
+		return null;
+		
+	}
+	
+	
+
+	
+	@GetMapping("/counselDetail.do")
+	public void counselDetail() {
+		
 	}
 
 

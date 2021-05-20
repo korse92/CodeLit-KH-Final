@@ -7,19 +7,13 @@
 	<insert id="insertCounsel">insert into counsel values(seq_counsel_no.nextval,#{refMemberId},#{counselTitle},#{counselContent},#{counselQNo},1,default)</insert>
 	<select id="selectCounselList" resultType="counsel">
 		select 
-			rownum,c.*
-				from(
-			select
-				*
-			from
+			*
+		from
 			counsel
-			order by
-			counsel_no
-			asc) c
-			order by
-			rownum
-			desc
-	
+		where
+			ref_member_id = #{memberId}
+		order by
+			counsel_date desc
 	</select>
 
 	<select id="getTotalContents" resultType="_int">
@@ -27,11 +21,8 @@
 			count(*)
 		from
 			counsel
-		<where>
-		<if test="_parameter gt 0">
-			ref_cousnel_no = #{_parameter}
-		</if>
-		</where>
+		where
+        	ref_member_id = #{memberId}
 	</select>
 	
 </mapper>
