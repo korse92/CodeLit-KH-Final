@@ -5,6 +5,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="찜목록" name="title"/>
@@ -44,6 +47,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->
@@ -81,6 +85,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->
@@ -118,6 +123,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->
@@ -155,6 +161,7 @@
                     <span class="title">강의제목</span>
                     <span class="name">강사이름</span>
                     <span class="price">수강료</span>
+                    <span class="avgLecAssessment">별점</span>
                 <span class="category">카테고리</span>
                 </div>
             </div> <!-- show -->

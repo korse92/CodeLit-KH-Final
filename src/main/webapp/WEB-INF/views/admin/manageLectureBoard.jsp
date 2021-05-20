@@ -83,18 +83,25 @@ window.onload = function() {
 <!-- 컨텐츠 시작 -->
 <div class="container">
 	<div class="mt-5">
-		<h2 class=" jb-larger mt-3">강사 관리</h2>
+		<h2 class=" jb-larger mt-3">강의 관리</h2>
 
 		<form method="GET" id="searchFrm"
 			action="${pageContext.request.contextPath}/admin/manageLectureBoard.do">
 			<div class="row mt-5 ms-1">
 			
-				<div class="col-sm-3">
+				<div class="col-sm-2">
 					<select class="form-select" id="category" name="category">
-						<option selected>카테고리</option>
+						<option selected disabled>카테고리</option>
 						<c:forEach items="${categoryList}" var="category">
-							<option value="${category.no}">${category.name}</option>
+							<option value="${category.no}" ${param.category eq category.no ? 'selected' : ''}>${category.name}</option>
 						</c:forEach>
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select class="form-select" id="searchType" name="searchType">
+						<option selected disabled>검색</option>
+						<option value="ref_member_id"  ${param.searchType eq 'ref_member_id' ? 'selected' : ''}>강의자</option>
+						<option value="lecture_name"   ${param.searchType eq 'lecture_name' ? 'selected' : ''}>강의명</option>
 					</select>
 				</div>
 				<div class="col-sm-4">

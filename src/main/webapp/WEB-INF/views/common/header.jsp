@@ -82,8 +82,10 @@ alert("${msg}");
 									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
 								</c:forEach>
 							</ul>
-						</li>
-						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a></li>
+						</li>  
+						<sec:authorize access="hasRole('USER') || hasRole('ADMIN')">
+						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
+						</sec:authorize>
 					</ul>
 				</div>
 
@@ -131,8 +133,8 @@ alert("${msg}");
 					                  <li><a class="dropdown-item" href="#">프로필</a></li>
 					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
 					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/pick.do">찜 목록</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/basket.do">장바구니</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do">장바구니</a></li>
 					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
