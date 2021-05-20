@@ -32,6 +32,6 @@ public class Lecture {
 	
 	//수강후기 관련
 	private List<Map<String, Object>> lectureCommentList;
-	private double avgLecAssessment;
+	private double avgLecAssessment; //
 	
 }
