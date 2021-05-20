@@ -34,7 +34,7 @@ img#thumbImage {
 <div class="container">
             <div class="mt-5 mx-auto form-group" style="width:fit-content;">
               <form name="lectureEnrollFrm"
-                action="${pageContext.request.contextPath}/counsel/counselInsert.do?${_csrf.parameterName}=${_csrf.token}"
+                action="${pageContext.request.contextPath}/counsel/counselWrite.do?${_csrf.parameterName}=${_csrf.token}"
                 method="post"
                 enctype="multipart/form-data">
                 <div class="row justify-content-center">
@@ -47,14 +47,6 @@ img#thumbImage {
                   <div class="col-sm-2 align-self-center">
                     <label class="form-label" for="counselTitle">제목</label>
                   </div>
-                  <div class="col-sm-4">
-                    <select class="form-select" name="refLecCatNo" required>
-                      <option value="" disabled selected>카테고리 선택</option>
-                      <c:forEach items="${categoryList}" var="category">
-                      <option value="${category.no}">${category.name}</option>
-                      </c:forEach>
-                    </select>
-                  </div>
                  
                   <div class="col-sm-6">
                     <input class="form-control" type="text" name="counselTitle"
@@ -66,7 +58,7 @@ img#thumbImage {
                
                 <div class="row">
                   <div class="col-sm-2 align-self-center">
-                    <label class="form-label" for="lectureHandout">첨부파일</label>
+                    <label class="form-label" for="cousnelHandout">첨부파일</label>
                   </div>
                   <div class="col-sm">
                     <input class="form-control" type="file" name="cousnelHandout"
@@ -77,7 +69,7 @@ img#thumbImage {
                 <div class="row">
 				<label class="form-label mb-2" for="">내용</label>
 				<div class="col-sm">
-					<textarea name="lectureIntro" id="lectureIntro" class="form-control" required></textarea>
+					<textarea name="counselContent" id="counselContent" class="form-control" required></textarea>
 				</div>
 			</div>
                 

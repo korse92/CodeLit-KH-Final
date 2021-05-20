@@ -29,7 +29,6 @@
             <thead class="primary table-primary">
               <tr>
                 <th scope="col">번호</th>
-                 <th scope="col">카테고리</th>
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">등록일</th>
@@ -37,14 +36,15 @@
           
               </tr>
             </thead>
-      <%--       <tbody>
+             <tbody>
             <c:forEach items="${list}" var="list" varStatus="status">
               <tr data-no="${list.counselNo}">
-			<!--  전체 레코드 수 - ( (현재 페이지 번호 - 1) * 한 페이지당 보여지는 레코드 수 + 현재 게시물 출력 순서 ) -->
-                <td scope="row">${list.rownum}</td>
+					<td>${list.counselNo }</td>
+				
              
                 <td>
                 	<c:choose>
+                	
                 		<c:when test="${fn:length(list.counselTitle) > 20}">
 				                <c:out value="${fn:substring(list.counselTitle,0,19)}" />...
                 		</c:when>
@@ -53,20 +53,20 @@
                 		</c:otherwise>
                 	</c:choose>
                 <td>${list.refMemberId}</td>
-                <td><fmt:formatDate value="${list.counselDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
+                <td><fmt:formatDate value="${list.counselDate}" pattern="yy/MM/dd"/></td>
                 
-     
+    		  <td></td>
               </tr>
             </c:forEach>
-            </tbody> --%>
+            </tbody> 
           </table>		          
 	       ${pageBar}
           </c:if>
-	    <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
+	   
 	      
 	      
 	        	<button class="btn btn-primary boardList-footer" onclick="location.href='${pageContext.request.contextPath}/counsel/counselWrite.do'">글쓰기</button>		       
-         </sec:authorize>
+        
       </div>
    </div>
 </sec:authorize>

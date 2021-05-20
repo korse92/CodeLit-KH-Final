@@ -1,13 +1,18 @@
 package com.kh.codelit.counsel.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.kh.codelit.counsel.model.dao.CounselDao;
 import com.kh.codelit.counsel.model.vo.Counsel;
+import lombok.extern.slf4j.Slf4j;
+
 
 
 @Service
+@Slf4j
 public class CounselServiceImpl implements CounselService{
 		
 	@Autowired
@@ -17,5 +22,13 @@ public class CounselServiceImpl implements CounselService{
 	public int insertCounsel(Counsel counsel) {
 	
 		return dao.insertCounsel(counsel);
+	}
+	@Override
+	public List<Counsel> selectCounselList(Map<String, Object> param){
+		return dao.selectCounselList(param);
+	}
+	@Override
+	public int getTotalContents(Integer catNo) {
+		return dao.getTotalContents(catNo);
 	}
 }

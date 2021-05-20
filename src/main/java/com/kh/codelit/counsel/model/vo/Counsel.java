@@ -20,7 +20,6 @@ public class Counsel {
 	
 	private String counselNo;
 	private String refMemberId;
-	private String counselCategory;
 	private String counselTitle;
 	private String counselContent;
 	private int counselQNo;

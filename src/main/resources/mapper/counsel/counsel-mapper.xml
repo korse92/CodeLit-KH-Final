@@ -4,46 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="counsel">
 
-	<insert id="insertCounsel">
-		insert into 
-		counsel
-		values(
-			seq_counsel_no.nextval,
-			#{refMemberId},
-			#{counselCategory},
-			#{counselTitle},
-			#{counselContent},
-			#{counselQno},
-			#{counselLevel},
-			#{counselDate}
-			<where>
-			<if test="_parameter gt 0">
-			and counsel_Qno = #{_parameter}
-			
-			
-			</if>
-			</where>
+	<insert id="insertCounsel">insert into counsel values(seq_counsel_no.nextval,#{refMemberId},#{counselTitle},#{counselContent},#{counselQNo},1,default)</insert>
+	<select id="selectCounselList" resultType="counsel">
+		select 
+			rownum,c.*
+				from(
+			select
+				*
+			from
+			counsel
 			order by
-			counsel_Qno
-		)
+			counsel_no
+			asc) c
+			order by
+			rownum
+			desc
 	
+	</select>
 
-	</insert>
-	
-	<select id="selectCounselList" resultType="lecture">
-		
+	<select id="getTotalContents" resultType="_int">
+		select
+			count(*)
+		from
+			counsel
 		<where>
-		  
-		<!--
-			if 태그에서 파라미터를 getter로 가져오기 때문에 getter가 없는
-			기본형변수나 String객체 등을 파라미터로 넘겼을때는 _parameter로 사용해야 함.
-		-->
 		<if test="_parameter gt 0">
-			and counsel_category= #{_parameter}
+			ref_cousnel_no = #{_parameter}
 		</if>
 		</where>
-		order by
-		  counsel_no
 	</select>
 	
 </mapper>

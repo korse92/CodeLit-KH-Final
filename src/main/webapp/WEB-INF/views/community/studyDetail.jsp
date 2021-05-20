@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -28,6 +27,7 @@
           	<c:if test="${not empty attach}">
 	            <img src='${pageContext.request.contextPath}${attachPath}'>
           	</c:if>
+   
            <p class="content">
            	${stdBrd.stdBrdContent}
            </p>          

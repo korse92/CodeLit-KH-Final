@@ -83,7 +83,7 @@ alert("${msg}");
 								</c:forEach>
 							</ul>
 						</li>  
-						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
+						<sec:authorize access="hasRole('USER') || hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 						</sec:authorize>
 					</ul>
