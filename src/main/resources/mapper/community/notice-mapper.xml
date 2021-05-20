@@ -109,4 +109,15 @@
 		and 
 			ref_contents_group_no = 'N'
 	</delete>
+	<update id="updateAttach">
+		update
+			attachment
+		set
+			original_filename = #{originalFilename},
+			renamed_filename = #{renamedFilename}
+		where 
+			attach_no = #{attachNo}
+		and
+			ref_contents_group_no = 'N'
+	</update>
 </mapper>

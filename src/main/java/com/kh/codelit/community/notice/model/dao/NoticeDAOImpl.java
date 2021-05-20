@@ -85,4 +85,11 @@ public class NoticeDAOImpl implements NoticeDAO {
 		return session.delete("notice.deleteAttach", noticeNo);
 	}
 
+
+	@Override
+	public int updateAttach(Attachment attach) {
+		return session.update("notice.updateAttach", attach);
+	}
+
+
 }

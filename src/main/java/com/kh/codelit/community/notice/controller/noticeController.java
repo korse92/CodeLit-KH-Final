@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,7 +70,6 @@ public class noticeController {
 				RedirectAttributes redirect,
 				Principal pri) throws IllegalStateException, IOException {
 		
-		log.debug("================upFile = {}", upFile.getOriginalFilename());
 		String saveDirectory =  request.getServletContext().getRealPath(Attachment.PATH_NOTICE);
 		
 		File dir = new File(saveDirectory);
@@ -79,7 +79,6 @@ public class noticeController {
 		notice.setRefMemberId(pri.getName());
 
 		int result = service.insertBoard(notice);
-		log.debug("NO=========================={}", notice.getNoticeNo());
 		if(!upFile.isEmpty() || upFile.getSize() > 0) {
 		
 			File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
@@ -123,11 +122,30 @@ public class noticeController {
 	}
 	
 	@PostMapping("/noticeUpdate.do")
-	public String updateNotice(@ModelAttribute Notice notice, RedirectAttributes redirect) {
+	public String updateNotice(@ModelAttribute Notice notice, 
+			@RequestParam(required = false) MultipartFile upFile,
+			RedirectAttributes redirect,
+			HttpServletRequest request
+			) throws IllegalStateException, IOException {
+		if(!upFile.isEmpty()) {
+			Attachment attach = service.selectOneAttach(notice.getNoticeNo());
+			
+			String save = request.getServletContext().getRealPath("/resources/upload/notice");
+			String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
+			File oldFile = new File(oldPath);
+			
+			
+			File renameFile = HelloSpringUtils.getRenamedFile(save, upFile.getOriginalFilename());
+			if(oldFile != null) oldFile.delete(); // 기존 파일 삭제
+			upFile.transferTo(renameFile);
+			
+			attach.setOriginalFilename(upFile.getOriginalFilename());
+			attach.setRenamedFilename(renameFile.getName());
+			
+		}
 		int result = service.update(notice);
 		String msg = result > 0 ? "수정 성공":"수정 실패";
 		redirect.addFlashAttribute("msg",msg);
-		
 		return "redirect:/community/noticeDetail.do?noticeNo="+notice.getNoticeNo();
 	}
 }

@@ -78,4 +78,12 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 
+	@Override
+	public int updateAttach(Attachment attach) {
+		return dao.updateAttach(attach);
+	}
+
+
+
+
 }

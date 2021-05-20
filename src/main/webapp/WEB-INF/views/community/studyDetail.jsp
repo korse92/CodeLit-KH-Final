@@ -69,21 +69,7 @@
 
 
   <script>
-  function commentSubmit(no){
-		$.ajax({
-			type : 'POST',
-			url : "<c:url value='/community/stdBrdInsertComment.do />'",
-			data : $("form[name='commentForm']").serialize(),
-			success : function(data){
-				if(data=="success"){
-					getCommentList();
-					$("#comment").val("");
-				}
-			},
-			error : function(request, status, error)P
-				console.log(error);
-		});  
-	  }
+
     $("button[name='comment-delete-btn']").on("click", function(){
       confirm("삭제 하시겠습니까?");
     });

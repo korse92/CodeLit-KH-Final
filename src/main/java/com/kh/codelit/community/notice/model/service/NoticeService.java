@@ -29,4 +29,7 @@ public interface NoticeService {
 
 	int deleteAttach(int noticeNo);
 
+	int updateAttach(Attachment attach);
+
+
 }
