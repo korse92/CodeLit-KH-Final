@@ -21,7 +21,7 @@
 		<h5>${categoryMap.get(lecture.refLecCatNo) }</h5>
 		<h2 class="row">${lecture.lectureName}</h2>
 		<div class="row">
-			<div class="col-auto">별점</div>
+			<div class="col-auto">${lecture. }</div>
 			<div class="col-auto">${lecture.lectureCommentList.size()} / </div>
 			<div class="col-auto">몇명의 수강생</div>
 		</div>
@@ -30,7 +30,7 @@
 			<div class="col-auto"><a href="">${lecture.teacherName}</a></div>
 		</div>
 		<div class="row lec-thumbnail w-50">
-			<img src="${pageContext.request.contextPath}/resources/images/banner1.jpg" alt="" />
+			<img src="${pageContext.request.contextPath}/resources/upload/banner1.jpg" alt="" />
 		</div>
 	</div>
 	<div class="page-body row my-3">

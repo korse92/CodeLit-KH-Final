@@ -44,7 +44,7 @@
 	});
 </script>
 
-<div class="container my-5">
+<div class="container-fluid my-5">
  	<div class="page-header row">
 		<div class="col-sm-auto me-auto">
 			<h2>강의 목록</h2>
@@ -146,11 +146,15 @@
 										</button>
 									</div>
 									<div class="m-1">
+				                		<form:form action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
+				                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 										<button
-											class="btn btn-outline-light" data-bs-toggle="tooltip"
-											data-bs-placement="right" title="찜하기">
-											<i class="fas fa-heart"></i>
+											type="submit"
+											class="btn ${lecture.picked ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
+											data-bs-placement="right" title="${lecture.picked ? '찜삭제' : '찜하기'}">
+											<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
 										</button>
+										</form:form>
 									</div>
 								</div>
 							</div>

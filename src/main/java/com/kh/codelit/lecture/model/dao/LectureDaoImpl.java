@@ -41,7 +41,7 @@ public class LectureDaoImpl implements LectureDao {
 		int offset = (cPage - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
-		return session.selectList("lecture.selectLectureList", catNo, rowBounds);
+		return session.selectList("lecture.selectLectureList", param, rowBounds);
 	}
 
 	@Override

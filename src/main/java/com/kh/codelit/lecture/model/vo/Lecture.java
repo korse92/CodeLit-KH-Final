@@ -41,4 +41,7 @@ public class Lecture {
 	private List<Map<String, Object>> lectureCommentList;
 	private double avgLecAssessment; //별점 평균
 
+	//찜,장바구니
+	private boolean picked;
+
 }

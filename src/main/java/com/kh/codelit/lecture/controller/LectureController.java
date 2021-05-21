@@ -1,5 +1,6 @@
 package com.kh.codelit.lecture.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,17 +37,21 @@ public class LectureController {
 			@PathVariable(required = false) Integer catNo,
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request,
-			Model model) {
+			Model model,
+			Principal principal) {
 		//1. 사용자 입력값
 		if(catNo == null)
 			catNo = 0;
 		int numPerPage = 12;
+		String memberId = principal.getName();
 		log.debug("catNo = {}", catNo);
 		log.debug("cPage = {}", cPage);
+		log.debug("memberId = {}", memberId);
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
 		param.put("catNo", catNo);
 		param.put("cPage", cPage);
+		param.put("memberId", memberId);
 
 		//2. 업무로직
 		//a. contents영역
