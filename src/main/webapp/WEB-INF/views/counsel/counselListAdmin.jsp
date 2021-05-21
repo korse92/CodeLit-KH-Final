@@ -14,7 +14,8 @@
 
 </script>
 
-	<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="hasRole('ADMIN')">
+	
 		<div class="container List-container" >
 	        <div class="row mt-5">
 	          	<h2 class=" jb-larger mt-1 col-3">1:1문의 </h2>
@@ -23,7 +24,7 @@
 	        <div class="my-5">
 	        
 	          	<c:if test="${empty list}">
-	          		<h1 style="text-align: center">등록된 문의가 없습니다..</h1>
+	          		<h1 style="text-align: center">등록된 문의가 없습니다.</h1>
 	          	</c:if>
 	          	
 	          	<c:if test="${not empty list}">
@@ -64,7 +65,6 @@
 		       		
 	          	</c:if>
 	          	
-		        <button class="btn btn-primary boardList-footer" onclick="location.href='${pageContext.request.contextPath}/counsel/counselWrite.do'">글쓰기</button>		       
 			</div>
 		</div>
 	</sec:authorize>

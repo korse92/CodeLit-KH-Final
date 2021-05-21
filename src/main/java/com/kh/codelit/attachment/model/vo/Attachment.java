@@ -14,11 +14,13 @@ public class Attachment {
 	public static final String PATH_LECTURE_THUMBNAIL = "/resources/upload/lecture/thumbnails";
 	public static final String PATH_NOTICE = "/resources/upload/notice";
 	public static final String PATH_STUDYBOARD = "/resources/upload/studyBoard";
+	public static final String PATH_COUNSEL = "/resources/upload/counsel";
 	
 	//그룹코드 상수
 	public static final String CODE_LECTURE_HANDOUT = "LH";
 	public static final String CODE_NOTICE = "N";
 	public static final String CODE_STUDY_BOARD = "SB";	
+	public static final String CODE_COUNSEL = "C";
 	
 	private int attachNo;
 	private int refContentsNo;//참조하는 컨텐츠(ex. 공지사항, 공부게시판의 게시글) 번호

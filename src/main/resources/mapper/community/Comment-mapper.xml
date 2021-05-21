@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cmt">
+	
+	<insert id="insertCmt">
+		insert into
+			study_comment
+		values(
+			SEQ_COMMENT_NO.nextval,
+			#{refStdBrdNo},
+			#{refMemberId},
+			#{stdCmtContent},
+			default
+			)
+	</insert>
+	
+	<select id="selectCmt" resultType="comment">
+		select
+			*
+		from
+			study_comment
+		where
+			ref_std_brd_no = #{refStdBrdNo}
+	</select>
+<!--  git 왜안올라가 -->
+	<select id="selectStdNo" resultType="comment">
+        select
+            *
+        from
+            study_comment
+        where 
+            std_cmt_no = #{stdCmtNo}
+	</select>
+	<delete id="delete">
+		delete
+		from
+			study_comment
+		where
+			std_cmt_no = #{stdCmtNo}
+	</delete>
+	
+	<update id="update">
+		update
+			stduy_comment
+		set
+			std_cmt_content = #{stdCmtContent}
+		where
+			std_cmt_no = #{stdCmtNo}
+	</update>
+
+
+</mapper>

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.codelit.community.study.model.service.CommentService;
 import com.kh.codelit.community.study.model.service.StudyService;
 import com.kh.codelit.community.study.model.vo.Comment;
+import com.kh.codelit.community.study.model.vo.StudyBoard;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,15 +49,19 @@ public class CommentController {
 	}
 	
 	@PostMapping("/updateComment.do")
-	public String updateCmt(@ModelAttribute Comment cmt,
+	public String updateCmt(
+			@ModelAttribute Comment cmt,
 			RedirectAttributes redirect) {
+		int result = service.update(cmt.getStdCmtNo());
 		
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	@PostMapping("/deleteCmt.do")
-	public String deleteCmt() {
+	public String deleteCmt(@RequestParam int cmtNo) {
+		Comment cmt = service.selectStdNo(cmtNo);
+		int result = service.delete(cmtNo);
 		
-		return "redirect:/community/studyDetail.do?stdBrdNo=";
+		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	
 }

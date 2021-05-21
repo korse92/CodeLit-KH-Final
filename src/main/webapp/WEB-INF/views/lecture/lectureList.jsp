@@ -8,7 +8,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
@@ -24,11 +23,6 @@
 	
 	pageContext.setAttribute("categoryMap", categoryMap);
 %> --%>
-
-<%
-	
-%>
-
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 목록" name="title"/>
@@ -57,7 +51,8 @@
 		
 /* 		$(".overlay .btn").click(e => {
 			alert("테스트");
-			
+		$(".overlay .btn").click(e => {
+			//alert("테스트");	
 			//location.href = "${pageContext.request.contextPath}";
 			
 			//e.stopPropagation(); //상위 요소로의 이벤트전파 중단(태그 고유동작은 중단시키지 못함(ex.a태그의 주소이동)

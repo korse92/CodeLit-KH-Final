@@ -14,12 +14,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -246,7 +250,7 @@ public class TeacherController {
 				attach.setRenamedFilename(renamedFile.getName());
 				attach.setRefContentsGroupCode(Attachment.CODE_LECTURE_HANDOUT);
 				
-				attachList.add(attach);				
+				attachList.add(attach);
 			}
 			
 			
@@ -271,5 +275,44 @@ public class TeacherController {
 		
 		return "redirect:/teacher/lectureEnroll.do";
 	}
+	@GetMapping("/lectureCalList.do")
+	public String calList() {
+		
+		return null;
+	}
+	
+	 @GetMapping("/teacherProfile.do") 
+	    public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
+			  							ModelAndView mav, 
+			  							Authentication authentication) {
+		  
+		  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
+		  
+		  
+		  try {
+			  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			  log.debug("userDetails = {}", userDetails);
+			  // userDetails = Member(memberId=teacher, memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2, 
+			  //                       memberProfile=null, memberReProfile=null, authorities=[ROLE_TEACHER, ROLE_USER])
+			  String memberId =  ((Member) userDetails).getMemberId();
+			  log.debug("memberId = {}", memberId); //memberId = teacher
+			
+				//lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
+				//log.debug("myProfileMethod@lecture = {}", lecture);
+			  List<Lecture> list = lectureService.selectMyLecture(memberId);
+			  log.debug("list = {}", list);
+		     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
+			  
+			  mav.addObject("list",list);
+			  mav.setViewName("/teacher/teacherProfile");
+			  
+		  }catch(Exception e) { 
+			  throw e; 
+		  }
+
+		  return mav;
+		  
+		  }
+	
 	
 }

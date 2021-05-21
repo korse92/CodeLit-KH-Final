@@ -78,8 +78,11 @@ alert("${msg}");
 								</c:forEach>
 							</ul>
 						</li>  
-						<sec:authorize access="hasRole('USER') || hasRole('ADMIN')">
+						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ADMIN')">
+						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselListAdmin.do">문의</a></li>
 						</sec:authorize>
 					</ul>
 				</div>
@@ -90,10 +93,6 @@ alert("${msg}");
 						id="navbarMain">
 						<ul class="navbar-nav">
 							<li class="nav-item m-1"><a	class="btn btn-warning nav-link text-light"	href="${pageContext.request.contextPath}/member/memberLogin.do">Sign In</a></li>
-							<!-- 로그인 Modal 버전 -->
-							<!-- <li class="nav-item m-1">
-	             <a class="btn btn-warning nav-link text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In(Modal)</a>
-	           </li> -->
 							<li class="nav-item m-1"><a
 								class="btn btn-primary nav-link text-light" href="${pageContext.request.contextPath}/member/memberEnroll.do">Sign Up</a>
 							</li>
@@ -109,7 +108,6 @@ alert("${msg}");
 			            	<li class="nav-item">
 			                	<span class="fs-4 text-light">
 			                		<sec:authentication property="principal.username"/>
-<%-- 									<sec:authentication property="principal.authorities"/> --%>
 			                	</span>
 			                	<span class="fs-5 text-light">&nbsp;님</span>
 			              	</li>
@@ -125,7 +123,7 @@ alert("${msg}");
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
-					                  <li><a class="dropdown-item" href="#">프로필</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
 					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
 					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
@@ -137,8 +135,9 @@ alert("${msg}");
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('TEACHER')">
 				                  		<hr/>
+				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
-					                  <li><a class="dropdown-item" href="#">정산내역</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('ADMIN')">
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
@@ -168,39 +167,7 @@ alert("${msg}");
 				
 			</div>
 		</nav>
-
-		<!-- 로그인 Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header text-center">
-						<h5 class="modal-title text-center" id="exampleModalLabel">CodeL!t</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"	aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form action="#" method="POST">
-							<table class="col-10 offset-1">
-								<tr>
-									<td colspan="3"><input type="text my-4 p-1"
-										class="form-control" name="id" placeholder="아이디"></td>
-									<td rowspan="2" colspan="2">
-										<button type="submit" class="btn btn-warning btn-xl py-4">로그인</button>
-									</td>
-								</tr>
-								<tr colspan="3">
-									<td><input type="password" class="form-control p-1"
-										name="password" placeholder="패스워드"></td>
-								</tr>
-							</table>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<p>추가내용</p>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 	</header>
 	<section id="content">
 	<!-- header.jsp 끝 -->
