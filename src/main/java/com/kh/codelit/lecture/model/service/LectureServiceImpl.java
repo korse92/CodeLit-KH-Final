@@ -84,6 +84,11 @@ public class LectureServiceImpl implements LectureService {
 	public int getTotalContents(Integer catNo) {
 		return lectureDao.getTotalContents(catNo);
 	}
+
+	@Override
+	public List<Lecture> selectMyLecture(String id) {
+		return lectureDao.selectMyLecture(id);
+	}
 	
 	
 }

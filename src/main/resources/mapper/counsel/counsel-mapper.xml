@@ -4,21 +4,44 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="counsel">
 
-	<insert id="insertCounsel">insert into counsel values(seq_counsel_no.nextval,#{refMemberId},#{counselTitle},#{counselContent},#{counselQNo},1,default)</insert>
+	<insert id="insertCounsel">
+		insert into 
+			counsel 
+		values
+			(seq_counsel_no.nextval,
+			#{refMemberId},
+			#{counselTitle},
+			#{counselContent},
+			null,
+			1,
+			default)
+			<selectKey resultType = "_int" keyProperty="counselQNo" order="AFTER">
+				select 
+					seq_counsel_no.currval
+				from 
+					dual
+			</selectKey>
+	</insert>
+	
 	<select id="selectCounselList" resultType="counsel">
-		select 
-			rownum,c.*
-				from(
-			select
-				*
-			from
-			counsel
-			order by
-			counsel_no
-			asc) c
-			order by
-			rownum
-			desc
+		select
+			c.*
+		from
+			counsel c
+		where 
+			(
+			ref_member_id = #{memberId} 
+			and counsel_level = 1
+			)
+			or 
+			(
+			counsel_level = 2 
+			and counsel_q_no in 
+				(select counsel_no from counsel where ref_member_id = #{memberId})
+			)
+			start with counsel_level = 1
+            connect by counsel_q_no = prior counsel_no
+            order siblings by counsel_no desc
 	
 	</select>
 
@@ -27,11 +50,28 @@
 			count(*)
 		from
 			counsel
-		<where>
-		<if test="_parameter gt 0">
-			ref_cousnel_no = #{_parameter}
-		</if>
-		</where>
+		where 
+			(
+			ref_member_id = #{memberId} 
+			and counsel_level = 1
+			)
+			or 
+			(
+			counsel_level = 2 
+			and counsel_q_no in 
+				(select counsel_no from counsel where ref_member_id = #{memberId})
+			)
+	</select>
+	
+	<select id="selectOneCounsel" resultType="counsel">
+		select *
+		from counsel
+		where counsel_no = #{counselNo}
+	</select>
+	<select id="selectAnswerBool" resultType="_int">
+		select count(*)
+		from counsel
+		where counsel_q_no = #{counselNo}
 	</select>
 	
 </mapper>
