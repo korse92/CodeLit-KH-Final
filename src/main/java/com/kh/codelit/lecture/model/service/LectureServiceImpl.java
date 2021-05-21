@@ -58,8 +58,6 @@ public class LectureServiceImpl implements LectureService {
 		return categoryMapInstance;
 	}
 
-
-
 	@Override
 	public int insertLecture(Lecture lecture) {		
 		int result = 0;
