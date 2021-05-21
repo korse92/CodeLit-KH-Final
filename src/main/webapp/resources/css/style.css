@@ -10,11 +10,11 @@ body {font-family:'SEBANG_Gothic_Regular', '휴먼모음T', sans-serif;}
 footer {padding: 10px;} */
 
 /********** 전체컨테이너 **********/
-div#container	{}
+/* div#container	{} */
 
 /********** header **********/
 
-header nav.navbar 
+header nav.navbar
 {
     background-color: #b8b5ff;
     box-shadow: 0 2px 4px 0 #edeef7;

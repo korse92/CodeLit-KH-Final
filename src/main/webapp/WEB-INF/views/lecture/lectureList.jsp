@@ -1,7 +1,4 @@
-﻿<%@page import="java.util.HashMap"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -22,25 +19,25 @@
 <link href="${pageContext.request.contextPath}/resources/css/theme-krajee-fa.css" media="all" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/css/theme-krajee-svg.css" media="all" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/css/theme-krajee-uni.css" media="all" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/lecture.css" media="all" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/lecture.css" media="all" rel="stylesheet" type="text/css" />
 
 <script>
 	$(() => {
-		//$("#input-id").rating();		
+		//$("#input-id").rating();
 		//$("#input-id").rating({min:1, max:10, step:2, size:'lg'});
-		
+
 		//Bootstrap Tooltip을 사용하기 위한 tooltip 초기화 코드
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 		  return new bootstrap.Tooltip(tooltipTriggerEl)
 		});
-		
+
 		$(".overlay .btn").click(e => {
 			//alert("테스트");
-			
+
 			//location.href = "${pageContext.request.contextPath}";
-			
+
 			//e.stopPropagation(); //상위 요소로의 이벤트전파 중단(태그 고유동작은 중단시키지 못함(ex.a태그의 주소이동)
 			e.preventDefault(); //태그의 고유동작을 중단시킴(a태그 주소이동, submit버튼의 form전송 등)
 		});

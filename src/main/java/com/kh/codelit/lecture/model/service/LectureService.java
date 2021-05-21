@@ -18,4 +18,8 @@ public interface LectureService {
 	List<Lecture> selectMyLecture(String id);
 
 	Map<Integer, Object> getCategoryMapInstance();
+
+	Lecture selectOneLecture(int no);
+
+	List<Map<String, Object>> selectLectureCmtList(int no);
 }

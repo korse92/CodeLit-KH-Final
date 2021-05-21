@@ -77,7 +77,7 @@ alert("${msg}");
 									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
 								</c:forEach>
 							</ul>
-						</li>  
+						</li>
 						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 						</sec:authorize>
@@ -99,10 +99,10 @@ alert("${msg}");
 						</ul>
 					</div>
 				</sec:authorize>
-				
+
 				<!-- 일반 사용자 로그인 -->
 				<sec:authorize access="isAuthenticated()">
-							
+
 					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarMain">
 			            <ul class="navbar-nav">
 			            	<li class="nav-item">
@@ -120,7 +120,7 @@ alert("${msg}");
 			                	</a>
 			                	<ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
 			                	  <form:form action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
-									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
+									 <button class="dropdown-item" type="submit">로그아웃</button>
 								  </form:form>
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
@@ -134,7 +134,7 @@ alert("${msg}");
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('TEACHER')">
-				                  		<hr/>
+				                  	  <hr/>
 				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
@@ -146,7 +146,7 @@ alert("${msg}");
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do">회원 관리</a></li>
 				                  		<li><a class="dropdown-item" href="#">알림</a></li>
 				                  </sec:authorize>
-				                  
+
 				                </ul>
 			              	</li>
 			             	<li>
@@ -164,10 +164,10 @@ alert("${msg}");
 			            </ul>
 			         </div>
 				</sec:authorize>
-				
+
 			</div>
 		</nav>
-		
+
 	</header>
 	<section id="content">
 	<!-- header.jsp 끝 -->
