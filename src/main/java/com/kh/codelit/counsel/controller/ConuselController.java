@@ -62,9 +62,8 @@ public class ConuselController {
 			
 			//b. pageBar영역
 			int totalContents = service.getTotalContents(memberId);
-			String url = request.getRequestURI();
-			log.debug("url = {}", url);
-			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+			String paramUrl = HelloSpringUtils.convertToParamUrl(request);
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, paramUrl);
 			
 			//3.jsp 위임처리
 			model.addAttribute("list", list);
