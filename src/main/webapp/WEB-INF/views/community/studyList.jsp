@@ -24,36 +24,36 @@ $(() => {
 
 
    	<div class="container">
+        <form method="GET" id="searchFrm"  
+         action="${pageContext.request.contextPath}/community/studyList.do">
         <div class="row mt-5">
           <h2 class=" jb-larger mt-3 col-sm-3">공부 게시판</h2>
-
-          <c:if test="${empty list}">
-          	<h1 style="text-align: center">등록된 게시글이 존재하지 않습니다.</h1>
-          </c:if>
-          
-          <c:if test="${not empty list}">
           <div class="mt-4 col-sm-2">
             <select class="form-select" id="searchType" name="searchType">
-              <option value="all">전체</option>
-              <option value="t">제목</option>
-              <option value="c">내용</option>
-              <option value="w">내용</option>
+              <option value="std_brd_title" ${param.searchType eq 't' ? 'selected' : ''}>제목</option>
+              <option value="ref_member_id" ${param.searchType eq 'w' ? 'selected' : ''}>작성자</option>
             </select>
           </div>
-            
           <div class="col-4 mt-4">
             <div class="input-group">  
               <div class="form-outline">
-                <input type="search" id="form1" class="form-control"  placeholder="Search"/>              
+                <input type="search" id="searchKeyword" name="searchKeyword" class="form-control"  placeholder="Search"/>              
               </div>
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 <i class="fas fa-search"></i>
               </button>
             </div>
           </div>
+          <c:if test="${empty list}">
+          	<h1 style="text-align: center; margin-top: 3rem;" >등록된 게시글이 존재하지 않습니다.</h1>
+          </c:if>
+          <c:if test="${not empty list}">
         </div>
+      </form>
         
+
         <div class="mt-5">
+
           <table class="table text-center table-hover">
             <thead class="table-primary">
               <tr>
@@ -69,6 +69,7 @@ $(() => {
 	              <tr data-no="${list.stdBrdNo}">
 	                <td scope="row">${list.rownum}</td>
 	                <td>
+	                [${list.lectureName}]
 						<c:choose>
 	                		<c:when test="${fn:length(list.stdBrdTitle) > 20}">
 					                <c:out value="${fn:substring(list.stdBrdTitle,0,19)}" />...

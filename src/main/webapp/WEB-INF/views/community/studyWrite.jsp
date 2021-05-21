@@ -51,14 +51,22 @@ function checkContent() {
           <div class="row title-group">
             <h5 class="col-sm-2 board-title">제목</h5>
             <div class="col-sm-10">
+	          <select name="selectBox">
+		          <c:forEach items="${list}" var="list">
+		         	<option value="${list.lectureNo}">${list.lectureName}</option>
+		          </c:forEach>
+	       	 </select>
               <input class="form-control " type="text" name="stdBrdTitle" id="stdBrdTitle" placeholder="title">
             </div>
           </div>
-          <div class="board-container">
+ 		  <div class="board-container">
+            <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
             <div class="form-group content">
-              <textarea class="form-control" name="stdBrdContent" id="stdBrdContent"rows="10" placeholder="content"></textarea>
-              <img src="" alt="" id="photo_img">
-                <input type="file" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
+              <textarea class="form-control" name="stdBrdContent" id="stdBrdContent" rows="10"></textarea>
+              	<div class="custom-file">
+	              	<img src="" alt="" id="photo_img">
+	                <input type="file" class="custom-file-input" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
+              	</div>
             </div>
           </div>
           <div class="board-footer">
