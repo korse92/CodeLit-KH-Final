@@ -10,14 +10,14 @@
 
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="CodeLit" name="title"/>
+	<jsp:param value="강의 상세페이지" name="title"/>
 </jsp:include>
 
 <!-- 컨텐츠 시작 -->
 
 <!-- 개인 CSS, JS 위치 -->
 
-<div class="container">
+<div class="container my-5">
 	<div class="page-header row">
 		<h2 class="row">강의 상세페이지</h2>
 		<div class="row just">
