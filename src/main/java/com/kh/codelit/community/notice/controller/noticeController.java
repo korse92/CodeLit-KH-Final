@@ -51,7 +51,7 @@ public class noticeController {
 		List<Notice> list = service.noticeList(param);
 		
 		int count = service.getListCount();
-		String uri = request.getRequestURI();
+		String uri = HelloSpringUtils.convertToParamUrl(request);
 		String pageBar = HelloSpringUtils.getPageBar(count, cPage, numPerPage, uri);
 		
 		model.addAttribute("list", list);
