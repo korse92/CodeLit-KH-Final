@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -177,7 +177,7 @@ public class TeacherController {
 		return mav;
 	}
 	
-	
+
 	
 	@GetMapping("/lectureEnroll.do")
 	public void lectureEnroll() {
@@ -271,5 +271,28 @@ public class TeacherController {
 		
 		return "redirect:/teacher/lectureEnroll.do";
 	}
+	@GetMapping("/teacherDetail.do")
+									//db에서 
+	public String teacherDetail(Authentication authentication,Model model) {
+		
+	String memberId = ((Member)authentication.getPrincipal()).getMemberId();
+
+
+	return "teacher/teacherDetai";
+		
+		
+	}
+//	@PostMapping("/teacherUpdate.do")
+//	public String teacherView(@ModelAttribute Teacher teacher,RedirectAttributes redirect ,
+//	Authentication authentication) {
+//		int result = teacherService.update(teacher);
+//		String memberId = ((Member)authentication.getPrincipal()).getMemberId();
+//		log.info("수정 : "+ teacher);
+//	
+//		String msg = result > 0 ? "수정 성공":"수정 실패";
+//		return "teacher/teacherView";
+//		
+//		
+//	}
 	
 }
