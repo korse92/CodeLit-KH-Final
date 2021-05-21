@@ -1,5 +1,6 @@
 package com.kh.codelit.community.study.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.study.model.dao.StudyDAO;
+import com.kh.codelit.community.study.model.vo.Comment;
 import com.kh.codelit.community.study.model.vo.StudyBoard;
+import com.kh.codelit.lecture.model.vo.Lecture;
 
 @Service
 public class StudyServiceImpl implements StudyService {
@@ -24,7 +27,7 @@ public class StudyServiceImpl implements StudyService {
 
 
 	@Override
-	public List<StudyBoard> studyBoardList(Map<String, Object> param) {
+	public List<Map<String, Object>> studyBoardList(Map<String, Object> param) {
 		return dao.studyBoardList(param);
 	}
 
@@ -76,6 +79,23 @@ public class StudyServiceImpl implements StudyService {
 		return dao.update(stdBrd);
 	}
 
-	
-	
+
+	@Override
+	public List<Lecture> selectLec() {
+		return dao.selectLec();
+	}
+
+
+	@Override
+	public Lecture selectOneLec(int lecNo) {
+		return dao.selectOneLec(lecNo);
+	}
+
+
+	@Override
+	public List<Comment> selectCmt(int stdBrdNo) {
+		return dao.selectCmt(stdBrdNo);
+	}
+
+
 }

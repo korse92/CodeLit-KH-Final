@@ -837,6 +837,7 @@ begin
     end loop;
     commit;
 end;
+/
 
 commit;
 
@@ -855,5 +856,6 @@ begin
     end loop;
     commit;
 end;
+/
 
 commit;

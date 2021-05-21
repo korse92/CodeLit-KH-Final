@@ -67,7 +67,6 @@ function checkContent() {
 	              		<img src="" alt="" id="photo_img">	              	
 	              	</c:if>
 	                <input type="file" value="${attach.originalFilename}" class="custom-file-input" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
-              		${attach}
               	</div>
             </div>
           </div>

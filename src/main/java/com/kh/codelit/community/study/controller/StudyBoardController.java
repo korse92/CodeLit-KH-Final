@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.community.study.model.service.StudyService;
+import com.kh.codelit.community.study.model.vo.Comment;
 import com.kh.codelit.community.study.model.vo.StudyBoard;
+import com.kh.codelit.lecture.model.vo.Lecture;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,24 +39,41 @@ public class StudyBoardController {
 	private StudyService service;
 	
 	@GetMapping("/studyList.do")
-	public void selectBoard(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request) {
+	public ModelAndView selectBoard(
+			@RequestParam(defaultValue = "1") int cPage, 
+			ModelAndView mav,
+			@RequestParam(required = false) String searchType,
+			@RequestParam(required = false) String searchKeyword,
+			HttpServletRequest request) {
 
 		int numPerPage = 10;
 		//클릭한 페이지, 총게시글 수전달
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
+		param.put("searchKeyword", searchKeyword);
+		param.put("searchType", searchType);
 		
-		List<StudyBoard> list = service.studyBoardList(param);
+		List<Map<String, Object>> list = service.studyBoardList(param);
 		
 		int count = service.getListCount();
 		String uri = request.getRequestURI();
+		if(searchKeyword != null || searchType != null)
+			uri +="&searchKeyword=" + searchKeyword + "&searchType=" + searchType;
+		Map<String, String[]> paramMap = request.getParameterMap();
+		for(String key : paramMap.keySet()) {
+			log.debug("key = {}", key);
+			String[] valArr = paramMap.get(key);
+			log.debug("valArr = {}", valArr);
+		}
+		
 		String pageBar = HelloSpringUtils.getPageBar(count, cPage, numPerPage, uri);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("pageBar", pageBar);
-		
-		
+//		model.addAttribute("list", list);
+//		model.addAttribute("pageBar", pageBar);
+		mav.addObject("list", list);
+		mav.addObject("pageBar", pageBar);
+		mav.setViewName("/community/studyList");
+		return mav;
 	}
 	
 	@GetMapping(value = {"/studyDetail.do", "/studyUpdate.do"})
@@ -61,8 +81,15 @@ public class StudyBoardController {
 		
 		int result = service.updateCnt(stdBrdNo);
 		StudyBoard stdBrd = service.selectOneStudy(stdBrdNo);
-		model.addAttribute("stdBrd",stdBrd);
 		Attachment attach = service.selectOneAttach(stdBrdNo);
+		List<Lecture> lec = service.selectLec();
+		List<Comment> listCmt = service.selectCmt(stdBrdNo);
+		
+		model.addAttribute("stdBrd",stdBrd);
+		model.addAttribute("list",lec);
+		if(listCmt != null) {
+			model.addAttribute("listCmt", listCmt);
+		}
 		
 		if(attach != null) {
 			String attachPath = attach.getContentsAttachPath() +"/"+ attach.getRenamedFilename();
@@ -72,13 +99,16 @@ public class StudyBoardController {
 	}
 	
 	@GetMapping("/studyWrite.do")
-	public void BoardWrite() {
-		
+	public void BoardWrite(Model model) {
+		List<Lecture> list = service.selectLec();
+		model.addAttribute("list",list);
 	}
+	
 	@PostMapping("/studyInsert.do")
 	public String studyInsert(
 				@ModelAttribute StudyBoard studyBoard,
 				@RequestParam(required = false) MultipartFile upFile,
+				@RequestParam(value = "selectBox") int lecNo,
 				HttpServletRequest request,
 				RedirectAttributes redirect,
 				Principal pri) throws IllegalStateException, IOException {
@@ -90,7 +120,7 @@ public class StudyBoardController {
 			dir.mkdir();
 		
 		studyBoard.setRefMemberId(pri.getName());
-
+		studyBoard.setRefLectureNo(lecNo);
 		int result = service.insertBoard(studyBoard);
 		if(!upFile.isEmpty() || upFile.getSize() > 0) {
 		
@@ -111,12 +141,66 @@ public class StudyBoardController {
 	}
 	
 	@PostMapping("/studyUpdate.do")
-	public String BoardUpdate(@ModelAttribute StudyBoard stdBrd, RedirectAttributes redirect) {
+	public String BoardUpdate(
+				@ModelAttribute StudyBoard stdBrd,
+				@RequestParam(required = false) MultipartFile upFile,
+				@RequestParam(value = "selectBox") int lecNo,
+				RedirectAttributes redirect,
+				HttpServletRequest request,
+				Principal pri) throws IllegalStateException, IOException {
+		if(!upFile.isEmpty()) {
+			// 새로운 파일이 있다면 첨부파일 조회
+			Attachment attach = service.selectOneAttach(stdBrd.getStdBrdNo());
+			//경로 불러오기
+			String saveDirectory =  request.getServletContext().getRealPath(Attachment.PATH_STUDYBOARD);
+			if(attach != null) {
+				if(upFile.getSize() == 0 && upFile.isEmpty()) {
+					String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
+					File oldFile = new File(oldPath);
+					
+					// 기존 파일 삭제
+					if(oldFile != null) oldFile.delete(); 
+					service.deleteAttach(stdBrd.getStdBrdNo());
+				} else {
+					//파일 객체 생성
+					String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
+					File oldFile = new File(oldPath);
+					
+					File renameFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+					// 기존 파일 삭제
+					if(oldFile != null) oldFile.delete(); 
+					//서버에서 기존 파일 삭제
+					int deleteResult = service.deleteAttach(stdBrd.getStdBrdNo());	
+					// 가져온 파일 업로드
+					upFile.transferTo(renameFile); 
+					//객체 생성
+					attach = new Attachment(0,stdBrd.getStdBrdNo(),upFile.getOriginalFilename(),renameFile.getName(),Attachment.CODE_STUDY_BOARD,Attachment.PATH_STUDYBOARD);
+					//새로운 파일을 서버에 저장
+					int insertResult = service.insertAttachment(attach);					
+				}
+			} else {
+				File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+				//파일 저장
+				upFile.transferTo(renamedFile);
+				
+				//Attachment객체생성
+				Attachment attachnew = new Attachment(0,stdBrd.getStdBrdNo(),upFile.getOriginalFilename(),renamedFile.getName(),Attachment.CODE_STUDY_BOARD,Attachment.PATH_STUDYBOARD);
+				
+				service.insertAttachment(attachnew);
+			}
+		}
+		
+		stdBrd.setRefLectureNo(lecNo);
+		stdBrd.setRefMemberId(pri.getName());
+		Lecture lec = service.selectOneLec(lecNo);
+		stdBrd.setLectureName(lec.getLectureName());
+		
+		log.debug("stdBrd ============{}", stdBrd);
 		int result = service.update(stdBrd);
 		String msg = result > 0 ? "수정 성공":"수정 실패";
 		redirect.addFlashAttribute("msg",msg);
 		
-		return "redirect:/community/noticeDetail.do?noticeNo="+stdBrd.getStdBrdNo();
+		return "redirect:/community/studyDetail.do?stdBrdNo="+stdBrd.getStdBrdNo();
 	}
 	
 	@GetMapping("/studyDelete.do")
