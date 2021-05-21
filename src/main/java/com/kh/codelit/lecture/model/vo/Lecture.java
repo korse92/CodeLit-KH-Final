@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Lecture {
 	
+	//lecture테이블 컬럼과 동일
 	private int lectureNo;
 	private int refLecCatNo;
 	private String refMemberId;
@@ -26,12 +27,15 @@ public class Lecture {
 	private String lectureAcceptYn;
 	private int lectureGuideline;
 	
+	//강사 관련
+	private String teacherName;
+	
 	//첨부파일 관련
 	private int attachCount;				//첨부파일 개수
 	private List<Attachment> attachList;
 	
 	//수강후기 관련
 	private List<Map<String, Object>> lectureCommentList;
-	private double avgLecAssessment;
+	private double avgLecAssessment; //
 	
 }

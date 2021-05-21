@@ -74,7 +74,7 @@ function deleteLecture(no) {
 		 <div>
 		  ${pageBar}
 		 </div>
-		</c:if>
+		</c:if> 
 </div>
 </section>
 </div>    

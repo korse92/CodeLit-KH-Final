@@ -50,19 +50,6 @@
 			<exclude-mapping path="/resources/**"/>
 			<beans:bean id="loggerinterceptor" class="com.kh.codelit.common.interceptor.LoggerInterceptor"/>
 		</interceptor>
-		<!-- <interceptor>
-			mapping 태그는 여러개 사용가능하다
-			<mapping path="/member/**/*.do"/>
-			<mapping path="/board/**/*.do"/>
-			<exclude-mapping path="/member/login.do"/>
-			<exclude-mapping path="/member/memberEnroll.do"/>
-			<exclude-mapping path="/member/checkIdDuplicate*.do"/>
-			<exclude-mapping path="/board/boardList.do"/>
-			<exclude-mapping path="/board/boardDetail.do"/>
-			<exclude-mapping path="/board/fileDownload.do"/>
-			<exclude-mapping path="/board/searchTitle.do"/>
-			<beans:bean id="loginInterceptor" class="com.kh.codelit.common.interceptor.LoginInterceptor"/>
-		</interceptor> -->
 	</interceptors>
 	
 	<!-- #11.1 annotation aop 작성 -->
@@ -73,17 +60,16 @@
 	-->
 	<aop:aspectj-autoproxy/>
 	
-		
-<!-- 	<bean id="csrfSecurityRequestMatcher" class="kr.re.kinac.pfp.component.CsrfSecurityRequestMatcher" /> -->
-
 	<!-- #12.1 파일업로드를 처리할 Resolver클래스 빈등록(빈이름 주의) -->
-	<beans:bean
+ 	<beans:bean
 		id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
-		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음)-->
+		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음) -->
 		<beans:property name="maxUploadSizePerFile" value="524288000" /> <!-- 파일하나당 최대용량은 500MB(500 * 1024 * 1024)이다. 기본값: -1(제한없음) -->
 		<beans:property name="maxInMemorySize" value="10240" /> <!-- 메모리 사용최대용량. 기본값 10240. 이값을 넘어가면, 임시파일로 저장함. -->
 	</beans:bean>
+	
+	
 	
 	<!-- #15.1 @Responsebody사용을 위한 의존 : 빈등록 (스프링 5.x => MappingJackson2HttpMessageConverter) -->
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />

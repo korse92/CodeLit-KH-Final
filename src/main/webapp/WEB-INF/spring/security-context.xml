@@ -11,12 +11,32 @@
 	<!-- #4. 패스워드암호화관련 빈등록 -->
 	<beans:bean id="bcryptPasswordEncoder"
 				class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+				
+	<beans:bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음) -->
+		<beans:property name="maxUploadSizePerFile" value="524288000" /> <!-- 파일하나당 최대용량은 500MB(500 * 1024 * 1024)이다. 기본값: -1(제한없음) -->
+		<beans:property name="maxInMemorySize" value="10240" /> <!-- 메모리 사용최대용량. 기본값 10240. 이값을 넘어가면, 임시파일로 저장함. -->
+		<beans:property name="defaultEncoding" value="UTF-8" />
+	</beans:bean>
 	
 	<!-- #5. 정적자원 요청은 security 인증/인가에서 제외한다. -->			
 	<http security="none" pattern="/resources/**"/>
 	
 	<!-- #6. HttpSecurity 설정 -->
 	<http auto-config="true">
+
+
+	
+	<!-- 	<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함.
+		<intercept-url pattern="/member/memberLogin.do" access="isAnonymous()" />
+		<intercept-url pattern="/member/memberEnroll.do" access="isAnonymous()" />
+		<intercept-url pattern="/member/**" access="isAuthenticated()"/>
+		<intercept-url pattern="/board/**" access="hasRole('USER')"/>
+	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />	    
+	    <intercept-url pattern="/**" access="isAuthenticated()" />
+	     -->
+
 
 		<!-- <intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함.
@@ -25,6 +45,7 @@
 		<intercept-url pattern="/board/**" access="hasRole('USER')"/>
 	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />	    
 	    <intercept-url pattern="/**" access="isAuthenticated()" /> -->
+
 <!-- 		<intercept-url pattern="/" access="permitAll" /> -->
 <!-- 		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함. -->
 <!-- 		<intercept-url pattern="/member/memberLogin.do" access="isAnonymous()" /> -->
@@ -57,7 +78,7 @@
 				logout-success-url="/"/>
 				
 		<!-- remember me 설정 -->
-		<remember-me  
+		<remember-me
 			data-source-ref="dataSource" 
 			token-validity-seconds="1209600"/> <!-- 초단위 기입 2419200 (60*60*24*14 : 4 주) -->
 

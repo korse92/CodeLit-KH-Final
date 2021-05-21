@@ -1,5 +1,6 @@
 package com.kh.codelit.lecture.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ public class LectureServiceImpl implements LectureService {
 	private AttachDao attachDao;
 
 	private static List<Map<String, Object>> categoryListInstance; //싱글톤 객체로 처리
+	private static Map<Integer, Object> categoryMapInstance;
 	
 	@Override
 	public List<Map<String, Object>> selectCategoryListInstance() {
@@ -36,6 +38,26 @@ public class LectureServiceImpl implements LectureService {
 		
 		return categoryListInstance;
 	}
+
+	@Override
+	public Map<Integer, Object> getCategoryMapInstance() {
+		if(categoryListInstance == null || categoryListInstance.isEmpty())
+			categoryListInstance = selectCategoryListInstance();
+		
+		if(categoryMapInstance == null || categoryMapInstance.isEmpty()) {
+			categoryMapInstance = new HashMap<>();
+			for(Map<String, Object> category : categoryListInstance) {
+				Integer no = (Integer)category.get("no");
+				String name = (String)category.get("name");
+				categoryMapInstance.put(no, name);
+			}
+			log.debug("categoryMapInstance 생성 = {}", categoryMapInstance);
+		}		
+		
+		return categoryMapInstance;
+	}
+
+
 
 	@Override
 	public int insertLecture(Lecture lecture) {		
