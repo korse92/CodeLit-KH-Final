@@ -13,18 +13,13 @@
 <meta charset="UTF-8">
 <title>${param.title}</title>
 
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	crossorigin="anonymous"></script>
 
-<!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-	crossorigin="anonymous"></script>
-
 <!-- Bootstrap CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-	rel="stylesheet" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
 <!-- Font Awesome(아이콘) CSS -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
@@ -45,7 +40,7 @@ alert("${msg}");
 </c:if>
 </head>
 <body>
-	<header>
+	<header class="sticky-top">
 
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="container">
@@ -82,8 +77,10 @@ alert("${msg}");
 									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
 								</c:forEach>
 							</ul>
-						</li>
-						<li class="nav-item mx-2"><a class="nav-link" href="#">문의</a></li>
+						</li>  
+						<sec:authorize access="hasRole('USER') || hasRole('ADMIN')">
+						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
+						</sec:authorize>
 					</ul>
 				</div>
 
@@ -120,19 +117,19 @@ alert("${msg}");
 			                	&nbsp;&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item dropdown">
-			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="dropdownUserMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 			                  		메뉴
 			                	</a>
-			                	<ul class="dropdown-menu" id="dropdown3" aria-labelledby="navbarDropdown3">
-			                	  <form:form class="d-inline" action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
+			                	<ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+			                	  <form:form action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
 					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
 					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/pick.do">찜 목록</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/basket.do">장바구니</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do">장바구니</a></li>
 					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">

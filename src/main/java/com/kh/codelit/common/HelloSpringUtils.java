@@ -1,9 +1,14 @@
 package com.kh.codelit.common;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class HelloSpringUtils {
 
@@ -110,6 +115,32 @@ public class HelloSpringUtils {
 		// 존재하지 않는 파일객체를 바라보는 자바 객체가 됨.
 
 		return newFile;
+	}
+	
+	public static String convertToParamUrl(HttpServletRequest request) {
+		String url = request.getRequestURI();
+		String parameterString = "";
+		
+		Map<String, String[]> paramMap = request.getParameterMap();
+		for(Map.Entry<String, String[]> mapEntry : paramMap.entrySet()) {
+			for(String value : mapEntry.getValue()) {
+				if(mapEntry.getKey().equals("cPage"))
+					continue;
+				
+				try {
+					parameterString +=
+							(parameterString.isEmpty() ? "?" : "&") + mapEntry.getKey() + 
+							"="	+ URLEncoder.encode(value, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		url += parameterString;
+		
+		return url;
+		
 	}
 
 }

@@ -2,6 +2,7 @@
 -- 테이블 CREATE문
 --=============================================
 DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
+
 CREATE TABLE "MEMBER" (
 	"MEMBER_ID"	VARCHAR2(20)		NOT NULL,
 	"MEMBER_PW"	VARCHAR2(300)		NOT NULL,
@@ -99,7 +100,6 @@ DROP TABLE "COUNSEL" CASCADE CONSTRAINTS;
 CREATE TABLE "COUNSEL" (
 	"COUNSEL_NO"	NUMBER		NOT NULL,
 	"REF_MEMBER_ID"	VARCHAR2(20)		NOT NULL,
-	"COUNSEL_CATEGORY"	VARCHAR2(30)		NOT NULL,
 	"COUNSEL_TITLE"	VARCHAR2(200)		NOT NULL,
 	"COUNSEL_CONTENT"	VARCHAR2(3000)		NOT NULL,
 	"COUNSEL_Q_NO"	NUMBER		NULL,
@@ -839,6 +839,8 @@ begin
 end;
 /
 
+commit;
+
 --강의후기 테스트 데이터 150개
 begin
     for n in 1..150 loop
@@ -855,6 +857,5 @@ begin
     commit;
 end;
 /
-
 
 commit;

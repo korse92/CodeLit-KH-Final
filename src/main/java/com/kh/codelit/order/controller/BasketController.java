@@ -1,4 +1,4 @@
-package com.kh.codelit.member.controller;
+package com.kh.codelit.order.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,14 +11,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/member")
-public class PickController {
-
+@RequestMapping("/order")
+public class BasketController {
+	
 	@Autowired
 	private MemberService memberService;
 	
-	@GetMapping("pick.do")
-	public void pick() {
-		log.debug("찜 목록");
+	@GetMapping("basket.do")
+	public void basket() {
+		log.debug("장바구니 목록");
 	}
+
 }

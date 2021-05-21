@@ -116,7 +116,7 @@ public class TeacherController {
 			
 			if(upFile.isEmpty()) {
 				
-				//result = teacherService.insertTeacherRequest(teacher);
+				result = teacherService.insertTeacherRequest(teacher);
 				
 			} else {
 				
@@ -140,7 +140,7 @@ public class TeacherController {
 				map.put("id", teacher.getRefMemberId());
 				
 				// 티처 정보 및 파일네임을 담은 메소드
-				//result = teacherService.insertTeacherRequest(teacher, map);
+				result = teacherService.insertTeacherRequest(teacher, map);
 				
 				if(oldFile != null) oldFile.delete(); // 기존 파일 삭제
 				upFile.transferTo(renamedFile);	// 업로드한 파일데이터를 지정한 파일에 저장한다.				
@@ -250,7 +250,7 @@ public class TeacherController {
 				attach.setRenamedFilename(renamedFile.getName());
 				attach.setRefContentsGroupCode(Attachment.CODE_LECTURE_HANDOUT);
 				
-				attachList.add(attach);				
+				attachList.add(attach);
 			}
 			
 			

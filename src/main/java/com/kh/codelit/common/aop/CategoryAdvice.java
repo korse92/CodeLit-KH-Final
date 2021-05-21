@@ -25,9 +25,12 @@ public class CategoryAdvice {
 	public void getCategoryList(Model model){
 		
 		List<Map<String, Object>> categoryList = lectureService.selectCategoryListInstance();
+		Map<Integer, Object> categoryMap = lectureService.getCategoryMapInstance();
 		
 		log.debug("categoryList = {}", categoryList);
+		log.debug("categoryMap = {}", categoryMap);
 		
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryMap", categoryMap);
 	}
 }
