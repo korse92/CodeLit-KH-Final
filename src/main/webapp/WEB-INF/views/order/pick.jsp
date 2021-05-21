@@ -67,18 +67,18 @@
                         <span class="info">${pick.lectureIntro}</span>
                     </a>
                 </div>
-                <ul class="addLecture">
-                    <li>
-                        <button class="btn bt text-light col-8 me-2">
-                            <i class="fas fa-shopping-basket"><span>&nbsp&nbsp장바구니 추가</span></i>
+                <div class="addLecture">
+                        <button class="btn" data-bs-toggle="tooltip" data-bs-placement="left" title="장바구니">
+                            <i class="fas fa-shopping-basket"></i>
                         </button>
+                        <button class="btn" data-bs-toggle="tooltip" data-bs-placement="left" title="찜">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    <!-- <li>
                     </li>
                     <li>
-                        <button class="btn bt text-light col-6 me-2">
-                            <i class="fas fa-heart"><span>&nbsp&nbsp찜 추가</span></i>
-                        </button>
-                    </li>
-                </ul>
+                    </li> -->
+                </div>
             </div> <!--hide -->
         </div> <!-- lecture -->
 		</c:forEach>
