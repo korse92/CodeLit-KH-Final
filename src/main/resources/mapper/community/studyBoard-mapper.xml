@@ -5,17 +5,32 @@
 <mapper namespace="studyBoard">
 
 	<select id="studyBoardList" resultType="studyBoard">
-		select 
+	select 
 		    rownum,
 		    n.*
 		from(
 		    select 
-		        * 
+		        s.std_brd_no,
+                s.ref_member_id,
+                s.ref_lecture_no,
+                s.std_brd_title,
+                s.std_brd_content,
+                s.std_brd_date,
+                s.std_brd_count,
+                l.lecture_name
 		    from 
-		        study_board
+		        study_board s join lecture l
+            on
+                s.ref_lecture_no = l.lecture_No
 		    order by 
 		        STD_BRD_NO
 		    asc) n
+	<where>
+      <if test="searchKeyword != null and searchKeyword != ''">
+  	   and
+   		${searchType} like '%' || #{searchKeyword} || '%' 
+     </if>  
+	</where>
 		order by
 		    rownum
 		    desc
@@ -28,12 +43,24 @@
 			study_board
 	</select>
 		<select id="selectOneStudy" resultType="studyBoard">
-		SELECT
-			*
-		FROM
-			study_board
-		WHERE
-			std_brd_no = #{stdBrdNo}
+			select
+			    *
+			from
+			(select 
+		        s.std_brd_no,
+                s.ref_member_id,
+                s.ref_lecture_no,
+                s.std_brd_title,
+                s.std_brd_content,
+                s.std_brd_date,
+                s.std_brd_count,
+                l.lecture_name
+		    from 
+		        study_board s join lecture l
+            on
+                s.ref_lecture_no = l.lecture_No
+                ) n
+			where n.std_brd_no = #{stdBrdNo}
 	</select>
 	
 	<insert id="insertBoard">
@@ -50,7 +77,7 @@
 		values(
 			SEQ_STD_BRD_NO.NEXTVAL,
 			#{refMemberId},
-			5,
+			#{refLectureNo},
 			#{stdBrdTitle},
 			#{stdBrdContent},
 			default,
@@ -74,9 +101,11 @@
 		update 
 		    study_board
 		set 
-		    notice_title = #{noticeTitle},
-		    notice_content = #{noticeContent},
-		    notice_date = default
+			std_brd_no = #{stdBrdNo},
+			ref_member_id = #{refMemberId},
+		    ref_lecture_no = #{refLectureNo},
+		    std_brd_title = #{stdBrdTitle},
+		    std_brd_content = #{stdBrdContent}
 		where
 		    std_brd_no = #{stdBrdNo}
 	</update>
@@ -112,6 +141,20 @@
 		and 
 			ref_contents_group_no = 'SB'
 	</delete>
-
-
+	<select id="selectLec" resultType="com.kh.codelit.lecture.model.vo.Lecture">
+		select 
+			*
+		from
+			lecture
+	</select>
+	
+	<select id="selectOneLec" resultType="com.kh.codelit.lecture.model.vo.Lecture">
+        select
+            lecture_name
+        from 
+            lecture
+        where
+            lecture_no = #{lectureNo}
+	</select>	
+	
 </mapper>
