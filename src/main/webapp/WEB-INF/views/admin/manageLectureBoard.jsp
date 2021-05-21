@@ -98,8 +98,8 @@ window.onload = function() {
 					</select>
 				</div>
 				<div class="col-sm-2">
-					<select class="form-select" id="searchType" name="searchType">
-						<option selected disabled>검색</option>
+					<select class="form-select" id="searchType" name="searchType" required>
+						<option value="" selected disabled>검색</option>
 						<option value="ref_member_id"  ${param.searchType eq 'ref_member_id' ? 'selected' : ''}>강의자</option>
 						<option value="lecture_name"   ${param.searchType eq 'lecture_name' ? 'selected' : ''}>강의명</option>
 					</select>
