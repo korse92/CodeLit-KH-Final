@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +25,8 @@ import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.community.notice.model.service.NoticeService;
 import com.kh.codelit.community.notice.model.vo.Notice;
+import com.kh.codelit.lecture.model.service.LectureService;
+import com.kh.codelit.lecture.model.vo.Lecture;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -128,20 +129,48 @@ public class noticeController {
 			HttpServletRequest request
 			) throws IllegalStateException, IOException {
 		if(!upFile.isEmpty()) {
+			// 새로운 파일이 있다면 첨부파일 조회
 			Attachment attach = service.selectOneAttach(notice.getNoticeNo());
-			
-			String save = request.getServletContext().getRealPath("/resources/upload/notice");
-			String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
-			File oldFile = new File(oldPath);
-			
-			
-			File renameFile = HelloSpringUtils.getRenamedFile(save, upFile.getOriginalFilename());
-			if(oldFile != null) oldFile.delete(); // 기존 파일 삭제
-			upFile.transferTo(renameFile);
-			
-			attach.setOriginalFilename(upFile.getOriginalFilename());
-			attach.setRenamedFilename(renameFile.getName());
-			
+			log.debug("attach = {}===========================", attach);
+			log.debug("upFile = {}===========================", upFile);
+			//경로 불러오기
+			String saveDirectory =  request.getServletContext().getRealPath(Attachment.PATH_NOTICE);
+			if(attach != null) {
+				if(upFile.getSize() == 0 && upFile.isEmpty()) {
+					String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
+					File oldFile = new File(oldPath);
+					
+					// 기존 파일 삭제
+					if(oldFile != null) oldFile.delete(); 
+					service.deleteAttach(notice.getNoticeNo());
+				} else {
+					//파일 객체 생성
+					String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
+					File oldFile = new File(oldPath);
+					
+					File renameFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+					// 기존 파일 삭제
+					if(oldFile != null) oldFile.delete(); 
+					//서버에서 기존 파일 삭제
+					int deleteResult = service.deleteAttach(notice.getNoticeNo());	
+					// 가져온 파일 업로드
+					upFile.transferTo(renameFile); 
+					//객체 생성
+					attach = new Attachment(0,notice.getNoticeNo(),upFile.getOriginalFilename(),renameFile.getName(),Attachment.CODE_NOTICE,Attachment.PATH_NOTICE);
+					log.debug("attach =============", attach);
+					//새로운 파일을 서버에 저장
+					int insertResult = service.insertAttachment(attach);					
+				}
+			} else {
+				File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+				//파일 저장
+				upFile.transferTo(renamedFile);
+				
+				//Attachment객체생성
+				Attachment attachnew = new Attachment(0,notice.getNoticeNo(),upFile.getOriginalFilename(),renamedFile.getName(),Attachment.CODE_NOTICE,Attachment.PATH_NOTICE);
+				
+				service.insertAttachment(attachnew);
+			}
 		}
 		int result = service.update(notice);
 		String msg = result > 0 ? "수정 성공":"수정 실패";
@@ -150,3 +179,12 @@ public class noticeController {
 	}
 }
 	
+
+
+
+
+
+
+
+
+

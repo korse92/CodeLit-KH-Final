@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.notice.model.vo.Notice;
+import com.kh.codelit.lecture.model.vo.Lecture;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,6 +90,12 @@ public class NoticeDAOImpl implements NoticeDAO {
 	@Override
 	public int updateAttach(Attachment attach) {
 		return session.update("notice.updateAttach", attach);
+	}
+
+
+	@Override
+	public List<Lecture> selectLec() {
+		return session.selectList("notice.selectLec");
 	}
 
 

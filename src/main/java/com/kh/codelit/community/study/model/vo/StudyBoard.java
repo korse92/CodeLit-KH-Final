@@ -21,5 +21,6 @@ public class StudyBoard {
 	private Date stdBrdDate;
 	private int stdBrdCount;
 	private int rownum;
+	private String lectureName;
 
 }

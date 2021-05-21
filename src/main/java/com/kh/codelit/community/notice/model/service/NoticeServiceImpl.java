@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.notice.model.dao.NoticeDAO;
 import com.kh.codelit.community.notice.model.vo.Notice;
+import com.kh.codelit.lecture.model.vo.Lecture;
 
 
 @Service
@@ -81,6 +82,12 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int updateAttach(Attachment attach) {
 		return dao.updateAttach(attach);
+	}
+
+
+	@Override
+	public List<Lecture> selectLec() {
+		return dao.selectLec();
 	}
 
 

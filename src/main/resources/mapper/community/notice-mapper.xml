@@ -120,4 +120,5 @@
 		and
 			ref_contents_group_no = 'N'
 	</update>
+
 </mapper>
