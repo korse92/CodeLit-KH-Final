@@ -246,7 +246,7 @@ public class TeacherController {
 				attach.setRenamedFilename(renamedFile.getName());
 				attach.setRefContentsGroupCode(Attachment.CODE_LECTURE_HANDOUT);
 				
-				attachList.add(attach);				
+				attachList.add(attach);
 			}
 			
 			

@@ -13,20 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-
 import com.kh.codelit.admin.model.service.AdminService;
-
+import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.vo.Teacher;
-
-import com.kh.codelit.common.HelloSpringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -349,20 +344,13 @@ public class adminController {
 			// b. pageBar 영역
 			int totalContents = adminService.getTotalContents(param);
 			// log.debug("totalContents = {}", totalContents);
-			String url = request.getRequestURI();
-			if(category != null || searchKeyword != null || searchType != null)
-				url += "?category=" + category + "&searchKeyword=" + searchKeyword + "&searchType=" + searchType;
+			String paramUrl = HelloSpringUtils.convertToParamUrl(request);
+//			if(category != null || searchKeyword != null || searchType != null)
+//				url += "?category=" + category + "&searchKeyword=" + searchKeyword + "&searchType=" + searchType;
+
+			log.debug("paramUrl = {}", paramUrl);
 			
-			Map<String, String[]> paramMap = request.getParameterMap();
-			for(String key : paramMap.keySet()) {
-				log.debug("key = {}", key);
-				String[] valArr = paramMap.get(key);
-				log.debug("valArr = {}", valArr);
-			}
-			
-			log.debug("paramMap = {}", paramMap);
-			log.debug("url = {}",url);
-			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, paramUrl);
 			log.debug("pageBar = {}", pageBar);
 			// 3. jsp처리 위임 model.addAttribute("list",list);
 			mav.addObject("lecBoardList", list);
@@ -370,7 +358,6 @@ public class adminController {
 			mav.setViewName("/admin/manageLectureBoard");
 			
 	} catch (Exception e) {
-		
 		throw e;
 	}
 		return mav;
