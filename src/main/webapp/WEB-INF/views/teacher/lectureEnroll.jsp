@@ -31,8 +31,10 @@ img#thumbImage {
 
 <div class="container">
 	<div class="mt-5 mx-auto form-group" style="width:fit-content;">
-		<form name="lectureEnrollFrm"
-			action="${pageContext.request.contextPath}/teacher/lectureEnroll.do?${_csrf.parameterName}=${_csrf.token}"
+		<form:form
+			id="lectureEnrollFrm"
+			name="lectureEnrollFrm"
+			action="${pageContext.request.contextPath}/teacher/lectureEnroll.do"
 			method="post"
 			enctype="multipart/form-data">
 			<div class="row justify-content-center">
@@ -116,7 +118,7 @@ img#thumbImage {
 				</div>
 			</div>
 			
-			<div id="selectedStreaming" class="d-none row">
+			<div id="selectedStreaming" class="row">
 				<label class="form-label mb-2" for="">강의일정</label>
 				<div class="col-sm">
 					<p>풀캘린더 들어갈곳</p>
@@ -129,7 +131,7 @@ img#thumbImage {
 					<input class="btn btn-primary" type="submit" value="등록 요청">
 				</div>
 			</div>
-		</form>
+		</form:form>
 	</div>
 </div>
 <script>

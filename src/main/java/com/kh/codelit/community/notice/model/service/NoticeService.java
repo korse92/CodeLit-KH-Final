@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.notice.model.vo.Notice;
+import com.kh.codelit.lecture.model.vo.Lecture;
 
 public interface NoticeService {
 
@@ -28,5 +29,10 @@ public interface NoticeService {
 	Attachment selectOneAttach(int noticeNo);
 
 	int deleteAttach(int noticeNo);
+
+	int updateAttach(Attachment attach);
+
+	List<Lecture> selectLec();
+
 
 }

@@ -26,6 +26,7 @@
           	<c:if test="${not empty attach}">
 	            <img src='${pageContext.request.contextPath}${attachPath}'>
           	</c:if>
+          	${attach}
             <p class="content">
               ${notice.noticeContent}
             </p>          
