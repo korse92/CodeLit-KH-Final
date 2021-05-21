@@ -32,19 +32,34 @@ public class CounselDaoImpl implements CounselDao {
 
 	@Override
 	public List<Counsel> selectCounselList(Map<String, Object> param) {
-		int cPage = (int)param.get("cPage");
-		int catNo = (int)param.get("catNo");
 		
+		String memberId = (String)param.get("memberId");
+		
+		int cPage = (int)param.get("cPage");
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
+		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return session.selectList("counsel.selectCounselList",catNo,rowBounds);
+		
+		return session.selectList("counsel.selectCounselList", memberId, rowBounds);
 	}
 
 	@Override
-	public int getTotalContents(Integer catNo) {
+	public int getTotalContents(String memberId) {
 		
-		return session.selectOne("counsel.getTotalContents", catNo);
+		return session.selectOne("counsel.getTotalContents", memberId);
+	}
+
+	@Override
+	public Counsel selectOneCounsel(int counselNo) {
+
+		return session.selectOne("counsel.selectOneCounsel", counselNo);
+	}
+
+	@Override
+	public int selectAnswerBool(int counselNo) {
+
+		return session.selectOne("counsel.selectAnswerBool", counselNo);
 	}
 	
 

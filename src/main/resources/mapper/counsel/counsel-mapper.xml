@@ -18,19 +18,24 @@
 	</insert>
 	
 	<select id="selectCounselList" resultType="counsel">
-		select 
-			rownum,c.*
-				from(
-			select
-				*
-			from
-			counsel
-			order by
-			counsel_no
-			asc) c
-			order by
-			rownum
-			desc
+		select
+			c.*
+		from
+			counsel c
+		where 
+			(
+			ref_member_id = #{memberId} 
+			and counsel_level = 1
+			)
+			or 
+			(
+			counsel_level = 2 
+			and counsel_q_no in 
+				(select counsel_no from counsel where ref_member_id = #{memberId})
+			)
+			start with counsel_level = 1
+            connect by counsel_q_no = prior counsel_no
+            order siblings by counsel_no
 	
 	</select>
 
@@ -39,11 +44,28 @@
 			count(*)
 		from
 			counsel
-		<where>
-		<if test="_parameter gt 0">
-			ref_cousnel_no = #{_parameter}
-		</if>
-		</where>
+		where 
+			(
+			ref_member_id = #{memberId} 
+			and counsel_level = 1
+			)
+			or 
+			(
+			counsel_level = 2 
+			and counsel_q_no in 
+				(select counsel_no from counsel where ref_member_id = #{memberId})
+			)
+	</select>
+	
+	<select id="selectOneCounsel" resultType="counsel">
+		select *
+		from counsel
+		where counsel_no = #{counselNo}
+	</select>
+	<select id="selectAnswerBool" resultType="_int">
+		select count(*)
+		from counsel
+		where counsel_q_no = #{counselNo}
 	</select>
 	
 </mapper>

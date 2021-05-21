@@ -39,23 +39,28 @@ public class ConuselController {
 	public String selelctBoard(
 		@RequestParam(defaultValue = "1") int cPage,
 		HttpServletRequest request,
+		Authentication authentication,
 		Model model) {
 		
 		try {
 			//1. 사용자 입력값
 			int numPerPage = 10;
 			
+			String memberId = ((Member)authentication.getPrincipal()).getMemberId();
+			
 			Map<String, Object> param = new HashMap<>();
 			param.put("numPerPage", numPerPage);
-			param.put("cPage", cPage);		
+			param.put("cPage", cPage);
+			param.put("memberId", memberId);
 			
 			//2. 업무로직
 			//a. contents영역
 			List<Counsel> list = service.selectCounselList(param);
 			log.debug("list = {}", list);
 			
+			
 			//b. pageBar영역
-			int totalContents = service.getTotalContents();
+			int totalContents = service.getTotalContents(memberId);
 			String url = request.getRequestURI();
 			log.debug("url = {}", url);
 			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
@@ -70,6 +75,27 @@ public class ConuselController {
 		
 		return "counsel/counselList";
 	}
+	
+	@GetMapping("/counselDetail.do")
+	public void counseDetail(
+				@RequestParam int counselNo,
+				Model model
+			) {
+		
+		log.debug("counselNo = {}", counselNo);
+		
+		try {
+			Counsel counsel = service.selectOneCounsel(counselNo);
+			log.debug("counsel = {}", counsel);
+			
+			model.addAttribute("counsel", counsel);
+			
+		} catch(Exception e) {
+			throw e;
+		}
+		
+	}
+	
 	
 	
 	@GetMapping("/counselWrite.do")

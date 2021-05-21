@@ -28,7 +28,17 @@ public class CounselServiceImpl implements CounselService{
 		return dao.selectCounselList(param);
 	}
 	@Override
-	public int getTotalContents(Integer catNo) {
-		return dao.getTotalContents(catNo);
+	public int getTotalContents(String memberId) {
+		return dao.getTotalContents(memberId);
+	}
+	@Override
+	public Counsel selectOneCounsel(int counselNo) {
+		
+		Counsel counsel = dao.selectOneCounsel(counselNo);
+		int result = dao.selectAnswerBool(counselNo);
+		
+		counsel.setCounselQNo(result);
+				
+		return counsel;
 	}
 }
