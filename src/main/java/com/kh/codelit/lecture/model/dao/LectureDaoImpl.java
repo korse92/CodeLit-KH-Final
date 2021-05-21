@@ -49,4 +49,9 @@ public class LectureDaoImpl implements LectureDao {
 		return session.selectOne("lecture.getTotalContents", catNo);
 	}
 
+	@Override
+	public List<Lecture> selectMyLecture(String id) {
+		return session.selectList("lecture.selectMyLecture", id);
+	}
+
 }

@@ -15,4 +15,6 @@ public interface LectureDao {
 
 	int getTotalContents(Integer catNo);
 
+	List<Lecture> selectMyLecture(String id);
+
 }

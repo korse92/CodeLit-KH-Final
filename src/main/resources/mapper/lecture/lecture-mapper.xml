@@ -69,6 +69,20 @@
 		</where>
 	</select>
 	
+	<select id="selectMyLecture" resultType="lecture">
+	select rownum, l.*
+	from (       
+           select
+                lecture_name
+           from
+               lecture
+           where 
+                lecture_accept_yn = 'Y'
+       ) l
+    　　　 
+	where rownum <![CDATA[ <= ]]> 3
+	</select>
+	
 </mapper>
 
 
