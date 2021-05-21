@@ -271,5 +271,10 @@ public class TeacherController {
 		
 		return "redirect:/teacher/lectureEnroll.do";
 	}
+	@GetMapping("/lectureCalList.do")
+	public String calList() {
+		
+		return null;
+	}
 	
 }
