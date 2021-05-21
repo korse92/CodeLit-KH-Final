@@ -29,7 +29,7 @@ $(() => {
 	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 	  return new bootstrap.Tooltip(tooltipTriggerEl)
 	});
-	
+
 	/* $(".hide .btn").click(e => {
 		location.href="${pageContext.request.contextPath}/order/addPick.do?refLectureNo=" + ${pick.refLectureNo}
 	}); */
@@ -88,12 +88,12 @@ $(() => {
                         </button>
                 	</div>
                 	<div class="m-1">
-                		<form action="${pageContext.request.contextPath}/order/deletePick.do" method="GET">
-                		<input name="pickNo" type="hidden" value="${pick.pickNo}" type="hidden"	/>
+                		<form:form action="${pageContext.request.contextPath}/order/deletePick.do" method="POST">
+                		<input name="lectureNo" type="hidden" value="${pick.refLectureNo}" type="hidden"	/>
                         <button class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="찜삭제" onclick = "location.href = '${pageContext.request.contextPath}/order/deletePick.do'">
-                            <i class="fas fa-heart"></i>
+                            <i class="far fa-trash-alt"></i>
                         </button>
-                        </form>
+                        </form:form>
                 	</div>
                     <!-- <li>
                     </li>
