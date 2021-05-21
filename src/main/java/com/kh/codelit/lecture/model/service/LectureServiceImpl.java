@@ -39,6 +39,7 @@ public class LectureServiceImpl implements LectureService {
 		return categoryListInstance;
 	}
 
+	
 	@Override
 	public Map<Integer, Object> getCategoryMapInstance() {
 		if(categoryListInstance == null || categoryListInstance.isEmpty())

@@ -28,8 +28,8 @@ Font Awesome(아이콘) CSS
 <script src="https://kit.fontawesome.com/0e3c91e1c6.js" crossorigin="anonymous"></script>
  -->
 
-<div class="container">
 <section class="profile-Tclass">
+<div class="container">
 	<sec:authorize access="hasRole('TEACHER')">
 		<div class="row m-5 p-5">
 			<div class="card border-warning m-5" style="max-width: 23rem;">
@@ -130,7 +130,8 @@ Font Awesome(아이콘) CSS
 		</div>
 	  </sec:authorize>
 	  <!-- 강사 프로필 끝 -->
-	
-	</section>
 	</div>
-</html>
+  </section>
+<!-- 컨텐츠 끝 -->
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
