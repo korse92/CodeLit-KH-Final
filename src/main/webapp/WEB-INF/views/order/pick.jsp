@@ -21,6 +21,20 @@
 <head>
 </head>
 
+
+<script>
+$(() => {
+	//Bootstrap Tooltip을 사용하기 위한 tooltip 초기화 코드
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	  return new bootstrap.Tooltip(tooltipTriggerEl)
+	});
+	
+	/* $(".hide .btn").click(e => {
+		location.href="${pageContext.request.contextPath}/order/addPick.do?refLectureNo=" + ${pick.refLectureNo}
+	}); */
+});
+</script>
 <section class="container-pick">
     <h2 class="mt-5">찜 목록</h2>
     <hr/>
@@ -58,22 +72,29 @@
                     <span class="name">${pick.teacherName}</span>
                     <span class="price">${pick.lecturePrice}</span>
                     <span class="avgLecAssessment">${pick.avgLecAssessment}</span>
-                	<span class="category">${pick.lecCatName}</span>
+                	<span class="category">카테고리 : ${pick.lecCatName}</span>
                 </div>
             </div> <!-- show -->
-            <div class="hide">
+            <div class="hide d-flex flex-column justify-content-between p-3">
                 <div class="link_info">
                     <a href="${pageContext.request.contextPath}/lecture/lectureDetail?no=${pick.refLectureNo}" class="moreInfo">
                         <span class="info">${pick.lectureIntro}</span>
                     </a>
                 </div>
-                <div class="addLecture">
-                        <button class="btn" data-bs-toggle="tooltip" data-bs-placement="left" title="장바구니">
+                <div class="addLecture d-flex justify-content-end">
+                	<div class="m-1">
+                        <button class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기" onclick = "location.href = 'test'">
                             <i class="fas fa-shopping-basket"></i>
                         </button>
-                        <button class="btn" data-bs-toggle="tooltip" data-bs-placement="left" title="찜">
+                	</div>
+                	<div class="m-1">
+                		<form action="${pageContext.request.contextPath}/order/deletePick.do" method="GET">
+                		<input name="pickNo" type="hidden" value="${pick.pickNo}" type="hidden"	/>
+                        <button class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="찜삭제" onclick = "location.href = '${pageContext.request.contextPath}/order/deletePick.do'">
                             <i class="fas fa-heart"></i>
                         </button>
+                        </form>
+                	</div>
                     <!-- <li>
                     </li>
                     <li>

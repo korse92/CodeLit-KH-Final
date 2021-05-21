@@ -23,6 +23,42 @@
 			pick p
 				on
 					p.ref_lecture_no = l.lecture_no
+		where
+			p.ref_member_id = #{refMemberId}
 	</select>
+	
+	<select id="countPick" resultType="int">
+		select
+			count(*)
+		from
+			pick
+		where
+			ref_lecture_no = #{refLectureNo}
+		and
+			ref_member_id = #{refMemberId}
+	</select>
+	
+	<insert id="addPick">
+		insert into
+			pick(
+				pick_no,
+				ref_member_id,
+				ref_lecture_no,
+				pick_date
+			)
+		values(
+			seq_pick_no.nextval,
+			#{refMemberId},
+			#{refLectureNo},
+			default
+		)
+	</insert>
+	
+	<delete id="deletePick">
+		delete from
+			pick
+		where
+			pick_no = #{pickNo}
+	</delete>
 	
 </mapper>
