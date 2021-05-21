@@ -137,7 +137,7 @@ alert("${msg}");
 				                  		<hr/>
 				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
-					                  <li><a class="dropdown-item" href="#">정산내역</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('ADMIN')">
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
