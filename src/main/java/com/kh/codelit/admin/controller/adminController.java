@@ -60,7 +60,7 @@ public class adminController {
 			List<Member> list = adminService.selectMemberList(param);
 			log.debug("manageMember = {}", list);
 			
-			String url = request.getRequestURI();
+			String url = HelloSpringUtils.convertToParamUrl(request);
 			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 			
 			mav.addObject("memberList", list);
@@ -129,7 +129,7 @@ public class adminController {
 			int totalContents = adminService.selectTeacherCount(param);
 			List<Teacher> list = adminService.selectTeacherList(param);
 			
-			String url = request.getRequestURI();
+			String url = HelloSpringUtils.convertToParamUrl(request);
 			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 			
 			mav.addObject("teacherList", list);
