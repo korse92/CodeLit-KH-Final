@@ -9,6 +9,15 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 public class CsrfSecurityRequestMatcher implements RequestMatcher {
 	
+	/**
+	 * See
+	 *
+	 * http://blogs.sourceallies.com/2014/04/customizing-csrf-protection-in-spring-security/
+	 * https://docs.spring.io/spring-security/site/docs/current/reference/html/appendix-namespace.html#nsa-csrf
+	 *
+	 *
+	 */
+	
 	private Pattern allowedMethods = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
     private RegexRequestMatcher dwrRequestMatcher = new RegexRequestMatcher("/dwr/.*\\.dwr", "POST");
     private RegexRequestMatcher restRequestMatcher = new RegexRequestMatcher("/rest/.*\\.view(\\?.*)?", "POST");

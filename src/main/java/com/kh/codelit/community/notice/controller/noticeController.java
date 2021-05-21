@@ -25,6 +25,8 @@ import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.community.notice.model.service.NoticeService;
 import com.kh.codelit.community.notice.model.vo.Notice;
+import com.kh.codelit.lecture.model.service.LectureService;
+import com.kh.codelit.lecture.model.vo.Lecture;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -69,7 +71,6 @@ public class noticeController {
 				RedirectAttributes redirect,
 				Principal pri) throws IllegalStateException, IOException {
 		
-		log.debug("================upFile = {}", upFile.getOriginalFilename());
 		String saveDirectory =  request.getServletContext().getRealPath(Attachment.PATH_NOTICE);
 		
 		File dir = new File(saveDirectory);
@@ -79,7 +80,6 @@ public class noticeController {
 		notice.setRefMemberId(pri.getName());
 
 		int result = service.insertBoard(notice);
-		log.debug("NO=========================={}", notice.getNoticeNo());
 		if(!upFile.isEmpty() || upFile.getSize() > 0) {
 		
 			File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
@@ -123,12 +123,68 @@ public class noticeController {
 	}
 	
 	@PostMapping("/noticeUpdate.do")
-	public String updateNotice(@ModelAttribute Notice notice, RedirectAttributes redirect) {
+	public String updateNotice(@ModelAttribute Notice notice, 
+			@RequestParam(required = false) MultipartFile upFile,
+			RedirectAttributes redirect,
+			HttpServletRequest request
+			) throws IllegalStateException, IOException {
+		if(!upFile.isEmpty()) {
+			// 새로운 파일이 있다면 첨부파일 조회
+			Attachment attach = service.selectOneAttach(notice.getNoticeNo());
+			log.debug("attach = {}===========================", attach);
+			log.debug("upFile = {}===========================", upFile);
+			//경로 불러오기
+			String saveDirectory =  request.getServletContext().getRealPath(Attachment.PATH_NOTICE);
+			if(attach != null) {
+				if(upFile.getSize() == 0 && upFile.isEmpty()) {
+					String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
+					File oldFile = new File(oldPath);
+					
+					// 기존 파일 삭제
+					if(oldFile != null) oldFile.delete(); 
+					service.deleteAttach(notice.getNoticeNo());
+				} else {
+					//파일 객체 생성
+					String oldPath = request.getServletContext().getRealPath("/resources/upload/notice/" + attach.getOriginalFilename());
+					File oldFile = new File(oldPath);
+					
+					File renameFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+					// 기존 파일 삭제
+					if(oldFile != null) oldFile.delete(); 
+					//서버에서 기존 파일 삭제
+					int deleteResult = service.deleteAttach(notice.getNoticeNo());	
+					// 가져온 파일 업로드
+					upFile.transferTo(renameFile); 
+					//객체 생성
+					attach = new Attachment(0,notice.getNoticeNo(),upFile.getOriginalFilename(),renameFile.getName(),Attachment.CODE_NOTICE,Attachment.PATH_NOTICE);
+					log.debug("attach =============", attach);
+					//새로운 파일을 서버에 저장
+					int insertResult = service.insertAttachment(attach);					
+				}
+			} else {
+				File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+				//파일 저장
+				upFile.transferTo(renamedFile);
+				
+				//Attachment객체생성
+				Attachment attachnew = new Attachment(0,notice.getNoticeNo(),upFile.getOriginalFilename(),renamedFile.getName(),Attachment.CODE_NOTICE,Attachment.PATH_NOTICE);
+				
+				service.insertAttachment(attachnew);
+			}
+		}
 		int result = service.update(notice);
 		String msg = result > 0 ? "수정 성공":"수정 실패";
 		redirect.addFlashAttribute("msg",msg);
-		
 		return "redirect:/community/noticeDetail.do?noticeNo="+notice.getNoticeNo();
 	}
 }
 	
+
+
+
+
+
+
+
+
+
