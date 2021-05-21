@@ -28,10 +28,10 @@ Font Awesome(아이콘) CSS
 <script src="https://kit.fontawesome.com/0e3c91e1c6.js" crossorigin="anonymous"></script>
  -->
 
-<div class="container">
 <section class="profile-Uclass">
+<div class="container">
 	  <!-- 유저 프로필 시작 -->
-	  	<sec:authorize access="!hasRole('TEACHER') && hasRole('USER')">
+	  	<%-- <sec:authorize access="!hasRole('TEACHER') && hasRole('USER')"> --%>
 		<div class="row m-5 p-5">
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">마이페이지</h3>
@@ -146,7 +146,9 @@ Font Awesome(아이콘) CSS
 				</div>
 			</div>
 		</div>
-	  </sec:authorize>
-	</section>
+	 <%--  </sec:authorize> --%>
 	</div>
-</html>
+ </section>
+<!-- 컨텐츠 끝 -->
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
