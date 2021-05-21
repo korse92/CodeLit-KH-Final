@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class PickServiceImpl implements PickService {
-	
+
 	@Autowired
 	private PickDao pickDao;
 
@@ -35,8 +35,8 @@ public class PickServiceImpl implements PickService {
 	}
 
 	@Override
-	public int deletePick(int pickNo) {
-		return pickDao.deletePick(pickNo);
+	public int deletePick(Map<String, Object> param) {
+		return pickDao.deletePick(param);
 	}
 
 }

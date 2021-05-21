@@ -13,6 +13,6 @@ public interface PickDao {
 
 	int addPick(int refLectureNo, String refMemberId);
 
-	int deletePick(int pickNo);
+	int deletePick(Map<String, Object> param);
 
 }

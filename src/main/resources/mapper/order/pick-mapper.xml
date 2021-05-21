@@ -26,7 +26,7 @@
 		where
 			p.ref_member_id = #{refMemberId}
 	</select>
-	
+
 	<select id="countPick" resultType="int">
 		select
 			count(*)
@@ -37,7 +37,7 @@
 		and
 			ref_member_id = #{refMemberId}
 	</select>
-	
+
 	<insert id="addPick">
 		insert into
 			pick(
@@ -53,12 +53,14 @@
 			default
 		)
 	</insert>
-	
+
 	<delete id="deletePick">
 		delete from
 			pick
 		where
-			pick_no = #{pickNo}
+			ref_lecture_no = #{lectureNo}
+		and
+			ref_member_id = #{memberId}
 	</delete>
-	
+
 </mapper>

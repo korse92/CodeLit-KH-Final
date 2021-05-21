@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Repository
 public class PickDaoImpl implements PickDao {
-	
+
 	@Autowired
 	private SqlSessionTemplate session;
 
@@ -41,8 +41,8 @@ public class PickDaoImpl implements PickDao {
 	}
 
 	@Override
-	public int deletePick(int pickNo) {
-		return session.delete("pick.deletePick", pickNo);
+	public int deletePick(Map<String, Object> param) {
+		return session.delete("pick.deletePick", param);
 	}
 
 }
