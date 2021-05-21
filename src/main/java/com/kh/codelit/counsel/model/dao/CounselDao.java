@@ -3,8 +3,8 @@ package com.kh.codelit.counsel.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.counsel.model.vo.Counsel;
-import com.kh.codelit.lecture.model.vo.Lecture;
 
 public interface CounselDao {
 
@@ -14,6 +14,11 @@ public interface CounselDao {
 
 	List<Counsel> selectCounselList(Map<String, Object> param);
 
-	int getTotalContents(Integer catNo);
+	int getTotalContents(String memberId);
+
+	Counsel selectOneCounsel(int counselNo);
+
+	int selectAnswerBool(int counselNo);
+
 
 }
