@@ -16,6 +16,5 @@ public interface LectureService {
 
 	int getTotalContents(Integer catNo);
 
-	Map<Integer, Object> getCategoryMapInstance();
-
+	List<Lecture> selectMyLecture(String id);
 }
