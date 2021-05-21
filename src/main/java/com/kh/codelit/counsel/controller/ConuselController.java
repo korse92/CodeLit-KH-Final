@@ -156,4 +156,42 @@ public class ConuselController {
 
 	}
 
+	
+	
+	@GetMapping("/counselListAdmin.do")
+	public void counselListAdmin(
+				Model model,
+				@RequestParam(defaultValue = "1") int cPage,
+				HttpServletRequest request
+			) {
+		
+		try {
+			//1. 사용자 입력값
+			int numPerPage = 10;
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("numPerPage", numPerPage);
+			param.put("cPage", cPage);
+			
+			//2. 업무로직
+			//a. contents영역
+			List<Counsel> list = service.selectCounselListAdmin(param);
+			log.debug("list = {}", list);
+			
+			//b. pageBar영역
+			int totalContents = service.getTotalContents(null);
+			String paramUrl = HelloSpringUtils.convertToParamUrl(request);
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, paramUrl);
+			
+			//3.jsp 위임처리
+			model.addAttribute("list", list);
+			model.addAttribute("pageBar", pageBar);
+			
+		} catch(Exception e) {
+			throw e;
+		}
+		
+	}
+	
+	
 }

@@ -20,5 +20,7 @@ public interface CounselDao {
 
 	int selectAnswerBool(int counselNo);
 
+	List<Counsel> selectCounselListAdmin(Map<String, Object> param);
+
 
 }

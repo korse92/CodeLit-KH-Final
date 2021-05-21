@@ -66,4 +66,9 @@ public class CounselServiceImpl implements CounselService{
 		
 		return map;
 	}
+	@Override
+	public List<Counsel> selectCounselListAdmin(Map<String, Object> param) {
+
+		return dao.selectCounselListAdmin(param);
+	}
 }

@@ -50,7 +50,8 @@
 			count(*)
 		from
 			counsel
-		where 
+		<where>
+			<if test="memberId != null and memberId != ''">
 			(
 			ref_member_id = #{memberId} 
 			and counsel_level = 1
@@ -60,7 +61,9 @@
 			counsel_level = 2 
 			and counsel_q_no in 
 				(select counsel_no from counsel where ref_member_id = #{memberId})
-			)
+			)			
+			</if>
+		</where> 
 	</select>
 	
 	<select id="selectOneCounsel" resultType="counsel">
@@ -74,4 +77,11 @@
 		where counsel_q_no = #{counselNo}
 	</select>
 	
+	<select id="selectCounselListAdmin" resultType = "counsel">
+		select *
+		from counsel
+		start with counsel_level = 1
+		connect by prior counsel_no = counsel_q_no
+		order siblings by counsel_no desc
+	</select>
 </mapper>

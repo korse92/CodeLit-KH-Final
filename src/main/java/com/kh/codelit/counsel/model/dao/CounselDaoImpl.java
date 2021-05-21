@@ -62,6 +62,18 @@ public class CounselDaoImpl implements CounselDao {
 
 		return session.selectOne("counsel.selectAnswerBool", counselNo);
 	}
+
+	@Override
+	public List<Counsel> selectCounselListAdmin(Map<String, Object> param) {
+
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("counsel.selectCounselListAdmin", null, rowBounds);
+	}
 	
 
 }
