@@ -51,7 +51,7 @@
 		});
 		
 		$(".overlay .btn").click(e => {
-			alert("테스트");
+			//alert("테스트");
 			
 			//location.href = "${pageContext.request.contextPath}";
 			
