@@ -11,11 +11,11 @@ public interface LectureService {
 
 	int insertLecture(Lecture lecture);
 
-
 	List<Lecture> selectLectureList(Map<String, Object> param);
 
 	int getTotalContents(Integer catNo);
 
-	Map<Integer, Object> getCategoryMapInstance();
+	List<Lecture> selectMyLecture(String id);
 
+	Map<Integer, Object> getCategoryMapInstance();
 }

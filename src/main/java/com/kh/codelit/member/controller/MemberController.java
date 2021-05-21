@@ -1,7 +1,9 @@
 package com.kh.codelit.member.controller;
 
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +13,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,8 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.codelit.lecture.model.service.LectureService;
+import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -34,6 +42,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private LectureService lectureService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -144,5 +155,38 @@ public class MemberController {
 	public void memberLogin_() {
 		log.debug("로그인 포스트 {}", "도착");
 	}
+
+    @GetMapping("/myProfile.do") 
+    public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
+		  							ModelAndView mav, 
+		  							Authentication authentication) {
+	  
+	  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
+	  
+	  
+	  try {
+		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		  log.debug("userDetails = {}", userDetails);
+		  // userDetails = Member(memberId=teacher, memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2, 
+		  //                       memberProfile=null, memberReProfile=null, authorities=[ROLE_TEACHER, ROLE_USER])
+		  String memberId =  ((Member) userDetails).getMemberId();
+		  log.debug("memberId = {}", memberId); //memberId = teacher
+		
+			//lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
+			//log.debug("myProfileMethod@lecture = {}", lecture);
+		  List<Lecture> list = lectureService.selectMyLecture(memberId);
+		  log.debug("list = {}", list);
+	     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
+		  
+		  mav.addObject("list",list);
+		  mav.setViewName("/member/myProfile");
+		  
+	  }catch(Exception e) { 
+		  throw e; 
+	  }
+
+	  return mav;
+	  
+	  }
 
 }

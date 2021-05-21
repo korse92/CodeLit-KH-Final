@@ -125,7 +125,7 @@ alert("${msg}");
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
-					                  <li><a class="dropdown-item" href="#">프로필</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
 					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
 					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
@@ -137,6 +137,7 @@ alert("${msg}");
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('TEACHER')">
 				                  		<hr/>
+				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
 				                  </sec:authorize>

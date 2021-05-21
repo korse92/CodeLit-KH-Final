@@ -7,22 +7,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
-<%-- <%
-	List<Map<String, Object>> categoryList = (List<Map<String, Object>>)request.getAttribute("categoryList");	
-	Map<Integer, String> categoryMap = new HashMap<>();
-	
-	for(Map<String, Object> category : categoryList) {
-		int no = Integer.parseInt(String.valueOf(category.get("no")));
-		String name = (String)category.get("name");
-		categoryMap.put(no, name);
-	}
-	
-	pageContext.setAttribute("categoryMap", categoryMap);
-%> --%>
 
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -51,7 +37,7 @@
 		});
 		
 		$(".overlay .btn").click(e => {
-			alert("테스트");
+			//alert("테스트");
 			
 			//location.href = "${pageContext.request.contextPath}";
 			

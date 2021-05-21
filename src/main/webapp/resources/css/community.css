@@ -81,3 +81,9 @@ section, aside, footer {padding:10px;}
   .comment-form-group{
     margin-bottom: 5em;
   }
+  
+  
+  
+  .detailLink {
+  	text-decoraion: none;
+  }
