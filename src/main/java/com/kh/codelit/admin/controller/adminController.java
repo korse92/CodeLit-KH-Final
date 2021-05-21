@@ -1,9 +1,5 @@
 package com.kh.codelit.admin.controller;
 
-<<<<<<< HEAD
-import java.io.UnsupportedEncodingException;
-=======
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-<<<<<<< HEAD
-=======
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 import com.kh.codelit.admin.model.service.AdminService;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.member.model.vo.Member;
