@@ -1,4 +1,5 @@
-﻿<%@page import="java.util.HashMap"%>
+﻿<%@page import="com.kh.codelit.order.model.vo.Pick"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,6 +11,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%-- <%
+	List<Map<String, Object>> categoryList = (List<Map<String, Object>>)request.getAttribute("categoryList");	
+	Map<Integer, String> categoryMap = new HashMap<>();
+	
+	for(Map<String, Object> category : categoryList) {
+		int no = Integer.parseInt(String.valueOf(category.get("no")));
+		String name = (String)category.get("name");
+		categoryMap.put(no, name);
+	}
+	
+	pageContext.setAttribute("categoryMap", categoryMap);
+%> --%>
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 목록" name="title"/>
@@ -36,14 +49,15 @@
 		  return new bootstrap.Tooltip(tooltipTriggerEl)
 		});
 		
+/* 		$(".overlay .btn").click(e => {
+			alert("테스트");
 		$(".overlay .btn").click(e => {
-			//alert("테스트");
-			
+			//alert("테스트");	
 			//location.href = "${pageContext.request.contextPath}";
 			
 			//e.stopPropagation(); //상위 요소로의 이벤트전파 중단(태그 고유동작은 중단시키지 못함(ex.a태그의 주소이동)
 			e.preventDefault(); //태그의 고유동작을 중단시킴(a태그 주소이동, submit버튼의 form전송 등)
-		});
+		}); */
 	});
 </script>
 
@@ -149,11 +163,15 @@
 										</button>
 									</div>
 									<div class="m-1">
+				                		<form action="${pageContext.request.contextPath}/order/addPick.do" method="GET">
+				                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 										<button
 											class="btn btn-outline-light" data-bs-toggle="tooltip"
-											data-bs-placement="right" title="찜하기">
+											data-bs-placement="right" title="찜하기"
+											onclick = "location.href = '${pageContext.request.contextPath}/order/addPick.do'">
 											<i class="fas fa-heart"></i>
 										</button>
+										</form>
 									</div>
 								</div>
 							</div>
