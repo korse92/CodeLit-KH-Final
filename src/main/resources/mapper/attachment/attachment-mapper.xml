@@ -15,5 +15,12 @@
 			#{refContentsGroupCode}
 		)
 	</insert>
+	<select id="selectAttachment" resultType="attachment">
+		select *
+		from attachment a
+				left join contents_group c
+				on a.ref_contents_group_no = c.contents_group_code
+		where ref_contents_code = #{no}
+	</select>
 	
 </mapper>

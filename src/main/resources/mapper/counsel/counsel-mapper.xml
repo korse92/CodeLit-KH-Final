@@ -12,9 +12,15 @@
 			#{refMemberId},
 			#{counselTitle},
 			#{counselContent},
-			#{counselQNo},
+			null,
 			1,
 			default)
+			<selectKey resultType = "_int" keyProperty="counselQNo" order="AFTER">
+				select 
+					seq_counsel_no.currval
+				from 
+					dual
+			</selectKey>
 	</insert>
 	
 	<select id="selectCounselList" resultType="counsel">
@@ -35,7 +41,7 @@
 			)
 			start with counsel_level = 1
             connect by counsel_q_no = prior counsel_no
-            order siblings by counsel_no
+            order siblings by counsel_no desc
 	
 	</select>
 

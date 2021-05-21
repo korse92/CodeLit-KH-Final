@@ -210,7 +210,7 @@ CREATE TABLE "TEACHER" (
 DROP TABLE "ATTACHMENT" CASCADE CONSTRAINTS;
 CREATE TABLE "ATTACHMENT" (
 	"ATTACH_NO"	NUMBER		NOT NULL,
-	"REF_CONTENTS_NO"	NUMBER		NOT NULL,
+	"REF_CONTENTS_CODE"	NUMBER		NOT NULL,
 	"ORIGINAL_FILENAME"	VARCHAR2(200)		NOT NULL,
 	"RENAMED_FILENAME"	VARCHAR2(200)		NOT NULL,
 	"REF_CONTENTS_GROUP_CODE"	VARCHAR2(3)		NOT NULL
@@ -815,6 +815,7 @@ insert into lecture_category values(seq_lec_cat_no.nextval, '빅데이터');
 insert into contents_group values('LH', '강의 첨부파일', '/resources/upload/lecture/handouts');
 insert into contents_group values('N', '공지사항', '/resources/upload/notice');
 insert into contents_group values('SB', '공부 게시판', '/resources/upload/studyBoard');
+insert into contents_group values('C', '1대1문의', '/resources/upload/counsel');
 
 --강의 테스트 데이터 50개 삽입 프로시저
 begin
@@ -855,5 +856,6 @@ begin
     end loop;
     commit;
 end;
+/
 
 commit;

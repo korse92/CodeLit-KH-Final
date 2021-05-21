@@ -7,13 +7,13 @@ import com.kh.codelit.counsel.model.vo.Counsel;
 
 public interface CounselService {
 
-	int insertCounsel(Counsel counsel);
+	int insertCounsel(Map<String, Object> param);
 
 	List<Counsel> selectCounselList(Map<String, Object> param);
 
 	int getTotalContents(String memberId);
 
-	Counsel selectOneCounsel(int counselNo);
+	Map<String, Object> selectOneCounsel(int counselNo);
 
 
 }

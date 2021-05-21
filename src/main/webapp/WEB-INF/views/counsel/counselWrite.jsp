@@ -33,8 +33,8 @@
 <body>
 <div class="container">
             <div class="mt-5 mx-auto form-group" style="width:fit-content;">
-              <form name="lectureEnrollFrm"
-                action="${pageContext.request.contextPath}/counsel/counselWrite.do?${_csrf.parameterName}=${_csrf.token}"
+              <form:form name="lectureEnrollFrm"
+                action="${pageContext.request.contextPath}/counsel/counselWrite.do"
                 method="post"
                 enctype="multipart/form-data">
                 <div class="row justify-content-center">
@@ -61,7 +61,7 @@
                     <label class="form-label" for="cousnelHandout">첨부파일</label>
                   </div>
                   <div class="col-sm">
-                    <input class="form-control" type="file" name="cousnelHandout"
+                    <input class="form-control" type="file" name="upFile"
                       id="lectureHandout">
                   </div>
                 </div>
@@ -81,7 +81,7 @@
                     <button type="submit" class="btn btn-primary complete-btn">완료</button>
                   </div>
                 </div>
-              </form>
+              </form:form>
             </div>
           </div>
 

@@ -56,7 +56,7 @@
 		  	</div>
 		    <div class="board-container mt-3 ps-2" id="conuselContent">
 		    	<c:if test="${not empty attach}">
-		    		<img src='${pageContext.request.contextPath}${attachPath}' alt="">
+		    		<img src="${pageContext.request.contextPath}${attach.contentsAttachPath}/${attach.renamedFilename}" alt="">
 		    	</c:if>
 		
 		        <p class="content mt-4 ps-3 fs-5">

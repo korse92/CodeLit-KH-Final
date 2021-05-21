@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.counsel.model.vo.Counsel;
 
 
@@ -62,6 +63,5 @@ public class CounselDaoImpl implements CounselDao {
 		return session.selectOne("counsel.selectAnswerBool", counselNo);
 	}
 	
-
 
 }

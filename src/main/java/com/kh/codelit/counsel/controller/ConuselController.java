@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.counsel.model.service.CounselService;
 import com.kh.codelit.counsel.model.vo.Counsel;
@@ -85,10 +86,15 @@ public class ConuselController {
 		log.debug("counselNo = {}", counselNo);
 		
 		try {
-			Counsel counsel = service.selectOneCounsel(counselNo);
+			Map<String, Object> map = service.selectOneCounsel(counselNo);
+
+			Counsel counsel = (Counsel)map.get("counsel");
 			log.debug("counsel = {}", counsel);
 			
+			Attachment attach = (Attachment)map.get("attach");
+			
 			model.addAttribute("counsel", counsel);
+			model.addAttribute("attach", attach != null ? attach : null);
 			
 		} catch(Exception e) {
 			throw e;
@@ -110,22 +116,36 @@ public class ConuselController {
 			HttpServletRequest request,
 			Model model,
 			RedirectAttributes redirectAttr,
-			Authentication authentication) {
+			Authentication authentication) throws Exception {
 		
 		try {
 			log.debug("upFile = {}", upFile);
 			
-			String saveDirectory =  request.getServletContext().getRealPath("/resources/upload/counsel");
+			String saveDirectory =  request.getServletContext().getRealPath(Attachment.PATH_COUNSEL);
 			
 			File dir = new File(saveDirectory);
 			if(!dir.exists())
 				dir.mkdir();
 			
-			counsel.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
+			File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
 			
+			counsel.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
 			log.debug("counsel = {}", counsel);
 			
-			int result = service.insertCounsel(counsel);
+			Attachment attach = new Attachment();
+			attach.setOriginalFilename(upFile.getOriginalFilename());
+			attach.setRenamedFilename(renamedFile.getName());
+			attach.setRefContentsGroupCode(Attachment.CODE_COUNSEL);
+			attach.setContentsAttachPath(Attachment.PATH_COUNSEL);
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("counsel", counsel);
+			param.put("attach", attach);
+			
+			int result = service.insertCounsel(param);
+			
+			upFile.transferTo(renamedFile);
+			
 			String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
 			redirectAttr.addFlashAttribute("msg",msg);
 			
