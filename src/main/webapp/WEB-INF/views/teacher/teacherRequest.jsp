@@ -93,7 +93,7 @@
 	
 	        <div id="registerDiv">
 	            
-	            <form action="${pageContext.request.contextPath}/teacher/teacherRequest.do?${_csrf.parameterName}=${_csrf.token}" 
+	            <form:form action="${pageContext.request.contextPath}/teacher/teacherRequest.do" 
 	            		method="POST" id="teachRegisterFrm"
 	            		enctype="multipart/form-data" >
 	        		<input type="hidden" value="${loginMember.memberId}" name="refMemberId" readonly/>
@@ -194,7 +194,7 @@
 	                    </tr>
 	        
 	                </table>
-	            </form>
+	            </form:form>
 	        </div> <!-- 실제 등록폼만 감싸는 디브 -->
 
 		</div>

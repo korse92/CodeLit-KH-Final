@@ -78,10 +78,16 @@ alert("${msg}");
 								</c:forEach>
 							</ul>
 						</li>  
-						<sec:authorize access="hasRole('USER') || hasRole('ADMIN')">
+						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 						</sec:authorize>
+<<<<<<< HEAD
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/teacher/teacherDetail.do">프로필 수정</a></li>
+=======
+						<sec:authorize access="hasRole('ADMIN')">
+						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselListAdmin.do">문의</a></li>
+						</sec:authorize>
+>>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</ul>
 				</div>
 
@@ -91,10 +97,6 @@ alert("${msg}");
 						id="navbarMain">
 						<ul class="navbar-nav">
 							<li class="nav-item m-1"><a	class="btn btn-warning nav-link text-light"	href="${pageContext.request.contextPath}/member/memberLogin.do">Sign In</a></li>
-							<!-- 로그인 Modal 버전 -->
-							<!-- <li class="nav-item m-1">
-	             <a class="btn btn-warning nav-link text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In(Modal)</a>
-	           </li> -->
 							<li class="nav-item m-1"><a
 								class="btn btn-primary nav-link text-light" href="${pageContext.request.contextPath}/member/memberEnroll.do">Sign Up</a>
 							</li>
@@ -110,7 +112,6 @@ alert("${msg}");
 			            	<li class="nav-item">
 			                	<span class="fs-4 text-light">
 			                		<sec:authentication property="principal.username"/>
-<%-- 									<sec:authentication property="principal.authorities"/> --%>
 			                	</span>
 			                	<span class="fs-5 text-light">&nbsp;님</span>
 			              	</li>
@@ -126,7 +127,7 @@ alert("${msg}");
 									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
 								  </form:form>
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
-					                  <li><a class="dropdown-item" href="#">프로필</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
 					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
 					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
@@ -138,8 +139,9 @@ alert("${msg}");
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('TEACHER')">
 				                  		<hr/>
+				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
-					                  <li><a class="dropdown-item" href="#">정산내역</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('ADMIN')">
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
@@ -169,6 +171,7 @@ alert("${msg}");
 				
 			</div>
 		</nav>
+<<<<<<< HEAD
 
 		<!-- 로그인 Modal -->
 		<%-- <div class="modal fade" id="exampleModal" tabindex="-1"
@@ -202,6 +205,9 @@ alert("${msg}");
 				</div>
 			</div>
 		</div> --%>
+=======
+		
+>>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 	</header>
 	<section id="content">
 	<!-- header.jsp 끝 -->

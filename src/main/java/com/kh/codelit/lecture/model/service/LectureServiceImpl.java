@@ -39,6 +39,7 @@ public class LectureServiceImpl implements LectureService {
 		return categoryListInstance;
 	}
 
+	
 	@Override
 	public Map<Integer, Object> getCategoryMapInstance() {
 		if(categoryListInstance == null || categoryListInstance.isEmpty())
@@ -56,8 +57,6 @@ public class LectureServiceImpl implements LectureService {
 		
 		return categoryMapInstance;
 	}
-
-
 
 	@Override
 	public int insertLecture(Lecture lecture) {		
@@ -85,6 +84,11 @@ public class LectureServiceImpl implements LectureService {
 	@Override
 	public int getTotalContents(Integer catNo) {
 		return lectureDao.getTotalContents(catNo);
+	}
+
+	@Override
+	public List<Lecture> selectMyLecture(String id) {
+		return lectureDao.selectMyLecture(id);
 	}
 	
 	

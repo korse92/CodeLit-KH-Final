@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Repository
 public class LectureDaoImpl implements LectureDao {
-	
+
 	@Autowired
 	private SqlSessionTemplate session;
 
@@ -36,17 +36,22 @@ public class LectureDaoImpl implements LectureDao {
 	public List<Lecture> selectLectureList(Map<String, Object> param) {
 		int cPage = (int)param.get("cPage");
 		int catNo = (int)param.get("catNo");
-		
+
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return session.selectList("lecture.selectLectureList", catNo, rowBounds);
+
+		return session.selectList("lecture.selectLectureList", param, rowBounds);
 	}
 
 	@Override
 	public int getTotalContents(Integer catNo) {
 		return session.selectOne("lecture.getTotalContents", catNo);
+	}
+
+	@Override
+	public List<Lecture> selectMyLecture(String id) {
+		return session.selectList("lecture.selectMyLecture", id);
 	}
 
 }

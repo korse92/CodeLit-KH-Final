@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.counsel.model.vo.Counsel;
 
 
@@ -32,12 +33,19 @@ public class CounselDaoImpl implements CounselDao {
 
 	@Override
 	public List<Counsel> selectCounselList(Map<String, Object> param) {
+
 		int cPage = (int)param.get("cPage");
 		String memberId = (String)param.get("memberId");
+
 		
+	
+		
+
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
+		
 		RowBounds rowBounds = new RowBounds(offset, limit);
+
 		return session.selectList("counsel.selectCounselList", memberId, rowBounds);
 	}
 
@@ -45,8 +53,21 @@ public class CounselDaoImpl implements CounselDao {
 	public int getTotalContents(String memberId) {
 		
 		return session.selectOne("counsel.getTotalContents", memberId);
+
+	}
+
+	@Override
+	public Counsel selectOneCounsel(int counselNo) {
+
+		return session.selectOne("counsel.selectOneCounsel", counselNo);
+	}
+
+	@Override
+	public int selectAnswerBool(int counselNo) {
+
+		return session.selectOne("counsel.selectAnswerBool", counselNo);
+
 	}
 	
-
 
 }
