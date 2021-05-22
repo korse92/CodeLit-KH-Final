@@ -34,12 +34,9 @@
 		});
 
 		$(".overlay .btn").click(e => {
-			//alert("테스트");
 
-			//location.href = "${pageContext.request.contextPath}";
-
-			//e.stopPropagation(); //상위 요소로의 이벤트전파 중단(태그 고유동작은 중단시키지 못함(ex.a태그의 주소이동)
-			e.preventDefault(); //태그의 고유동작을 중단시킴(a태그 주소이동, submit버튼의 form전송 등)
+			//e.preventDefault(); //태그의 고유동작을 중단시킴(a태그 주소이동, submit버튼의 form전송 등)\
+			e.stopPropagation(); //상위 요소로의 이벤트전파 중단(태그 고유동작은 중단시키지 못함(ex.a태그의 주소이동)
 		});
 	});
 </script>
@@ -91,75 +88,75 @@
 	<div class="row row-cols-auto">
 	</c:if>
 		<div class="col-sm-3 my-3">
-			<a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lecture.lectureNo}" class="text-decoration-none text-dark">
-				<div class="card mx-auto position-relative">
-					<img
-						src="${empty lecture.lectureThumbRenamed ?
-									'https://via.placeholder.com/450x300.png?text=Thumbnail+Image'
-									: pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += lecture.lectureThumbRenamed}"
-						class="card-img-top"
-						alt="..."
-						style="height: 13rem;"/>
-					<div class="card-body">
-						<h5 class="card-title">${lecture.lectureName}</h5>
-						<p class="card-subtitle">${lecture.teacherName}</p>
-						<p class="card-subtitle my-1">
-							<c:forEach var="i" begin="1" end="5">
-								<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
-							</c:forEach>
-						</p>
-						<p class="card-text">
-							<c:choose>
-								<c:when test="${lecture.lecturePrice == 0}">
-								무료
-								</c:when>
-								<c:otherwise>
-								<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
-								</c:otherwise>
-							</c:choose>
-						</p>
+			<div class="card mx-auto position-relative"
+				style="cursor: pointer;"
+				onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lecture.lectureNo}';">
+				<img
+					src="${empty lecture.lectureThumbRenamed ?
+								'https://via.placeholder.com/450x300.png?text=Thumbnail+Image'
+								: pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += lecture.lectureThumbRenamed}"
+					class="card-img-top"
+					alt="..."
+					style="height: 13rem;"/>
+				<div class="card-body">
+					<h5 class="card-title">${lecture.lectureName}</h5>
+					<p class="card-subtitle">${lecture.teacherName}</p>
+					<p class="card-subtitle my-1">
+						<c:forEach var="i" begin="1" end="5">
+							<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
+						</c:forEach>
+					</p>
+					<p class="card-text">
+						<c:choose>
+							<c:when test="${lecture.lecturePrice == 0}">
+							무료
+							</c:when>
+							<c:otherwise>
+							<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
+							</c:otherwise>
+						</c:choose>
+					</p>
+				</div>
+				<div class="overlay d-flex flex-column justify-content-end p-3">
+					<div class="row my-1">
+						<div class="col-auto">
+							<h5>${lecture.lectureName}</h5>
+						</div>
 					</div>
-					<div class="overlay d-flex flex-column justify-content-end p-3">
-						<div class="row my-1">
-							<div class="col-auto">
-								<h5>${lecture.lectureName}</h5>
-							</div>
+					<div class="row my-1">
+						<div class="lecture-intro col-auto">
+							${lecture.lectureIntro}
 						</div>
-						<div class="row my-1">
-							<div class="lecture-intro col-auto">
-								${lecture.lectureIntro}
-							</div>
+					</div>
+					<div class="row my-1">
+						<div class="col-auto">카테고리 : ${categoryMap.get(lecture.refLecCatNo)}</div>
+					</div>
+					<div class="row my-1">
+						<div class="col-auto">강의종류 : ${lecture.lectureType eq 'V' ? '일반 강의' : '스트리밍 강의'}</div>
+					</div>
+					<div class="d-flex justify-content-end">
+						<div class="m-1">
+							<button
+								class="btn btn-outline-light" data-bs-toggle="tooltip"
+								data-bs-placement="right" title="장바구니에 담기"
+								onclick = "location.href = 'test'">
+								<i class="fas fa-shopping-basket"></i>
+							</button>
 						</div>
-						<div class="row my-1">
-							<div class="col-auto">카테고리 : ${categoryMap.get(lecture.refLecCatNo)}</div>
-						</div>
-						<div class="row my-1">
-							<div class="col-auto">강의종류 : ${lecture.lectureType eq 'V' ? '일반 강의' : '스트리밍 강의'}</div>
-						</div>
-							<div class="d-flex justify-content-end">
-							<div class="m-1">
-								<button
-									class="btn btn-outline-light" data-bs-toggle="tooltip"
-									data-bs-placement="right" title="장바구니에 담기"
-									onclick = "location.href = 'test'">
-									<i class="fas fa-shopping-basket"></i>
-								</button>
-							</div>
-							<div class="m-1">
-		                		<form:form action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
-		                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
-								<button
-									type="submit"
-									class="btn ${lecture.picked ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
-									data-bs-placement="right" title="${lecture.picked ? '찜삭제' : '찜하기'}">
-									<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
-								</button>
-								</form:form>
-							</div>
+						<div class="m-1">
+	                		<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
+	                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+							<button
+								type="submit"
+								class="btn ${lecture.picked ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
+								data-bs-placement="right" title="${lecture.picked ? '찜삭제' : '찜하기'}">
+								<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
+							</button>
+							</form:form>
 						</div>
 					</div>
 				</div>
-			</a>
+			</div>
 		</div>
 	<c:if test="${(vs.count%4 == 0) || vs.last}">
 	</div>

@@ -15,6 +15,20 @@
 <!-- 컨텐츠 시작 -->
 
 <!-- 개인 CSS, JS 위치 -->
+<script>
+$(() => {
+
+/* 	$('.accordion-collapse').on('show.bs.collapse', function () {
+		if(!$(".accordion-collapse").hasClass('show'))
+			$(allCollapseBtn).text('모두 접기');
+	});
+	$('.accordion-collapse').on('hide.bs.collapse', function () {
+		if($(".accordion-collapse").hasClass('show'))
+			$(allCollapseBtn).text('모두 펼치기');
+	}); */
+});
+
+</script>
 
 <div class="container my-3">
 	<div class="card">
@@ -29,24 +43,22 @@
 		</div>
 		<div class="card-body">
 			<h2 class="card-title">${lecture.lectureName}</h2>
-			<div class="card-subtitle text-muted">
+			<div class="card-subtitle text-muted mt-2">
 				<div class="row">
 					<div class="col-auto">
 					<c:forEach var="i" begin="1" end="5">
 						<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
 					</c:forEach>
-
-
 					</div>
 					<div class="col-auto">후기 : ${lecture.lectureCommentList.size()} 개</div>
 					<div class="col-auto">수강생 : 몇명</div>
 				</div>
-				<div class="row">
+				<div class="row my-1">
 					<div class="col-auto">
 						<i class="fas fa-chalkboard-teacher"></i>
 					</div>
 					<div class="col-auto">
-						<a href="${lecture.teacher.teacherLink}" target="_blank">${lecture.teacher.teacherName}</a>
+						<a href="${lecture.teacher.teacherLink}" class="text-muted" target="_blank">${lecture.teacher.teacherName}</a>
 					</div>
 				</div>
 			</div>
@@ -79,23 +91,33 @@
 				</div>
 				<div class="tab-pane fade" id="curriculum" role="tabpanel"
 					aria-labelledby="profile-tab">
+					<button id="allCollapseBtn"
+						class="btn btn-primary d-block ms-auto mb-3" type="button" data-bs-toggle="collapse"
+						data-bs-target=".accordion-collapse" aria-expanded="false">모두 펼치기 / 접기</button>
 					<div class="accordion" id="curriculumAccordionPanels">
-						<c:forEach items="${lecture.partList}" var="part">
+						<c:forEach items="${lecture.partList}" var="part" varStatus="pvs">
 						<div class="accordion-item">
 								<button class="accordion-button collapsed" type="button"
 									data-bs-toggle="collapse"
 									data-bs-target="#collapseChapterOfPart${part.lecturePartNo}"
 									aria-expanded="false" aria-controls="collapseChapterOfPart${part.lecturePartNo}">
-									<i class="fas fa-bars me-3"></i><span>${part.lecturePartTitle}</span>
+									<i class="fas fa-bars me-3"></i>
+									<span>파트 ${pvs.count }. ${part.lecturePartTitle}</span>
+									<span class="badge bg-primary ms-2">${part.chepterList.size()}</span>
 								</button>
 							</h2>
 							<div id="collapseChapterOfPart${part.lecturePartNo}"
 								class="accordion-collapse collapse"
 								aria-labelledby="partPanel${part.lecturePartNo}">
-								<div class="accordion-body">
-							<c:forEach items="${part.chepterList}" var="chapter">
-								<h5>${chapter.lecChapterTitle}</h5>
-							</c:forEach>
+								<div class="accordion-body px-0">
+									<ul class="list-group-flush p-0 m-0">
+										<c:forEach items="${part.chepterList}" var="chapter" varStatus="cvs">
+										<li class="list-group-item">
+											<i class="fas fa-play-circle"></i>
+											<span>챕터 ${cvs.count}. ${chapter.lecChapterTitle}</span>
+										</li>
+										</c:forEach>
+									</ul>
 								</div>
 							</div>
 						</div>
