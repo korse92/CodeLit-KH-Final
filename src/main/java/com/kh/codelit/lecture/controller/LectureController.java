@@ -43,7 +43,7 @@ public class LectureController {
 		if(catNo == null)
 			catNo = 0;
 		int numPerPage = 12;
-		String memberId = principal.getName();
+		String memberId = principal != null ? principal.getName() : null;
 		log.debug("catNo = {}", catNo);
 		log.debug("cPage = {}", cPage);
 		log.debug("memberId = {}", memberId);

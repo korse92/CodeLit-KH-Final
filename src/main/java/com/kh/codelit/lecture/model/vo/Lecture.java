@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
+import com.kh.codelit.teacher.model.vo.Teacher;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class Lecture {
 
 	//강사 관련
 	private String teacherName;
+	private Teacher teacher;
 
 	//첨부파일 관련
 	private int attachCount;				//첨부파일 개수

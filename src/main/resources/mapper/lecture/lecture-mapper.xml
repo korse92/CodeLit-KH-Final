@@ -92,8 +92,7 @@
 
 	<select id="selectOneLecture" resultMap="lectureCollectMap">
 		select
-		    l.*, p.*, c.*,
-		    (select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
+		    l.*, p.*, c.*, t.*,
 		    round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment"
 		from
 		    lecture l
@@ -101,6 +100,8 @@
 		            on l.lecture_no = p.ref_lecture_no
 		        left join lecture_chapter c
 		            on p.lecture_part_no = c.ref_lec_part_no
+		        left join teacher t
+		        	on l.ref_member_id = t.ref_member_id
 		where
 			lecture_no = #{no}
 	</select>
@@ -116,8 +117,19 @@
 		<result column="lecture_price" property="lecturePrice"/>
 		<result column="lecture_accept_yn" property="lectureAcceptYn"/>
 		<result column="lecture_guideline" property="lectureGuideline"/>
-		<result column="teacher_name" property="teacherName"/>
 		<result column="avg_lec_assessment" property="avgLecAssessment"/>
+
+		<association property="teacher" javaType="teacher">
+			<id column="ref_member_id" property="refMemberId"/>
+			<result column="teacher_name" property="teacherName"/>
+			<result column="teacher_phone" property="teacherPhone"/>
+			<result column="ref_lec_cat_no" property="refLecCatNo"/>
+			<result column="teacher_introduce" property="teacherIntroduce"/>
+			<result column="teacher_link" property="teacherLink"/>
+			<result column="teacher_bank" property="teacherBank"/>
+			<result column="teacher_account" property="teacherAccount"/>
+			<result column="teacher_acc_name" property="teacherAccName"/>
+		</association>
 
 		<collection property="partList" ofType="lecturePart">
 			<id column="lecture_part_no" property="lecturePartNo"/>
