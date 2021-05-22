@@ -93,7 +93,8 @@
 	
 	        <div id="detailDiv">
 	            
-	            <form action="${pageContext.request.contextPath}/teacher/teacherUpdate.do?${_csrf.parameterName}=${_csrf.token}" 
+	            <form action="${pageContext.request.contextPath}/
+/teacherUpdate.do?${_csrf.parameterName}=${_csrf.token}" 
 	            		method="POST" id="teachUpdateFrm"
 	            		enctype="multipart/form-data" >
 	        		<input type="hidden" value="${loginMember.memberId}" name="refMemberId" readonly/>
@@ -104,12 +105,15 @@
 	                              <img src="" alt="" id="photo_img">
 	                            </div>
 	                        </td>
-	                        
 	                        <td colspan="1" class="td2">
-	                            <label for="teacherName">이름</label>
-	                        </td>
+	                           <label for="teacherName">이름</label>
+	                           
+							</td>
+	                        
 	                        <td colspan="3" class="td3">
-	                            <input type="text" class="form-control" placeholder="이름을 입력해주세요." name="teacherName" id="teacherName" />
+	                            <input type="text" class="form-control" name="teacherName" id="teacherName" 
+	                         value = ${teacher.teacherName} >
+	                            
 	                        </td>
 	                    </tr>
 	        
@@ -118,7 +122,8 @@
 	                            <label for="teacherPhone">전화번호</label>
 	                        </td>
 	                        <td colspan="3" class="td3">
-	                            <input type="text" class="form-control" placeholder="전화번호 (- 없이)" name="teacherPhone" id="teacherPhone">
+	                            <input type="text" class="form-control" name="teacherPhone" id="teacherPhone"  value ="${detail.teacherPhone}" />
+	                             
 	                        </td>
 	                    </tr>
 	                    <tr>
@@ -129,7 +134,8 @@
 	                            <label for="teacherLink">깃허브(블로그)</label>
 	                        </td>
 	                        <td colspan="3" class="td3">
-	                            <input type="text" class="form-control" placeholder="깃허브 또는 블로그 주소" name="teacherLink" id="teacherLink">
+	                            <input type="text" class="form-control"  name="teacherLink" id="teacherLink"
+	                            value =${teacher.teacherLink}  >
 	                        </td>
 	                    </tr>
 	                    <tr>
@@ -137,7 +143,7 @@
 	                            <label for="refLecCatNo">희망분야</label>
 	                        </td>
 	                        <td colspan="5">
-	                            <select class="form-select" aria-label="희망분야" name="refLecCatNo" id="refLecCatNo">
+	                            <select class="form-select" name="refLecCatNo" id="refLecCatNo">
 	                              <option selected>카테고리 선택</option>
 	                              <c:forEach items="${catList}" var="list">
 	                              	<option value="${list.no}">${list.name}</option>
@@ -151,7 +157,7 @@
 	                        <label for="teacherBank">은행명</label>
 	                      </td>
 	                      <td colspan="5">
-	                        <input type="text" class="form-control" placeholder="은행명" name="teacherBank" id="teacherBank">
+	                        <input type="text" class="form-control" name="teacherBank" id="teacherBank" >
 	                      </td>
 	                    </tr>
 	                    <tr>
@@ -159,7 +165,7 @@
 	                            <label for="teacherAccount">계좌번호</label>
 	                        </td>
 	                        <td colspan="5">
-	                            <input type="text" class="form-control" placeholder="계좌번호 (- 없이)" name="teacherAccount" id="teacherAccount">
+	                            <input type="text" class="form-control"  name="teacherAccount" id="teacherAccount"   value ="${teacher.teacherAccount}"  >
 	                        </td>
 	                    </tr>
 	                    <tr>
@@ -167,7 +173,7 @@
 	                            <label for="teacherAccName">예금주</label>
 	                        </td>
 	                        <td colspan="5">
-	                            <input type="text" class="form-control" placeholder="예금주" name="teacherAccName" id="teacherAccName">
+	                            <input type="text" class="form-control" name="teacherAccName" id="teacherAccName" value ="${teacher.teacherAccName}" >
 	                        </td>
 	                    </tr>
 	                    <tr>
@@ -175,7 +181,7 @@
 	                            <label for="teacherIntroduce">강사소개</label>
 	                        </td>
 	                        <td colspan="5">
-	                            <textarea name="teacherIntroduce" id="teacherIntroduce" class="form-control" cols="30" rows="10"></textarea>
+	                            <textarea name="teacherIntroduce" id="teacherIntroduce" class="form-control" cols="30" rows="10"    value ="${teacher.teacherIntroduce}" ></textarea>
 	                        </td>
 	                    </tr>
 	        

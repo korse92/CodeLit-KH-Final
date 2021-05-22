@@ -22,4 +22,6 @@ public class TeacherDaoImpl implements TeacherDao {
 		
 		return session.insert("teacher.insertTeacherRequest", teacher);
 	}
+
+	
 }

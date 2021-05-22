@@ -272,27 +272,21 @@ public class TeacherController {
 		return "redirect:/teacher/lectureEnroll.do";
 	}
 	@GetMapping("/teacherDetail.do")
-									//db에서 
-	public String teacherDetail(Authentication authentication,Model model) {
-		
-	String memberId = ((Member)authentication.getPrincipal()).getMemberId();
-
-
-	return "teacher/teacherDetai";
-		
-		
+	public ModelAndView memberDetail(@ModelAttribute("techaer") Teacher techaer, ModelAndView mav) {
+		log.info("techaer = {}", techaer);
+		mav.setViewName("teacher/teacherDetail");
+		return mav;
 	}
 //	@PostMapping("/teacherUpdate.do")
 //	public String teacherView(@ModelAttribute Teacher teacher,RedirectAttributes redirect ,
-//	Authentication authentication) {
+//			Authentication authentication) {
 //		int result = teacherService.update(teacher);
 //		String memberId = ((Member)authentication.getPrincipal()).getMemberId();
 //		log.info("수정 : "+ teacher);
-//	
+//
 //		String msg = result > 0 ? "수정 성공":"수정 실패";
-//		return "teacher/teacherView";
-//		
-//		
-//	}
+//	return "teacher/teacherView";
+//	
+//			}
 	
 }

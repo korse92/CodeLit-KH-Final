@@ -13,4 +13,30 @@
 				#{teacherAccName})
 	</insert>
 
+	<select id="selectTeacherCollection" >
+		select
+			*
+		from
+			member
+		where 
+			id = #{id}
+	</select>
+	
+<!-- 	<resultMap type="member" id="memberMap">
+	 <result column="enroll_date" property="enrollDate"/>
+	</resultMap>
+	<update id="updateMember">
+	update member 
+	set 
+	name = #{name},
+	gender = #{gender},
+	birthday = #{birthday},
+	email = #{email},
+	phone = #{phone},
+	address = #{address},
+	hobby = #{hobby}
+	where
+	id = #{id}
+	 </update> -->
+	
 </mapper>
