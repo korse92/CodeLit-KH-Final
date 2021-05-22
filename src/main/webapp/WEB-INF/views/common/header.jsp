@@ -17,8 +17,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	crossorigin="anonymous"></script>
 
+<!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+	crossorigin="anonymous"></script>
+
 <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+	crossorigin="anonymous">
 
 <!-- Font Awesome(아이콘) CSS -->
 <link rel="stylesheet"
@@ -77,7 +86,7 @@ alert("${msg}");
 									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
 								</c:forEach>
 							</ul>
-						</li>  
+						</li>
 						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 						</sec:authorize>
@@ -103,10 +112,10 @@ alert("${msg}");
 						</ul>
 					</div>
 				</sec:authorize>
-				
+
 				<!-- 일반 사용자 로그인 -->
 				<sec:authorize access="isAuthenticated()">
-							
+
 					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarMain">
 			            <ul class="navbar-nav">
 			            	<li class="nav-item">
@@ -124,7 +133,7 @@ alert("${msg}");
 			                	</a>
 			                	<ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
 			                	  <form:form action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
-									 <button class="dropdown-item" type="submit">로그아웃</button>			    					
+									 <button class="dropdown-item" type="submit">로그아웃</button>
 								  </form:form>
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
@@ -138,7 +147,7 @@ alert("${msg}");
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('TEACHER')">
-				                  		<hr/>
+				                  	  <hr/>
 				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
@@ -150,7 +159,7 @@ alert("${msg}");
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do">회원 관리</a></li>
 				                  		<li><a class="dropdown-item" href="#">알림</a></li>
 				                  </sec:authorize>
-				                  
+
 				                </ul>
 			              	</li>
 			             	<li>
@@ -168,10 +177,11 @@ alert("${msg}");
 			            </ul>
 			         </div>
 				</sec:authorize>
-				
+
 			</div>
 		</nav>
 
+<<<<<<< HEAD
 
 		<!-- 로그인 Modal -->
 		<%-- <div class="modal fade" id="exampleModal" tabindex="-1"
@@ -208,6 +218,8 @@ alert("${msg}");
 
 		
 
+=======
+>>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 	</header>
 	<section id="content">
 	<!-- header.jsp 끝 -->
