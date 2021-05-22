@@ -68,41 +68,41 @@ public class ConuselController {
 	model.addAttribute("pageBar", pageBar);
 	
 	return "counsel/counselList";
-
-		
-		try {
-			//1. 사용자 입력값
-			int numPerPage = 10;
-			
-			String memberId = ((Member)authentication.getPrincipal()).getMemberId();
-			
-			Map<String, Object> param = new HashMap<>();
-			param.put("numPerPage", numPerPage);
-			param.put("cPage", cPage);
-			param.put("memberId", memberId);
-			
-			//2. 업무로직
-			//a. contents영역
-			List<Counsel> list = service.selectCounselList(param);
-			log.debug("list = {}", list);
-			
-			
-			//b. pageBar영역
-			int totalContents = service.getTotalContents(memberId);
-			String paramUrl = HelloSpringUtils.convertToParamUrl(request);
-			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, paramUrl);
-			
-			//3.jsp 위임처리
-			model.addAttribute("list", list);
-			model.addAttribute("pageBar", pageBar);
-			
-		} catch(Exception e) {
-			throw e;
-		}
-		
-		return "counsel/counselList";
-
 	}
+//		
+//		try {
+////			//1. 사용자 입력값
+////			int numPerPage = 10;
+////			
+////			String memberId = ((Member)authentication.getPrincipal()).getMemberId();
+////			
+////			Map<String, Object> param = new HashMap<>();
+////			param.put("numPerPage", numPerPage);
+////			param.put("cPage", cPage);
+////			param.put("memberId", memberId);
+////			
+////			//2. 업무로직
+////			//a. contents영역
+////			List<Counsel> list = service.selectCounselList(param);
+////			log.debug("list = {}", list);
+////			
+////			
+////			//b. pageBar영역
+////			int totalContents = service.getTotalContents(memberId);
+////			String paramUrl = HelloSpringUtils.convertToParamUrl(request);
+////			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, paramUrl);
+////			
+////			//3.jsp 위임처리
+////			model.addAttribute("list", list);
+////			model.addAttribute("pageBar", pageBar);
+////			
+//		} catch(Exception e) {
+//			throw e;
+//		}
+////		
+//		return "counsel/counselList";
+
+	
 	
 
 	@GetMapping("/counselDetail.do")
@@ -194,10 +194,5 @@ public class ConuselController {
 	
 	
 
-	
-	@GetMapping("/counselDetail.do")
-	public void counselDetail() {
-		
-	}
 
 }

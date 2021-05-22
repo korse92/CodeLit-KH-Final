@@ -46,7 +46,7 @@ Font Awesome(아이콘) CSS
 			            <span class="fs-5">,&nbsp;안녕하세요.</span>
 					</p>
 					<div class="text-end">
-						<a href="#">프로필 수정</a>
+						<a href="${pageContext.request.contextPath}/teacher/teacherDetail.do">프로필 수정</a>
 					</div>
 				</div>
 			</div>

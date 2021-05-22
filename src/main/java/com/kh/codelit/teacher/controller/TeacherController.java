@@ -16,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/teacher")
+
 public class TeacherController {
 
 	@Autowired
@@ -276,10 +276,14 @@ public class TeacherController {
 	}
 
 	@GetMapping("/teacherDetail.do")
-	public ModelAndView memberDetail(@ModelAttribute("techaer") Teacher techaer, ModelAndView mav) {
+	public String teacherrDetail(@ModelAttribute Teacher techaer,
+			Authentication authentication) {
+		
+		techaer.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
 		log.info("techaer = {}", techaer);
-		mav.setViewName("teacher/teacherDetail");
-		return mav;
+		
+		return "teacher/teacherDetail";
+		
 	}
 //	@PostMapping("/teacherUpdate.do")
 //	public String teacherView(@ModelAttribute Teacher teacher,RedirectAttributes redirect ,
