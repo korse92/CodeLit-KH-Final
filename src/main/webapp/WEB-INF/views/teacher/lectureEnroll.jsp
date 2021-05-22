@@ -7,6 +7,8 @@
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 등록" name="title"/>
 </jsp:include>
@@ -117,7 +119,7 @@ img#thumbImage {
 					</div>
 				</div>
 			</div>
-			
+
 			<div id="selectedStreaming" class="row">
 				<label class="form-label mb-2" for="">강의일정</label>
 				<div class="col-sm">
@@ -162,20 +164,22 @@ img#thumbImage {
   $("[name=lectureEnrollFrm").on('reset', e => {
     document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
   });
-  
+
   //ckeditor 생성
   CKEDITOR.replace('lectureIntro', {
 	  height: 500
   });
-  
+
   $("[name=lectureEnrollFrm]").submit(e => {
 	  var $lectureGuideline = $(lectureGuideline)
 	  if(!$lectureGuideline.val()){
 		  $lectureGuideline.val(1);
-		  
+
 	  }
   });
 
 </script>
 
 <!-- 컨텐츠 끝 -->
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

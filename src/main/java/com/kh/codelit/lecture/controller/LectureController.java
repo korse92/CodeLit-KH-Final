@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
@@ -42,7 +43,7 @@ public class LectureController {
 		if(catNo == null)
 			catNo = 0;
 		int numPerPage = 12;
-		String memberId = principal.getName();
+		String memberId = principal != null ? principal.getName() : null;
 		log.debug("catNo = {}", catNo);
 		log.debug("cPage = {}", cPage);
 		log.debug("memberId = {}", memberId);
@@ -72,8 +73,19 @@ public class LectureController {
 	}
 
 	@GetMapping("/lectureDetail.do")
-	public void lectureDetail(@RequestParam int no) {
+	public ModelAndView lectureDetail(
+			@RequestParam int no,
+			ModelAndView mav) {
+		//1. 업무로직
+		Lecture lecture = lectureService.selectOneLecture(no);
+		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
+		log.debug("lecture = {}", lecture);
 
+		//2. jsp 위임
+		mav.addObject("lecture", lecture);
+		mav.setViewName("lecture/lectureDetail");
+
+		return mav;
 	}
 
 

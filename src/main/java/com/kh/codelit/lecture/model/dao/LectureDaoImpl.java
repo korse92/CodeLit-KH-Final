@@ -54,4 +54,14 @@ public class LectureDaoImpl implements LectureDao {
 		return session.selectList("lecture.selectMyLecture", id);
 	}
 
+	@Override
+	public Lecture selectOneLecture(int no) {
+		return session.selectOne("lecture.selectOneLecture", no);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectLectureCmtList(int no) {
+		return session.selectList("lecture.selectLectureCmtList", no);
+	}
+
 }
