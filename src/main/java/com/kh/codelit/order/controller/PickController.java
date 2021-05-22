@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +48,8 @@ public class PickController {
 						@ModelAttribute Pick pick,
 						@ModelAttribute Lecture lecture,
 						RedirectAttributes redirectAttr,
-						Principal pri
+						Principal pri,
+						HttpServletRequest request
 			) throws IllegalStateException, IOException {
 
 		pick.setRefMemberId(pri.getName());
@@ -70,7 +73,7 @@ public class PickController {
 //				log.debug("delete = {}", delete);
 //			}
 
-		return "redirect:/order/pick.do";
+		return "redirect:" + request.getHeader("Referer");
 
 	}
 
@@ -78,7 +81,8 @@ public class PickController {
 	public String deletePick(
 						@RequestParam int lectureNo,
 						Principal principal,
-						RedirectAttributes redirectAttr
+						RedirectAttributes redirectAttr,
+						HttpServletRequest request
 			) {
 		String memberId = principal.getName();
 		log.debug("lectureNo = {}", lectureNo);
@@ -89,7 +93,7 @@ public class PickController {
 		int delete = pickService.deletePick(param);
 		log.debug("delete = {}", delete);
 
-		return "redirect:/order/pick.do";
+		return "redirect:" + request.getHeader("Referer");
 
 	}
 

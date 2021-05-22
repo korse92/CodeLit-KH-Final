@@ -2,14 +2,14 @@
     pageEncoding="UTF-8"%>
 <!-- footer.jsp 시작 -->
 </section>
-  
+
   <style>
   	#commonFooter {
   		border-top: 1px solid gray;
   		margin-top: 6rem;
   	}
   </style>
- 
+
 <footer id = "commonFooter" class="d-flex align-items-center justify-content-center">
   <div class="container">
     <div class="row">
@@ -17,10 +17,6 @@
     </div>
   </div>
 </footer>
-
-
-<!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
 </body>
 </html>
