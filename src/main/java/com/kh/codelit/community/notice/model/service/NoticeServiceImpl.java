@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.notice.model.dao.NoticeDAO;
@@ -19,7 +20,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired
 	private NoticeDAO dao;
 	
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertBoard(Notice notice) {
 		return dao.insertBoard(notice);
@@ -30,7 +31,7 @@ public class NoticeServiceImpl implements NoticeService {
 	public int getListCount() {
 		return dao.getListCount();
 	}
-
+	
 	@Override
 	public List<Notice> noticeList(Map<String, Object> param) {
 		return dao.noticeList(param);
@@ -42,43 +43,41 @@ public class NoticeServiceImpl implements NoticeService {
 		return dao.selectOneNotice(noticeNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int delete(int noticeNo) {
 		return dao.delete(noticeNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int update(Notice notice) {
 		return dao.update(notice);
 	}
-
 
 	@Override
 	public int updateCnt(int noticeNo) {
 		return dao.updateCnt(noticeNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertAttachment(Attachment attach) {
 		return dao.insertAttachment(attach);
 	}
-
 
 	@Override
 	public Attachment selectOneAttach(int noticeNo) {
 		return dao.selectAttachment(noticeNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAttach(int noticeNo) {
 		return dao.deleteAttach(noticeNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int updateAttach(Attachment attach) {
 		return dao.updateAttach(attach);

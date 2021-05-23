@@ -71,7 +71,47 @@
       </div>
   </div>
 <script type="text/javascript">
+const ws = new SockJS("${pageContext.request.contextPath}/alarm/alarmList");
+console.log(ws);
+const stompClient = Stomp.over(ws);
 
+//connect 핸들러 작성
+stompClient.connect({}, (frame) => {
+	
+	stompClient.subscribe("/app/all", (frame) => {
+		const msgObj = JSON.parse(frame.body);
+		console.log(msgObj);
+		const {from, to, content, type, time} = msgObj;
+		console.log(msgObj);
+		alert(content + "\n" + new Date(time));
+	});
+	
+	stompClient.subscribe("/app/user", (message) => {
+		toastr.info(message);
+	});
+	
+	stompClient.subscribe("/app/teacher", (message) => {
+		toastr.info(message);
+	});
+});
+
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "3000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
 //3.메세지 발행
 $("#send").click(() => {
 	const $message = $("#message");

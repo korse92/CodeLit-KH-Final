@@ -35,32 +35,45 @@ public class CommentController {
 			@ModelAttribute Comment cmt,
 			RedirectAttributes redirect,
 			Principal pri) {
-		cmt.setRefMemberId(pri.getName());
-		int result = service.insertCmt(cmt);
-		
-//		return "redirect:/community/noticeDetail.do?noticeNo="+cmt.getRefStdBrdNo();
+		try {
+			cmt.setRefMemberId(pri.getName());
+			int result = service.insertCmt(cmt);
+		}catch (Exception e) {
+			throw e;
+		}
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	@GetMapping("/updateComment.do")
 	public void updateComment(@RequestParam int cmtNo, Model model) {
-		//기능만 먼저할것. jsp 에러에 대해서 여쭤볼것
-		List<Comment> listCmt = stdService.selectCmt(cmtNo);
-		model.addAttribute("listCmt", listCmt);
+		try {
+			List<Comment> listCmt = stdService.selectCmt(cmtNo);
+			model.addAttribute("listCmt", listCmt);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	@PostMapping("/updateComment.do")
 	public String updateCmt(
 			@ModelAttribute Comment cmt,
 			RedirectAttributes redirect) {
-		int result = service.update(cmt.getStdCmtNo());
-		
+		try {
+			int result = service.update(cmt.getStdCmtNo());
+		} catch (Exception e) {
+			throw e;
+		}
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	@PostMapping("/deleteCmt.do")
 	public String deleteCmt(@RequestParam int cmtNo) {
-		Comment cmt = service.selectStdNo(cmtNo);
-		int result = service.delete(cmtNo);
-		
+		Comment cmt = null;
+		try {
+			
+			cmt = service.selectStdNo(cmtNo);
+			int result = service.delete(cmtNo);
+		} catch (Exception e) {
+			throw e;
+		}		
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	

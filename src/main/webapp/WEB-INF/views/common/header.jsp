@@ -53,48 +53,7 @@
 <script>
 alert("${msg}");
 
-const ws = new SockJS("${pageContext.request.contextPath}/alarm/alarmList");
-const stompClient = Stomp.over(ws);
 
-//connect 핸들러 작성
-stompClient.connect({}, (frame) => {
-	console.log("stomp connected : ", frame);
-	
-	stompClient.subscribe("/app/all", (frame) => {
-		console.log("message from /app : ", frame);
-		const msgObj = JSON.parse(frame.body);
-		console.log(msgObj);
-		const {from, to, content, type, time} = msgObj;
-		alert(content + "\n" + new Date(time));
-		
-	});
-	
-	stompClient.subscribe("/app/user", (message) => {
-		console.log("message from /app/user : ", message);
-	});
-	
-	stompClient.subscribe("/app/teacher", (message) => {
-		console.log("message from /app/teacher : ", message);
-	});
-});
-
-toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-bottom-right",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "3000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
 
 </script>
 </c:if>
