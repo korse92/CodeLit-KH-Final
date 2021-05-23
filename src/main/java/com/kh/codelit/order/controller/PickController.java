@@ -54,11 +54,9 @@ public class PickController {
 
 		pick.setRefMemberId(pri.getName());
 		pick.setRefLectureNo(lecture.getLectureNo());
-		pick.setPickNo(pick.getPickNo());
 		log.debug("refMemberIdAddPick = {}", pick.getRefMemberId());
 		log.debug("refLectureNoAddPick = {}", pick.getRefLectureNo());
 		log.debug("lectureNoAddPick = {}", lecture.getLectureNo());
-		log.debug("PickNoAddPick = {}", pick.getPickNo());
 
 		int result = pickService.addPick(pick.getRefLectureNo(), pick.getRefMemberId());
 
@@ -72,6 +70,9 @@ public class PickController {
 //				int delete = pickService.deletePick(pick.getPickNo());
 //				log.debug("delete = {}", delete);
 //			}
+
+			countPick(pick);
+			log.debug("countPick = {}", countPick(pick));
 
 		return "redirect:" + request.getHeader("Referer");
 
@@ -95,6 +96,14 @@ public class PickController {
 
 		return "redirect:" + request.getHeader("Referer");
 
+	}
+
+	@GetMapping("countPick.do")
+	public int countPick(@ModelAttribute Pick pick) {
+
+		int result = pickService.countPick(pick.getRefLectureNo(), pick.getRefMemberId());
+
+		return result;
 	}
 
 

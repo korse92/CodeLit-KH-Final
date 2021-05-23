@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pick">
+<mapper namespace="basket">
 
-	<select id="selectPickList" resultType="pick">
+	<select id="selectBasketList" resultType="basket">
 		select
-			p.*,
+			b.*,
 			l.lecture_thumb_renamed, l.lecture_name, t.teacher_name, l.lecture_price, lc.lec_cat_name, l.lecture_intro,
 			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment"
 		from
@@ -20,43 +20,43 @@
 				on
 					l.ref_member_id = t.ref_member_id
 				inner join
-			pick p
+			basket b
 				on
-					p.ref_lecture_no = l.lecture_no
+					b.ref_lecture_no = l.lecture_no
 		where
-			p.ref_member_id = #{refMemberId}
+			b.ref_member_id = #{refMemberId}
 	</select>
 
-	<select id="countPick" resultType="int">
+	<select id="countBasket" resultType="int">
 		select
 			count(*)
 		from
-			pick
+			basket
 		where
 			ref_lecture_no = #{refLectureNo}
 		and
 			ref_member_id = #{refMemberId}
 	</select>
 
-	<insert id="addPick">
+	<insert id="addBasket">
 		insert into
-			pick(
-				pick_no,
-				ref_member_id,
+			basket(
+				basket_no,
 				ref_lecture_no,
-				pick_date
+				ref_member_id,
+				basket_date
 			)
 		values(
-			seq_pick_no.nextval,
-			#{refMemberId},
+			seq_basket_no.nextval,
 			#{refLectureNo},
+			#{refMemberId},
 			default
 		)
 	</insert>
 
-	<delete id="deletePick">
+	<delete id="deleteBasket">
 		delete from
-			pick
+			basket
 		where
 			ref_lecture_no = #{lectureNo}
 		and

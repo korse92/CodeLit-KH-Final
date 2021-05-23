@@ -83,22 +83,21 @@ $(() => {
                 </div>
                 <div class="addLecture d-flex justify-content-end">
                 	<div class="m-1">
-                        <button class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기" onclick = "location.href = 'test'">
+                		<form:form action="${pageContext.request.contextPath}/order/addBasket.do" method="POST">
+                		<input name="lectureNo" type="hidden" value="${pick.refLectureNo}" type="hidden" />
+                        <button type="submit" class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기">
                             <i class="fas fa-shopping-basket"></i>
                         </button>
+                        </form:form>
                 	</div>
                 	<div class="m-1">
                 		<form:form action="${pageContext.request.contextPath}/order/deletePick.do" method="POST">
                 		<input name="lectureNo" type="hidden" value="${pick.refLectureNo}" type="hidden"	/>
-                        <button class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="찜삭제" onclick = "location.href = '${pageContext.request.contextPath}/order/deletePick.do'">
+                        <button type="submit" class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="찜삭제">
                             <i class="far fa-trash-alt"></i>
                         </button>
                         </form:form>
                 	</div>
-                    <!-- <li>
-                    </li>
-                    <li>
-                    </li> -->
                 </div>
             </div> <!--hide -->
         </div> <!-- lecture -->
