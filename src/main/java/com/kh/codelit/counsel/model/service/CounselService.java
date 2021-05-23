@@ -17,5 +17,7 @@ public interface CounselService {
 
 	List<Counsel> selectCounselListAdmin(Map<String, Object> param);
 
+	int insertCounselAnswer(Map<String, Object> param);
+
 
 }

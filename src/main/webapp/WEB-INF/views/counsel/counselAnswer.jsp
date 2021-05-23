@@ -23,6 +23,9 @@
                 min-height: 15rem;
             }
             
+            #content {
+            	min-height: 20rem;
+            }
         </style>
 
 		<script>
@@ -53,7 +56,7 @@
 		  	<div class="row mb-2 ps-2">
 		  		<span class="col-1 fs-5">작성자 : </span><span class="col-11 fs-5">${counsel.refMemberId}</span>
 		  	</div>
-		    <div class="board-container mt-3 ps-2" id="conuselContent">
+		    <div class="board-container mt-3 ps-2" id= "conuselContent">
 		    	<c:if test="${not empty attach}">
 		    		<img src="${pageContext.request.contextPath}${attach.contentsAttachPath}/${attach.renamedFilename}" alt="">
 		    	</c:if>
@@ -66,14 +69,54 @@
 		</div>
 		
 		<sec:authorize access="hasRole('ADMIN')">
-			<c:if test="${counsel.counselQNo eq 0 && counsel.counselLevel eq 1}" >
-				<div class="col-2 mx-auto mt-5">
-				    <button type="button" id="answerBtn" class="btn btn-primary col-12">답글</button>
-				</div>
-			</c:if>
+		
+			<div class="col-10 mx-auto mt-5">
+              	<form:form id = "counselAnswerFrm"
+	                action="${pageContext.request.contextPath}/counsel/counselAnswer.do"
+	                method="post"
+	                enctype="multipart/form-data">
+	                <input type="hidden" name="counselQNo" value="${counsel.counselNo}" />
+					<table class="mx-auto col-11 text-center">
+						<tr class="col-10 py-3">
+							<td>
+								<label for="counselTitle">제목</label>
+							</td>
+							<td>
+								<input type="text" name="counselTitle" class="form-control" placeholder="제목" value="Re: ${counsel.counselTitle}"/>
+							</td>
+						</tr>
+						<tr class="col-10 py-3">
+							<td>
+								<label for="upFile">첨부파일 </label>
+							</td>
+							<td>
+								<input type="file" name="upFile" class="form-control"/>
+							</td>
+						</tr>
+						<tr class="col-10 py-3">
+							<td>
+								<label for="counselContent">내용</label>
+							</td>
+							<td>
+								<textarea name="counselContent" id="content" class="form-control"></textarea>
+							</td>
+						</tr>
+						<tr class="col-10 py-3">
+						<td></td>
+							<td> 
+								<input type="submit" class="btn btn-warning mt-5 py-1 px-4 fs-4" value="등록" />
+							</td>
+						</tr>
+					</table>
+				</form:form>
+		
+			</div>
+			
 		</sec:authorize>
 
 	</div>
+
+
 
 
 <!-- 컨텐츠 끝 -->

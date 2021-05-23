@@ -22,5 +22,7 @@ public interface CounselDao {
 
 	List<Counsel> selectCounselListAdmin(Map<String, Object> param);
 
+	int insertCounselAnswer(Counsel counsel);
+
 
 }

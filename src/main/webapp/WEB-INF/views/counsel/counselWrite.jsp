@@ -30,60 +30,57 @@
 }
 </style>
 
-<body>
 <div class="container">
-            <div class="mt-5 mx-auto form-group" style="width:fit-content;">
-              <form:form name="lectureEnrollFrm"
-                action="${pageContext.request.contextPath}/counsel/counselWrite.do"
-                method="post"
-                enctype="multipart/form-data">
-                <div class="row justify-content-center">
-                  <!-- col-auto : 내부요소 크기에 맞게 컬럼 크기 맞춤 -->
-                  <div class="col-auto">
-                    <h2>고객 센터 </h2>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-2 align-self-center">
-                    <label class="form-label" for="counselTitle">제목</label>
-                  </div>
-                 
-                  <div class="col-sm-10">
-                    <input class="form-control" type="text" name="counselTitle"
-                      id="counselTitle" placeholder="제목" required>
-                  </div>
-                </div>
+	<div class="mt-5 mx-auto form-group" style="width:fit-content;">
+    	<form:form name="counselWriteFrm"
+        	action="${pageContext.request.contextPath}/counsel/counselWrite.do"
+            method="post"
+            enctype="multipart/form-data">
+        	<input type="hidden" name="refMemberId" value="${loginMember.memberId}" />
+            <div class="row justify-content-center">
+              <!-- col-auto : 내부요소 크기에 맞게 컬럼 크기 맞춤 -->
+              <div class="col-auto">
+                <h2>고객 센터 </h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2 align-self-center">
+                <label class="form-label" for="counselTitle">제목</label>
+              </div>
+             
+              <div class="col-sm-10">
+                <input class="form-control" type="text" name="counselTitle"
+                  id="counselTitle" placeholder="제목" required>
+              </div>
+            </div>
                
-                 
+            <div class="row">
+              <div class="col-sm-2 align-self-center">
+                <label class="form-label" for="cousnelHandout">첨부파일</label>
+              </div>
+              <div class="col-sm">
+                <input class="form-control" type="file" name="upFile"
+                  id="lectureHandout">
+              </div>
+            </div>
                
-                <div class="row">
-                  <div class="col-sm-2 align-self-center">
-                    <label class="form-label" for="cousnelHandout">첨부파일</label>
-                  </div>
-                  <div class="col-sm">
-                    <input class="form-control" type="file" name="upFile"
-                      id="lectureHandout">
-                  </div>
-                </div>
-               
-                <div class="row">
+            <div class="row">
 				<label class="form-label mb-2" for="counselContent">내용</label>
 				<div class="col-sm">
 					<textarea name="counselContent" id="counselContent" class="form-control" required></textarea>
 				</div>
 			</div>
                 
-                
-           
-                <div class="row form-group justify-content-end">
-                  <div class="col-sm-auto">
-                  <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/counsel/counselList.do'">취소</button>
-                    <button type="submit" class="btn btn-primary complete-btn">완료</button>
-                  </div>
-                </div>
-              </form:form>
+            <div class="row form-group justify-content-end">
+            	<div class="col-sm-auto">
+            		<button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/counsel/counselList.do'">취소</button>
+                	<button type="submit" class="btn btn-primary complete-btn">완료</button>
+              	</div>
             </div>
-          </div>
+    	</form:form>
+	</div>
+</div>
 
-</body>
-</html>
+<!-- 컨텐츠 끝 -->
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

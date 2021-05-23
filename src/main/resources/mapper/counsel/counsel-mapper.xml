@@ -51,7 +51,7 @@
 		from
 			counsel
 		<where>
-			<if test="memberId != null and memberId != ''">
+			<if test="_parameter != null and _parameter != ''">
 			(
 			ref_member_id = #{memberId} 
 			and counsel_level = 1
@@ -84,4 +84,13 @@
 		connect by prior counsel_no = counsel_q_no
 		order siblings by counsel_no desc
 	</select>
+	
+	<insert id="insertCounselAnswer">
+		insert into counsel
+		values(seq_counsel_no.nextval, #{refMemberId}, #{counselTitle}, #{counselContent}, #{counselQNo}, 2, default)
+		<selectKey order="AFTER" resultType="_int" keyProperty="counselNo">
+			select seq_counsel_no.currval from dual
+		</selectKey>
+	</insert>
+
 </mapper>

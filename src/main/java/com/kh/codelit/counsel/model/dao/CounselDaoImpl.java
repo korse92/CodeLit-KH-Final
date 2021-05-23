@@ -48,6 +48,7 @@ public class CounselDaoImpl implements CounselDao {
 	@Override
 	public int getTotalContents(String memberId) {
 		
+		log.debug("counsel getTotalContents memberId = {}", memberId);
 		return session.selectOne("counsel.getTotalContents", memberId);
 	}
 
@@ -73,6 +74,13 @@ public class CounselDaoImpl implements CounselDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return session.selectList("counsel.selectCounselListAdmin", null, rowBounds);
+	}
+
+	@Override
+	public int insertCounselAnswer(Counsel counsel) {
+
+		log.debug("insertCounselAnswer = {}", "도착");
+		return session.insert("counsel.insertCounselAnswer", counsel);
 	}
 	
 
