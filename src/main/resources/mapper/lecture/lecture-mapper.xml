@@ -12,12 +12,12 @@
 		order by
 			lec_cat_no
 	</select>
-	
+
 	<resultMap type="map" id="categoryMap">
 		<id column="lec_cat_no" property="no" javaType="integer"/>
 		<result column="lec_cat_name" property="name" javaType="string"/>
 	</resultMap>
-	
+
 	<insert id="insertLecture">
 		insert into
 			lecture
@@ -32,7 +32,7 @@
 			#{lectureThumbRenamed},
 			#{lecturePrice},
 			default,
-			#{lectureGuideline}			
+			#{lectureGuideline}
 		)
 		<selectKey resultType="_int" keyProperty="lectureNo" order="AFTER">
 			select
@@ -41,12 +41,13 @@
 				dual
 		</selectKey>
 	</insert>
-	
+
 	<select id="selectLectureList" resultType="lecture">
-		select 
+		select
 			l.*,
 			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
-			(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name" 
+			(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
+			(select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked"
 		from lecture l
 		<where>
 		    lecture_accept_yn = 'Y'
@@ -54,14 +55,14 @@
 			if 태그에서 파라미터를 getter로 가져오기 때문에 getter가 없는
 			기본형변수나 String객체 등을 파라미터로 넘겼을때는 _parameter로 사용해야 함.
 		-->
-		<if test="_parameter gt 0">
-			and ref_lec_cat_no = #{_parameter}
+		<if test="catNo gt 0">
+			and ref_lec_cat_no = #{catNo}
 		</if>
 		</where>
 		order by
 		    lecture_no
 	</select>
-	
+
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
@@ -74,21 +75,92 @@
 		</if>
 		</where>
 	</select>
-	
+
 	<select id="selectMyLecture" resultType="lecture">
 	select rownum, l.*
-	from (       
+	from (
            select
                 lecture_name
            from
                lecture
-           where 
+           where
                 lecture_accept_yn = 'Y'
        ) l
-    　　　 
+    　　　
 	where rownum <![CDATA[ <= ]]> 3
 	</select>
-	
+
+	<select id="selectOneLecture" resultMap="lectureCollectMap">
+		select
+		    l.*, p.*, c.*, t.*,
+		    round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment"
+		from
+		    lecture l
+		        left join lecture_part p
+		            on l.lecture_no = p.ref_lecture_no
+		        left join lecture_chapter c
+		            on p.lecture_part_no = c.ref_lec_part_no
+		        left join teacher t
+		        	on l.ref_member_id = t.ref_member_id
+		where
+			lecture_no = #{no}
+	</select>
+	<resultMap type="lecture" id="lectureCollectMap">
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="ref_lec_cat_no" property="refLecCatNo"/>
+		<result column="ref_member_id" property="refMemberId"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_type" property="lectureType"/>
+		<result column="lecture_intro" property="lectureIntro"/>
+		<result column="lecture_thumb_origin" property="lectureThumbOrigin"/>
+		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="lecture_accept_yn" property="lectureAcceptYn"/>
+		<result column="lecture_guideline" property="lectureGuideline"/>
+		<result column="avg_lec_assessment" property="avgLecAssessment"/>
+
+		<association property="teacher" javaType="teacher">
+			<id column="ref_member_id" property="refMemberId"/>
+			<result column="teacher_name" property="teacherName"/>
+			<result column="teacher_phone" property="teacherPhone"/>
+			<result column="ref_lec_cat_no" property="refLecCatNo"/>
+			<result column="teacher_introduce" property="teacherIntroduce"/>
+			<result column="teacher_link" property="teacherLink"/>
+			<result column="teacher_bank" property="teacherBank"/>
+			<result column="teacher_account" property="teacherAccount"/>
+			<result column="teacher_acc_name" property="teacherAccName"/>
+		</association>
+
+		<collection property="partList" ofType="lecturePart">
+			<id column="lecture_part_no" property="lecturePartNo"/>
+			<result column="ref_lecture_no" property="refLectureNo"/>
+			<result column="lecture_part_title" property="lecturePartTitle"/>
+
+			<collection property="chepterList" ofType="lectureChapter">
+				<id column="lec_chapter_no" property="lecChapterNo"/>
+				<result column="ref_lec_part_no" property="refLecPartNo"/>
+				<result column="lec_chapter_title" property="lecChapterTitle"/>
+				<result column="lec_chapter_video" property="lecChapterVideo"/>
+				<result column="lec_chapter_re_video" property="lecChapterReVideo"/>
+			</collection>
+		</collection>
+	</resultMap>
+
+	<select id="selectLectureCmtList" resultType="map">
+		select
+			ref_lecture_no "refLectureNo",
+			ref_member_id "refMemberId",
+			lec_assessment "lecAssessment",
+			lec_comment "lecComment",
+			lec_cmt_enroll_date "lecCmtEnrollDate"
+		from
+			lecture_comment
+		where
+			ref_lecture_no = #{no}
+		order by
+			lec_cmt_enroll_date desc
+	</select>
+
 </mapper>
 
 

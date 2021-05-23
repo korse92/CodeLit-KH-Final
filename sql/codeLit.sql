@@ -817,6 +817,8 @@ insert into contents_group values('N', '공지사항', '/resources/upload/notice
 insert into contents_group values('SB', '공부 게시판', '/resources/upload/studyBoard');
 insert into contents_group values('C', '1대1문의', '/resources/upload/counsel');
 
+commit;
+
 --강의 테스트 데이터 50개 삽입 프로시저
 begin
     for n in 1..50 loop
@@ -840,8 +842,6 @@ begin
 end;
 /
 
-commit;
-
 --강의후기 테스트 데이터 150개
 begin
     for n in 1..150 loop
@@ -859,4 +859,47 @@ begin
 end;
 /
 
-commit;
+--강의커리큘럼 삽입 프로시저
+begin
+    for n in 1..10 loop
+        insert into lecture_part
+        values(
+            seq_lec_part_no.nextval,
+            3,
+            '파트 ' || n
+        );
+    end loop;
+    commit;
+end;
+/
+
+--강의커리큘럼 삽입 프로시저
+begin
+    for n in 1..10 loop
+        insert into lecture_part
+        values(
+            seq_lec_part_no.nextval,
+            3,
+            '파트 ' || n
+        );
+    end loop;
+    commit;
+end;
+/
+
+begin
+    for n in 1..11 loop
+        for m in 1..10 loop
+            insert into lecture_chapter
+            values(
+                seq_lec_chapter_no.nextval,
+                n,
+                '챕터 ' || m,
+                null,
+                null
+            );
+        end loop;
+    end loop;
+    commit;
+end;
+/

@@ -7,6 +7,12 @@ import com.kh.codelit.order.model.vo.Pick;
 
 public interface PickDao {
 
-	List<Pick> selectPickList();
+	List<Pick> selectPickList(String refMemberId);
+
+	int countPick(int refLectureNo, String refMemberId);
+
+	int addPick(int refLectureNo, String refMemberId);
+
+	int deletePick(Map<String, Object> param);
 
 }
