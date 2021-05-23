@@ -86,7 +86,7 @@ Font Awesome(아이콘) CSS
 						<p><a href="#">알림</a></p>
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">받은알림 목록</a></span>
+						<span class=""><a href="${pageContext.request.contextPath}/alarm/alarmList.do">받은알림 목록</a></span>
 					</div>
 				</div>
 			</div>
