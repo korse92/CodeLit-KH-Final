@@ -122,7 +122,7 @@ img#thumbImage {
 
 			<div id="selectedStreaming" class="row">
 				<label class="form-label mb-2" for="">강의일정</label>
-				<div class="col-sm">
+				<div class="col-sm" id="fullCalendar">
 					<p>풀캘린더 들어갈곳</p>
 					<input type="hidden" name="streamingDateList" />
 				</div>
