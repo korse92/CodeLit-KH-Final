@@ -25,9 +25,9 @@ window.onload = function() {
 }
 </script>
 
-    <div class="container">
-        <div class="row mt-5">
-          <h2 class=" jb-larger mt-3 col-sm-4">공부 게시판</h2>
+	<div class="container">
+    	<div class="row mt-5">
+          <h2 class=" jb-larger mt-3 col-3">정산 내역</h2>
         </div>
         <!-- 파일전송-->
         <form action="">

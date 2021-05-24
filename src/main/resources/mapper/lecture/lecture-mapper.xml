@@ -46,7 +46,9 @@
 		select 
 			l.*,
 			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
-			(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name" 
+			(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
+			(select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked",
+			(select count(*) from basket where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "basketed"
 		from lecture l
 		<where>
 		    lecture_accept_yn = 'Y'
@@ -54,8 +56,8 @@
 			if 태그에서 파라미터를 getter로 가져오기 때문에 getter가 없는
 			기본형변수나 String객체 등을 파라미터로 넘겼을때는 _parameter로 사용해야 함.
 		-->
-		<if test="_parameter gt 0">
-			and ref_lec_cat_no = #{_parameter}
+		<if test="catNo gt 0">
+			and ref_lec_cat_no = #{catNo}
 		</if>
 		</where>
 		order by
@@ -89,30 +91,6 @@
     　　　 
 	where rownum <![CDATA[ <= ]]> 3
 	</select>
-	
-	<select id="mainLecture" resultMap="mainLecMap">
-	select rownum, a.*
-        from (       
-                select
-                    *
-                 from
-                    lecture left join teacher using(ref_member_id)
-                where
-                    lecture_accept_yn = 'Y' 
-                order by lecture_no desc) a
-    　　　 
-	where rownum <![CDATA[ <= ]]> 8
-	</select>
-	
-	<resultMap type="map" id="mainLecMap">
-		<id column="lecture_no" property="lectureNo"/>
-		<result column="lecture_name" property="lectureName"/>
-		<result column="lecture_intro" property="lectureIntro"/>
-		<result column="lecture_price" property="lecturePrice"/>
-		<result column="ref_lec_cat_no" property="refLecCatNo"/>
-		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
-		<result column="teacher_name" property="teacherName"/>
-	</resultMap>
 	
 </mapper>
 

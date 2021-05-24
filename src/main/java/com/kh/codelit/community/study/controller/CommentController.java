@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.codelit.community.study.model.service.CommentService;
 import com.kh.codelit.community.study.model.service.StudyService;
 import com.kh.codelit.community.study.model.vo.Comment;
+import com.kh.codelit.community.study.model.vo.StudyBoard;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,29 +35,46 @@ public class CommentController {
 			@ModelAttribute Comment cmt,
 			RedirectAttributes redirect,
 			Principal pri) {
-		cmt.setRefMemberId(pri.getName());
-		int result = service.insertCmt(cmt);
-		
-//		return "redirect:/community/noticeDetail.do?noticeNo="+cmt.getRefStdBrdNo();
+		try {
+			cmt.setRefMemberId(pri.getName());
+			int result = service.insertCmt(cmt);
+		}catch (Exception e) {
+			throw e;
+		}
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	@GetMapping("/updateComment.do")
 	public void updateComment(@RequestParam int cmtNo, Model model) {
-		//기능만 먼저할것. jsp 에러에 대해서 여쭤볼것
-		List<Comment> listCmt = stdService.selectCmt(cmtNo);
-		model.addAttribute("listCmt", listCmt);
+		try {
+			List<Comment> listCmt = stdService.selectCmt(cmtNo);
+			model.addAttribute("listCmt", listCmt);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	@PostMapping("/updateComment.do")
-	public String updateCmt(@ModelAttribute Comment cmt,
+	public String updateCmt(
+			@ModelAttribute Comment cmt,
 			RedirectAttributes redirect) {
-		
+		try {
+			int result = service.update(cmt.getStdCmtNo());
+		} catch (Exception e) {
+			throw e;
+		}
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	@PostMapping("/deleteCmt.do")
-	public String deleteCmt() {
-		
-		return "redirect:/community/studyDetail.do?stdBrdNo=";
+	public String deleteCmt(@RequestParam int cmtNo) {
+		Comment cmt = null;
+		try {
+			
+			cmt = service.selectStdNo(cmtNo);
+			int result = service.delete(cmtNo);
+		} catch (Exception e) {
+			throw e;
+		}		
+		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
 	
 }

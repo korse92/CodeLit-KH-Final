@@ -19,4 +19,8 @@ public interface LectureDao {
 
 	List<Map<String, Object>> mainLecture();
 
+	Lecture selectOneLecture(int no);
+
+	List<Map<String, Object>> selectLectureCmtList(int no);
+
 }

@@ -6,13 +6,13 @@
 }
 
 #orderDiv_left {
-    width: 50rem;
+    /* width: 100%; */
     /* border: 1px solid black; */
 }
 
 #orderDiv_right {
-    width: 20rem;
-    min-height: 15rem;
+    /* width: 100%; */
+    /* min-height: 15rem; */
 }
 
 h2 {
@@ -23,10 +23,6 @@ h2 {
 #lectureImg {
     width: 13rem;
     height: 7rem;
-}
-
-.or_lec {
-    width: 45rem;
 }
 
 .bt {

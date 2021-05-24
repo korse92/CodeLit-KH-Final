@@ -35,23 +35,24 @@ button:focus {
 
 /********** pick **********/
 .pick {
-    display: flex;
-    justify-content: space-between;
-    padding: 50px;
+    /* display: flex;
+    justify-content: flex-start;
+    padding: 50px; */
 }
 
 /********** pick-lecture **********/
 .lecture {
     display: flex;
-    width: 20%;
+    /* width: 100%; */
     height: 340px;
+    /* margin: 0px 30px; */
+    position: relative;
 }
 
 .lecture .show {
     width: 100%;
     border: 1px solid #b8b5ff;
     border-radius: 5%;
-    position: relative;
     margin: 0px;
 }
 
@@ -66,22 +67,41 @@ button:focus {
 
 .lecture .show .img img {
     width: 100%;
+    height: 150px;
     margin-bottom: 10px;
     border-radius: 5%;
 }
 
 .lecture .hide {
-    width: 20%;
-    height: 350px;
+/*     width: 19%;
+    height: 340px;
     position: absolute;
     display: none;
     background-color: black;
-    opacity: 0.8; 
+    opacity: 0.8;
     border-radius: 5%;
+    flex-direction: column; */
+   	position: absolute;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.5); /* Black see-through */
+	color: #f1f1f1;
+	width: 100%;
+	height: 100%;
+	transition: .5s ease;
+	opacity:0;
+	color: white;
+	border-radius: 5%;
+	/* margin: 0px; */
 }
 
 .lecture .hide .link_info {
-	padding: 20px;
+	/* padding: 20px; */
+	overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 라인수 */
+    -webkit-box-orient: vertical;
+    word-wrap:break-word;
 }
 
 .lecture .hide .link_info a {
@@ -93,15 +113,22 @@ button:focus {
 }
 
 .lecture .hide .addLecture {
-    text-align: end;
-    margin-top: 20px;
+/*     display: flex;
+    flex-direction: column;
+    justify-content: flex-end; */
 }
 
 .lecture .hide .addLecture button {
-    border: 1px solid white;
     margin: 5px;
+    /* display: flex;
+    justify-content: flex-end; */
 }
 
-.lecture .show:hover + .hide {
-    display: block;
+.lecture .hide .addLecture .btn i {
+	color: white;
+}
+
+.lecture:hover .hide {
+    /* display: block; */
+    opacity: 1;
 }

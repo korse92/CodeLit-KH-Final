@@ -18,13 +18,23 @@
 	crossorigin="anonymous"></script>
 
 <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+	crossorigin="anonymous">
 
 <!-- Font Awesome(아이콘) CSS -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
 	integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
 	crossorigin="anonymous">
+
+<!-- websocket -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.js" integrity="sha512-Kdp1G1My+u1wTb7ctOrJxdEhEPnrVxBjAg8PXSvzBpmVMfiT+x/8MNua6TH771Ueyr/iAOIMclPHvJYHDpAlfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js" integrity="sha512-tL4PIUsPy+Rks1go4kQG8M8/ItpRMvKnbBjQm4d2DQnFwgcBYRRN00QdyQnWSCwNMsoY/MfJY8nHp2CzlNdtZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 <!-- 사용자작성 JS -->
 <script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
@@ -36,6 +46,9 @@
 <c:if test="${not empty msg}">
 <script>
 alert("${msg}");
+
+
+
 </script>
 </c:if>
 </head>
@@ -78,8 +91,11 @@ alert("${msg}");
 								</c:forEach>
 							</ul>
 						</li>
-						<sec:authorize access="hasRole('USER') || hasRole('ADMIN')">
+						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
+						</sec:authorize>
+						<sec:authorize access="hasRole('ADMIN')">
+						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselListAdmin.do">문의</a></li>
 						</sec:authorize>
 					</ul>
 				</div>
@@ -90,10 +106,6 @@ alert("${msg}");
 						id="navbarMain">
 						<ul class="navbar-nav">
 							<li class="nav-item m-1"><a	class="btn btn-warning nav-link text-light"	href="${pageContext.request.contextPath}/member/memberLogin.do">Sign In</a></li>
-							<!-- 로그인 Modal 버전 -->
-							<!-- <li class="nav-item m-1">
-	             <a class="btn btn-warning nav-link text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign In(Modal)</a>
-	           </li> -->
 							<li class="nav-item m-1"><a
 								class="btn btn-primary nav-link text-light" href="${pageContext.request.contextPath}/member/memberEnroll.do">Sign Up</a>
 							</li>
@@ -109,7 +121,6 @@ alert("${msg}");
 			            	<li class="nav-item">
 			                	<span class="fs-4 text-light">
 			                		<sec:authentication property="principal.username"/>
-<%-- 									<sec:authentication property="principal.authorities"/> --%>
 			                	</span>
 			                	<span class="fs-5 text-light">&nbsp;님</span>
 			              	</li>
@@ -170,38 +181,6 @@ alert("${msg}");
 			</div>
 		</nav>
 
-		<!-- 로그인 Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header text-center">
-						<h5 class="modal-title text-center" id="exampleModalLabel">CodeL!t</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"	aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form action="#" method="POST">
-							<table class="col-10 offset-1">
-								<tr>
-									<td colspan="3"><input type="text my-4 p-1"
-										class="form-control" name="id" placeholder="아이디"></td>
-									<td rowspan="2" colspan="2">
-										<button type="submit" class="btn btn-warning btn-xl py-4">로그인</button>
-									</td>
-								</tr>
-								<tr colspan="3">
-									<td><input type="password" class="form-control p-1"
-										name="password" placeholder="패스워드"></td>
-								</tr>
-							</table>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<p>추가내용</p>
-					</div>
-				</div>
-			</div>
-		</div>
 	</header>
 	<section id="content">
 	<!-- header.jsp 끝 -->
