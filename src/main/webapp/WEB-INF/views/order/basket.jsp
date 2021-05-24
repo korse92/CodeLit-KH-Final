@@ -9,12 +9,72 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="장바구니" name="title"/>
 </jsp:include>
+
+<!-- import 링크 -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/basket.css" />
 
 <!-- Font Awesome(아이콘) CSS -->
 <script src="https://kit.fontawesome.com/0e3c91e1c6.js" crossorigin="anonymous"></script>
 <head>
 </head>
+
+	<script>
+		window.onload = function() {
+			IMP.init('imp94594446');	
+			
+			const orderBtn = document.getElementById("orderBtn");
+			
+			orderBtn.addEventListener('click', function(e) {
+
+				var money = document.getElementById("money").innerText;
+				var orderName = document.getElementById("orderName").innerText;
+				var memberId = document.getElementById("memberId").innerText;
+				
+				IMP.request_pay({
+				    pg : 'inicis', // version 1.1.0부터 지원.
+				    pay_method : 'card',
+				    merchant_uid : 'merchant_' + new Date().getTime(),
+				    name : orderName,
+				    amount : money
+				}, function(rsp) {
+				    if ( rsp.success ) {
+				        var msg = '결제가 완료되었습니다.';
+				        
+				        var payCode = document.getElementById("payCode");
+				        var refMemberId = document.getElementById("refMemberId");
+				        var payCost = document.getElementById("payCost");
+				        
+				        payCode.value = rsp.apply_num;
+				        refMemberId.value = memberId;
+				        payCost.value = money;
+				        
+				        $("#orderFrm").submit();
+				        
+// 				        msg += '고유ID : ' + rsp.imp_uid;
+// 				        msg += '상점 거래ID : ' + rsp.merchant_uid;
+// 				        msg += '결제 금액 : ' + rsp.paid_amount;
+// 				        msg += '카드 승인번호 : ' + rsp.apply_num;
+				    } else {
+				        var msg = '결제에 실패하였습니다.';
+				        msg += '에러내용 : ' + rsp.error_msg;
+				    }
+				    alert(msg);
+				});
+			
+			});
+			
+		}
+	</script>
+	
+	<form:form id="orderFrm" method="post"
+		action="${pageContext.request.contextPath}/order/orderHandling.do">
+		<input type="hidden" id="payCode" name="payCode"/>
+		<input type="hidden" id="refMemberId" name="refMemberId"/>
+		<input type="hidden" id="payCost" name="payCost"/>
+	</form:form>
+	
 
 <div class="container">
 	<h2>장바구니</h2>
@@ -63,8 +123,8 @@
 				<div id="orderTableTop" class="row fs-4">
 					<c:choose>
 						<c:when test="${not empty basketList}">
-							<p class="text-start ps-3">ID : ${refMemberId}</p>
-				            <p class="text-start ps-3">강의 : ${basketList.get(0).lectureName} 외 ${basketList.size()}종</p>
+							<span class="col-3">ID : </span><p id="memberId" class="col-9 text-start ps-3">${refMemberId}</p>
+				            <span class="col-3">강의 : </span><p id="orderName" class="col-9 text-start ps-3">${basketList.get(0).lectureName} 외 ${basketList.size()}종</p>
 						</c:when>
 						<c:otherwise>
 							<p class="text-center ps-5">장바구니에 담긴 강의가 없습니다.</p>
@@ -72,10 +132,12 @@
 					</c:choose>
 				</div>
 
-<!-- 				<div id="orderTableBottom" class="row"> -->
+<!-- 				<div id="orderTableBottom" class="row">  ${sumBasket} -->
 	            	<hr>
-		            <p class="text-end fs-4 me-2">${sumBasket}</p>
-		            <button type="button" class="btn btn-primary text-light fs-5 my-0">결 제</button>
+	            	<div class="row">
+			            <span id="money" class="offset-6 col-4 fs-4 me-2">${sumBasket}</span><span class="col-1 fs-4 me-2">원</span>
+			            <button type="button" id="orderBtn" class="btn btn-primary text-light fs-5 mt-3">결 제</button>
+	            	</div>
 	            </div>
 			</div>
 		</div>
