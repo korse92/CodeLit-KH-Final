@@ -16,39 +16,7 @@
   const menuRestApiHost = "http://localhost:9090/codelit";
 
 window.onload = function() {
-	/*	
-	$("#typeSelector").change(e => {
-      	const type = $(e.target).val();
-      	console.log(type); //사용자가 선택한 값이 잘 넘어오는지 확인
-      	
-      	$.ajax({
-      		url: `${pageContext.request.contextPath}/admin/searchCategory.do/\${type}`,  //${type} 은 브라우저와서 실행되야 하므로 escaping처리
-      		dataType: "json",
-      		success(data){
-      			//console.log(data);
-      			//displayResultTable("#menuType-result", data);
-      		},
-      		error(xhr, status, err){
-      			console.log(xhr, status, err);
-      		}
-      	});
-    }); */
-    
- //유효성 검사
-/*  $("#searchBtn").click(e => {
-	 //폼 제출 방지
-	  e.preventDefault();
-	 
-	const typeSelector = $("[name=typeSelector]", e.target).val();
-	const searchKeyword = $("[name= searchKeyword]", e.target).val();
-	 
-	if(!typeSelector || !searchKeyword){
-		alert("검색어를 입력해주세요.");
-		return;
-	}
-	
- });
-  */
+
 	$(() => {
 		$("#rejectPlayingLecture")
 		.modal()
@@ -57,28 +25,13 @@ window.onload = function() {
 			location.href = '${empty header.referer || fn:contains(header.referer, '/member/memberLogin.do') ? pageContext.request.contextPath : header.referer}'; //referer가 없거나,로그인페이지를 경로로 들어간 경우 contextPath로 이동
 		})
 	});
-	
-	
-	/*  $(typeSelector).change(e => {
-		console.log(e.target.value);
-		//href="${pageContext.request.contextPath}/admin/manageLectureBoard.do/${category.no}";
-	});  */
-	
-	/* const searchBtn = document.getElementById("searchBtn");
-	searchBtn.addEventListener('click', function(e) {
-		
-		var searchKeyword = document.getElementById("searchKeyword").value;
-		location.href=`${pageContext.request.contextPath}/admin/manageMember.do?keyword=\${searchKeyword}`;
-	}); */
+
 	
 };         
 
 
-
-
-
-
 </script>
+
 
 <!-- 컨텐츠 시작 -->
 <div class="container">

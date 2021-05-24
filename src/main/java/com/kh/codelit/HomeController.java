@@ -4,10 +4,13 @@ import java.beans.PropertyEditor;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
@@ -17,11 +20,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.codelit.lecture.model.service.LectureService;
+import com.kh.codelit.lecture.model.vo.Lecture;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@Slf4j
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -29,12 +39,32 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	
+	@Autowired
+	private LectureService lectureService;
+	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {		
+	public String home(Locale locale,Model model) {		
+		
 		logger.info("/홈 요청");
-        return "forward:index.jsp";        //  슬래시에 대해 이걸로 인덱스 찾아가게 함.
+	
+	try {	
+		List<Map<String, Object>> list = lectureService.mainLecture();
+		log.debug("list = {}", list);
+		
+		model.addAttribute("list", list);
+		
+	}catch (Exception e) {
+		
+		throw e;
+	}
+		return "forward:index.jsp";      
+        
+        //  슬래시에 대해 이걸로 인덱스 찾아가게 함.
         // Servers 하위에 있는 web.xml에서 웰컴파일 지정하던 것을 여기서 직접 설정해줌.
 	}
+	
 	
 	/**
 	 * 커맨드객체 이용시 사용자 입력값(String)을 특정필드타입으로 대입할 editor객체를 설정
