@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -16,6 +17,7 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	crossorigin="anonymous"></script>
+
 
 <!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
 <script
@@ -52,7 +54,6 @@
 <c:if test="${not empty msg}">
 <script>
 alert("${msg}");
-
 
 
 </script>
