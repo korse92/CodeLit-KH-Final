@@ -54,8 +54,8 @@
 			</li>
 			<c:forEach items="${categoryList}" var="category">
 			<li class="nav-item">
-				<a  class="nav-link ${catNo eq category.no ? 'active' : ''}"
-					href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a>
+				<a class="nav-link ${catNo eq category.no ? 'active' : ''}"
+				   href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a>
 			</li>
 			</c:forEach>
 		</ul>
