@@ -47,7 +47,8 @@
 			l.*,
 			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
 			(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
-			(select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked"
+			(select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked",
+			(select count(*) from basket where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "basketed"
 		from lecture l
 		<where>
 		    lecture_accept_yn = 'Y'

@@ -45,5 +45,6 @@ public class Lecture {
 
 	//찜,장바구니
 	private boolean picked;
+	private boolean basketed;
 
 }
