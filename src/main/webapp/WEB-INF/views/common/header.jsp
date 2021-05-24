@@ -17,6 +17,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	crossorigin="anonymous"></script>
 
+
 <!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
