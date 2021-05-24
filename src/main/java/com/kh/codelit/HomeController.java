@@ -65,6 +65,7 @@ public class HomeController {
         // Servers 하위에 있는 web.xml에서 웰컴파일 지정하던 것을 여기서 직접 설정해줌.
 	}
 	
+	
 	/**
 	 * 커맨드객체 이용시 사용자 입력값(String)을 특정필드타입으로 대입할 editor객체를 설정
 	 * @param binder

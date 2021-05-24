@@ -13,6 +13,7 @@
 			lec_cat_no
 	</select>
 	
+	
 	<resultMap type="map" id="categoryMap">
 		<id column="lec_cat_no" property="no" javaType="integer"/>
 		<result column="lec_cat_name" property="name" javaType="string"/>

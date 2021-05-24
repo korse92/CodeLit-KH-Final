@@ -246,29 +246,6 @@
 	        <version>2.9.5</version>
 	    </dependency>
 	    
-<<<<<<< HEAD
-	    <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
-	    <!-- jsp에서 taglib 사용시 JasperException발생할때 테스트용 -->
-		<dependency>
-		    <groupId>org.apache.tomcat.embed</groupId>
-		    <artifactId>tomcat-embed-jasper</artifactId>
-		    <version>8.5.61</version>
-		</dependency>  
-		
-		  <!--#16. 스프링 웹소켓 의존 추가 -->
-	    <dependency>
-	        <groupId>org.springframework</groupId>
-	        <artifactId>spring-websocket</artifactId>
-	        <version>${org.springframework-version}</version>
-	    </dependency>
-	    <!-- stomp 의존 추가 -->
-	    <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-messaging</artifactId>
-        	<version>${org.springframework-version}</version>
-    	</dependency>
-		
-=======
    	    <!-- #16. 웹소켓 의존 추가 -->
 	    <dependency>
 	        <groupId>org.springframework</groupId>
@@ -283,7 +260,6 @@
 	        <version>${org.springframework-version}</version>
 	    </dependency>
 
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 	</dependencies>
     <build>
         <plugins>
