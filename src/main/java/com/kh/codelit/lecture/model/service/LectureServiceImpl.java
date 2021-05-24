@@ -90,6 +90,12 @@ public class LectureServiceImpl implements LectureService {
 	public List<Lecture> selectMyLecture(String id) {
 		return lectureDao.selectMyLecture(id);
 	}
+
+
+	@Override
+	public List<Map<String, Object>> mainLecture() {
+		return lectureDao.mainLecture();
+	}
 	
 	
 }

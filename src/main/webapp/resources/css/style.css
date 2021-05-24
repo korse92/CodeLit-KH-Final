@@ -26,5 +26,8 @@ header nav.navbar
 /********** content **********/
 section#content		{min-height:600px;}
 
+.main-content    {background-color: #edeef7;}
+
+
 /********** footer **********/
 footer	{background-color:#f8f9fa; background-clip:content-box; min-height:95px;}

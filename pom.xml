@@ -254,6 +254,19 @@
 		    <version>8.5.61</version>
 		</dependency>  
 		
+		  <!--#16. 스프링 웹소켓 의존 추가 -->
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-websocket</artifactId>
+	        <version>${org.springframework-version}</version>
+	    </dependency>
+	    <!-- stomp 의존 추가 -->
+	    <dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-messaging</artifactId>
+        	<version>${org.springframework-version}</version>
+    	</dependency>
+		
 	</dependencies>
     <build>
         <plugins>

@@ -82,12 +82,37 @@
                 lecture_name
            from
                lecture
-           where 
-                lecture_accept_yn = 'Y'
+           <where>
+                lecture_accept_yn = 'Y' and ref_member_id = #{id}
+           </where> 
        ) l
     　　　 
 	where rownum <![CDATA[ <= ]]> 3
 	</select>
+	
+	<select id="mainLecture" resultMap="mainLecMap">
+	select rownum, a.*
+        from (       
+                select
+                    *
+                 from
+                    lecture left join teacher using(ref_member_id)
+                where
+                    lecture_accept_yn = 'Y' 
+                order by lecture_no desc) a
+    　　　 
+	where rownum <![CDATA[ <= ]]> 8
+	</select>
+	
+	<resultMap type="map" id="mainLecMap">
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_intro" property="lectureIntro"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="ref_lec_cat_no" property="refLecCatNo"/>
+		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
+		<result column="teacher_name" property="teacherName"/>
+	</resultMap>
 	
 </mapper>
 

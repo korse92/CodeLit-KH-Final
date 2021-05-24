@@ -277,11 +277,11 @@ public class TeacherController {
 	}
 	
 	 @GetMapping("/teacherProfile.do") 
-	    public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
-			  							ModelAndView mav, 
-			  							Authentication authentication) {
+	    public ModelAndView myProfile(HttpServletRequest request,
+			  						  ModelAndView mav, 
+			  						  Authentication authentication) {
 		  
-		  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
+		  log.debug("request.isUserInRole('TEACHER') = {}", request.isUserInRole("TEACHER"));
 		  
 		  
 		  try {
