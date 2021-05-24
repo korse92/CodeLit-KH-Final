@@ -104,7 +104,7 @@ window.onload = function() {
 							</td>
 							<td>${lec.refMemberId}</td>
 							<td>${lec.lectureName}</td>
-							<td><a href="${pageContext.request.contextPath}/admin/manageLectureBoard.do?detail=${lec.teacherLink}">강의 상세 페이지</a></td>
+							<td><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lec.lectureNo}">강의 상세보기</a></td>
 							<td>
 								<button
 									type="button" 

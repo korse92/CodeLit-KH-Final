@@ -54,7 +54,7 @@ function deleteLecture(no) {
 	          <td style="display:none">${lectureList.lectureNo}</td>
 	          <td>${lectureList.lecCatName}</td>
 	          <td>${lectureList.refMemberId}</td>
-	          <td><a href="#">${lectureList.lectureId}</a></td>
+	          <td><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureList.lectureNo}">강의 상세보기</a></td>
 	          <td>
 	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?no=${lectureList.lectureNo}';">승인</button>
 	             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteLecture('${lectureList.lectureNo}');">거절</button>
