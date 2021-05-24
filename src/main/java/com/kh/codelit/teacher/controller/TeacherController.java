@@ -275,17 +275,6 @@ public class TeacherController {
 
 		return "redirect:/teacher/lectureEnroll.do";
 	}
-<<<<<<< HEAD
-	
-	 @GetMapping("/teacherProfile.do") 
-	    public ModelAndView myProfile(HttpServletRequest request,
-			  						  ModelAndView mav, 
-			  						  Authentication authentication) {
-		  
-		  log.debug("request.isUserInRole('TEACHER') = {}", request.isUserInRole("TEACHER"));
-		  
-		  
-=======
 	@GetMapping("/lectureCalList.do")
 	public String calList() {
 
@@ -293,14 +282,12 @@ public class TeacherController {
 	}
 
 	 @GetMapping("/teacherProfile.do")
-	    public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
+	    public ModelAndView myProfile(HttpServletRequest request,
 			  							ModelAndView mav,
 			  							Authentication authentication) {
 
-		  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
+		  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", request.isUserInRole("TEACHER"));
 
-
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 		  try {
 			  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			  log.debug("userDetails = {}", userDetails);

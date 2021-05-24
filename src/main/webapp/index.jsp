@@ -140,6 +140,7 @@
 			<c:if test="${vs.count % 4 == 0}">
 			</div>
 			</c:if>
+			
 		</c:forEach>
 	</div>
 

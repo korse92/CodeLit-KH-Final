@@ -4,7 +4,11 @@ package com.kh.codelit.lecture.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Repository
 public class LectureDaoImpl implements LectureDao {
-	
+
 	@Autowired
 	private SqlSessionTemplate session;
 
@@ -35,8 +39,7 @@ public class LectureDaoImpl implements LectureDao {
 	@Override
 	public List<Lecture> selectLectureList(Map<String, Object> param) {
 		int cPage = (int)param.get("cPage");
-		int catNo = (int)param.get("catNo");
-		
+
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
@@ -55,11 +58,6 @@ public class LectureDaoImpl implements LectureDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> mainLecture() {
-		return session.selectList("lecture.mainLecture");
-	}
-	
-	@Override
 	public Lecture selectOneLecture(int no) {
 		return session.selectOne("lecture.selectOneLecture", no);
 	}
@@ -69,5 +67,10 @@ public class LectureDaoImpl implements LectureDao {
 		return session.selectList("lecture.selectLectureCmtList", no);
 	}
 
+	@Override
+	public List<Map<String, Object>> mainLecture() {
+		
+		return session.selectList("lecture.mainLecture");
+	}
 
 }

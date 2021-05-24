@@ -22,5 +22,5 @@
 				on a.ref_contents_group_code = c.contents_group_code
 		where ref_contents_no = #{no}
 	</select>
-	
+
 </mapper>

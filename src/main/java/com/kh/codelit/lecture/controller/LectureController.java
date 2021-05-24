@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,10 +81,16 @@ public class LectureController {
 		//1. 업무로직
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
+		int numPerCmtPage = 5;
+		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
+		log.debug("totalCmtPage = {}", totalCmtPage);
+
 
 		//2. jsp 위임
 		mav.addObject("lecture", lecture);
+		mav.addObject("numPerCmtPage", numPerCmtPage);
+		mav.addObject("totalCmtPage", totalCmtPage);
 		mav.setViewName("lecture/lectureDetail");
 
 		return mav;
