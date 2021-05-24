@@ -43,7 +43,7 @@
 								</div>
 								<!-- <button type="button" class="btn bt text-light me-2">찜이동</button> -->
 								<div class="col-auto">
-									<button type="button" class="btn bt text-light mb-2">찜이동</button>
+<!-- 									<button type="button" class="btn bt text-light mb-2">찜이동</button> -->
 		                        	<form:form id="deleteFrm" action="${pageContext.request.contextPath}/order/deleteBasket.do" method="POST">
 										<button type="submit" class="btn bt text-light">삭제</button> <!-- bt text-light me-2 -->
 				                		<input name="lectureNo" type="hidden" value="${basket.refLectureNo}" type="hidden"	/>
