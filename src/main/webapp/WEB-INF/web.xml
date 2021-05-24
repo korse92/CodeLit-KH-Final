@@ -32,8 +32,8 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-			<!-- #16.1 websocket 비동기처리 지원 설정  -->
-		<async-supported>true</async-supported>	
+		<!-- Websocket 비동기 처리 지원 설정 -->
+		<async-supported>true</async-supported>
 	</servlet>
 		
 	<servlet-mapping>

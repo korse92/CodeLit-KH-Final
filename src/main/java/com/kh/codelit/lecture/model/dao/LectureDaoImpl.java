@@ -40,8 +40,8 @@ public class LectureDaoImpl implements LectureDao {
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return session.selectList("lecture.selectLectureList", catNo, rowBounds);
+
+		return session.selectList("lecture.selectLectureList", param, rowBounds);
 	}
 
 	@Override
@@ -58,5 +58,16 @@ public class LectureDaoImpl implements LectureDao {
 	public List<Map<String, Object>> mainLecture() {
 		return session.selectList("lecture.mainLecture");
 	}
+	
+	@Override
+	public Lecture selectOneLecture(int no) {
+		return session.selectOne("lecture.selectOneLecture", no);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectLectureCmtList(int no) {
+		return session.selectList("lecture.selectLectureCmtList", no);
+	}
+
 
 }

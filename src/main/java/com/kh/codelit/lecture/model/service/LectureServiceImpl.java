@@ -96,6 +96,17 @@ public class LectureServiceImpl implements LectureService {
 	public List<Map<String, Object>> mainLecture() {
 		return lectureDao.mainLecture();
 	}
-	
-	
+
+
+	@Override
+	public Lecture selectOneLecture(int no) {
+		return lectureDao.selectOneLecture(no);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectLectureCmtList(int no) {
+		return lectureDao.selectLectureCmtList(no);
+	}
+
+
 }

@@ -126,20 +126,20 @@
 		JOIN 
 		    contents_group c 
 		ON 
-		    a.ref_contents_group_no = c.contents_group_code
+		    a.ref_contents_group_code = c.contents_group_code
 		where
-		    a.ref_contents_code = #{stdBrdNo}
+		    a.ref_contents_no = #{stdBrdNo}
 		and 
-			a.ref_contents_group_no = 'SB'
+			a.ref_contents_group_code = 'SB'
 	</select>
 	<delete id="deleteAttach">
 		delete 
 		from 
 			attachment 
 		where 
-			ref_contents_code = #{stdBrdNo} 
+			ref_contents_no = #{stdBrdNo} 
 		and 
-			ref_contents_group_no = 'SB'
+			ref_contents_group_code = 'SB'
 	</delete>
 	<select id="selectLec" resultType="com.kh.codelit.lecture.model.vo.Lecture">
 		select 

@@ -94,20 +94,20 @@
 		JOIN 
 		    contents_group c 
 		ON 
-		    a.ref_contents_group_no = c.contents_group_code
+		    a.ref_contents_group_code = c.contents_group_code
 		where
-		    a.ref_contents_code = #{noticeNo}
+		    a.ref_contents_no = #{noticeNo}
 		and 
-			a.ref_contents_group_no = 'N'
+			a.ref_contents_group_code = 'N'
 	</select>
 	<delete id="deleteAttach">
 		delete 
 		from 
 			attachment 
 		where 
-			ref_contents_code = #{noticeNo} 
+			ref_contents_no = #{noticeNo} 
 		and 
-			ref_contents_group_no = 'N'
+			ref_contents_group_code = 'N'
 	</delete>
 	<update id="updateAttach">
 		update
@@ -118,7 +118,7 @@
 		where 
 			attach_no = #{attachNo}
 		and
-			ref_contents_group_no = 'N'
+			ref_contents_group_code = 'N'
 	</update>
 
 </mapper>

@@ -17,10 +17,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	crossorigin="anonymous"></script>
 
-<div class="container">
 <section class="profile-Uclass">
-		<!-- 유저 프로필 시작 -->
-		<%-- <sec:authorize access="!hasRole('TEACHER') && hasRole('USER')"> --%>
+<div class="container">
+	  <!-- 유저 프로필 시작 -->
+	  	<%-- <sec:authorize access="!hasRole('TEACHER') && hasRole('USER')"> --%>
 		<div class="row m-5 p-5">
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">마이페이지</h3>
@@ -151,7 +151,7 @@
 						</p>
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">받은알림 목록</a></span>
+						<span class=""><a href="${pageContext.request.contextPath}/alarm/alarmList.do">받은알림 목록</a></span>
 					</div>
 				</div>
 			</div>
