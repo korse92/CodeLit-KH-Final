@@ -77,13 +77,4 @@
 
 	</select>
 
-	<select id="findAdultMan" resultType="healthclub">
-		select * from healthclub where balckl = 'active'
-		<choose>
-			<when test="">
-				and #{age} > 19
-			</when>
-		</choose>
-	</select>
-
 </mapper>
