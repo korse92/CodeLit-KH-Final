@@ -27,9 +27,10 @@
 			b.ref_member_id = #{refMemberId}
 	</select>
 
-	<select id="countBasket" resultType="int">
+<!--
+	<select id="selectPickOne" resultType="int">
 		select
-			count(*)
+			basket_no
 		from
 			basket
 		where
@@ -38,6 +39,7 @@
 			ref_member_id = #{refMemberId}
 	</select>
 
+ -->
 	<insert id="addBasket">
 		insert into
 			basket(
@@ -62,5 +64,26 @@
 		and
 			ref_member_id = #{memberId}
 	</delete>
+
+	<select id="sumBasket" resultType="int">
+		select
+			sum(lecture_price)
+		from
+			basket b, lecture l
+		where
+			b.ref_lecture_no = l.lecture_no
+		and
+			b.ref_member_id = #{refMemberId}
+
+	</select>
+
+	<select id="findAdultMan" resultType="healthclub">
+		select * from healthclub where balckl = 'active'
+		<choose>
+			<when test="">
+				and #{age} > 19
+			</when>
+		</choose>
+	</select>
 
 </mapper>

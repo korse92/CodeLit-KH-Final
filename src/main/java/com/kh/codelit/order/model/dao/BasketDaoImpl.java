@@ -37,4 +37,18 @@ public class BasketDaoImpl implements BasketDao {
 		return session.delete("basket.deleteBasket", param);
 	}
 
+//	@Override
+//	public int selectBasketOne(int refLectureNo, String refMemberId) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("refLectureNo", refLectureNo);
+//		map.put("refMemberId", refMemberId);
+//		return session.selectOne("basket.selectBasketOne", map);
+//	}
+
+	@Override
+	public int sumBasket(String refMemberId) {
+		return session.selectOne("basket.sumBasket", refMemberId);
+	}
+
+
 }

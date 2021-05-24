@@ -9,7 +9,7 @@ public interface PickService {
 
 	List<Pick> selectPickList(String refMemberId);
 
-	int countPick(int refLectureNo, String refMemberId);
+//	int selectPickOne(int refLectureNo, String refMemberId);
 
 	int addPick(int refLectureNo, String refMemberId);
 

@@ -35,12 +35,21 @@ public class BasketController {
 	@GetMapping("basket.do")
 	public void basket(Model model, Principal pri) {
 		String refMemberId = pri.getName();
-		model.addAttribute("refMemberId", refMemberId);
 		List<Basket> basketList = basketService.selectBasketList(refMemberId);
 		log.debug("refMemberIdPick = {}", refMemberId);
 		log.debug("basketList = {}", basketList);
 
+		int sumBasket = 0;
+
+		if(!basketList.isEmpty())
+			sumBasket = basketService.sumBasket(refMemberId);
+
+		log.debug("sumBasket = {}", sumBasket);
+
+		model.addAttribute("refMemberId", refMemberId);
 		model.addAttribute("basketList", basketList);
+		model.addAttribute("count", basketList.size());
+		model.addAttribute("sumBasket", sumBasket);
 	}
 
 	@PostMapping("addBasket.do")
@@ -86,4 +95,12 @@ public class BasketController {
 
 		return "redirect:" + request.getHeader("Referer");
 	}
+
+//	@GetMapping("selectBasketOne.do")
+//	public int selectBasketOne(@ModelAttribute Basket basket) {
+//		int result = basketService.selectBasketOne(basket.getRefLectureNo(), basket.getRefMemberId());
+//		return result;
+//	}
+
+
 }

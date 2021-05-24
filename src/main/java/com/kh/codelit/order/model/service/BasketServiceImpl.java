@@ -32,4 +32,14 @@ public class BasketServiceImpl implements BasketService {
 	public int deleteBasket(Map<String, Object> param) {
 		return basketDao.deleteBasket(param);
 	}
+
+//	@Override
+//	public int selectBasketOne(int refLectureNo, String refMemberId) {
+//		return basketDao.selectBasketOne(refLectureNo, refMemberId);
+//	}
+
+	@Override
+	public int sumBasket(String refMemberId) {
+		return basketDao.sumBasket(refMemberId);
+	}
 }

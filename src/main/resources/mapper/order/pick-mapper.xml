@@ -27,9 +27,9 @@
 			p.ref_member_id = #{refMemberId}
 	</select>
 
-	<select id="countPick" resultType="int">
+	<select id="selectPickOne" resultType="int">
 		select
-			count(*)
+			pick_no
 		from
 			pick
 		where

@@ -13,4 +13,8 @@ public interface BasketService {
 
 	int deleteBasket(Map<String, Object> param);
 
+//	int selectBasketOne(int refLectureNo, String refMemberId);
+
+	int sumBasket(String refMemberId);
+
 }

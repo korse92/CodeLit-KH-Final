@@ -24,10 +24,10 @@ public class PickServiceImpl implements PickService {
 		return pickDao.selectPickList(refMemberId);
 	}
 
-	@Override
-	public int countPick(int refLectureNo, String refMemberId) {
-		return pickDao.countPick(refLectureNo, refMemberId);
-	}
+//	@Override
+//	public int selectPickOne(int refLectureNo, String refMemberId) {
+//		return pickDao.selectPickOne(refLectureNo, refMemberId);
+//	}
 
 	@Override
 	public int addPick(int refLectureNo, String refMemberId) {
