@@ -37,7 +37,9 @@
 				    pay_method : 'card',
 				    merchant_uid : 'merchant_' + new Date().getTime(),
 				    name : orderName,
-				    amount : money
+				    amount : money,
+				    buyer_email : 'asrisk@naver.com',	// 회원아이디 메일 사용시 memberId 지정 가능
+				    buyer_name : memberId
 				}, function(rsp) {
 				    if ( rsp.success ) {
 				        var msg = '결제가 완료되었습니다.';
@@ -69,7 +71,7 @@
 	</script>
 	
 	<form:form id="orderFrm" method="post"
-		action="${pageContext.request.contextPath}/order/orderHandling.do">
+		action="${pageContext.request.contextPath}/order/paymentHandling.do">
 		<input type="hidden" id="payCode" name="payCode"/>
 		<input type="hidden" id="refMemberId" name="refMemberId"/>
 		<input type="hidden" id="payCost" name="payCost"/>
