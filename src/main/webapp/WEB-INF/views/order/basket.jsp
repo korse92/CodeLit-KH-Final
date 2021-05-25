@@ -67,7 +67,20 @@
 			
 			});
 			
+			
+			
+			
 		}
+		
+		
+		// 삭제버튼 ajax
+		function deleteDiv(n) {
+			
+			var basketDiv = document.getElementById(`basketDiv\${n}`);
+			
+			basketDiv.remove();
+		}
+		
 	</script>
 	
 	<form:form id="orderFrm" method="post"
@@ -84,7 +97,7 @@
 	<div class="row">
 		<div id="orderDiv_left me-3" class="col-7">
 			<c:forEach items="${basketList}" var="basket" varStatus="vs">
-			<div class="card mb-4">
+			<div class="card mb-4" id="basketDiv${vs.count}">
 				<div class="row">
 					<div class="col-md-4" id="imgDiv">
 						<c:choose>
@@ -106,8 +119,8 @@
 								<!-- <button type="button" class="btn bt text-light me-2">찜이동</button> -->
 								<div class="col-auto">
 <!-- 									<button type="button" class="btn bt text-light mb-2">찜이동</button> -->
-		                        	<form:form id="deleteFrm" action="${pageContext.request.contextPath}/order/deleteBasket.do" method="POST">
-										<button type="submit" class="btn bt text-light">삭제</button> <!-- bt text-light me-2 -->
+		                        	<form:form id="deleteFrm${vs.count}" action="${pageContext.request.contextPath}/order/deleteBasket.do" method="POST">
+										<button type="button" class="btn bt text-light" onclick="deleteDiv(${vs.count});">삭제</button> <!-- bt text-light me-2 -->
 				                		<input name="lectureNo" type="hidden" value="${basket.refLectureNo}" type="hidden"	/>
 									</form:form>
 								</div>
