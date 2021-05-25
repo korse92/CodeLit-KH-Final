@@ -50,5 +50,33 @@
 		OR
 		    auth = 'ROLE_ADMIN'
 	</select>
+	
+	<select id="alarmList" resultType="Messenger">
+		select 
+			rownum,
+			m.* 
+		from (
+		    select 
+		        * 
+		   	from 
+				messenger 
+			where 
+				ref_receiver_id = #{refReceiverId}
+			order by 
+				rownum
+			asc) m
+		order by
+			rownum
+		desc
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		select
+			count(*)
+		from
+			messenger
+		where 
+			ref_receiver_id = #{refReceiverId}
+	</select>
 
 </mapper>
