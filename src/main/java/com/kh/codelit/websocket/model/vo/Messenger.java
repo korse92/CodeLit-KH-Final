@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Messenger {
 
+	private int rownum;
 	private int msgNo;
 	private String refWriterId;
 	private String refReceiverId;

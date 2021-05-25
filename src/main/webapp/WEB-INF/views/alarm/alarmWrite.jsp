@@ -16,26 +16,16 @@
         <div class="row mt-5">
           <h2 class=" jb-larger mt-3 col-sm-4">알림 작성</h2>
         </div>
-         <!-- ${pageContext.request.contextPath}/alarm/alarmInsert.do -->
-        <!-- 파일전송-->
-<!--          <form action="#"
-  			enctype="multipart/form-data" 
-        	method="post" 
-        	onsubmit="return checkContent();"> -->
           <div class="row title-group">
             <h5 class="col-sm-2 board-title">제목</h5>
              <div class="col-2">
 			    <select id="stomp-url" class="form-select">
 					<option value="">전송대상</option>
-					<option value="/app/all">전체</option>
-					<option value="/app/user/">유저</option>
+					<option value="/app/user">유저</option>
 					<option value="/app/teacher">강사</option>
 			    </select>
 		 	  </div>
             <div class="col-sm-7">
-            <c:forEach items="${user}" var="user">
-            	<input type="hidden" value="${user.memberId}" id="userList" name="userList"> 
-            </c:forEach>
               <input class="form-control" type="text" name="msgTitle" id="msgTitle" placeholder="title">
             </div>
           </div>
@@ -48,7 +38,6 @@
             <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/alarm/alarmList.do';">취소</button>
             <button type="button" class="btn btn-primary sendBtn" id="sendBtn">완료</button>
           </div>
-        <!-- </form> -->
       </div>
       
 <script>
@@ -62,21 +51,15 @@ const stompClient = Stomp.over(ws);
 //2.connect핸들러 작성. 구독
 stompClient.connect({}, (frame) => {
 	
-	stompClient.subscribe("/topic/all", (frame) => {
-		const msgObj = JSON.parse(frame.body);
-		const {msgTitle, msgContent} = msgObj;
-		toastr.info(msgContent,"[전체공지] "+msgTitle, {timOut: 5000})
-	});
-	
 	stompClient.subscribe("/topic/user", (frame) => {
 		const msgObj = JSON.parse(frame.body);
-		const {msgTitle, msgContent, time} = msgObj;
+		const {msgTitle, msgContent} = msgObj;
 		toastr.info(msgContent, "[유저알림] "+msgTitle, {timeOut: 5000});
 	});
 	
 	stompClient.subscribe("/topic/teacher", (message) => {
 		const msgObj = JSON.parse(frame.body);
-		const {msgTitle, msgContent, time} = msgObj;
+		const {msgTitle, msgContent} = msgObj;
 		toastr.info(msgContent, "[강사알림] "+msgTitle, {timeOut: 5000});
 	});
 });
