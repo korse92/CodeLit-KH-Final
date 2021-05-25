@@ -9,10 +9,10 @@ public interface MessengerDAO {
 
 	int insertMsg(Messenger msg);
 
-	List<Map<String, String>> selectMember();
-
 	int insertMsgCurrval(Messenger msg);
 
 	List<Map<String, String>> selectAuth(String auth);
+
+	List<Messenger> alarmList(String name);
 
 }

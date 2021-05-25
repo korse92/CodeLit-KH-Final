@@ -32,44 +32,23 @@ public class MessengerController {
 	private MessengerService service;
 	
 	private SimpMessagingTemplate sim;
-
-	@MessageMapping("/all")
-	@SendTo("/topic/all")
-	public Messenger all(@RequestBody Messenger msg, Principal pri) {
+	
+	@MessageMapping("/user")
+	@SendTo("/topic/user")
+	public Messenger user(@RequestBody Messenger msg, Principal pri) {
 		try {
 			// 알림 작성
 			msg.setRefWriterId(pri.getName());
-			List<Map<String, String>> member = service.selectMember();
-		
-				if(member.size() != 0) {
-					for(int i =0; i< member.size(); i++) {
-						msg.setRefReceiverId(member.get(i).get("memberId").toString());
-						service.insertMsg(msg);
-					}
-				}
+			String auth = "ROLE_USER";
+			List<Map<String, String>> user = service.selectAuth(auth);
+						
+				 for(int i =0; i< user.size(); i++) {
+					 msg.setRefReceiverId(user.get(i).get("memberId").toString());
+					 log.debug("보낼사람 {}",msg.getRefReceiverId());
+					 service.insertMsg(msg); } 
 		} catch (Exception e) {
 			throw e;
 		}
-		return msg;
-	}
-	
-	@MessageMapping("/user")
-	@SendTo("/topic/user/{userList}")
-	public Messenger user(@DestinationVariable String userList, @RequestBody Messenger msg, Principal pri) {
-		// 알림 작성
-		log.info("memberID ==========={}",userList);
-		msg.setRefWriterId(pri.getName());
-		
-		//유저권한 조회
-		String auth = "ROLE_USER";
-		List<Map<String, String>> user = service.selectAuth(auth);
-		
-		
-		// 알림 조회
-		
-		// 사용자 권한 조회 > 사용자 조회
-		
-		log.info("/app/user/{} 요청 : {}", msg);
 		return msg;
 	}
 	
@@ -94,7 +73,8 @@ public class MessengerController {
 		model.addAttribute("user",user);
 	}
 	@GetMapping("/alarmList.do")
-	public void alarmList() {
+	public void alarmList(Model model,Principal pri) {
+		List<Messenger> list = service.arlarmList(pri.getName());
 		
 	}
 

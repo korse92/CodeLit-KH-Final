@@ -22,13 +22,6 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.insertMsg(msg);
 	}
 
-
-	@Override
-	public List<Map<String, String>> selectMember() {
-		return dao.selectMember();
-	}
-
-
 	@Override
 	public int insertMsgCurrval(Messenger msg) {
 		return dao.insertMsgCurrval(msg);
@@ -38,6 +31,12 @@ public class MessengerServiceImpl implements MessengerService {
 	@Override
 	public List<Map<String, String>> selectAuth(String auth) {
 		return dao.selectAuth(auth);
+	}
+
+
+	@Override
+	public List<Messenger> arlarmList(String name) {
+		return dao.alarmList(name);
 	}
 
 }	

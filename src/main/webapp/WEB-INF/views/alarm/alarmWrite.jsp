@@ -27,15 +27,11 @@
              <div class="col-2">
 			    <select id="stomp-url" class="form-select">
 					<option value="">전송대상</option>
-					<option value="/app/all">전체</option>
 					<option value="/app/user/">유저</option>
 					<option value="/app/teacher">강사</option>
 			    </select>
 		 	  </div>
             <div class="col-sm-7">
-            <c:forEach items="${user}" var="user">
-            	<input type="hidden" value="${user.memberId}" id="userList" name="userList"> 
-            </c:forEach>
               <input class="form-control" type="text" name="msgTitle" id="msgTitle" placeholder="title">
             </div>
           </div>
@@ -61,12 +57,6 @@ const stompClient = Stomp.over(ws);
 
 //2.connect핸들러 작성. 구독
 stompClient.connect({}, (frame) => {
-	
-	stompClient.subscribe("/topic/all", (frame) => {
-		const msgObj = JSON.parse(frame.body);
-		const {msgTitle, msgContent} = msgObj;
-		toastr.info(msgContent,"[전체공지] "+msgTitle, {timOut: 5000})
-	});
 	
 	stompClient.subscribe("/topic/user", (frame) => {
 		const msgObj = JSON.parse(frame.body);
@@ -95,7 +85,7 @@ $("#sendBtn").click(() => {
 		alert("전송 url을 선택하세요."); 
 		return;
 	}
-	console.log("============"+$url.val());
+
 	sendMessage($url.val());
 });
 

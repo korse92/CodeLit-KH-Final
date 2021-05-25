@@ -21,11 +21,6 @@ public class MessengerDAOImpl implements MessengerDAO{
 	}
 
 	@Override
-	public List<Map<String, String>> selectMember() {
-		return  session.selectList("msg.selectMember");
-	}
-
-	@Override
 	public int insertMsgCurrval(Messenger msg) {
 		return session.insert("msg.insertMsgCurrval",msg);
 	}
@@ -33,6 +28,11 @@ public class MessengerDAOImpl implements MessengerDAO{
 	@Override
 	public List<Map<String, String>> selectAuth(String auth) {
 		return session.selectList("msg.selectAuth", auth);
+	}
+
+	@Override
+	public List<Messenger> alarmList(String name) {
+		return session.selectList("msg.alarmList", name);
 	}
 	
 }
