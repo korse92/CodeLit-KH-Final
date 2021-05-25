@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,14 +81,27 @@ public class LectureController {
 		//1. 업무로직
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
+		int numPerCmtPage = 5;
+		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
+		log.debug("totalCmtPage = {}", totalCmtPage);
+
 
 		//2. jsp 위임
 		mav.addObject("lecture", lecture);
+		mav.addObject("numPerCmtPage", numPerCmtPage);
+		mav.addObject("totalCmtPage", totalCmtPage);
 		mav.setViewName("lecture/lectureDetail");
 
 		return mav;
 	}
-
+	
+	@GetMapping("/mainAllLecture.do")
+	public void mainAllLecture(@ModelAttribute Lecture lecture) {
+		
+		log.debug("메인 렉쳐 잘 도착! = {}", lecture);
+	}
+	
+	
 
 }
