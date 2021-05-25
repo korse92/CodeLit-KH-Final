@@ -33,10 +33,15 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.selectAuth(auth);
 	}
 
+	@Override
+	public List<Messenger> arlarmList(Map<String, Object> param) {
+		return dao.alarmList(param);
+	}
 
 	@Override
-	public List<Messenger> arlarmList(String name) {
-		return dao.alarmList(name);
+	public int getListCount(String name) {
+		return dao.getListCount(name);
+
 	}
 
 }	

@@ -13,6 +13,9 @@ public interface MessengerDAO {
 
 	List<Map<String, String>> selectAuth(String auth);
 
-	List<Messenger> alarmList(String name);
+	List<Messenger> alarmList(Map<String, Object> param);
+
+	int getListCount(String name);
+
 
 }

@@ -13,6 +13,8 @@ public interface MessengerService {
 
 	List<Map<String, String>> selectAuth(String auth);
 
-	List<Messenger> arlarmList(String name);
+	List<Messenger> arlarmList(Map<String, Object> param);
+
+	int getListCount(String name);
 	
 }
