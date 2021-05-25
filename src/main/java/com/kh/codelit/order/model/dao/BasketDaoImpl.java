@@ -50,5 +50,12 @@ public class BasketDaoImpl implements BasketDao {
 		return session.selectOne("basket.sumBasket", refMemberId);
 	}
 
+	@Override
+	public int deleteBasketAjax(int basketNo) {
+
+		return session.delete("basket.deleteBasketAjax", basketNo);
+	}
+
+
 
 }
