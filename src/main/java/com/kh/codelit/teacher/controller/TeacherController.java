@@ -177,25 +177,19 @@ public class TeacherController {
 			@ModelAttribute Lecture lecture,
 			@RequestParam(required = false) MultipartFile lectureThumbnail,
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
-			@RequestParam String curriculumMap,
+			@RequestParam String curriculum,
 			HttpServletRequest request,
 			Authentication authentication,
 			RedirectAttributes redirectAttr) {
 
 		try {
 			log.debug("lecture(필드값 Set 전) = {}", lecture);
-			log.debug("curriculumMap = {}", curriculumMap);
 
 			Gson gson = new Gson();
 
-			/*
-			 * Type listType = new TypeToken<List<>>
-			 *
-			 * JsonArray array = gson.fromJson(curriculumMap, JsonArray.class);
-			 * for(JsonElement elem : array) { log.debug(elem.toString()); }
-			 */
+			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
+			log.debug("lecturePartArr = {}", lecturePartArr);
 
-			//log.debug("array = {}", array);
 
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
@@ -411,38 +405,5 @@ public class TeacherController {
 		return mav;
 
 	}
-
-	@GetMapping("/teacherProfile.do")
-	public ModelAndView myProfile(HttpServletRequest request, ModelAndView mav, Authentication authentication) {
-
-		log.debug("requestWrapper.isUserInRole('TEACHER') = {}", request.isUserInRole("TEACHER"));
-
-		try {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			log.debug("userDetails = {}", userDetails);
-			// userDetails = Member(memberId=teacher,
-			// memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2,
-			// memberProfile=null, memberReProfile=null, authorities=[ROLE_TEACHER, ROLE_USER])
-			String memberId = ((Member) userDetails).getMemberId();
-			log.debug("memberId = {}", memberId); // memberId = teacher
-
-			// lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
-			// log.debug("myProfileMethod@lecture = {}", lecture);
-			List<Lecture> list = lectureService.selectMyLecture(memberId);
-			log.debug("list = {}", list);
-			// list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null,
-			// lectureName=테스트1,
-
-			mav.addObject("list", list);
-			mav.setViewName("/teacher/teacherProfile");
-
-		} catch (Exception e) {
-			throw e;
-		}
-
-		return mav;
-
-	}
-
 
 }

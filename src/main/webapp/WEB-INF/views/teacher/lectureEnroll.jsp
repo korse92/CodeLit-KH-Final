@@ -24,8 +24,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/main.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/locales/ko.js"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    	themeSystem: 'bootstrap',
+     	themeSystem: 'bootstrap',
       initialDate: new Date(),
       locale: "ko",
       editable: true,
@@ -257,7 +257,7 @@ img#thumbImage {
 						<input type="button" value="테스트" id="curtest"/>
 					</div>
 				</div>
-				<input type="hidden" name="curriculumMap" />
+				<input type="hidden" name="curriculum" />
 			</div>
 
 			<div id="selectedStreaming" class="row">
@@ -410,19 +410,19 @@ img#thumbImage {
 				$lecturePrice.val(0);
 			}
 
-			$("[name=curriculumMap]").val(createCurMap());
+			$("[name=curriculum]").val(createCurriculum());
 
 			//e.preventDefault();//테스트용
 		});
 
 		$(curtest).click(e => {
-			createCurMap();
+			createCurriculum();
 		});
 
 	});
 
 	//파트, 챕터값을 map(part, chapter[])로 만들어주기
-	function createCurMap(){
+	function createCurriculum(){
 		//var curMap = new Map();
 		const curArr = new Array();
 		const $partDiv = $("#inputCurriculum").find(".partDiv");
@@ -434,12 +434,8 @@ img#thumbImage {
 			if(!$partInput.val())
 				return true;
 
-			let lecturePart = new LecturePart(pIdx, $partInput.val());
+			const lecturePart = new LecturePart(pIdx, $partInput.val());
 
-			const curObj =  {
-					"part" : lecturePart,
-					"chapterArr" : new Array()
-			}
 			//curMap.set(lecturePart, new Array());
 
 			let $chapterInputs = $partInput.next().find(".chapterInput");
@@ -452,9 +448,9 @@ img#thumbImage {
 				//console.log(chapArr);
 				let lectureChapter = new LectureChapter(cIdx, $(elem).val(), null);
 				//chapArr.push(lectureChapter);
-				curObj.chapterArr.push(lectureChapter);
+				lecturePart.chapterArr.push(lectureChapter);
 			});
-			curArr.push(curObj);
+			curArr.push(lecturePart);
 
 		});
 		//console.log(curMap);
@@ -469,6 +465,7 @@ img#thumbImage {
 	function LecturePart(lecturePartNo, lecturePartTitle) {
 		this.lecturePartNo = lecturePartNo;
 		this.lecturePartTitle = lecturePartTitle;
+		this.chapterArr = new Array();
 	}
 
 	function LectureChapter(lecChapterNo, lecChapterTitle, lecChapterVideo) {
