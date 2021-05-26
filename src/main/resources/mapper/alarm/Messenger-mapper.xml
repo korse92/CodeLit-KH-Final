@@ -47,8 +47,6 @@
 		    authorities
 		where
 		    auth = #{auth}
-		OR
-		    auth = 'ROLE_ADMIN'
 	</select>
 	
 	<select id="alarmList" resultType="Messenger">
@@ -63,7 +61,7 @@
 			where 
 				ref_receiver_id = #{refReceiverId}
 			order by 
-				rownum
+				msg_date
 			asc) m
 		order by
 			rownum
@@ -77,6 +75,34 @@
 			messenger
 		where 
 			ref_receiver_id = #{refReceiverId}
+	</select>
+	
+	<select id="getReadVal" resultType="_int">
+		select
+			count(*)
+		from
+			messenger
+		where
+			read_yn = 'N'
+		and
+			ref_receiver_id = #{refReceiverId}
+	</select>
+	
+	<update id="updateReadVal">
+		update
+			messenger
+		set
+			read_yn = 'Y'
+		where
+			msg_no = #{msgNo}
+	</update>
+	<select id="selectOneMsg" resultType="Messenger">
+		select
+			*
+		from	
+			messenger
+		where
+			msg_no = #{msgNo}
 	</select>
 
 </mapper>

@@ -10,8 +10,6 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css">
 
-
-
     <div class="container">
         <div class="row mt-5">
           <h2 class=" jb-larger mt-3 col-sm-4">알림 작성</h2>
@@ -41,35 +39,16 @@
       </div>
       
 <script>
-toastr.options.escapeHtml = true;
-toastr.options.closeButton = true;
-toastr.options.newestOnTop = false;
-toastr.options.progressBar = true;
-const ws = new SockJS("${pageContext.request.contextPath}/stomp");
-const stompClient = Stomp.over(ws);
 
-//2.connect핸들러 작성. 구독
-stompClient.connect({}, (frame) => {
-	
-	stompClient.subscribe("/topic/user", (frame) => {
-		const msgObj = JSON.parse(frame.body);
-		const {msgTitle, msgContent} = msgObj;
-		toastr.info(msgContent, "[유저알림] "+msgTitle, {timeOut: 5000});
-	});
-	
-	stompClient.subscribe("/topic/teacher", (message) => {
-		const msgObj = JSON.parse(frame.body);
-		const {msgTitle, msgContent} = msgObj;
-		toastr.info(msgContent, "[강사알림] "+msgTitle, {timeOut: 5000});
-	});
-});
-
-//3.메세지 전송
 $("#sendBtn").click(() => {
 	const $message = $("#msgContent");
-	const $title = $("msgTitle");
-	const $url = $("#stomp-url"); // $("#stomp-url option:selected")
+	const $title = $("#msgTitle");
+	const $url = $("#stomp-url"); 
 	
+	if($title.val() == '') {
+		alert("제목을 작성하세요.");
+		return;
+	}
 	if($message.val() == '') {
 		alert("메세지를 작성하세요.");
 		return;
@@ -78,25 +57,10 @@ $("#sendBtn").click(() => {
 		alert("전송 url을 선택하세요."); 
 		return;
 	}
-	console.log("============"+$url.val());
 	sendMessage($url.val());
+	
+	location.href='${pageContext.request.contextPath}/alarm/alarmList.do';
 });
-
-function sendMessage(url){
-	const $message = $("#msgContent");
-	const $title = $("#msgTitle");
-	
-	const message = {
-		msgTitle : $title.val(),
-		msgContent : $message.val(),
-		readYN : 'N'
-	};
-	
-	stompClient.send(url, {}, JSON.stringify(message));
-	
-	$title.val('');
-	$message.val(''); // 초기화
-}
 
 //유효성검사
 function checkContent() {

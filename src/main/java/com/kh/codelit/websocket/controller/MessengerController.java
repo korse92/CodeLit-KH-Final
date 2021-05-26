@@ -8,14 +8,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +32,6 @@ public class MessengerController {
 
 	@Autowired
 	private MessengerService service;
-	
-	private SimpMessagingTemplate sim;
-	
 	
 	@MessageMapping("/user")
 	@SendTo("/topic/user")
@@ -76,8 +71,9 @@ public class MessengerController {
 	@GetMapping("/alarmWrite.do")
 	public void alarmwrite(Model model) {
 		/*
-		 * String auth = "ROLE_USER"; List<Map<String, String>> user =
-		 * service.selectAuth(auth); model.addAttribute("user",user);
+		 * String auth = "ROLE_USER"; 
+		 * List<Map<String, String>> user = service.selectAuth(auth); 
+		 * model.addAttribute("user",user);
 		 */
 	}
 	
@@ -90,17 +86,20 @@ public class MessengerController {
 		param.put("name", pri.getName());
 		
 
-		List<Messenger> list = service.arlarmList(param);
+		List<Messenger> message = service.arlarmList(param);
 		int count = service.getListCount(pri.getName());
 		String uri = HelloSpringUtils.convertToParamUrl(request);
 		String pageBar = HelloSpringUtils.getPageBar(count, cPage, numPerPage, uri);
 		
-		model.addAttribute("list", list);
+		model.addAttribute("message", message);
 		model.addAttribute("pageBar", pageBar);
 	}
 
-	@PostMapping("/alarmInsert.do")
-	public void alarmInsert() {
-
+	@GetMapping("/alarmDetail.do")
+	public void alarmDetail(@RequestParam int msgNo, Model model) {
+		int result = service.updateReadVal(msgNo);
+		Messenger message = service.selectOneMsg(msgNo);
+		
+		model.addAttribute("message", message);
 	}
 }
