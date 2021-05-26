@@ -188,6 +188,40 @@
 		<result column="teacher_name" property="teacherName"/>
 	</resultMap>
 	
+	<update id="clickCount" statementType="CALLABLE" parameterType="HashMap">
+	
+	{
+		 call proc_upsert_lecture_click(
+						#{no},
+						#{ref_member_id}
+		)
+	}
+	</update>
+	
+	<select id="rollingLecList" resultMap="bestLectureMap">
+	select 
+			rownum, e.*
+	from (select 
+        		c.ref_lecture_no,
+        		l.lecture_name,
+        		sum(c.click_no) as clickNo
+          from 
+            	lecture_click c join lecture l
+             		on c.ref_lecture_no = l.lecture_no
+          group by
+            	c.ref_lecture_no, l.lecture_name
+          order by 
+            	clickNo desc) e
+	where rownum <![CDATA[ <= ]]> 3
+	
+	</select>
+	
+	<resultMap type="map" id="bestLectureMap">
+		<id column="ref_lecture_no" property="refLectureNo"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="click_no" property="clickNo"/>
+	</resultMap>
+
 </mapper>
 
 
