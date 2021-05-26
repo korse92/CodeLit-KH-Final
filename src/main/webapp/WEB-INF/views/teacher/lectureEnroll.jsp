@@ -32,8 +32,12 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- timepicker -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+ -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.min.js" ></script><!-- 타이머js -->
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.css" media=""/><!-- 타이머css -->
+
 
 <!-- full Calendar script -->
 <script>
@@ -54,8 +58,19 @@ document.addEventListener('DOMContentLoaded', function() {
               return weekList[date.dow];
           },
       dateClick: function(info) {
-    	  //alert('a day has been clicked!');
-          //console.log('Date: ' + info.dateStr);
+    	  $("#eventModal").modal("show");
+          var date = info.dateStr
+          $("#startDate").val(date);
+          $("#endDate").val(date);
+          var lectureName = $("#lectureName").val();
+          $("#title").val(lectureName);
+          $('#close').on('click', function(){
+      		$("#eventModal").modal("hide");
+      		});
+      },
+      eventClick: function(info){
+  		$("#eventModal").modal("show");
+		console.log(info);
       },
       //연월 표기 한국어 설정
       titleFormat : function(date) {
@@ -65,13 +80,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calendar.render();
 
-    calendar.on('dateClick', function() {
-    	$("#eventModal").modal("show");
-    	  //console.log('clicked on ' + info.dateStr);
+
+    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
+    var eventId = 1 + Math.floor(Math.random() * 1000);
+
+    $("#save-event").on('click', function(){
+    	var title = $("#title").val();
+   		var startDate = $("#startDate").val();
+   		var endDate = $("#endDate").val();
+
+   		calendar.addEvent({
+    		title: title,
+    		start: startDate,
+    		end: endDate,
+    		allDay: true
     	});
 
-    $('#close').on('click', function(){
-    		$("#eventModal").modal("hide");
+        if (startDate > endDate) {
+            alert('끝나는 날짜가 앞설 수 없습니다.');
+            return false;
+        }
+
+        if (title === '') {
+            alert('일정명은 필수입니다.');
+            return false;
+        }
+
+        $("#eventModal").modal('hide');
     });
 });
 
@@ -97,6 +132,38 @@ $(function() {
 	$("#startDate").datepicker('setDate', 'today');
 	$("#endDate").datepicker('setDate', 'today');
 });
+
+//timepicker
+/* $('#startTime')
+    .timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00','scrollDefaultNow': true }) //stime 시작 기본 설정
+    .on('changeTime',function() {                           //stime 을 선택한 후 동작
+        var from_time = $("input[name='startTime']").val(); //stime 값을 변수에 저장
+        $('#endTime').timepicker('option','minTime', from_time);//etime의 mintime 지정
+        if ($('#endTime').val() && $('#endTime').val() < from_time) {
+            $('#endTime').timepicker('setTime', from_time);
+//etime을 먼저 선택한 경우 그리고 etime시간이 stime시간보다 작은경우 etime시간 변경
+        }
+    });
+
+$('#endTime').timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00'});//etime 시간 기본 설정
+ */
+
+//timepicker
+$(document).ready(function() {
+    // INPUT 박스에 들어간 ID값을 적어준다.
+    $("#startTime,#endTime").timepicker({
+        'minTime': '09:00am', // 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
+        'maxTime': '22:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
+        'timeFormat': 'H:i',
+        'step': 30 // 30분 단위로 지정. ( 10을 넣으면 10분 단위 )
+});
+
+$(window).scroll(function(){
+    $(".ui-timepicker-wrapper").hide();
+});
+
+});
+
 </script>
 
 
@@ -273,7 +340,7 @@ img#thumbImage {
 					<label class="form-label" for="startTime">시작 시간</label>
 				</div>
 				<div class="col-sm">
-					<input class="form-control" type="text" name="startTime" id="startTime" />
+					<input class="timepicker form-control" type="text" name="startTime" id="startTime" value="" maxlength="10" />
 				</div>
 			</div>
 
@@ -282,7 +349,7 @@ img#thumbImage {
 					<label class="form-label" for="endTime">종료 시간</label>
 				</div>
 				<div class="col-sm">
-					<input class="form-control" type="text" name="endTime" id="endTime" />
+					<input class="timepicker form-control" type="text" name="endTime" id="endTime" value="" maxlength="10"/>
 				</div>
 			</div>
 
@@ -351,8 +418,14 @@ img#thumbImage {
 
 
 
+<<<<<<< HEAD
+  $("[name=lectureEnrollFrm]").on('reset', e => {
+    document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
+  });
+=======
 	//part>chapter div 추가 함수
 	var partInputNo = 0;
+>>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 
 	$((e) => {
 		$(partAddBtn).click(e => {
