@@ -15,7 +15,6 @@
 <!-- 컨텐츠 시작 -->
 <!-- 개인 CSS, JS 위치 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
-<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 
 <!-- full Calendar -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/main.css" />
@@ -25,7 +24,6 @@
 <!-- 풀캘린더 부트스트랩 테마 -->
 <!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' /> -->
 
-<!-- <script src="//code.jquery.com/jquery-3.2.1.js"></script> -->
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
