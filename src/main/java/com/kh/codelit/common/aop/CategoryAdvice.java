@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.websocket.model.service.MessengerService;
@@ -17,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-@SessionAttributes(value = { "categoryList"})
 public class CategoryAdvice {
 
 	@Autowired
@@ -27,7 +25,7 @@ public class CategoryAdvice {
 	private MessengerService msgService;
 
 	@ModelAttribute
-	public void getCategoryList(Model model) {
+	public void getCategoryList(Model model){
 
 		List<Map<String, Object>> categoryList = lectureService.selectCategoryListInstance();
 		Map<Integer, Object> categoryMap = lectureService.getCategoryMapInstance();
@@ -37,15 +35,14 @@ public class CategoryAdvice {
 
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryMap", categoryMap);
-
 	}
-	
-	  @ModelAttribute 
+
+	  @ModelAttribute
 	  public void getReadVal(Principal pri, Model model){
 		  if(pri != null) {
 			  int readVal = msgService.getReadVal(pri.getName());
-			  
-			  model.addAttribute("readVal", readVal);			  
+
+			  model.addAttribute("readVal", readVal);
 		  }
 	  }
 	}

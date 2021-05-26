@@ -21,4 +21,6 @@ public class Teacher {
 	private String teacherAccount;
 	private String teacherAccName;
 	
+	private String memberProfile;
+	private String memberReProfile;
 }

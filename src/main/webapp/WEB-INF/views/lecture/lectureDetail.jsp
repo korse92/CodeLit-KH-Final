@@ -103,6 +103,12 @@ $(() => {
 				</div>
 
 			</div>
+			<div class="row lec-thumbnail w-50">
+				<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${lecture.lectureThumbRenamed}" alt="" id ="photo_img" />
+
+
+
+			</div>
 		</div>
 		<div class="card-body">
 			<ul class="nav nav-tabs mb-3" id="DetailTab" role="tablist">

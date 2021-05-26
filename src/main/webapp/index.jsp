@@ -32,11 +32,11 @@
 
 <script>
 window.onload = function() {
-	const searchBtn = document.getElementById("searchBtn");
-	searchBtn.addEventListener('click', function(e) {
+	const mainSearchBtn = document.getElementById("mainSearchBtn");
+	mainSearchBtn.addEventListener('click', function(e) {
 		
-		var searchKeyword = document.getElementById("memberSearchKeyword").value;
-		location.href=`${pageContext.request.contextPath}/admin/manageMember.do?keyword=\${searchKeyword}`;
+		var searchKeyword = document.getElementById("mainSearch").value;
+		location.href=`${pageContext.request.contextPath}/lecture/mainSearchResult.do?keyword=\${searchKeyword}`;
 	});
 	
 };

@@ -84,4 +84,9 @@ public class LectureDaoImpl implements LectureDao {
 		return session.selectList("lecture.rollingLecList");
 	}
 
+	@Override
+	public List<Map<String, Object>> mainSearchResult(Map<String, Object> param) {
+		return session.selectList("lecture.mainSearchResult", param);
+	}
+
 }

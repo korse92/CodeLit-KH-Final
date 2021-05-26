@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${param.title}</title>
 
 <!-- jQuery -->
@@ -99,9 +100,13 @@ alert("${msg}");
 						<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 						</sec:authorize>
+
+					
+
 						<sec:authorize access="hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselListAdmin.do">문의</a></li>
 						</sec:authorize>
+
 					</ul>
 				</div>
 
@@ -188,6 +193,42 @@ alert("${msg}");
 
 			</div>
 		</nav>
+
+
+
+		<!-- 로그인 Modal -->
+		<%-- <div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h5 class="modal-title text-center" id="exampleModalLabel">CodeL!t</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"	aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form action="#" method="POST">
+							<table class="col-10 offset-1">
+								<tr>
+									<td colspan="3"><input type="text my-4 p-1"
+										class="form-control" name="id" placeholder="아이디"></td>
+									<td rowspan="2" colspan="2">
+										<button type="submit" class="btn btn-warning btn-xl py-4">로그인</button>
+									</td>
+								</tr>
+								<tr colspan="3">
+									<td><input type="password" class="form-control p-1"
+										name="password" placeholder="패스워드"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<p>추가내용</p>
+					</div>
+				</div>
+			</div>
+		</div> --%>
+
 
 	</header>
 	<section id="content">
