@@ -122,10 +122,7 @@ public class LectureController {
 
 		return mav;
 	}
-	
-	
-	
-	
+
 	@GetMapping("/mainAllLecture.do")
 	public void mainAllLecture(@ModelAttribute Lecture lecture) {
 		

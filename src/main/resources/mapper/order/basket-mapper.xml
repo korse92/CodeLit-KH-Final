@@ -77,4 +77,9 @@
 
 	</select>
 
+	<delete id="deleteBasketAjax">
+		delete from basket
+		where basket_no = #{basketNo}
+	</delete>
+	
 </mapper>

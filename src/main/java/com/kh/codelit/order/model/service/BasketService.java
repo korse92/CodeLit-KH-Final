@@ -17,4 +17,6 @@ public interface BasketService {
 
 	int sumBasket(String refMemberId);
 
+	List<Basket> deleteBasketAjax(int basketNo, String refMemberId);
+
 }
