@@ -8,9 +8,19 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
 </jsp:include>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/userPage(notice,lectureList).css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<script type="text/javascript">
+$(() => {
+	$("tr[data-no]").click(e => {
+		var $tr = $(e.target).parent();
+		var no = $tr.data("no");
+		location.href = `${pageContext.request.contextPath}/alarm/alarmDetail.do?msgNo=\${no}`;
+	});
+});
+</script>
 
 <div class="container">
   <div class="row mt-5">
@@ -20,27 +30,28 @@
 	<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/alarm/alarmWrite.do'">알림작성</button>
   </sec:authorize>
       <div class="mt-5 text-center">
-        <table class="table text-center">
+        <table class="table text-center table-hover">
+          <c:if test="${empty message}">
+          	<h1>등록된 알람이 존재하지 않습니다.</h1>
+          </c:if>
+          <c:if test="${not empty message}">          
           <thead class="table-primary">
             <tr>
               <th scope="col">번호</th>
-              <th scope="col">알림 내용</th>
+              <th scope="col">제목</th>
               <th scope="col">날짜</th>
-              <th scope="col">받는 사람</th>
+              <th scope="col">보낸사람</th>
+              <th scope="col">수신여부</th>
             </tr>
           </thead>
-          <tbody style="">
-          <c:if test="${empty list}">
-          	<h1>등록된 알람이 존재하지 않습니다.</h1>
-          </c:if>
-          <c:if test="${not empty list}">          
-          ${list}
-            <c:forEach items="${list}" var="list">
-	            <tr>
-	              <td>${messenger.rownum}</td>
-	              <td>${messenger.title}</td>
-	              <td></td>
-	              <td>User/Teacher/All</td>
+          <tbody>
+            <c:forEach items="${message}" var="message">
+	            <tr data-no="${message.msgNo}">
+	              <td>${message.rownum}</td>
+	              <td>${message.msgTitle}</td>
+	              <td><fmt:formatDate value="${message.msgDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
+	              <td>${message.refWriterId}</td>
+	              <td>${message.readYN eq 'N' ? '읽지않음' : '읽음'}</td>
 	            </tr>
             </c:forEach>
           </tbody>
