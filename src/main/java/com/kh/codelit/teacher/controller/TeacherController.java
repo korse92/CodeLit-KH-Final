@@ -190,7 +190,12 @@ public class TeacherController {
 			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
 			log.debug("lecturePartArr = {}", lecturePartArr);
 
-
+			for(LecturePart part : lecturePartArr) {
+				log.debug("{}", part);
+				for(LectureChapter chap : part.getChapterArr()) {
+					log.debug("{}", chap);
+				}
+			}
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
 			String thumbnailsSaveDirectory =
@@ -406,8 +411,4 @@ public class TeacherController {
 
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 }
