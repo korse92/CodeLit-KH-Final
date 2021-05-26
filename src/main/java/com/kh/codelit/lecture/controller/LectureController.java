@@ -1,6 +1,7 @@
 package com.kh.codelit.lecture.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,17 +79,40 @@ public class LectureController {
 	}
 
 	@GetMapping("/lectureDetail.do")
-	public ModelAndView lectureDetail(
-			@RequestParam int no,
-			ModelAndView mav) {
+	public ModelAndView lectureDetail(HttpServletRequest request,
+									  @RequestParam int no,
+									  ModelAndView mav,
+									  Authentication authentication) {
 		//1. 업무로직
+	
+		
+		// 로그인 정보
+		Member loginMember = (Member)authentication.getPrincipal();
+		//log.debug("loginMember = {}", loginMember);
+		loginMember.getMemberId();
+		log.debug("loginMember id = {}", loginMember);
+
+		
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
 		int numPerCmtPage = 5;
 		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
 		log.debug("totalCmtPage = {}", totalCmtPage);
-
+		
+		// lecture 객체에 정보 담음
+		//lecture.setRefMemberId(loginMember.getMemberId());
+		//log.debug("lectureDetail@lecture = {}", lecture);
+		
+		//map객체에 담아보기
+		Map<String,Object> param = new HashMap<>();
+		param.put("ref_member_id", loginMember.getMemberId());
+		param.put("no", no);
+		log.debug("param = {}", param);
+		
+		//강의id 담아 클릭수
+		int result = lectureService.clickCount(param);
+		log.debug("clickCountresult = {}", result);
 
 		//2. jsp 위임
 		mav.addObject("lecture", lecture);
@@ -96,6 +123,9 @@ public class LectureController {
 		return mav;
 	}
 	
+	
+	
+	
 	@GetMapping("/mainAllLecture.do")
 	public void mainAllLecture(@ModelAttribute Lecture lecture) {
 		
@@ -103,5 +133,6 @@ public class LectureController {
 	}
 	
 	
-
+	
+	
 }
