@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="msg">
+	<select id="selectMember" resultMap="selMember">
+		select
+			*
+		from
+			authorities
+	</select>
+	<resultMap type="map" id="selMember">
+		<result column="auth" property="auth"/>
+		<result column="member_id" property="memberId"/>
+	</resultMap>
+	
+	<insert id="insertMsg">
+		insert into
+			messenger
+		values(
+			seq_msg_no.nextval,
+			#{refWriterId},
+			#{refReceiverId},
+			#{msgTitle},
+			#{msgContent},
+			default,
+			#{readYN}
+		)
+	</insert>
+	<insert id="insertMsgCurrval">
+		insert into
+			messenger
+		values(
+			seq_msg_no.currval,
+			#{refWriterId},
+			#{refReceiverId},
+			#{msgTitle},
+			#{msgContent},
+			default,
+			#{readYN}
+		)
+	</insert>
+	<select id="selectAuth" resultMap="selMember">
+		select 
+		    *
+		from
+		    authorities
+		where
+		    auth = #{auth}
+		OR
+		    auth = 'ROLE_ADMIN'
+	</select>
+	
+	<select id="alarmList" resultType="Messenger">
+		select 
+			rownum,
+			m.* 
+		from (
+		    select 
+		        * 
+		   	from 
+				messenger 
+			where 
+				ref_receiver_id = #{refReceiverId}
+			order by 
+				rownum
+			asc) m
+		order by
+			rownum
+		desc
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		select
+			count(*)
+		from
+			messenger
+		where 
+			ref_receiver_id = #{refReceiverId}
+	</select>
+
+</mapper>

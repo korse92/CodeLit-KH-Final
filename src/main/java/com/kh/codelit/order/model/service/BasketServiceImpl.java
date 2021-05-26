@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.codelit.order.model.dao.BasketDao;
 import com.kh.codelit.order.model.vo.Basket;
@@ -41,5 +42,15 @@ public class BasketServiceImpl implements BasketService {
 	@Override
 	public int sumBasket(String refMemberId) {
 		return basketDao.sumBasket(refMemberId);
+	}
+
+	@Transactional
+	@Override
+	public List<Basket> deleteBasketAjax(int basketNo, String refMemberId) {
+
+		int result = basketDao.deleteBasketAjax(basketNo);
+		log.debug("deleteBasketAjax = {}", "성공");
+		
+		return basketDao.selectBasketList(refMemberId);
 	}
 }
