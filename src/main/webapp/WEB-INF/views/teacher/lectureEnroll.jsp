@@ -28,6 +28,13 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- timepicker -->
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+ -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.min.js" ></script><!-- 타이머js -->
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.css" media=""/><!-- 타이머css -->
+
 
 <!-- full Calendar script -->
 <script>
@@ -67,42 +74,24 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#close').on('click', function(){
     		$("#eventModal").modal("hide");
     });
-
-    var eventArr = calendar.getEvents();
-    //console.log(eventArr);
-
-    eventArr.forEach((event, idx) => {
-    	console.log(idx, event);
-    	console.log(idx, event.id);
-    	console.log(idx, event.title);
-    	console.log(idx, "dateObject = ", event.start);
-    	console.log(idx, "dateObject = ", event.end);
-    	console.log(idx, "jsonStr = " + JSON.stringify(event.start));
-    	console.log(idx, "jsonStr = " + JSON.stringify(event.end));
-    });
-
-  });
+});
 
 //datepicker
 $(function() {
- 	$(".datepicker").datepicker({
+	$.datepicker.setDefaults({
 		dateFormat : 'yy-mm-dd',
+		startDate: '7d', //달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+		endDate: '6m',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
 		showOtherMonths : true,
 		showMonthAfterYear : true,
 		changeYear : true,
 		changeMonth : true,
-       yearSuffix: "년",
+       	yearSuffix: "년",
       	monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
       	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
        dayNamesMin: ['일','월','화','수','목','금','토'],
        dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
 	});
-	$('.datePicker').datepicker({
-		format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-		startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
-        language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-
-		})
 	$("#startDate").datepicker();
 	$("#endDate").datepicker();
 
@@ -110,19 +99,36 @@ $(function() {
 	$("#endDate").datepicker('setDate', 'today');
 });
 
-/* datetimepicker */
-$(function () {
-        $('#datetimepicker7').datetimepicker();
-        $('#datetimepicker8').datetimepicker({
-            useCurrent: false
-        });
-        $("#datetimepicker7").on("change.datetimepicker", function (e) {
-            $('#datetimepicker8').datetimepicker('minDate', e.date);
-        });
-        $("#datetimepicker8").on("change.datetimepicker", function (e) {
-            $('#datetimepicker7').datetimepicker('maxDate', e.date);
-        });
+//timepicker
+/* $('#startTime')
+    .timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00','scrollDefaultNow': true }) //stime 시작 기본 설정
+    .on('changeTime',function() {                           //stime 을 선택한 후 동작
+        var from_time = $("input[name='startTime']").val(); //stime 값을 변수에 저장
+        $('#endTime').timepicker('option','minTime', from_time);//etime의 mintime 지정
+        if ($('#endTime').val() && $('#endTime').val() < from_time) {
+            $('#endTime').timepicker('setTime', from_time);
+//etime을 먼저 선택한 경우 그리고 etime시간이 stime시간보다 작은경우 etime시간 변경
+        }
     });
+
+$('#endTime').timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00'});//etime 시간 기본 설정
+ */
+
+ $(document).ready(function() {
+     // INPUT 박스에 들어간 ID값을 적어준다.
+     $("#startTime,#endTime").timepicker({
+         'minTime': '09:00am', // 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
+         'maxTime': '20:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
+         'timeFormat': 'H:i',
+         'step': 30 // 30분 단위로 지정. ( 10을 넣으면 10분 단위 )
+ });
+
+ $(window).scroll(function(){
+     $(".ui-timepicker-wrapper").hide();
+ });
+
+ });
+
 </script>
 
 
@@ -137,19 +143,11 @@ $(function () {
 }
 
 img#thumbImage {
-		width: 550px;
+	width: 450px;
 	height: 300px;
-	object-fit: fill;
 }
 
 /* full Calendar */
-body {
-  margin: 40px 10px;
-  padding: 0;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
 #calendar {
   max-width: 1100px;
   margin: 0 auto;
@@ -298,8 +296,25 @@ body {
 				<label class="form-label mb-2" for="">강의일정</label>
 				<div class="col-sm">
 					<input type="hidden" name="streamingDateList" />
-	 				<div id='calendar'>
-     				</div>
+	 				<div id='calendar'></div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-2 align-self-center">
+					<label class="form-label" for="startTime">시작 시간</label>
+				</div>
+				<div class="col-sm">
+					<input class="timepicker form-control" type="text" name="startTime" id="startTime" value="" maxlength="10" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-2 align-self-center">
+					<label class="form-label" for="endTime">종료 시간</label>
+				</div>
+				<div class="col-sm">
+					<input class="timepicker form-control" type="text" name="endTime" id="endTime" value="" maxlength="10"/>
 				</div>
 			</div>
 
