@@ -21,10 +21,28 @@ header nav.navbar
     /* 인프런 그림자 0 2px 4px 0 hsl(0deg 0% 81% / 50%) */
     color: #e4fbff;
 }
+.my-bell {
+  transform-origin: top;
+  animation: bell 2s infinite linear;
+}
+@keyframes bell{
+  0%, 50%{
+		transform: rotate(0deg);
+	}
+  5%, 15%, 25%, 35%, 45% {
+    transform: rotate(13deg);
+  }
+  10%, 20%, 30%, 40% {
+    transform: rotate(-13deg);
+  }
+}
 
 
 /********** content **********/
 section#content		{min-height:600px;}
+
+.main-content    {background-color: #edeef7;}
+
 
 /********** footer **********/
 footer	{background-color:#f8f9fa; background-clip:content-box; min-height:95px;}

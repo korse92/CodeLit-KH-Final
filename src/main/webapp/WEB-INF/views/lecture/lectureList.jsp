@@ -54,8 +54,8 @@
 			</li>
 			<c:forEach items="${categoryList}" var="category">
 			<li class="nav-item">
-				<a  class="nav-link ${catNo eq category.no ? 'active' : ''}"
-					href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a>
+				<a class="nav-link ${catNo eq category.no ? 'active' : ''}"
+				   href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a>
 			</li>
 			</c:forEach>
 		</ul>
@@ -136,12 +136,15 @@
 					</div>
 					<div class="d-flex justify-content-end">
 						<div class="m-1">
+							<form:form id="basketFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}" method="POST">
+	                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 							<button
-								class="btn btn-outline-light" data-bs-toggle="tooltip"
-								data-bs-placement="right" title="장바구니에 담기"
-								onclick = "location.href = 'test'">
-								<i class="fas fa-shopping-basket"></i>
+								type="submit"
+								class="btn ${lecture.basketed ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
+								data-bs-placement="right" title="${lecture.basketed ? '장바구니에서 삭제' : '장바구니에 담기'}">
+								<i class="${lecture.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
 							</button>
+							</form:form>
 						</div>
 						<div class="m-1">
 	                		<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">

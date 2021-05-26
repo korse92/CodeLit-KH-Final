@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="basket">
+
+	<select id="selectBasketList" resultType="basket">
+		select
+			b.*,
+			l.lecture_thumb_renamed, l.lecture_name, t.teacher_name, l.lecture_price, lc.lec_cat_name, l.lecture_intro,
+			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment"
+		from
+			lecture l
+				inner join
+			lecture_category lc
+				on
+					l.ref_lec_cat_no = lc.lec_cat_no
+				inner join
+			teacher t
+				on
+					l.ref_member_id = t.ref_member_id
+				inner join
+			basket b
+				on
+					b.ref_lecture_no = l.lecture_no
+		where
+			b.ref_member_id = #{refMemberId}
+	</select>
+
+<!--
+	<select id="selectPickOne" resultType="int">
+		select
+			basket_no
+		from
+			basket
+		where
+			ref_lecture_no = #{refLectureNo}
+		and
+			ref_member_id = #{refMemberId}
+	</select>
+
+ -->
+	<insert id="addBasket">
+		insert into
+			basket(
+				basket_no,
+				ref_lecture_no,
+				ref_member_id,
+				basket_date
+			)
+		values(
+			seq_basket_no.nextval,
+			#{refLectureNo},
+			#{refMemberId},
+			default
+		)
+	</insert>
+
+	<delete id="deleteBasket">
+		delete from
+			basket
+		where
+			ref_lecture_no = #{lectureNo}
+		and
+			ref_member_id = #{memberId}
+	</delete>
+
+	<select id="sumBasket" resultType="int">
+		select
+			sum(lecture_price)
+		from
+			basket b, lecture l
+		where
+			b.ref_lecture_no = l.lecture_no
+		and
+			b.ref_member_id = #{refMemberId}
+
+	</select>
+
+	<delete id="deleteBasketAjax">
+		delete from basket
+		where basket_no = #{basketNo}
+	</delete>
+	
+</mapper>

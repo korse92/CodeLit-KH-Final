@@ -27,28 +27,40 @@ public class CounselServiceImpl implements CounselService{
 	@Autowired
 	private AttachDao attachDao;
 
+	
+	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertCounsel(Map<String, Object> param) {
 		
 		Counsel counsel = (Counsel)param.get("counsel");
-		int counselNo = dao.insertCounsel(counsel);
+		int result = dao.insertCounsel(counsel);
 				
 		Attachment attach = (Attachment)param.get("attach");
-		attach.setRefContentsNo(counsel.getCounselQNo());
-		int result = attachDao.insertAttachment(attach);
+		if(attach != null) {
+			attach.setRefContentsNo(counsel.getCounselQNo());
+			result = attachDao.insertAttachment(attach);			
+		}
 		
 		return result;
 	}
+	
+	
+	
 	@Override
 	public List<Counsel> selectCounselList(Map<String, Object> param){
 		return dao.selectCounselList(param);
 	}
+	
+	
+	
 	@Override
 	public int getTotalContents(String memberId) {
 		return dao.getTotalContents(memberId);
 
 	}
+	
+	
 	
 	@Override
 	public Map<String, Object> selectOneCounsel(int counselNo) {
@@ -63,9 +75,37 @@ public class CounselServiceImpl implements CounselService{
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("counsel", counsel);
-		map.put("attach", attachList.get(0) != null ? attachList.get(0) : null);
+		log.debug("attachList = {}", attachList);
+		map.put("attach", attachList.isEmpty() ? null : attachList.get(0));
 		
 		return map;
 
 	}
+	
+	
+	
+	@Override
+	public List<Counsel> selectCounselListAdmin(Map<String, Object> param) {
+
+		return dao.selectCounselListAdmin(param);
+	}
+
+
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int insertCounselAnswer(Map<String, Object> param) {
+
+		Counsel counsel = (Counsel)param.get("counsel");
+		int result = dao.insertCounselAnswer(counsel);
+		
+		Attachment attach = (Attachment)param.get("attach");
+		if(attach != null) {
+			attach.setRefContentsNo(counsel.getCounselNo());
+			result = attachDao.insertAttachment(attach);			
+		}
+		
+		return result;
+	}
+	
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.community.study.model.dao.StudyDAO;
@@ -31,13 +32,13 @@ public class StudyServiceImpl implements StudyService {
 		return dao.studyBoardList(param);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertAttachment(Attachment attach) {
 		return dao.insertAttachment(attach);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertBoard(StudyBoard studyBoard) {
 		return dao.insertBoard(studyBoard);
@@ -61,19 +62,19 @@ public class StudyServiceImpl implements StudyService {
 		return dao.selectOneStudy(stdBrdNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAttach(int stdBrdNo) {
 		return dao.deleteAttach(stdBrdNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int delete(int stdBrdNo) {
 		return dao.delete(stdBrdNo);
 	}
 
-
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int update(StudyBoard stdBrd) {
 		return dao.update(stdBrd);

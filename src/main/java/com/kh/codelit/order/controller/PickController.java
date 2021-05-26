@@ -48,19 +48,20 @@ public class PickController {
 						@ModelAttribute Pick pick,
 						@ModelAttribute Lecture lecture,
 						RedirectAttributes redirectAttr,
-						Principal pri,
+						Principal principal,
 						HttpServletRequest request
 			) throws IllegalStateException, IOException {
 
-		pick.setRefMemberId(pri.getName());
+//		pick.setRefMemberId(pri.getName());
+		String refMemberId = principal.getName();
 		pick.setRefLectureNo(lecture.getLectureNo());
-		pick.setPickNo(pick.getPickNo());
+		log.debug("pick = {}", pick);
 		log.debug("refMemberIdAddPick = {}", pick.getRefMemberId());
+		log.debug("memberIdAddPick = {}", refMemberId);
 		log.debug("refLectureNoAddPick = {}", pick.getRefLectureNo());
 		log.debug("lectureNoAddPick = {}", lecture.getLectureNo());
-		log.debug("PickNoAddPick = {}", pick.getPickNo());
 
-		int result = pickService.addPick(pick.getRefLectureNo(), pick.getRefMemberId());
+		int result = pickService.addPick(pick.getRefLectureNo(), refMemberId);
 
 			log.debug("pick = {}", pick);
 //			int count = pickService.countPick(pick.getRefLectureNo(), pick.getRefMemberId());
@@ -74,7 +75,6 @@ public class PickController {
 //			}
 
 		return "redirect:" + request.getHeader("Referer");
-
 	}
 
 	@PostMapping("deletePick.do")
@@ -97,5 +97,10 @@ public class PickController {
 
 	}
 
+//	@GetMapping("selectPickOne.do")
+//	public int selectPickOne(@ModelAttribute Pick pick) {
+//		int result = pickService.selectPickOne(pick.getRefLectureNo(), pick.getRefMemberId());
+//		return result;
+//	}
 
 }

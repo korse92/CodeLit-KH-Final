@@ -12,12 +12,13 @@
 		order by
 			lec_cat_no
 	</select>
-
+	
+	
 	<resultMap type="map" id="categoryMap">
 		<id column="lec_cat_no" property="no" javaType="integer"/>
 		<result column="lec_cat_name" property="name" javaType="string"/>
 	</resultMap>
-
+	
 	<insert id="insertLecture">
 		insert into
 			lecture
@@ -32,7 +33,7 @@
 			#{lectureThumbRenamed},
 			#{lecturePrice},
 			default,
-			#{lectureGuideline}
+			#{lectureGuideline}			
 		)
 		<selectKey resultType="_int" keyProperty="lectureNo" order="AFTER">
 			select
@@ -41,13 +42,14 @@
 				dual
 		</selectKey>
 	</insert>
-
+	
 	<select id="selectLectureList" resultType="lecture">
-		select
+		select 
 			l.*,
 			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
 			(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
-			(select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked"
+			(select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked",
+			(select count(*) from basket where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "basketed"
 		from lecture l
 		<where>
 		    lecture_accept_yn = 'Y'
@@ -62,7 +64,7 @@
 		order by
 		    lecture_no
 	</select>
-
+	
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
@@ -75,18 +77,19 @@
 		</if>
 		</where>
 	</select>
-
+	
 	<select id="selectMyLecture" resultType="lecture">
 	select rownum, l.*
-	from (
+	from (       
            select
                 lecture_name
            from
                lecture
-           where
-                lecture_accept_yn = 'Y'
+           <where>
+                lecture_accept_yn = 'Y' and ref_member_id = #{id}
+           </where> 
        ) l
-    　　　
+    　　　 
 	where rownum <![CDATA[ <= ]]> 3
 	</select>
 
@@ -160,6 +163,91 @@
 		order by
 			lec_cmt_enroll_date desc
 	</select>
+
+	<select id="mainLecture" resultMap="mainLecMap">
+	select rownum, a.*
+        from (       
+                select
+                    *
+                 from
+                    lecture left join teacher using(ref_member_id)
+                where
+                    lecture_accept_yn = 'Y' 
+                order by lecture_no desc) a
+    　　　 
+	where rownum <![CDATA[ <= ]]> 8
+	</select>
+	
+	<resultMap type="map" id="mainLecMap">
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_intro" property="lectureIntro"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="ref_lec_cat_no" property="refLecCatNo"/>
+		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
+		<result column="teacher_name" property="teacherName"/>
+	</resultMap>
+	
+	<update id="clickCount" statementType="CALLABLE" parameterType="HashMap">
+	
+	{
+		 call proc_upsert_lecture_click(
+						#{no},
+						#{ref_member_id}
+		)
+	}
+	</update>
+	
+	<select id="rollingLecList" resultMap="bestLectureMap">
+	select 
+			rownum, e.*
+	from (select 
+        		c.ref_lecture_no,
+        		l.lecture_name,
+        		sum(c.click_no) as clickNo
+          from 
+            	lecture_click c join lecture l
+             		on c.ref_lecture_no = l.lecture_no
+          group by
+            	c.ref_lecture_no, l.lecture_name
+          order by 
+            	clickNo desc) e
+	where rownum <![CDATA[ <= ]]> 3
+	
+	</select>
+	
+	<resultMap type="map" id="bestLectureMap">
+		<id column="ref_lecture_no" property="refLectureNo"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="click_no" property="clickNo"/>
+	</resultMap>
+	
+	<select id="mainSearchResult" resultMap="mainSearchMap">
+	
+	select
+		 *
+	from 
+		lecture left join teacher using(ref_member_id)
+	<where>
+		lecture_name like '%' || #{searchKeyword} || '%' and lecture_accept_yn = 'Y'
+	</where> 	
+	order by lecture_no desc
+	
+	</select>
+	
+	<resultMap type="map" id="mainSearchMap">
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="ref_member_id" property="refMemberId"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_intro" property="lectureIntro"/>
+		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="teacher_name" property="teacherName"/>
+	</resultMap>
+	
+	
+	
+	
 
 </mapper>
 

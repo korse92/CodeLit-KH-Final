@@ -44,7 +44,6 @@
 		 	<h2 class=" jb-larger mt-3 col-2">문의사항</h2>
 		</div>
 		<hr>
-		<input type="hidden" id="counselNo" value="${counsel.counselNo}" />
 		<div class="col-10 mx-auto mt-5" id="detailDiv">
 			<div class="row header ps-2">
 		    	<h5 class="col-1 board-title fs-4">제목 : </h5>
@@ -67,14 +66,9 @@
 		</div>
 		
 		<sec:authorize access="hasRole('ADMIN')">
-			<c:if test="${counsel.counselQNo eq 0}" >
+			<c:if test="${counsel.counselQNo eq 0 && counsel.counselLevel eq 1}" >
 				<div class="col-2 mx-auto mt-5">
 				    <button type="button" id="answerBtn" class="btn btn-primary col-12">답글</button>
-				</div>
-			</c:if>
-			<c:if test="${counsel.counselQNo eq 1}" >
-				<div class="col-2 mx-auto mt-5">
-					<p>답글이 있습니다.</p>
 				</div>
 			</c:if>
 		</sec:authorize>

@@ -4,12 +4,17 @@ package com.kh.codelit.lecture.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +40,6 @@ public class LectureDaoImpl implements LectureDao {
 	@Override
 	public List<Lecture> selectLectureList(Map<String, Object> param) {
 		int cPage = (int)param.get("cPage");
-		int catNo = (int)param.get("catNo");
 
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
@@ -62,6 +66,27 @@ public class LectureDaoImpl implements LectureDao {
 	@Override
 	public List<Map<String, Object>> selectLectureCmtList(int no) {
 		return session.selectList("lecture.selectLectureCmtList", no);
+	}
+
+	@Override
+	public List<Map<String, Object>> mainLecture() {
+		
+		return session.selectList("lecture.mainLecture");
+	}
+
+	@Override
+	public int clickCount(Map<String, Object> param) {
+		return session.update("lecture.clickCount", param);
+	}
+
+	@Override
+	public List<Map<String, Object>> rollingLecList() {
+		return session.selectList("lecture.rollingLecList");
+	}
+
+	@Override
+	public List<Map<String, Object>> mainSearchResult(Map<String, Object> param) {
+		return session.selectList("lecture.mainSearchResult", param);
 	}
 
 }

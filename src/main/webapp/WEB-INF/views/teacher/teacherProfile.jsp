@@ -15,29 +15,13 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" crossorigin="anonymous"></script>
 
-<!-- Bootstrap CSS -->
-<!-- <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-	rel="stylesheet" crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-	crossorigin="anonymous"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-Font Awesome(아이콘) CSS
-<script src="https://kit.fontawesome.com/0e3c91e1c6.js" crossorigin="anonymous"></script>
- -->
-
-<section class="profile-Tclass">
 <div class="container">
+<section class="profile-Tclass">
 	<sec:authorize access="hasRole('TEACHER')">
 		<div class="row m-5 p-5">
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">강사 마이페이지</h3>
 				<div class="card-body">
-					<div class="img">
-						<%--   <img src="${pageContext.request.contextPath}" alt=""> --%>
-					</div>
 					<p class="card-text">
 						<span class="fs-5">
 			               <sec:authentication property="principal.username"/>
@@ -51,15 +35,16 @@ Font Awesome(아이콘) CSS
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
-				<h3 class="card-header">내 글 확인</h3>
+				<h3 class="card-header">내 강의 목록</h3>
+				<form method="GET" id="lecFrm" action="${pageContext.request.contextPath}/teacher/teacherProfile.do">
 				<div class="card-body">
-					<p class="card-text">Some quick example text to build on the
-						card title and make up the bulk of the card's content.</p>
-					<div class="img">
-						<%--<img src="${pageContext.request.contextPath}/resources/images/banner1.jpg" alt=""> --%>
-						<div class="text-end">
-							<a href="#">내 글 목록</a>
-						</div>
+					<div class="Calendar">
+					<c:forEach items="${list}" var="lec">
+						<p><a href="#">${lec.lectureName}</p>
+					</c:forEach>
+					</div>
+					<div class="text-end">
+						<span class=""><a href="#">강의 전체 보기</a></span>
 					</div>
 				</div>
 			</div>
@@ -72,7 +57,7 @@ Font Awesome(아이콘) CSS
 						<p><a href="#">알림</a></p>
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">받은알림 목록</a></span>
+						<span class=""><a href="${pageContext.request.contextPath}/alarm/alarmList.do">받은알림 목록</a></span>
 					</div>
 				</div>
 			</div>
@@ -100,20 +85,7 @@ Font Awesome(아이콘) CSS
 					</div>
 				</div>
 			</div>
-			<div class="card border-warning m-5" style="max-width: 23rem;">
-				<h3 class="card-header">강의 목록</h3>
-				<form method="GET" id="lecFrm" action="${pageContext.request.contextPath}/teacher/teacherProfile.do">
-				<div class="card-body">
-					<div class="Calendar">
-					<c:forEach items="${list}" var="lec">
-						<p><a href="#">${lec.lectureName}</p>
-					</c:forEach>
-					</div>
-					<div class="text-end">
-						<span class=""><a href="#">강의 전체 보기</a></span>
-					</div>
-				</div>
-			</div>
+			
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">강의자 페이지</h3>
 				<div class="card-body">
@@ -130,8 +102,8 @@ Font Awesome(아이콘) CSS
 		</div>
 	  </sec:authorize>
 	  <!-- 강사 프로필 끝 -->
-	</div>
   </section>
+</div>
 <!-- 컨텐츠 끝 -->
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

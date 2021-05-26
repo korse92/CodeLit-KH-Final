@@ -53,29 +53,29 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 
 public class MemberController {
-	
+
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private LectureService lectureService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
+
 	@GetMapping("/memberEnroll.do")
 	public void memberEnroll() {
 		log.debug("회원가입 = {}", "회원가입");
 	}
-	
+
 	@PostMapping("/memberEnroll.do")
 //	@RequestMapping(value = "/memberEnroll.do", method = RequestMethod.POST)
 	public String memberEnroll(
-						@ModelAttribute Member member, 
+						@ModelAttribute Member member,
 						RedirectAttributes redirectAttr
 					) {
 		log.info("member = {}", member);
-		
+
 		try {
 			//암호화 처리
 			String rawPassword = member.getPassword();
@@ -83,10 +83,10 @@ public class MemberController {
 			log.info("rawPassword = {}", rawPassword);
 			log.info("encodedPassword = {}", encodedPassword);
 			member.setMemberPw(encodedPassword);
-			
+
 			//1. 업무로직
 			int result = memberService.insertMember(member);
-			String msg =  result > 0 ? "회원 등록 성공!" : "회원 등록 실패!";		
+			String msg =  result > 0 ? "회원 등록 성공!" : "회원 등록 실패!";
 			//2. 사용자 피드백 준비 및 리다이렉트
 			redirectAttr.addFlashAttribute("msg", msg);
 		} catch(Exception e) {
@@ -95,25 +95,25 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
-	
+
 	//아이디 중복 확인
 	@GetMapping("/chkIdDupl.do")
 	public ResponseEntity<?> chkIdDupl(@RequestParam("id") String memberId) {
 		//1.업무로직
 		Member member = memberService.selectOneMember(memberId);
 		boolean usable = (member == null);
-		
+
 		//2. json 변환 객체
 		Map<String, Object> map = new HashMap<>();
 		map.put("usable", usable);
 		map.put("id", memberId);
 		map.put("serverTime", new Date());
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 		return new ResponseEntity<>(map, headers, HttpStatus.OK);
 	}
-	
+
 	/* 구글 로그인 */
 	@ResponseBody
 	@GetMapping("/insertMemberByGoogle.do")
@@ -125,10 +125,10 @@ public class MemberController {
 		log.info("memberController = {}", member);
 		log.info("member_ajaxId = {}", member_ajaxName);
 
-		try {		
+		try {
 			//구글 회원가입
 			int result = memberService.insertMemberByGoogle(member);
-			String msg =  result > 0 ? "회원가입 되었습니다." : "회원가입에 실패하였습니다.";		
+			String msg =  result > 0 ? "회원가입 되었습니다." : "회원가입에 실패하였습니다.";
 			//2. 사용자 피드백 준비 및 리다이렉트
 			redirectAttr.addFlashAttribute("msg", msg);
 			log.debug("msg = {}", msg);
@@ -136,13 +136,13 @@ public class MemberController {
 			log.error(e.getMessage(), e);
 			throw e;
 		}
-			
+
 			//구글 로그인
 //			member = memberService.loginByGoogle(member);
 //			session.setAttribute("memberId", member.getMemberId());
 //			redirectAttr.addFlashAttribute("gmember", member);
 
-		
+
 //		if(member_ajaxId.equals(member.getMemberId())) { //DB에 아이디가 존재할 경우
 //			//구글 로그인
 //			memberService.loginByGoogle(member);
@@ -151,20 +151,20 @@ public class MemberController {
 //		} else { //DB에 아이디가 존재하지 않을 경우
 //			//구글 회원가입
 //			memberService.insertMemberByGoogle(member);
-//			
+//
 //			//구글 로그인
 //			member = memberService.loginByGoogle(member);
 //			session.setAttribute("memberId", member.getMemberId());
 //			redirectAttr.addFlashAttribute("gmember", member);
-//			
+//
 //		}
-		
+
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/memberLogin.do")
 	public void memberLogin() {}
-	
+
 	@PostMapping("/memberLogin.do")
 	public void memberLogin_() {
 		log.debug("로그인 포스트 {}", "도착");
@@ -183,6 +183,7 @@ public class MemberController {
 //	}
 	@GetMapping("/memberDetail.do")
 	  public void detail(Model model, Principal pri  ) {
+
 
 		  String MemberId = pri.getName();
 		  model.addAttribute("refMemberId", MemberId); 
@@ -294,36 +295,45 @@ public class MemberController {
 	
 	
     @GetMapping("/myProfile.do") 
+
+
     public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
-		  							ModelAndView mav, 
+		  							ModelAndView mav,
 		  							Authentication authentication) {
-	  
+
 	  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
-	  
-	  
+
+
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		  log.debug("userDetails = {}", userDetails);
-		  // userDetails = Member(memberId=teacher, memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2, 
+		  // userDetails = Member(memberId=teacher, memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2,
 		  //                       memberProfile=null, memberReProfile=null, authorities=[ROLE_TEACHER, ROLE_USER])
 		  String memberId =  ((Member) userDetails).getMemberId();
 		  log.debug("memberId = {}", memberId); //memberId = teacher
-		
+
 			//lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
 			//log.debug("myProfileMethod@lecture = {}", lecture);
 		  List<Lecture> list = lectureService.selectMyLecture(memberId);
 		  log.debug("list = {}", list);
 	     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
-		  
+
 		  mav.addObject("list",list);
 		  mav.setViewName("/member/myProfile");
-		  
-	  }catch(Exception e) { 
-		  throw e; 
+
+	  }catch(Exception e) {
+		  throw e;
 	  }
 
 	  return mav;
-	  
+
 	  }
+
+
+    @GetMapping("/streamingCalendar")
+    public void streamingCalendar() {
+    	log.debug("calendar = {}", "calendar");
+    }
+
 
 }

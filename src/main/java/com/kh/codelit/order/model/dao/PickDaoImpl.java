@@ -24,13 +24,13 @@ public class PickDaoImpl implements PickDao {
 		return session.selectList("pick.selectPickList", refMemberId);
 	}
 
-	@Override
-	public int countPick(int refLectureNo, String refMemberId) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("refLectureNo", refLectureNo);
-		map.put("refMemberId", refMemberId);
-		return session.selectOne("pick.countPick", map);
-	}
+//	@Override
+//	public int selectPickOne(int refLectureNo, String refMemberId) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("refLectureNo", refLectureNo);
+//		map.put("refMemberId", refMemberId);
+//		return session.selectOne("pick.selectPickOne", map);
+//	}
 
 	@Override
 	public int addPick(int refLectureNo, String refMemberId) {
