@@ -188,6 +188,67 @@
 		<result column="teacher_name" property="teacherName"/>
 	</resultMap>
 	
+	<update id="clickCount" statementType="CALLABLE" parameterType="HashMap">
+	
+	{
+		 call proc_upsert_lecture_click(
+						#{no},
+						#{ref_member_id}
+		)
+	}
+	</update>
+	
+	<select id="rollingLecList" resultMap="bestLectureMap">
+	select 
+			rownum, e.*
+	from (select 
+        		c.ref_lecture_no,
+        		l.lecture_name,
+        		sum(c.click_no) as clickNo
+          from 
+            	lecture_click c join lecture l
+             		on c.ref_lecture_no = l.lecture_no
+          group by
+            	c.ref_lecture_no, l.lecture_name
+          order by 
+            	clickNo desc) e
+	where rownum <![CDATA[ <= ]]> 3
+	
+	</select>
+	
+	<resultMap type="map" id="bestLectureMap">
+		<id column="ref_lecture_no" property="refLectureNo"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="click_no" property="clickNo"/>
+	</resultMap>
+	
+	<select id="mainSearchResult" resultMap="mainSearchMap">
+	
+	select
+		 *
+	from 
+		lecture left join teacher using(ref_member_id)
+	<where>
+		lecture_name like '%' || #{searchKeyword} || '%' and lecture_accept_yn = 'Y'
+	</where> 	
+	order by lecture_no desc
+	
+	</select>
+	
+	<resultMap type="map" id="mainSearchMap">
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="ref_member_id" property="refMemberId"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_intro" property="lectureIntro"/>
+		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="teacher_name" property="teacherName"/>
+	</resultMap>
+	
+	
+	
+	
+
 </mapper>
 
 

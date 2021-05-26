@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.member.model.vo.Member;
 
 public interface LectureDao {
 
@@ -22,5 +23,11 @@ public interface LectureDao {
 	Lecture selectOneLecture(int no);
 
 	List<Map<String, Object>> selectLectureCmtList(int no);
+
+	int clickCount(Map<String, Object> param);
+
+	List<Map<String, Object>> rollingLecList();
+
+	List<Map<String, Object>> mainSearchResult(Map<String, Object> param);
 
 }

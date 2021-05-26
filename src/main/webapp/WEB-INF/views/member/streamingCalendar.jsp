@@ -89,13 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <style>
-body {
-  margin: 40px 10px;
-  padding: 0;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
 #loading {
   display: none;
   position: absolute;
@@ -105,7 +98,7 @@ body {
 
 #calendar {
   max-width: 1100px;
-  margin: 50px auto;
+  margin: 100px auto;
 }
 </style>
 
