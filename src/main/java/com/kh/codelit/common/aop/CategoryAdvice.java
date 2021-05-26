@@ -40,12 +40,16 @@ public class CategoryAdvice {
 
 	}
 	
-	  @ModelAttribute 
-	  public void getReadVal(Principal pri, Model model){
-		  if(pri != null) {
-			  int readVal = msgService.getReadVal(pri.getName());
-			  
-			  model.addAttribute("readVal", readVal);			  
-		  }
-	  }
+	@ModelAttribute 
+	public void getReadVal(Principal pri, Model model){
+		if(pri != null) {
+			int readVal = msgService.getReadVal(pri.getName());
+			model.addAttribute("readVal", readVal);			  
+		}
 	}
+	/*
+	 * @ModelAttribute public void getMsg() {
+	 * 
+	 * }
+	 */
+}

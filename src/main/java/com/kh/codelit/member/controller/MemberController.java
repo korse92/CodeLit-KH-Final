@@ -32,6 +32,8 @@ import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.websocket.model.service.MessengerService;
+import com.kh.codelit.websocket.model.vo.Messenger;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,6 +51,9 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
+	@Autowired
+	private MessengerService msgService;
+	
 	@GetMapping("/memberEnroll.do")
 	public void memberEnroll() {
 		log.debug("회원가입 = {}", "회원가입");
@@ -177,7 +182,10 @@ public class MemberController {
 		  List<Lecture> list = lectureService.selectMyLecture(memberId);
 		  log.debug("list = {}", list);
 	     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
+		  
+		  List<Messenger> message = msgService.alarmList(memberId);
 
+		  mav.addObject("message",message);
 		  mav.addObject("list",list);
 		  mav.setViewName("/member/myProfile");
 

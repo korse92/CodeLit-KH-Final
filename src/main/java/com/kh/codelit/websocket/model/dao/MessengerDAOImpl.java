@@ -56,5 +56,11 @@ public class MessengerDAOImpl implements MessengerDAO{
 	public Messenger selectOneMsg(int msgNo) {
 		return session.selectOne("msg.selectOneMsg",msgNo);
 	}
+
+	@Override
+	public List<Messenger> alarmList(String memberId) {
+		return session.selectList("msg.selectList", memberId);
+	}
+
 	
 }

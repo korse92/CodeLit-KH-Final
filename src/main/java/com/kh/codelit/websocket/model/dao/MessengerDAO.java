@@ -21,5 +21,7 @@ public interface MessengerDAO {
 
 	Messenger selectOneMsg(int msgNo);
 
+	List<Messenger> alarmList(String memberId);
+
 
 }

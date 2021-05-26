@@ -104,5 +104,16 @@
 		where
 			msg_no = #{msgNo}
 	</select>
+	<select id="selectList" resultType="Messenger">
+		select 
+	        * 
+	   	from 
+			messenger 
+		where 
+			ref_receiver_id = #{refReceiverId}
+		order by 
+			msg_date
+		asc
+	</select>
 
 </mapper>
