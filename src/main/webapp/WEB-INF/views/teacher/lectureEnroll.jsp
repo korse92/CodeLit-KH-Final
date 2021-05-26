@@ -18,21 +18,31 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!-- full Calendar -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ko.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/main.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/main.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/locales/ko.js"></script>
+
+<!-- 풀캘린더 부트스트랩 테마 -->
+<!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' /> -->
+
+<script src="//code.jquery.com/jquery-3.2.1.js"></script>
+<!-- datepicker -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- datepicker -->
 <!-- datepicker 는 jquery 1.7.1 이상 bootstrap 2.0.4 이상 버전이 필요함 -->
 <!-- jQuery가 먼저 로드 된 후 datepicker가 로드 되어야함.-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<!-- <link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css"> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!--
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+<link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
-
+ -->
 <!-- datepicker 한국어 달력 쓰려면 추가 로드-->
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.ko.js"></script>
+<!-- <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.ko.js"></script> -->
 
 <!-- datetimepicker -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -49,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
+    	themeSystem: 'bootstrap',
       initialDate: new Date(),
       locale: "ko",
       editable: true,
@@ -96,10 +107,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
   });
 
+//datepicker
+$(function() {
+/* 	$(".datepicker").datepicker({
+		dateFormat : 'yy-mm-dd',
+		showOtherMonths : true,
+		showMonthAfterYear : true,
+		changeYear : true,
+		changeMonth : true,
+       yearSuffix: "년",
+      	monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+      	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+       dayNamesMin: ['일','월','화','수','목','금','토'],
+       dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+	}); */
+	$('.datePicker').datepicker({
+		format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+        language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+
+		})
+	$("#startDate").datepicker();
+	$("#endDate").datepicker();
+
+	$("#startDate").datepicker('setDate', 'today');
+	$("#endDate").datepicker('setDate', 'today');
+});
+
 /* datetimepicker */
 $(function () {
-    $('#datetimepicker5').datetimepicker();
-});
+        $('#datetimepicker7').datetimepicker();
+        $('#datetimepicker8').datetimepicker({
+            useCurrent: false
+        });
+        $("#datetimepicker7").on("change.datetimepicker", function (e) {
+            $('#datetimepicker8').datetimepicker('minDate', e.date);
+        });
+        $("#datetimepicker8").on("change.datetimepicker", function (e) {
+            $('#datetimepicker7').datetimepicker('maxDate', e.date);
+        });
+    });
 </script>
 
 
@@ -265,15 +312,15 @@ body {
 
 	                <div class="row mb-3">
 					    <label for="start" class="col-sm-2 col-form-label">시작</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control datepicker" id="start" required="required" />
+					    <div class="col-sm-10 form-group">
+				        	<input type="text" class="datePicker form-control" id="startDate" name="startDate"/>
 					    </div>
 				  	</div>
 
 	                <div class="row mb-3">
 					    <label for="end" class="col-sm-2 col-form-label">끝</label>
-					    <div class="col-sm-10">
-							<input type="text" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5"/>
+					    <div class="col-sm-10 form-group">
+				        	<input type="text" class="datePicker form-control" id="endDate" name="endDate"/>
 					    </div>
 				  	</div>
                 </div>
