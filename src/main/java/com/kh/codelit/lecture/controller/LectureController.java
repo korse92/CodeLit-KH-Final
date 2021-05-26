@@ -95,13 +95,11 @@ public class LectureController {
 
 		return mav;
 	}
-	
+
 	@GetMapping("/mainAllLecture.do")
 	public void mainAllLecture(@ModelAttribute Lecture lecture) {
-		
+
 		log.debug("메인 렉쳐 잘 도착! = {}", lecture);
 	}
-	
-	
 
 }
