@@ -45,6 +45,7 @@
 
 <!-- 사용자작성 JS -->
 <script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
 
 <!-- 사용자작성 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -53,7 +54,6 @@
 <c:if test="${not empty msg}">
 <script>
 alert("${msg}");
-
 </script>
 </c:if>
 </head>
@@ -171,10 +171,13 @@ alert("${msg}");
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
-
-			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
-			                    	<i class="fas fa-bell my-auto"></i>
-			                    	<i class="far fa-bell my-auto"></i>
+			                	<a class="nav-link px-0" href="${pageContext.request.contextPath}/alarm/alarmList.do" id="alertsDropdown" style="font-size: 1.5rem;">
+			                    	<c:if test="${readVal > 0}">
+				                    	<i class="fas fa-bell my-auto my-bell"></i>
+			                    	</c:if>
+			                    	<c:if test="${readVal == 0}">
+				                    	<i class="far fa-bell my-auto"></i>
+			                    	</c:if>
 			                    	<!-- 알림 여부에 따라 아이콘 바꾸기 -->
 			                    	<span class="badge badge-danger badge-counter"></span>
 			                	</a>

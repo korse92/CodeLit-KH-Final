@@ -51,9 +51,12 @@ public class HomeController {
 	
 	try {	
 		List<Map<String, Object>> list = lectureService.mainLecture();
-		log.debug("list = {}", list);
+		//log.debug("list = {}", list);
+		List<Map<String, Object>> rollingList = lectureService.rollingLecList();
+		//log.debug("rollingList = {}", rollingList);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("rollingList", rollingList);
 		
 	}catch (Exception e) {
 		

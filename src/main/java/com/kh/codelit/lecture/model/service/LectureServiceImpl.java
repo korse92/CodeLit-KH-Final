@@ -11,6 +11,7 @@ import com.kh.codelit.attachment.model.dao.AttachDao;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.lecture.model.dao.LectureDao;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -106,6 +107,18 @@ public class LectureServiceImpl implements LectureService {
 	@Override
 	public List<Map<String, Object>> selectLectureCmtList(int no) {
 		return lectureDao.selectLectureCmtList(no);
+	}
+
+
+	@Override
+	public int clickCount(Map<String, Object> param) {
+		return lectureDao.clickCount(param);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> rollingLecList() {
+		return lectureDao.rollingLecList();
 	}
 
 
