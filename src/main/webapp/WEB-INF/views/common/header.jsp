@@ -16,8 +16,7 @@
 <title>${param.title}</title>
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"
-	crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 
 <!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
@@ -38,7 +37,7 @@
 	integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
 	crossorigin="anonymous">
 
-<!-- websocket -->
+<!-- websocket 관련 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.js" integrity="sha512-Kdp1G1My+u1wTb7ctOrJxdEhEPnrVxBjAg8PXSvzBpmVMfiT+x/8MNua6TH771Ueyr/iAOIMclPHvJYHDpAlfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js" integrity="sha512-tL4PIUsPy+Rks1go4kQG8M8/ItpRMvKnbBjQm4d2DQnFwgcBYRRN00QdyQnWSCwNMsoY/MfJY8nHp2CzlNdtZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -47,6 +46,7 @@
 
 <!-- 사용자작성 JS -->
 <script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
 
 <!-- 사용자작성 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -55,8 +55,6 @@
 <c:if test="${not empty msg}">
 <script>
 alert("${msg}");
-
-
 </script>
 </c:if>
 </head>
@@ -174,10 +172,13 @@ alert("${msg}");
 			                	&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item">
-
-			                	<a class="nav-link px-0" href="#" id="alertsDropdown" style="font-size: 1.5rem;">
-			                    	<i class="fas fa-bell my-auto"></i>
-			                    	<i class="far fa-bell my-auto"></i>
+			                	<a class="nav-link px-0" href="${pageContext.request.contextPath}/alarm/alarmList.do" id="alertsDropdown" style="font-size: 1.5rem;">
+			                    	<c:if test="${readVal > 0}">
+				                    	<i class="fas fa-bell my-auto my-bell"></i>
+			                    	</c:if>
+			                    	<c:if test="${readVal == 0}">
+				                    	<i class="far fa-bell my-auto"></i>
+			                    	</c:if>
 			                    	<!-- 알림 여부에 따라 아이콘 바꾸기 -->
 			                    	<span class="badge badge-danger badge-counter"></span>
 			                	</a>

@@ -29,6 +29,12 @@
 			orderBtn.addEventListener('click', function(e) {
 
 				var money = document.getElementById("money").innerText;
+				
+				if(money == 0) {
+					e.preventDefault;
+					alert("결제할 내역이 없습니다.");
+				}
+				
 				var orderName = document.getElementById("orderName").innerText;
 				var memberId = document.getElementById("memberId").innerText;
 				
@@ -67,7 +73,64 @@
 			
 			});
 			
+			
+			
+			
 		}
+		
+		
+		// 삭제버튼 ajax
+		function deleteDiv(n, basketNo) {
+
+			// db 삭제 ajax	
+			$.ajax({
+				url : "${pageContext.request.contextPath}/order/deleteBasketAjax.do",
+				data :  {
+					basketNo : basketNo,
+					${_csrf.parameterName} : "${_csrf.token}"
+				},
+				method : "POST",
+				success : function(data) {
+					console.log("삭제 ajax 성공. basketNo");
+					console.log(data);
+					
+					// 화면에서 삭제
+					let basketDiv = document.getElementById(`basketDiv\${n}`);
+					basketDiv.remove();
+					
+					// 이름 및 금액 조정
+					let orderName = document.getElementById("orderName");
+					let money = document.getElementById("money");
+
+					if(data.length == 0) {
+						let orderTableTop = document.getElementById("orderTableTop");
+						orderTableTop.innerHTML = "<p class='text-center ps-5'>장바구니에 담긴 강의가 없습니다.</p>";
+						money.innerText = 0;
+
+					} else if(data.length == 1) {
+						orderName.innerText = data[0].lectureName;
+						money.innerText = data[0].lecturePrice;
+						
+					} else {
+						orderName.innerText = data[0].lectureName + " 외 " + (data.length - 1) + "종";
+						
+						let cash = 0;
+						for(var i=0 in data) {
+							cash += data[i].lecturePrice;
+						}
+						money.innerText = cash;
+					}
+	
+				},
+				error : function() {
+					console.log("삭제 ajax 실패");					
+				},
+				complete : function() {
+					console.log("삭제 ajax 완료");
+				}
+			});
+		}
+		
 	</script>
 	
 	<form:form id="orderFrm" method="post"
@@ -84,7 +147,7 @@
 	<div class="row">
 		<div id="orderDiv_left me-3" class="col-7">
 			<c:forEach items="${basketList}" var="basket" varStatus="vs">
-			<div class="card mb-4">
+			<div class="card mb-4" id="basketDiv${vs.count}">
 				<div class="row">
 					<div class="col-md-4" id="imgDiv">
 						<c:choose>
@@ -105,11 +168,8 @@
 								</div>
 								<!-- <button type="button" class="btn bt text-light me-2">찜이동</button> -->
 								<div class="col-auto">
-<!-- 									<button type="button" class="btn bt text-light mb-2">찜이동</button> -->
-		                        	<form:form id="deleteFrm" action="${pageContext.request.contextPath}/order/deleteBasket.do" method="POST">
-										<button type="submit" class="btn bt text-light">삭제</button> <!-- bt text-light me-2 -->
-				                		<input name="lectureNo" type="hidden" value="${basket.refLectureNo}" type="hidden"	/>
-									</form:form>
+<!-- 								<button type="button" class="btn bt text-light mb-2">찜이동</button> -->
+									<button type="button" class="btn bt text-light" onclick="deleteDiv(${vs.count}, ${basket.basketNo});">삭제</button> <!-- bt text-light me-2 -->
 								</div>
 							</div>
 						</div>
@@ -126,7 +186,7 @@
 					<c:choose>
 						<c:when test="${not empty basketList}">
 							<span class="col-3">ID : </span><p id="memberId" class="col-9 text-start ps-3">${refMemberId}</p>
-				            <span class="col-3">강의 : </span><p id="orderName" class="col-9 text-start ps-3">${basketList.get(0).lectureName} 외 ${basketList.size()}종</p>
+				            <span class="col-3">강의 : </span><p id="orderName" class="col-9 text-start ps-3">${basketList.get(0).lectureName} 외 ${basketList.size() - 1}종</p>
 						</c:when>
 						<c:otherwise>
 							<p class="text-center ps-5">장바구니에 담긴 강의가 없습니다.</p>

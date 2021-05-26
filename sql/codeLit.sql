@@ -356,6 +356,10 @@ ALTER TABLE "AUTHORITIES" ADD CONSTRAINT "PK_AUTHORITIES" PRIMARY KEY (
 	"MEMBER_ID"
 );
 
+ALTER TABLE "LECTURE_CLICK" ADD CONSTRAINT "PK_LECTURE_CLICK" PRIMARY KEY (
+	"REF_LECTURE_NO", 
+	"REF_MEMBER_ID"
+);
 
 --================================
 -- FK
@@ -775,6 +779,8 @@ NOCACHE;
 --=============================================
 -- PL/SQL
 --=============================================
+
+-- 회원가입시 user authority 부여하는 트리거
 create or replace trigger trg_auth
     after
     insert on member
@@ -785,6 +791,35 @@ begin
 end;
 /
 
+
+-- 강의 조회수 올리는 프로시져
+create or replace procedure proc_upsert_lecture_click (
+    p_ref_lecture_no in lecture_click.ref_lecture_no%type,
+    p_ref_member_id in lecture_click.ref_member_id%type
+)
+is
+    cnt number := 0;
+begin
+    select count(*)
+    into cnt
+    from lecture_click
+    where ref_member_id = p_ref_member_id
+        and ref_lecture_no = p_ref_lecture_no;
+    dbms_output.put_line('cnt = ' || cnt);
+    if cnt = 0 then
+        -- insert
+        insert into lecture_click
+        values(p_ref_lecture_no, p_ref_member_id, 1);
+    else
+        -- update
+        update lecture_click
+        set click_no = (click_no + 1)
+        where ref_member_id = p_ref_member_id
+            and ref_lecture_no = p_ref_lecture_no;
+    end if;
+    commit;
+end;
+/
 
 --=============================================
 -- 테스트 데이터 insert문

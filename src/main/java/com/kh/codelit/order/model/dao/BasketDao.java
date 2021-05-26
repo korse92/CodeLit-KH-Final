@@ -17,4 +17,6 @@ public interface BasketDao {
 
 	int sumBasket(String refMemberId);
 
+	int deleteBasketAjax(int basketNo);
+
 }

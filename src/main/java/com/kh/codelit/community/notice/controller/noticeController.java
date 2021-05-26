@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ import com.kh.codelit.community.notice.model.service.NoticeService;
 import com.kh.codelit.community.notice.model.vo.Notice;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.websocket.model.vo.Messenger;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +40,8 @@ public class noticeController {
 	@Autowired
 	private NoticeService service;
 	
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
 	
 	@GetMapping("/noticeList.do")
 	public void selectBoard(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request) {
@@ -94,7 +98,9 @@ public class noticeController {
 				
 				service.insertAttachment(attach);
 			}
-	
+			Messenger message = new Messenger();
+			//3. 특정사용자에게 알림(stomp)
+			simpMessagingTemplate.convertAndSend("/topic/user", message);
 			String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
 			redirect.addFlashAttribute("msg",msg);
 		} catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.kh.codelit.common.aop;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-//@SessionAttributes(value = {"categoryList"})
 public class CategoryAdvice {
 	
 	@Autowired
@@ -33,4 +33,13 @@ public class CategoryAdvice {
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryMap", categoryMap);
 	}
-}
+	
+	  @ModelAttribute 
+	  public void getReadVal(Principal pri, Model model){
+		  if(pri != null) {
+			  int readVal = msgService.getReadVal(pri.getName());
+			  
+			  model.addAttribute("readVal", readVal);			  
+		  }
+	  }
+	}
