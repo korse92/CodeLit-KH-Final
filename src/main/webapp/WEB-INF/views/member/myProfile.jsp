@@ -34,7 +34,7 @@
 						</span> <span class="fs-5">님</span> <span class="fs-5">,&nbsp;안녕하세요.</span>
 					</p>
 					<div class="text-end">
-						<a href="#">프로필 수정</a>
+						<a href="${pageContext.request.contextPath}/member/memberDetail.do">프로필 수정</a>
 					</div>
 				</div>
 			</div>

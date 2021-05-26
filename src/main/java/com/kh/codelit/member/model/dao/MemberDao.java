@@ -20,4 +20,18 @@ public interface MemberDao {
 	int insertMemberByGoogle(Member member);
 
 
+	Member selectDetail(String memberId);
+
+
+	int updateMember(Member member);
+
+
+	int deleteMember(String memberId);
+
+
+
+
+
+
+
 }

@@ -13,11 +13,13 @@ public interface CounselService {
 
 	int getTotalContents(String memberId);
 
+
 	Map<String, Object> selectOneCounsel(int counselNo);
 
 	List<Counsel> selectCounselListAdmin(Map<String, Object> param);
 
 	int insertCounselAnswer(Map<String, Object> param);
+
 
 
 }
