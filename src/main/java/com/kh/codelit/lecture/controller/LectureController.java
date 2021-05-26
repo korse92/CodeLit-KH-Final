@@ -123,13 +123,37 @@ public class LectureController {
 		return mav;
 	}
 
-	@GetMapping("/mainAllLecture.do")
-	public void mainAllLecture(@ModelAttribute Lecture lecture) {
+	/*
+	 * @GetMapping("/mainAllLecture.do") public void mainAllLecture(@ModelAttribute
+	 * Lecture lecture) {
+	 * 
+	 * log.debug("메인 렉쳐 잘 도착! = {}", lecture); }
+	 */
+	
+	@GetMapping("/mainSearchResult.do")
+	public ModelAndView mainSearchResult(ModelAndView mav,
+										@RequestParam(required = false) String keyword
+										) 
+	{
 		
-		log.debug("메인 렉쳐 잘 도착! = {}", lecture);
+		//log.debug("메인 검색 컨트롤러 연결 완@searchKeyword = {}", keyword);
+		
+	try {
+		Map<String, Object> param = new HashMap<>();
+		param.put("searchKeyword", keyword);
+		log.debug("param = {}", param);
+		
+		List<Map<String, Object>> list = lectureService.mainSearchResult(param);
+		log.debug("mainSearchResult@list = {}", list);
+		
+		mav.addObject("list",list);
+		mav.setViewName("/lecture/mainSearchResult");
+	}catch(Exception e) {
+		throw e;
 	}
 	
-	
+		return mav;
+	}
 	
 	
 }

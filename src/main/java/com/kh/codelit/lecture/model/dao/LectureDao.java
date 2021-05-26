@@ -28,4 +28,6 @@ public interface LectureDao {
 
 	List<Map<String, Object>> rollingLecList();
 
+	List<Map<String, Object>> mainSearchResult(Map<String, Object> param);
+
 }

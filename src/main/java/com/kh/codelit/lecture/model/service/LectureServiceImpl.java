@@ -122,4 +122,10 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 
+	@Override
+	public List<Map<String, Object>> mainSearchResult(Map<String, Object> param) {
+		return lectureDao.mainSearchResult(param);
+	}
+
+
 }
