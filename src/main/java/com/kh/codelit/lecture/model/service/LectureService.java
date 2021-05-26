@@ -29,4 +29,6 @@ public interface LectureService {
 	int clickCount(Map<String, Object> param);
 
 	List<Map<String, Object>> rollingLecList();
+
+	List<Map<String, Object>> mainSearchResult(Map<String, Object> param);
 }
