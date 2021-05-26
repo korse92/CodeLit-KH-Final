@@ -109,7 +109,7 @@
 							<a href="#">다음 강의 일정</a>
 						</p>
 						<p>
-							<a href="#">스트리밍 강의 일정</a>
+							<a href="${pageContext.request.contextPath}/member/streamingCalendar.do">스트리밍 강의 일정</a>
 						</p>
 					</div>
 					<div class="text-end">
