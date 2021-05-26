@@ -16,8 +16,7 @@
 <title>${param.title}</title>
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"
-	crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 
 <!-- Bootstrap JS : JQuery load 이후에 작성할것.-->

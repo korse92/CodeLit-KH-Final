@@ -17,6 +17,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
 
 <!-- full Calendar -->
+<!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' /> -->
+<!-- <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>-->
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/main.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/main.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/locales/ko.js"></script>
@@ -204,7 +207,7 @@ img#thumbImage {
 					<textarea name="lectureIntro" id="lectureIntro" class="form-control" required></textarea>
 				</div>
 			</div>
-			<div id="selectedVideo" class="row">
+			<div class="selectedVideo row">
 				<div class="row">
 					<label class="form-label mb-2" for="lectureGuideline">가이드라인 (권장하는 하루에 들을 영상개수)</label>
 					<div class="col-sm">
@@ -214,7 +217,7 @@ img#thumbImage {
 				</div>
 			</div>
 
-			<div id="selectedVido" class="row">
+			<div class="selectedVideo row">
 				<label class="form-label mb-2" for="">커리큘럼 등록</label>
 				<div class="row my-0 justify-content-end">
 					<div class="col-auto">
