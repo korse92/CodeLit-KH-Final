@@ -13,30 +13,56 @@
 				#{teacherAccName})
 	</insert>
 
-	<select id="selectTeacherCollection" >
-		select
-			*
-		from
-			member
-		where 
-			id = #{id}
+	<select id="selectOne" resultMap="teacherMap">
+		select *
+		from  
+		teacher t
+  		  join member m
+  		 	
+  		 	
+  		 	 
+        on t.ref_member_id =m.member_id
+       
+        where 
+		    t.ref_member_id = #{RefmemberId}
+		
 	</select>
-	
-<!-- 	<resultMap type="member" id="memberMap">
-	 <result column="enroll_date" property="enrollDate"/>
+		<resultMap id="teacherMap" type="teacher">
+			<id column="ref_member_id" property="refMemberId"/>
+			<result column="teacher_name" property="teacherName"/>
+			<result column="teacher_phone" property="teacherPhone"/>
+			<result column="ref_lec_cat_no" property="refLecCatNo"/>
+			<result column="teacher_introduce" property="teacherIntroduce"/>
+			<result column="teacher_link" property="teacherLink"/>
+			<result column="teacher_bank" property="teacherBank"/>
+			<result column="teacher_account" property="teacherAccount"/>
+			<result column="teacher_acc_name" property="teacherAccName"/>
+			<result column="member_profile" property="memberProfile"/>
+			<result column="member_re_profile" property="memberReProfile"/>
+			
 	</resultMap>
-	<update id="updateMember">
-	update member 
-	set 
-	name = #{name},
-	gender = #{gender},
-	birthday = #{birthday},
-	email = #{email},
-	phone = #{phone},
-	address = #{address},
-	hobby = #{hobby}
-	where
-	id = #{id}
-	 </update> -->
 	
+
+	<update id="selectUpdate">
+		update 
+		    teacher
+		set 
+		    teacher_name = #{teacherName},
+		    teacher_phone = #{teacherPhone},
+		    ref_lec_cat_no = #{refLecCatNo},
+		    teacher_introduce = #{teacherIntroduce},
+		    teacher_link = #{teacherLink},
+		    teacher_bank = #{teacherBank},
+		    teacher_account = #{teacherAccount},
+		    teacher_acc_name = #{teacherAccName}
+		where
+		ref_member_id = #{refMemberId}
+		
+	</update>
+	
+	
+	<delete id="deleteMember">
+		delete from teacher
+		where ref_member_id = #{RrfMemberId}
+	</delete>
 </mapper>

@@ -85,13 +85,13 @@
     </style>
     
 <!-- 컨텐츠 시작 -->
+	
+	   <div id="registerDiv">
+		<section class="container">
 
 		<div class="container" id="teacherRequestDiv">
-
 	        <h2 class="mt-5">강사 등록</h2>
 	        <hr/>
-	
-	        <div id="registerDiv">
 	            
 	            <form:form action="${pageContext.request.contextPath}/teacher/teacherRequest.do" 
 	            		method="POST" id="teachRegisterFrm"
@@ -196,7 +196,7 @@
 	                </table>
 	            </form:form>
 	        </div> <!-- 실제 등록폼만 감싸는 디브 -->
-
+		</section>
 		</div>
 
 

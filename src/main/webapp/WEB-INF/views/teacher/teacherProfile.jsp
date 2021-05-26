@@ -45,7 +45,7 @@ Font Awesome(아이콘) CSS
 			            <span class="fs-5">님</span>
 			            <span class="fs-5">,&nbsp;안녕하세요.</span>
 					</p>
-					<div class="text-end">
+					<div class="text">
 						<a href="${pageContext.request.contextPath}/teacher/teacherDetail.do">프로필 수정</a>
 					</div>
 				</div>
@@ -67,7 +67,7 @@ Font Awesome(아이콘) CSS
 				<h3 class="card-header">알림</h3>
 				<div class="card-body">
 					<div class="alamList">
-						<p><a href="#">알림</a></p> 
+						<p><a href="${pageContext.request.contextPath}/teacher/teacherDetail.do">알림</a></p> 
 						<p><a href="#">알림</a></p>
 						<p><a href="#">알림</a></p>
 					</div>

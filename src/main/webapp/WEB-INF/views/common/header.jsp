@@ -91,7 +91,7 @@ alert("${msg}");
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 						</sec:authorize>
 
-						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/teacher/teacherDetail.do">프로필 수정</a></li>
+					
 
 						<sec:authorize access="hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselListAdmin.do">문의</a></li>
@@ -181,7 +181,7 @@ alert("${msg}");
 			</div>
 		</nav>
 
-<<<<<<< HEAD
+
 
 		<!-- 로그인 Modal -->
 		<%-- <div class="modal fade" id="exampleModal" tabindex="-1"
@@ -216,10 +216,7 @@ alert("${msg}");
 			</div>
 		</div> --%>
 
-		
 
-=======
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 	</header>
 	<section id="content">
 	<!-- header.jsp 끝 -->
