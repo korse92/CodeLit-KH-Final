@@ -52,4 +52,26 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.insertMemberByGoogle", member);
 	}
 
+	@Override
+	public Member selectDetail(String memberId) {
+		
+		return session.selectOne("member.selectDetail",memberId);
+	}
+
+	@Override
+	public int updateMember(Member member) {
+	
+		return session.update("member.updateMember", member);
+	}
+
+	
+
+	@Override
+	public int deleteMember(String memberId) {
+	
+		return session.delete(memberId);
+	}
+
+
+
 }

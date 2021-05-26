@@ -9,31 +9,48 @@
 </jsp:include>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lecturerPage.css">
+<script>
+window.onload = function() {
+  let upFile = document.getElementById('upFile');
+  let thumb = document.getElementById('photo_img');
+  upFile.addEventListener('change', function(e) {
+    
+    if(upFile.files[0] != null) {
+      thumb.src = URL.createObjectURL(upFile.files[0]);
+    } else {
+      thumb.src = "";
+    }
 
-	<div class="container">
-    	<div class="row mt-5">
-          <h2 class=" jb-larger mt-3 col-3">정산 내역</h2>
+  });
+}
+</script>
+
+    <div class="container">
+        <div class="row mt-5">
+          <h2 class=" jb-larger mt-3 col-sm-4">공부 게시판</h2>
         </div>
-     <div class="mt-5">
-      <table class="table text-center ">
-        <thead class="primary table-primary">
-          <tr>
-            <th scope="col">날짜</th>
-            <th scope="col">강의 제목</th>
-            <th scope="col">정산 내역</th>
-          </tr>
-        </thead>
-        <tbody>
-        <c:forEach>
-          <tr>
-            <td scope="row"></td>
-            <td>rkd</td>
-            <td>0</td>
-          </tr>
-        </c:forEach>
-        </tbody>
-      </table>
-    </div>
-  </div>
+        <!-- 파일전송-->
+        <form action="">
+          <div class="row title-group">
+            <h5 class="col-sm-2 board-title">제목</h5>
+            <div class="col-sm-10">
+              <input class="form-control " type="text" placeholder="title">
+            </div>
+          </div>
+          <div class="board-container">
+            <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
+            <div class="form-group content">
+              <textarea class="form-control" name="" id=""rows="10" placeholder="content"></textarea>
+              <img src="" alt="" id="photo_img">
+                <input type="file" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
+            </div>
+          </div>
+          <div class="board-footer">
+            <!-- 관리자-->
+            <button type="button" class="btn btn-danger cancel-btn" onclick="location.href='./studentBoardList.html'">취소</button>
+            <button type="submit" class="btn btn-primary complete-btn">완료</button>
+          </div>
+        </form>
+      </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
