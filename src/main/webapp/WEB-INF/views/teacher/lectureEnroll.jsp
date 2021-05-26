@@ -416,16 +416,12 @@ img#thumbImage {
 </div> <!-- container -->
 <script>
 
-
-
-<<<<<<< HEAD
   $("[name=lectureEnrollFrm]").on('reset', e => {
     document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
   });
-=======
+
 	//part>chapter div 추가 함수
 	var partInputNo = 0;
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 
 	$((e) => {
 		$(partAddBtn).click(e => {
