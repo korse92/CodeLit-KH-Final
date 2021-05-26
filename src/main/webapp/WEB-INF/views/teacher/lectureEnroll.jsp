@@ -29,12 +29,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- timepicker -->
-<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
- -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.min.js" ></script><!-- 타이머js -->
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.css" media=""/><!-- 타이머css -->
-
 
 <!-- full Calendar script -->
 <script>
@@ -98,37 +94,6 @@ $(function() {
 	$("#startDate").datepicker('setDate', 'today');
 	$("#endDate").datepicker('setDate', 'today');
 });
-
-//timepicker
-/* $('#startTime')
-    .timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00','scrollDefaultNow': true }) //stime 시작 기본 설정
-    .on('changeTime',function() {                           //stime 을 선택한 후 동작
-        var from_time = $("input[name='startTime']").val(); //stime 값을 변수에 저장
-        $('#endTime').timepicker('option','minTime', from_time);//etime의 mintime 지정
-        if ($('#endTime').val() && $('#endTime').val() < from_time) {
-            $('#endTime').timepicker('setTime', from_time);
-//etime을 먼저 선택한 경우 그리고 etime시간이 stime시간보다 작은경우 etime시간 변경
-        }
-    });
-
-$('#endTime').timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00'});//etime 시간 기본 설정
- */
-
- $(document).ready(function() {
-     // INPUT 박스에 들어간 ID값을 적어준다.
-     $("#startTime,#endTime").timepicker({
-         'minTime': '09:00am', // 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
-         'maxTime': '20:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
-         'timeFormat': 'H:i',
-         'step': 30 // 30분 단위로 지정. ( 10을 넣으면 10분 단위 )
- });
-
- $(window).scroll(function(){
-     $(".ui-timepicker-wrapper").hide();
- });
-
- });
-
 </script>
 
 
@@ -305,7 +270,7 @@ img#thumbImage {
 					<label class="form-label" for="startTime">시작 시간</label>
 				</div>
 				<div class="col-sm">
-					<input class="timepicker form-control" type="text" name="startTime" id="startTime" value="" maxlength="10" />
+					<input class="form-control" type="text" name="startTime" id="startTime" />
 				</div>
 			</div>
 
@@ -314,9 +279,11 @@ img#thumbImage {
 					<label class="form-label" for="endTime">종료 시간</label>
 				</div>
 				<div class="col-sm">
-					<input class="timepicker form-control" type="text" name="endTime" id="endTime" value="" maxlength="10"/>
+					<input class="form-control" type="text" name="endTime" id="endTime" />
 				</div>
 			</div>
+
+
 
 			<div class="row form-group justify-content-end">
 				<div class="col-sm-auto">
@@ -349,14 +316,14 @@ img#thumbImage {
 	                <div class="row mb-3">
 					    <label for="start" class="col-sm-2 col-form-label">시작</label>
 					    <div class="col-sm-10 form-group">
-				        	<input type="text" class="datePicker form-control" id="startDate" name="startDate"/>
+				        	<input type="text" class="datepicker form-control" id="startDate" name="startDate"/>
 					    </div>
 				  	</div>
 
 	                <div class="row mb-3">
 					    <label for="end" class="col-sm-2 col-form-label">끝</label>
 					    <div class="col-sm-10 form-group">
-				        	<input type="text" class="datePicker form-control" id="endDate" name="endDate"/>
+				        	<input type="text" class="datepicker form-control" id="endDate" name="endDate"/>
 					    </div>
 				  	</div>
                 </div>
