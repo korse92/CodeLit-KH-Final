@@ -15,7 +15,7 @@
 <!-- 컨텐츠 시작 -->
 <!-- 개인 CSS, JS 위치 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 
 <!-- full Calendar -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/main.css" />
@@ -25,7 +25,7 @@
 <!-- 풀캘린더 부트스트랩 테마 -->
 <!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' /> -->
 
-<script src="//code.jquery.com/jquery-3.2.1.js"></script>
+<!-- <script src="//code.jquery.com/jquery-3.2.1.js"></script> -->
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -34,15 +34,16 @@
 <!-- datepicker -->
 <!-- datepicker 는 jquery 1.7.1 이상 bootstrap 2.0.4 이상 버전이 필요함 -->
 <!-- jQuery가 먼저 로드 된 후 datepicker가 로드 되어야함.-->
-<!--
+<%--
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
- -->
+--%>
+
 <!-- datepicker 한국어 달력 쓰려면 추가 로드-->
-<!-- <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.ko.js"></script> -->
+<%-- <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.ko.js"></script> --%>
 
 <!-- datetimepicker -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //datepicker
 $(function() {
-/* 	$(".datepicker").datepicker({
+ 	$(".datepicker").datepicker({
 		dateFormat : 'yy-mm-dd',
 		showOtherMonths : true,
 		showMonthAfterYear : true,
@@ -120,7 +121,7 @@ $(function() {
       	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
        dayNamesMin: ['일','월','화','수','목','금','토'],
        dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
-	}); */
+	});
 	$('.datePicker').datepicker({
 		format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
 		startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
