@@ -1,6 +1,8 @@
 package com.kh.codelit.member.model.service;
 
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,6 +63,45 @@ public class MemberServiceImpl implements MemberService {
 		log.debug("insertMemberByGoogleService = {}", member);
 		return memberDao.insertMemberByGoogle(member);
 	}
+
+
+
+	@Override
+	public Member selectDetail(String memberId) {
+		
+		return memberDao.selectDetail(memberId);
+	}
+
+
+
+	@Override
+	public int updateMember(Member member) {	
+		return memberDao.updateMember(member);
+	}
+
+
+
+	@Override
+	public int delete(String memberId) {
+
+		return memberDao.deleteMember(memberId);
+	}
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
 	
 
 }

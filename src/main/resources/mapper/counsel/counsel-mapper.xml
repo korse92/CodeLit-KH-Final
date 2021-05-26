@@ -24,6 +24,16 @@
 	</insert>
 	
 	<select id="selectCounselList" resultType="counsel">
+
+		select 
+			*
+		from
+			counsel
+		where
+			ref_member_id = #{memberId}
+		order by
+			counsel_date desc
+
 		select
 			c.*
 		from
@@ -43,15 +53,24 @@
             connect by counsel_q_no = prior counsel_no
             order siblings by counsel_no desc
 	
+
 	</select>
 
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
 		from
+
+
+		where
+        	ref_member_id = #{memberId}
+
+		where 
+
 			counsel
 		<where>
 			<if test="_parameter != null and _parameter != ''">
+
 			(
 			ref_member_id = #{memberId} 
 			and counsel_level = 1
@@ -75,6 +94,7 @@
 		select count(*)
 		from counsel
 		where counsel_q_no = #{counselNo}
+
 	</select>
 	
 	<select id="selectCounselListAdmin" resultType = "counsel">

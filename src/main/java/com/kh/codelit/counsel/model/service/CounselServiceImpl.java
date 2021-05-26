@@ -57,6 +57,7 @@ public class CounselServiceImpl implements CounselService{
 	@Override
 	public int getTotalContents(String memberId) {
 		return dao.getTotalContents(memberId);
+
 	}
 	
 	
@@ -78,6 +79,7 @@ public class CounselServiceImpl implements CounselService{
 		map.put("attach", attachList.isEmpty() ? null : attachList.get(0));
 		
 		return map;
+
 	}
 	
 	
