@@ -50,7 +50,7 @@
 						</p>
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">수강중인 강의 목록</a></span>
+						<span class=""><a href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의 목록</a></span>
 					</div>
 				</div>
 			</div>

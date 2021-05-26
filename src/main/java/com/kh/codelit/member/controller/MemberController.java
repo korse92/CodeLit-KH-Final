@@ -1,11 +1,13 @@
 package com.kh.codelit.member.controller;
 
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
@@ -203,5 +208,42 @@ public class MemberController {
     	log.debug("calendar = {}", "calendar");
     }
 
+    
+    @GetMapping("/memberLectureList.do")
+    public String MemberLectureList(
+			@PathVariable(required = false) Integer catNo,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request,
+			Model model,
+			Principal principal) {
+		//1. 사용자 입력값
+		if(catNo == null)
+			catNo = 0;
+		int numPerPage = 12;
+		String memberId = principal != null ? principal.getName() : null;
+		log.debug("catNo = {}", catNo);
+		log.debug("cPage = {}", cPage);
+		log.debug("memberId = {}", memberId);
+		Map<String, Object> param = new HashMap<>();
+		param.put("numPerPage", numPerPage);
+		param.put("catNo", catNo);
+		param.put("cPage", cPage);
+		param.put("memberId", memberId);
 
+		//2. 업무로직
+		//a. contents영역
+		List<Lecture> list = lectureService.selectLectureList(param);
+		log.debug("list = {}", list);
+
+		//b. pageBar영역
+		int totalContents = lectureService.getTotalContents(catNo);
+		String url = HelloSpringUtils.convertToParamUrl(request);
+		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+
+		//3.jsp 위임처리
+		model.addAttribute("list", list);
+		model.addAttribute("pageBar", pageBar);
+
+		return "/member/memberLectureList";
+	}
 }

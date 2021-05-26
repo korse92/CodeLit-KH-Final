@@ -143,7 +143,7 @@ alert("${msg}");
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
 					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
-					                  <li><a class="dropdown-item" href="#">수강중인 강의</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do">장바구니</a></li>
 					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
