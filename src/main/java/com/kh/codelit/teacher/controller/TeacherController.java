@@ -406,4 +406,8 @@ public class TeacherController {
 
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 }
