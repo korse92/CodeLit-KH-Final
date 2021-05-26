@@ -26,8 +26,9 @@
 }
 
 img#thumbImage {
-	width: 450px;
+		width: 550px;
 	height: 300px;
+	object-fit: fill;
 }
 </style>
 
@@ -79,14 +80,14 @@ img#thumbImage {
 				</div>
 				<div class="col-sm">
 					<input class="form-control" type="number" name="lecturePrice" min="0"
-						id="lecturePrice" placeholder="무료 강의일 경우 0을 입력해주세요." required>
+						id="lecturePrice" placeholder="무료 강의일 경우 0을 입력해주세요.(기본값 0)">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-2 align-self-center">
 					<label class="form-label" for="lectureHandout">첨부파일</label>
 				</div>
-				<div class="col-sm">
+				<div class="col-sm-10">
 					<input class="form-control" type="file" name="lectureHandout"
 						id="lectureHandout">
 				</div>
@@ -98,7 +99,7 @@ img#thumbImage {
 				<div class="col-sm-10">
 					<img
 						src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image"
-						class="img-thumbnail w-100" id="thumbImage" alt="썸네일 이미지">
+						class="img-thumbnail" id="thumbImage" alt="썸네일 이미지">
 					<input
 						class="form-control d-none" type="file" name="lectureThumbnail"
 						id="lectureThumbnail">
@@ -120,6 +121,49 @@ img#thumbImage {
 				</div>
 			</div>
 
+			<div id="selectedVido" class="row">
+				<label class="form-label mb-2" for="">커리큘럼 등록</label>
+				<div class="row my-0 justify-content-end">
+					<div class="col-auto">
+						<button type="button" class="btn p-0" id="partAddBtn"><i class="fas fa-plus-square text-primary fs-3"></i></button>
+						<button type="button" class="btn p-0" id="partDelBtn"><i class="fas fa-minus-square text-warning fs-3"></i></button>
+					</div>
+				</div>
+				<div class="row justify-content-start">
+					<div class="col-sm-12" id="inputCurriculum">
+						<div class="partDiv row justify-content-end my-1">
+							<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
+							<div class="col-sm-11 chapterDiv">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+							</div>
+						</div>
+						<div class="partDiv row justify-content-end my-1">
+							<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
+							<div class="col-sm-11 chapterDiv">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+							</div>
+						</div>
+						<div class="partDiv row justify-content-end my-1">
+							<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
+							<div class="col-sm-11 chapterDiv">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+							</div>
+						</div>
+						<input type="button" value="테스트" id="curtest"/>
+					</div>
+				</div>
+				<input type="hidden" name="curriculumMap" />
+			</div>
+
 			<div id="selectedStreaming" class="row">
 				<label class="form-label mb-2" for="">강의일정</label>
 				<div class="col-sm">
@@ -127,6 +171,7 @@ img#thumbImage {
 					<input type="hidden" name="streamingDateList" />
 				</div>
 			</div>
+
 			<div class="row form-group justify-content-end">
 				<div class="col-sm-auto">
 					<input class="btn btn-warning btn" type="reset" value="리셋">
@@ -137,47 +182,151 @@ img#thumbImage {
 	</div>
 </div>
 <script>
-  $(thumbImage).click(e => {
-    $(lectureThumbnail).trigger('click');
-  });
 
-  $(lectureThumbnail).change(e => {
-    const target = e.target;
-    const files = target.files;
 
-    // FileReader support
-    if (FileReader && files && files.length) {
-        var fr = new FileReader();
-        fr.onload = function () {
-            document.getElementById("thumbImage").src = fr.result;
-        }
-        fr.readAsDataURL(files[0]);
-    }
-    // Not supported
-    else {
-        // fallback -- perhaps submit the input to an iframe and temporarily store
-        // them on the server until the user's session ends.
-        document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
-    }
-  });
 
-  $("[name=lectureEnrollFrm").on('reset', e => {
-    document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
-  });
+	//part>chapter div 추가 함수
+	var partInputNo = 0;
 
-  //ckeditor 생성
-  CKEDITOR.replace('lectureIntro', {
-	  height: 500
-  });
+	$((e) => {
+		$(partAddBtn).click(e => {
+			/* let $partDiv = $("<div></div>", {
+				"class" : ""
+			}).; */
+			$(inputCurriculum).append($("<input>", {
+				"type" : "text",
+				"class" : "form-control my-1",
+				"placeholder" : "파트 제목 입력"
+			}));
+		});
 
-  $("[name=lectureEnrollFrm]").submit(e => {
-	  var $lectureGuideline = $(lectureGuideline)
-	  if(!$lectureGuideline.val()){
-		  $lectureGuideline.val(1);
+		$(thumbImage).click(e => {
+			$(lectureThumbnail).trigger('click');
+		});
 
-	  }
-  });
+		$(lectureThumbnail).change(e => {
+			const target = e.target;
+			const files = target.files;
 
+			// FileReader support
+			if (FileReader && files && files.length) {
+				var fr = new FileReader();
+				fr.onload = function () {
+						document.getElementById("thumbImage").src = fr.result;
+				}
+				fr.readAsDataURL(files[0]);
+			}
+			// Not supported
+			else {
+				// fallback -- perhaps submit the input to an iframe and temporarily store
+				// them on the server until the user's session ends.
+				document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
+			}
+		});
+
+		$("[name=lectureEnrollFrm").on('reset', e => {
+			document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
+		});
+
+		//ckeditor 생성
+		CKEDITOR.replace('lectureIntro', {
+			height: 500
+		});
+
+		$("[name=lectureEnrollFrm]").submit(e => {
+			var $lectureGuideline = $(lectureGuideline)
+			if(!$lectureGuideline.val()){
+				$lectureGuideline.val(1);
+			}
+
+			var $lecturePrice = $(lecturePrice)
+			if(!$lecturePrice.val()){
+				$lecturePrice.val(0);
+			}
+
+			$("[name=curriculumMap]").val(createCurMap());
+
+			//e.preventDefault();//테스트용
+		});
+
+		$(curtest).click(e => {
+			createCurMap();
+		});
+
+	});
+
+	//파트, 챕터값을 map(part, chapter[])로 만들어주기
+	function createCurMap(){
+		//var curMap = new Map();
+		const curArr = new Array();
+		const $partDiv = $("#inputCurriculum").find(".partDiv");
+		//console.log($partDiv);
+		$partDiv.each((pIdx, elem) => {
+			let $partInput = $(elem).find(".partInput");
+			//curMap에 key: Part객체 생성, value: Array객체 생성
+
+			if(!$partInput.val())
+				return true;
+
+			let lecturePart = new LecturePart(pIdx, $partInput.val());
+
+			const curObj =  {
+					"part" : lecturePart,
+					"chapterArr" : new Array()
+			}
+			//curMap.set(lecturePart, new Array());
+
+			let $chapterInputs = $partInput.next().find(".chapterInput");
+			//console.log($chapterInputs);
+			$chapterInputs.each((cIdx, elem) => {
+				if(!$(elem).val())
+					return true;// jQuery의 each에서 true리턴 : continue, false리턴 : break;
+				//let chapArr = curMap.get(lecturePart);
+
+				//console.log(chapArr);
+				let lectureChapter = new LectureChapter(cIdx, $(elem).val(), null);
+				//chapArr.push(lectureChapter);
+				curObj.chapterArr.push(lectureChapter);
+			});
+			curArr.push(curObj);
+
+		});
+		//console.log(curMap);
+		console.log("curArr", curArr);
+
+		const jsonStr = JSON.stringify(curArr);
+		console.log("jsonStr", jsonStr);
+
+		return jsonStr;
+	}
+
+	function LecturePart(lecturePartNo, lecturePartTitle) {
+		this.lecturePartNo = lecturePartNo;
+		this.lecturePartTitle = lecturePartTitle;
+	}
+
+	function LectureChapter(lecChapterNo, lecChapterTitle, lecChapterVideo) {
+		this.lecChapterNo = lecChapterNo;
+		this.lecChapterTitle = lecChapterTitle;
+		this.lecChapterVideo = lecChapterVideo;
+	}
+
+	function replacer(key, value) {
+		if(value instanceof Map) {
+			return Array.from(value.entries()); // or with spread: value: [...value]
+		} else {
+			return value;
+		}
+	}
+
+	function reviver(key, value) {
+		if(typeof value === 'object' && value !== null) {
+			if (value.dataType === 'Map') {
+				return new Map(value.value);
+			}
+		}
+		return value;
+	}
 </script>
 
 <!-- 컨텐츠 끝 -->

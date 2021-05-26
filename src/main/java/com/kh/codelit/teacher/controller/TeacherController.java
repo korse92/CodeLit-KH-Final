@@ -12,29 +12,30 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.kh.codelit.attachment.model.exception.AttachmentException;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.service.TeacherService;
@@ -193,12 +194,26 @@ public class TeacherController {
 			@ModelAttribute Lecture lecture,
 			@RequestParam(required = false) MultipartFile lectureThumbnail,
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
+			@RequestParam String curriculumMap,
 			HttpServletRequest request,
 			Authentication authentication,
 			RedirectAttributes redirectAttr) {
 
 		try {
 			log.debug("lecture(필드값 Set 전) = {}", lecture);
+			log.debug("curriculumMap = {}", curriculumMap);
+
+			Gson gson = new Gson();
+
+			/*
+			 * Type listType = new TypeToken<List<>>
+			 *
+			 * JsonArray array = gson.fromJson(curriculumMap, JsonArray.class);
+			 * for(JsonElement elem : array) { log.debug(elem.toString()); }
+			 */
+
+			//log.debug("array = {}", array);
+
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
 			String thumbnailsSaveDirectory =
@@ -224,7 +239,7 @@ public class TeacherController {
 				//저장할 파일명 생성
 				File renamedFile = HelloSpringUtils.getRenamedFile(thumbnailsSaveDirectory, lectureThumbnail.getOriginalFilename());
 				//파일 저장
-				lectureThumbnail.transferTo(renamedFile);
+				//lectureThumbnail.transferTo(renamedFile);
 
 				lecture.setLectureThumbOrigin(lectureThumbnail.getOriginalFilename());
 				lecture.setLectureThumbRenamed(renamedFile.getName());
@@ -243,7 +258,7 @@ public class TeacherController {
 				//저장할 파일명 생성
 				File renamedFile = HelloSpringUtils.getRenamedFile(handoutsSaveDirectory, lectureHandout.getOriginalFilename());
 				//파일 저장
-				lectureHandout.transferTo(renamedFile);
+				//lectureHandout.transferTo(renamedFile);
 				//Attachment객체 생성
 				Attachment attach = new Attachment();
 				attach.setOriginalFilename(lectureHandout.getOriginalFilename());
@@ -259,13 +274,13 @@ public class TeacherController {
 			lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
 			log.debug("lecture(필드값 Set 후) = {}", lecture);
 
-			int result = lectureService.insertLecture(lecture);
+			//int result = lectureService.insertLecture(lecture);
 
 			//2. 사용자 피드백
-			String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
-			redirectAttr.addFlashAttribute("msg", msg);
+			//String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
+			//redirectAttr.addFlashAttribute("msg", msg);
 
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			log.error("첨부파일 등록 오류!", e);
 			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
 		} catch (Exception e) {

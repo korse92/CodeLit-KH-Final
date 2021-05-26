@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-@SessionAttributes(value = {"categoryList"})
+//@SessionAttributes(value = {"categoryList"})
 public class CategoryAdvice {
 	
 	@Autowired
