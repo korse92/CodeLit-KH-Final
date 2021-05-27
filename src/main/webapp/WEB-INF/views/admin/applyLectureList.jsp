@@ -12,12 +12,16 @@
 </jsp:include>
 
 <script>
-
 function deleteLecture(no) {
 	if(confirm(`강의 신청을 거절하시겠습니까?`)){
 		
 	  var $frm = $(document.deleteLectureFrm);
 	  $frm.find("[name=no]").val(no);
+	  
+	  // 지헌 - 알림관련 스크립트 추가
+	  const id = $("#id").val();
+	  sendMessage("/app/reject/"+id);
+	  
 	  $frm.submit();
 	}
 
@@ -60,6 +64,14 @@ function deleteLecture(no) {
 	             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteLecture('${lectureList.lectureNo}');">거절</button>
 	          </td>
 	        </tr>
+	        
+	        <!-- 지헌 / 알림관련 hidden 값 추가 -->
+		  	<input type="hidden" value="[반려]강의 신청이 거절되었습니다." id="msgTitle" />
+			<input type="hidden" 
+				value="강의번호 ${lectureList.lectureNo} 가 신청이 거절되었습니다." id="msgContent" />
+			<input type="hidden" id="id" value="${lectureList.refMemberId}"/>
+			<!-- 지헌 / 알림관련 종료-->
+			
 	  	 </c:forEach>
 	  	</c:if> 
 	</table>
@@ -67,7 +79,7 @@ function deleteLecture(no) {
 	  		action="${pageContext.request.contextPath}/admin/deleteLecture.do"
 	  		method="POST"	>
 	  	<input type="hidden" name="no">
-	  </form:form>	    	
+	  </form:form>	
 	 <!-- 페이지 바 -->
 	  <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 	 	<c:if test="${!empty list}">

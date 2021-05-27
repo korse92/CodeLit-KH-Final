@@ -1,6 +1,5 @@
 package com.kh.codelit.common.aop;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.codelit.lecture.model.service.LectureService;
-import com.kh.codelit.websocket.model.service.MessengerService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,8 +21,7 @@ public class CategoryAdvice {
 	@Autowired
 	private LectureService lectureService;
 
-	@Autowired
-	private MessengerService msgService;
+
 
 	@ModelAttribute
 	public void getCategoryList(Model model) {
@@ -40,16 +37,5 @@ public class CategoryAdvice {
 
 	}
 	
-	@ModelAttribute 
-	public void getReadVal(Principal pri, Model model){
-		if(pri != null) {
-			int readVal = msgService.getReadVal(pri.getName());
-			model.addAttribute("readVal", readVal);			  
-		}
-	}
-	/*
-	 * @ModelAttribute public void getMsg() {
-	 * 
-	 * }
-	 */
+
 }

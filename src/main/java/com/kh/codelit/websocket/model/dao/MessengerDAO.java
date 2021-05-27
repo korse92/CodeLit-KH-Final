@@ -23,5 +23,7 @@ public interface MessengerDAO {
 
 	List<Messenger> alarmList(String memberId);
 
+	List<String> selectAuthTeacher();
+
 
 }

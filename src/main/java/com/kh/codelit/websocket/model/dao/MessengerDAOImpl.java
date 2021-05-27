@@ -62,5 +62,10 @@ public class MessengerDAOImpl implements MessengerDAO{
 		return session.selectList("msg.selectList", memberId);
 	}
 
+	@Override
+	public List<String> selectAuthTeacher() {
+		return session.selectList("msg.selectAuth");
+	}
+
 	
 }

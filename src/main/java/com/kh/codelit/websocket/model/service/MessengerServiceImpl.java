@@ -58,4 +58,9 @@ public class MessengerServiceImpl implements MessengerService {
 		return dao.alarmList(memberId);
 	}
 
+	@Override
+	public List<String> selectAuthTeacher() {
+		return dao.selectAuthTeacher();
+	}
+
 }	

@@ -22,5 +22,7 @@ public interface MessengerService {
 	Messenger selectOneMsg(int msgNo);
 
 	List<Messenger> alarmList(String memberId);
+
+	List<String> selectAuthTeacher();
 	
 }

@@ -14,6 +14,14 @@
 		<result column="member_id" property="memberId"/>
 	</resultMap>
 	
+	<select id="selectAuthTeacher" resultMap="selMember">
+		select
+			*
+		from
+			authorities
+		where
+			auth = 'ROLE_TEACHER'
+	</select>
 	<insert id="insertMsg">
 		insert into
 			messenger

@@ -101,9 +101,10 @@ public class noticeController {
 			String msg = result > 0 ?"등록완료 되었습니다.":"등록 실패하였습니다.";
 			redirect.addFlashAttribute("msg",msg);
 
-			//3. 특정사용자에게 알림(stomp)
-			sim.convertAndSend("/topic/user", "공지 관련 알림 test");
-			log.debug("sim==================={}", sim);
+			/*
+			 * //3. 특정사용자에게 알림(stomp) sim.convertAndSend("/topic/user", "공지 관련 알림 test");
+			 * log.debug("sim==================={}", sim);
+			 */
 		} catch (Exception e) {
 			throw e;
 		}
