@@ -56,6 +56,43 @@
 		</where>
 	</select>
 
+	 <select id="selectMemberOrderList "  resultMap="paymentMap">
+	 select * from
+	 		
+	 	payment p
+	 	left join lecture l
+	 	
+	 	on p.pay_code = l.lecture_no
+	 	where 
+	 	  p.ref_member_id = #{RefmemberId}
+		  
+	<!--        	select 
+			*
+		from 
+			member m
+		    	left join authorities a
+		        	on m.member_id = a.member_id
+                left join payment p
+                    on p.pay_code = m.member_id
+                left join lecture l
+                 on l.lecture_no = p.ref_member_id
+            where
+                   p.pay_code = #{payCode}; -->
+	 
+	
+	</select>
+	
+	<resultMap id="paymentMap" type="payment">
+		<id column="pay_code" property="payCode"/>
+		<result column="ref_member_id" property="refMemberId"/>
+		<result column="pay_no" property="payNo"/>
+		<result column="pay_cost" property="payCost"/>
+		<result column="pay_date" property="payDate"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_type" property="lectureType"/>
+		<result column="teacher_name" property="teacherName"/>
+	
+	</resultMap>
 	<select id="applyTeacherList" resultMap="TeacherListMap">
 		select
    			 *
@@ -96,8 +133,34 @@
 		<result column="ref_member_id" property="refMemberId"/>
 	</resultMap> 
 
-	 
-
+	
+ 	
+              <!--   left join payment p
+                    on p.pay_code = m.member_id
+                left join lecture l
+                 on l.lecture_no = p.ref_member_id;
+	<where>
+		m.member_id not in 
+		    (select member_id from authorities where auth = 'ROLE_ADMIN')
+		    <if test="keyword != null and keyword != ''">
+		    and
+		    	m.member_id like '%' || #{keyword} || '%'
+		    </if>		
+		</where>
+		 
+	 </select>
+		<resultMap type="payment" id="memberOrderMap">
+				
+		<id column="pay_code" property="payCode"/>
+		<result column="ref_member_id" property="refMemberId"/>
+		<result column="pay_no" property="payNo"/>
+		<result column="pay_cost" property="payCost"/>
+		<result column="pay_date" property="payDate"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_type" property="lectureType"/>
+		<result column="teacher_name" property="teacherName"/>
+		
+		</resultMap> -->
 	<update id="approveLecture">
 		update
 	    	lecture
@@ -217,7 +280,19 @@
 			</if>
 		</where>
 	</select>
-	
+		<select id="selectMemberOrderCount" resultType="_int">
+		select count(*)
+		from member m
+			left join (select * from authorities where auth = 'ROLE_ADMIN') a
+			on m.member_id = a.member_id
+		<where>
+			auth is null
+			<if test="keyword != null and keyword != ''">
+				and
+					m.member_id like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
 	<select id="searchCategory" resultMap="LectureListMap">
 	<!-- 이클립스의 emp_mapper참고 -->
 	select 
