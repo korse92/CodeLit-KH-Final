@@ -57,14 +57,17 @@
 	</select>
 
 	 <select id="selectMemberOrderList "  resultMap="paymentMap">
-	 select * from
+            
+     select * from
 	 		
 	 	payment p
 	 	left join lecture l
 	 	
 	 	on p.pay_code = l.lecture_no
+	 	
 	 	where 
-	 	  p.ref_member_id = #{RefmemberId}
+	 	 p.pay_code = #{payCode}
+	 	 
 		  
 	<!--        	select 
 			*

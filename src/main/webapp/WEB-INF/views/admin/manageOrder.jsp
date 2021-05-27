@@ -54,24 +54,7 @@
         </style>
 
 		<script>
-	/* 		window.onload = function() {
-				
-				let $del = $('.deleteMemberFrm');
-				
-				$del.each(function(i, elem) {
-					
-					elem.addEventListener('submit', function(e) {
-						
-						if(confirm("정말로 삭제하시겠습니까?")) {
-							return true;
-						} else {
-							e.preventDefault();
-						}
-						
-					});
-					
-				});
-				 */
+
 				
 				
 				const searchBtn = document.getElementById("searchBtn");
