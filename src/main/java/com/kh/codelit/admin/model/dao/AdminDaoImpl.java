@@ -174,6 +174,18 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectMemberOrderCount", param);
 	}
 
+	@Override
+	public int deleteTeacherAndAuth(String refMemberId) {
+
+		return session.delete("admin.deleteTeacherAndAuth", refMemberId);
+	}
+
+	@Override
+	public int deleteTeacherAndAuth2(String refMemberId) {
+
+		return session.delete("admin.deleteTeacherAndAuth2", refMemberId);
+	}
+
 
 
 

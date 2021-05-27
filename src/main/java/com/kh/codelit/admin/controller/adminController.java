@@ -181,6 +181,29 @@ public class adminController {
 		return mav;
 	}
 	
+	@PostMapping("/deleteTeacherAndAuth.do")
+	public String deleteTeacherAndAuth(
+				@RequestParam String refMemberId,
+				RedirectAttributes redirectAttr
+			) {
+		
+		log.debug("deleteTeacherAndAuth : refMemberId = ", refMemberId);
+		
+		String msg = null;
+		try {
+			
+			int result = adminService.deleteTeacherAndAuth(refMemberId);
+			msg = result > 0 ? "삭제에 성공했습니다." : "삭제에 실패했습니다.";
+			
+			
+		} catch(Exception e) {
+			throw e;
+		}
+		
+		redirectAttr.addFlashAttribute("msg", msg);
+		
+		return "redirect:/admin/manageTeacher.do";
+	}
 
 	
 	//강의 신청 목록

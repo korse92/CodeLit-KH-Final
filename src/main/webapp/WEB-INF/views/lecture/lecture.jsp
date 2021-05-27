@@ -14,6 +14,8 @@
 	<jsp:param value="CodeLit" name="title" />
 </jsp:include>
 
+<script src="${pageContext.request.contextPath}/resources/js/lecture.js"></script>
+
 <!-- 컨텐츠 시작 -->
 
 <!-- 개인 CSS, JS 위치 -->
@@ -44,61 +46,18 @@
 
 	<script>
 		
-		window.onload() = function() {
-			
-			/**
-			*	서버의 동영상을 비동기요청을 통해, 응답(blob타입)으로부터 blob url을 생성하고
-			*	video.src에 적용하여 재생
-			*/
-			
-			// blob url 생성 함수
-			const blobUrlCreator = blob => {
-				const url = window.URL.createObjectURL(blob);
-				return url;
-			};
-			  
-			
-			// 동영상 불러오는 함수
-			function loadXHR(url) {
-				
-				return new Promise((resolve, reject) => {
-					try {
-						const xhr = new XMLHttpRequest();
-						xhr.open("GET", url);
-						xhr.responseType = "blob";
-						xhr.onerror = event => {
-							reject(`Network error : ${event}`);
-						};
-						xhr.onload = () => {
-			          		if (xhr.status === 200) {
-						    	resolve(xhr.response);
-							} else {
-						    	reject(`XHR load error: ${xhr.statusText}`);
-						    }
-						};
-						xhr.send();
-					} catch(err) {
-						reject(err.message);
-					}
-				});
-				
-			}	// function loadXHR(url)
-			  
-			
-			
-			// 파일 가져오는 비동기 요청 -> blob url 생성 -> video src에 삽입
-			
-			const lectureVideo = document.getElementById("lectureVideo");
-			
-			loadXHR('$pageContext.request.contextPath}/resources/upload/notice/test.mp4')
-			.then(blobUrlCreator)
-			.then(url => {
-				lectureVideo.src = url;
-			});
-			
-		} // window.onload
-	
-	
+	window.onload = function() {
+		
+		// 파일 가져오는 비동기 요청 -> blob url 생성 -> video src에 삽입
+		const lectureVideo = document.getElementById("lectureVideo");
+		
+		loadXHR('test.mp4')
+		.then(blobUrlCreator)
+		.then(url => {
+			lectureVideo.src = url;
+		});
+		
+	}
 
   </script>
 
