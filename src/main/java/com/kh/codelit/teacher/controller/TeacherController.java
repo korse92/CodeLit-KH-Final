@@ -178,6 +178,7 @@ public class TeacherController {
 			@RequestParam(required = false) MultipartFile lectureThumbnail,
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
 			@RequestParam String curriculum,
+			@RequestParam(required = false) MultipartFile[] chapterVideos,
 			HttpServletRequest request,
 			Authentication authentication,
 			RedirectAttributes redirectAttr) {

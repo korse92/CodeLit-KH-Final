@@ -283,7 +283,7 @@ img#thumbImage {
 			</div>
 
 			<div class="selectedVideo row">
-				<label class="form-label mb-2" for="">커리큘럼 등록</label>
+				<label class="form-label mb-2" for="">커리큘럼 등록 (스트리밍 강의일 경우 영상첨부 안하셔도 됩니다.)</label>
 				<!-- <div class="row my-0 justify-content-end">
 					<div class="col-auto">
 						<button type="button" class="btn p-0" id="partAddBtn"><i class="fas fa-plus-square text-primary fs-3"></i></button>
@@ -293,7 +293,7 @@ img#thumbImage {
 				<div class="col-sm">
 					<div class="d-flex flex-column align-items-start" id="inputCurriculum">
 						<!--
-						<div class="partDiv w-100">
+						<div class="part-group w-100">
 							<div class="input-group">
 								<button type="button" class="btn p-0 me-2 partDelBtn"
 										data-bs-toggle="tooltip" data-bs-placement="left" title="파트 삭제">
@@ -301,20 +301,23 @@ img#thumbImage {
 								</button>
 								<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
 							</div>
-							<div class="input-group ps-5">
-								<button type="button" class="btn p-0 me-2 chapDelBtn"
-										data-bs-toggle="tooltip" data-bs-placement="left" title="챕터 삭제">
-									<i class="fas fa-minus-square text-warning fs-3"></i>
-								</button>
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+							<div class="chapter-group ps-5">
+								<div class="input-group">
+									<button type="button" class="btn p-0 me-2 chapDelBtn"
+											data-bs-toggle="tooltip" data-bs-placement="left" title="챕터 삭제">
+										<i class="fas fa-minus-square text-warning fs-3"></i>
+									</button>
+									<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+								</div>
+								<input type="file" class="form-control form-control-sm" name="chapterVideo" accept="video/*">
 							</div>
-							<button type="button" class="btn chapAddBtn ms-5 p-0"
+							<button type="button" class="btn chapAddBtn ms-5 mt-1 p-0"
 									data-bs-toggle="tooltip" data-bs-placement="left" title="챕터 추가">
 								<i class="fas fa-plus-square text-primary fs-3"></i>
 							</button>
 						</div>
 						-->
-						<button type="button" class="btn p-0 partAddBtn"
+						<button type="button" class="btn p-0 mt-1 partAddBtn"
 								data-bs-toggle="tooltip" data-bs-placement="left" title="파트 추가">
 							<i class="fas fa-plus-square text-primary fs-3"></i>
 						</button>
