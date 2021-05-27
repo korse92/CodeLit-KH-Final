@@ -225,24 +225,30 @@
 	<select id="mainSearchResult" resultMap="mainSearchMap">
 	
 	select
-		 *
+    	*
 	from 
-		lecture left join teacher using(ref_member_id)
+    	lecture l left join teacher t 
+        	on l.ref_member_id = t.ref_member_id
+            	left join lecture_comment c 
+                	on t.ref_member_id = c.ref_member_id
 	<where>
-		lecture_name like '%' || #{searchKeyword} || '%' and lecture_accept_yn = 'Y'
-	</where> 	
-	order by lecture_no desc
+    	l.lecture_name like '%' || #{searchKeyword} || '%' and l.lecture_accept_yn = 'Y'
+    </where>	
+	order by
+    	l.lecture_no desc
 	
 	</select>
 	
 	<resultMap type="map" id="mainSearchMap">
 		<id column="lecture_no" property="lectureNo"/>
+		<result column="ref_lec_cat_no" property="refLecCatNo"/>
 		<result column="ref_member_id" property="refMemberId"/>
 		<result column="lecture_name" property="lectureName"/>
 		<result column="lecture_intro" property="lectureIntro"/>
 		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
 		<result column="lecture_price" property="lecturePrice"/>
 		<result column="teacher_name" property="teacherName"/>
+		<result column="lec_assessment" property="lecAssessment"/>
 	</resultMap>
 	
 	
