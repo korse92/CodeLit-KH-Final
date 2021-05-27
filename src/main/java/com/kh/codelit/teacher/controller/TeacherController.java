@@ -29,12 +29,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.kh.codelit.attachment.model.exception.AttachmentException;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.community.notice.model.vo.Notice;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.service.TeacherService;
@@ -45,7 +50,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/teacher")
-
 public class TeacherController {
 
 	@Autowired
@@ -102,7 +106,7 @@ public class TeacherController {
 				dir.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
 			}
 
-			if (upFile.isEmpty()) {
+			if(upFile.isEmpty()) {
 
 				result = teacherService.insertTeacherRequest(teacher);
 
@@ -112,7 +116,7 @@ public class TeacherController {
 				Member member = memberService.selectOneMember(teacher.getRefMemberId());
 				String oldFilePath = request.getServletContext()
 						.getRealPath("/resources/upload/member/" + member.getMemberReProfile());
-				
+
 				File oldFile = new File(oldFilePath);
 
 				// 리네임드파일 생성
@@ -169,38 +173,56 @@ public class TeacherController {
 	}
 
 	@PostMapping("/lectureEnroll.do")
-	public String lectureEnroll(@ModelAttribute Lecture lecture,
+	public String lectureEnroll(
+			@ModelAttribute Lecture lecture,
 			@RequestParam(required = false) MultipartFile lectureThumbnail,
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
-			HttpServletRequest request, Authentication authentication, RedirectAttributes redirectAttr) {
+			@RequestParam String curriculum,
+			@RequestParam(required = false) MultipartFile[] chapterVideos,
+			HttpServletRequest request,
+			Authentication authentication,
+			RedirectAttributes redirectAttr) {
 
 		try {
 			log.debug("lecture(필드값 Set 전) = {}", lecture);
 
-			// 0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
-			String thumbnailsSaveDirectory = request.getServletContext().getRealPath(Attachment.PATH_LECTURE_THUMBNAIL);
-			String handoutsSaveDirectory = request.getServletContext().getRealPath(Attachment.PATH_LECTURE_HANDOUT);
+			Gson gson = new Gson();
+
+			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
+			log.debug("lecturePartArr = {}", lecturePartArr);
+
+			for(LecturePart part : lecturePartArr) {
+				log.debug("{}", part);
+				for(LectureChapter chap : part.getChapterArr()) {
+					log.debug("{}", chap);
+				}
+			}
+
+			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
+			String thumbnailsSaveDirectory =
+					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_THUMBNAIL);
+			String handoutsSaveDirectory =
+					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_HANDOUT);
 
 			File dirThumb = new File(thumbnailsSaveDirectory);
-			if (!dirThumb.exists()) {
+			if(!dirThumb.exists()) {
 				dirThumb.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
 			}
 
 			File dirHandout = new File(handoutsSaveDirectory);
-			if (!dirHandout.exists()) {
+			if(!dirHandout.exists()) {
 				dirHandout.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
 			}
 
-			if (!lectureThumbnail.isEmpty() || !(lectureThumbnail.getSize() == 0)) {
+			if(!lectureThumbnail.isEmpty() || !(lectureThumbnail.getSize() == 0)) {
 				log.debug("lectureThumbnail = {}", lectureThumbnail);
 				log.debug("lectureThumbnail.name = {}", lectureThumbnail.getOriginalFilename());
 				log.debug("lectureThumbnail.size = {}", lectureThumbnail.getSize());
 
-				// 저장할 파일명 생성
-				File renamedFile = HelloSpringUtils.getRenamedFile(thumbnailsSaveDirectory,
-						lectureThumbnail.getOriginalFilename());
-				// 파일 저장
-				lectureThumbnail.transferTo(renamedFile);
+				//저장할 파일명 생성
+				File renamedFile = HelloSpringUtils.getRenamedFile(thumbnailsSaveDirectory, lectureThumbnail.getOriginalFilename());
+				//파일 저장
+				//lectureThumbnail.transferTo(renamedFile);
 
 				lecture.setLectureThumbOrigin(lectureThumbnail.getOriginalFilename());
 				lecture.setLectureThumbRenamed(renamedFile.getName());
@@ -208,20 +230,19 @@ public class TeacherController {
 
 			List<Attachment> attachList = new ArrayList<>();
 
-			for (MultipartFile lectureHandout : lectureHandouts) {
-				if (lectureHandout.isEmpty() || lectureHandout.getSize() == 0)
+			for(MultipartFile lectureHandout : lectureHandouts) {
+				if(lectureHandout.isEmpty() || lectureHandout.getSize() == 0)
 					continue;
 
 				log.debug("lectureHandout = {}", lectureHandouts);
 				log.debug("lectureHandout.name = {}", lectureHandout.getOriginalFilename());
 				log.debug("lectureHandout.size = {}", lectureHandout.getSize());
 
-				// 저장할 파일명 생성
-				File renamedFile = HelloSpringUtils.getRenamedFile(handoutsSaveDirectory,
-						lectureHandout.getOriginalFilename());
-				// 파일 저장
-				lectureHandout.transferTo(renamedFile);
-				// Attachment객체 생성
+				//저장할 파일명 생성
+				File renamedFile = HelloSpringUtils.getRenamedFile(handoutsSaveDirectory, lectureHandout.getOriginalFilename());
+				//파일 저장
+				//lectureHandout.transferTo(renamedFile);
+				//Attachment객체 생성
 				Attachment attach = new Attachment();
 				attach.setOriginalFilename(lectureHandout.getOriginalFilename());
 				attach.setRenamedFilename(renamedFile.getName());
@@ -230,20 +251,21 @@ public class TeacherController {
 				attachList.add(attach);
 			}
 
-			// 1. 업무로직
+
+			//1. 업무로직
 			lecture.setAttachList(attachList);
-			lecture.setRefMemberId(((Member) authentication.getPrincipal()).getMemberId());
+			lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
 			log.debug("lecture(필드값 Set 후) = {}", lecture);
 
-			int result = lectureService.insertLecture(lecture);
+			//int result = lectureService.insertLecture(lecture);
 
-			// 2. 사용자 피드백
-			String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
-			redirectAttr.addFlashAttribute("msg", msg);
+			//2. 사용자 피드백
+			//String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
+			//redirectAttr.addFlashAttribute("msg", msg);
 
-		} catch (IOException | IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			log.error("첨부파일 등록 오류!", e);
-			throw new AttachmentException("첨부파일 등록 오류!"); // Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
+			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
 		} catch (Exception e) {
 			log.error("강의 등록 오류!", e);
 			throw e;
@@ -252,110 +274,109 @@ public class TeacherController {
 		return "redirect:/teacher/lectureEnroll.do";
 	}
 
-	
-	  @GetMapping("/teacherDetail.do") 
-	  public void detail(Model model, Principal pri ,Member member ) {
 
-	  String refMemberId = pri.getName();
-	  model.addAttribute("refMemberId", refMemberId); 
-	  
-	  Teacher teacher = teacherService.selectOne(refMemberId);
-	  model.addAttribute("teacher", teacher); 
-	  log.debug("teacher = {}", teacher);
+	@GetMapping("/teacherDetail.do")
+	public void detail(Model model, Principal pri ,Member member ) {
 
-	  }
+		String refMemberId = pri.getName();
+		model.addAttribute("refMemberId", refMemberId);
 
-		@PostMapping("/teacherUpdate.do")
-		public ModelAndView teacherUpdate(@ModelAttribute Teacher teacher,
-				@RequestParam(value = "upFile", required = false) MultipartFile upFile, ModelAndView mav,
-				HttpServletRequest request, Authentication authentication) {
+		Teacher teacher = teacherService.selectOne(refMemberId);
+		model.addAttribute("teacher", teacher);
+		log.debug("teacher = {}", teacher);
 
-			int result = 0;
-			String msg = null;
-		
-			try {
+	}
 
-				// 0. 파일 저장
-				// 저장경로
-				// pageContext - request - session - application에서 app이 servletContext이다.
-				// 가져온 경로의 앞 /는 src/main/webapp을 가리킴. (컨텍스트 루트)
-				String saveDirectory = request.getServletContext().getRealPath("/resources/upload/member");
+	@PostMapping("/teacherUpdate.do")
+	public ModelAndView teacherUpdate(@ModelAttribute Teacher teacher,
+			@RequestParam(value = "upFile", required = false) MultipartFile upFile, ModelAndView mav,
+			HttpServletRequest request, Authentication authentication) {
 
-				// File은 오로지 파일만 가리키는 것이 아니라, 존재하지 않는 것도 가리킬 수 있음. (생성용)
-				File dir = new File(saveDirectory);
-				if (!dir.exists()) {
-					dir.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
-				}
+		int result = 0;
+		String msg = null;
 
-				if (upFile.isEmpty()) {
+		try {
 
-					result = teacherService.updateModify(teacher);
+			// 0. 파일 저장
+			// 저장경로
+			// pageContext - request - session - application에서 app이 servletContext이다.
+			// 가져온 경로의 앞 /는 src/main/webapp을 가리킴. (컨텍스트 루트)
+			String saveDirectory = request.getServletContext().getRealPath("/resources/upload/member");
 
-				} else {
-
-					// 디비를 가져와야 기존 파일 삭제가 필요한지 알 수 있다.
-					Member member = memberService.selectOneMember(teacher.getRefMemberId());
-					String oldFilePath = request.getServletContext()
-							.getRealPath("/resources/upload/member/" + member.getMemberReProfile());
-					log.debug("기존파일경로 = {}", oldFilePath);
-					File oldFile = new File(oldFilePath);
-
-					// 리네임드파일 생성
-					File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
-
-					log.debug("upFile = {}", upFile);
-					log.debug("renamedFile = {}", renamedFile);
-
-					// 오리지널네임과 리네임 담은 맵객체 생성
-					Map<String, String> map = new HashMap<>();
-					map.put("memberProfile", upFile.getOriginalFilename());
-					map.put("memberReProfile", renamedFile.getName());
-					map.put("id", teacher.getRefMemberId());
-
-					// 티처 정보 및 파일네임을 담은 메소드
-					result = teacherService.selectUpdate(teacher, map);
-				
-					if (oldFile != null)
-						oldFile.delete(); // 기존 파일 삭제
-					upFile.transferTo(renamedFile); // 업로드한 파일데이터를 지정한 파일에 저장한다.
-
-					// authentication에 담긴 멤버 정보 변경
-					member.setMemberProfile(upFile.getOriginalFilename());
-					member.setMemberReProfile(renamedFile.getName());
-
-					Authentication newAuthentication = new UsernamePasswordAuthenticationToken(member,
-							authentication.getCredentials(), authentication.getAuthorities());
-					SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
-					log.debug("강사신청 후 변경된 프로필 확인 = {}", ((Member) authentication.getPrincipal()).getMemberProfile());
-
-				} // upfile.isEmpty()
-
-				
-
-			} catch (IOException | IllegalStateException e) {
-				log.error("강사 신청 첨부파일 오류", e);
-				throw new RuntimeException("강사신청 첨부파일 저장 오류");
-			} catch (Exception e) {
-				msg = "신청에 실패했습니다.";
-				throw e;
+			// File은 오로지 파일만 가리키는 것이 아니라, 존재하지 않는 것도 가리킬 수 있음. (생성용)
+			File dir = new File(saveDirectory);
+			if (!dir.exists()) {
+				dir.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
 			}
 
-			FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
-			flashMap.put("msg", msg);
+			if (upFile.isEmpty()) {
 
-			mav.setViewName("/teacher/teacherProfile");
+				result = teacherService.updateModify(teacher);
 
-			return mav;
-		}	
-	
+			} else {
 
-	
+				// 디비를 가져와야 기존 파일 삭제가 필요한지 알 수 있다.
+				Member member = memberService.selectOneMember(teacher.getRefMemberId());
+				String oldFilePath = request.getServletContext()
+						.getRealPath("/resources/upload/member/" + member.getMemberReProfile());
+				log.debug("기존파일경로 = {}", oldFilePath);
+				File oldFile = new File(oldFilePath);
+
+				// 리네임드파일 생성
+				File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
+
+				log.debug("upFile = {}", upFile);
+				log.debug("renamedFile = {}", renamedFile);
+
+				// 오리지널네임과 리네임 담은 맵객체 생성
+				Map<String, String> map = new HashMap<>();
+				map.put("memberProfile", upFile.getOriginalFilename());
+				map.put("memberReProfile", renamedFile.getName());
+				map.put("id", teacher.getRefMemberId());
+
+				// 티처 정보 및 파일네임을 담은 메소드
+				result = teacherService.selectUpdate(teacher, map);
+
+				if (oldFile != null)
+					oldFile.delete(); // 기존 파일 삭제
+				upFile.transferTo(renamedFile); // 업로드한 파일데이터를 지정한 파일에 저장한다.
+
+				// authentication에 담긴 멤버 정보 변경
+				member.setMemberProfile(upFile.getOriginalFilename());
+				member.setMemberReProfile(renamedFile.getName());
+
+				Authentication newAuthentication = new UsernamePasswordAuthenticationToken(member,
+						authentication.getCredentials(), authentication.getAuthorities());
+				SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
+				log.debug("강사신청 후 변경된 프로필 확인 = {}", ((Member) authentication.getPrincipal()).getMemberProfile());
+
+			} // upfile.isEmpty()
+
+
+
+		} catch (IOException | IllegalStateException e) {
+			log.error("강사 신청 첨부파일 오류", e);
+			throw new RuntimeException("강사신청 첨부파일 저장 오류");
+		} catch (Exception e) {
+			msg = "신청에 실패했습니다.";
+			throw e;
+		}
+
+		FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+		flashMap.put("msg", msg);
+
+		mav.setViewName("/teacher/teacherProfile");
+
+		return mav;
+	}
+
+
+
 	@GetMapping("/lectureCalList.do")
 	public String calList() {
-
 		return null;
-		}
+	}
 
 	@GetMapping("/teacherProfile.do")
 	public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper, ModelAndView mav,
@@ -392,4 +413,3 @@ public class TeacherController {
 	}
 
 }
-

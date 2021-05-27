@@ -19,4 +19,6 @@ public class LecturePart {
 	//챕터 리스트
 	private List<LectureChapter> chepterList;
 
+	private LectureChapter[] chapterArr;
+
 }

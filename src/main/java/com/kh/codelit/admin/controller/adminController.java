@@ -235,7 +235,7 @@ public class adminController {
 	public ModelAndView applyTeacherList(ModelAndView mav) {
 		try {
 			List<Map<String, Object>> list = adminService.applyTeacherList();
-			log.debug("list ={}", list);
+			log.debug("applyTeacher list ={}", list);
 
 			mav.addObject("list", list);
 			mav.setViewName("/admin/applyTeacherList");
