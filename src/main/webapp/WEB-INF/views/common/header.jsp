@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${param.title}</title>
 
 <!-- jQuery -->
@@ -100,7 +101,7 @@ alert("${msg}");
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselList.do">문의</a></li>
 						</sec:authorize>
 
-					
+
 
 						<sec:authorize access="hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselListAdmin.do">문의</a></li>
