@@ -21,4 +21,10 @@ public class Payment {
 	private Date payDate;
 	
 	private List<Integer> refLectureNo;
+	private String lectureThumbRenamed;
+	private String lectureName;
+	private String teacherName;
+	private int lecturePrice;
+	private String lecCatName;
+	private String lectureIntro;
 }

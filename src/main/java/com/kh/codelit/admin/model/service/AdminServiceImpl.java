@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.codelit.admin.model.dao.AdminDao;
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.order.model.vo.Payment;
 import com.kh.codelit.teacher.model.vo.Teacher;
 
 @Service
@@ -103,6 +104,24 @@ public class AdminServiceImpl implements AdminService {
 
 		return adminDao.selectTeacherCount(param);
 	}
+
+	@Override
+	public int selectMemberOrderCount(Map<String, Object> param) {
+		
+		return adminDao.selectMemberOrderCount(param);
+	}
+
+	@Override
+	public List<Payment> selectMemberOrderList(Map<String, Object> param) {
+		
+		return adminDao.selectMemberOrderList(param);
+	}
+
+
+	
+
+
+	
 
 
 }
