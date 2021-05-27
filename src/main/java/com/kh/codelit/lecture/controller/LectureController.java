@@ -100,9 +100,6 @@ public class LectureController {
 		log.debug("lecture = {}", lecture);
 		log.debug("totalCmtPage = {}", totalCmtPage);
 		
-		// lecture 객체에 정보 담음
-		//lecture.setRefMemberId(loginMember.getMemberId());
-		//log.debug("lectureDetail@lecture = {}", lecture);
 		
 		//map객체에 담아보기
 		Map<String,Object> param = new HashMap<>();
@@ -123,12 +120,6 @@ public class LectureController {
 		return mav;
 	}
 
-	/*
-	 * @GetMapping("/mainAllLecture.do") public void mainAllLecture(@ModelAttribute
-	 * Lecture lecture) {
-	 * 
-	 * log.debug("메인 렉쳐 잘 도착! = {}", lecture); }
-	 */
 	
 	@GetMapping("/mainSearchResult.do")
 	public ModelAndView mainSearchResult(ModelAndView mav,
