@@ -74,5 +74,6 @@ public class Member implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
 
 }

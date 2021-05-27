@@ -16,13 +16,16 @@ public interface CounselDao {
 
 	int getTotalContents(String memberId);
 
+
 	Counsel selectOneCounsel(int counselNo);
 
 	int selectAnswerBool(int counselNo);
 
+
 	List<Counsel> selectCounselListAdmin(Map<String, Object> param);
 
 	int insertCounselAnswer(Counsel counsel);
+
 
 
 }

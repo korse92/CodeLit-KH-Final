@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,6 +72,21 @@ public class LectureDaoImpl implements LectureDao {
 	public List<Map<String, Object>> mainLecture() {
 		
 		return session.selectList("lecture.mainLecture");
+	}
+
+	@Override
+	public int clickCount(Map<String, Object> param) {
+		return session.update("lecture.clickCount", param);
+	}
+
+	@Override
+	public List<Map<String, Object>> rollingLecList() {
+		return session.selectList("lecture.rollingLecList");
+	}
+
+	@Override
+	public List<Map<String, Object>> mainSearchResult(Map<String, Object> param) {
+		return session.selectList("lecture.mainSearchResult", param);
 	}
 
 }

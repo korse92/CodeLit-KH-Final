@@ -33,15 +33,19 @@ public class CounselDaoImpl implements CounselDao {
 
 	@Override
 	public List<Counsel> selectCounselList(Map<String, Object> param) {
-		
-		String memberId = (String)param.get("memberId");
-		
+
 		int cPage = (int)param.get("cPage");
+		String memberId = (String)param.get("memberId");
+
+		
+	
+		
+
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
+
 		return session.selectList("counsel.selectCounselList", memberId, rowBounds);
 	}
 
@@ -50,6 +54,7 @@ public class CounselDaoImpl implements CounselDao {
 		
 		log.debug("counsel getTotalContents memberId = {}", memberId);
 		return session.selectOne("counsel.getTotalContents", memberId);
+
 	}
 
 	@Override
@@ -62,6 +67,7 @@ public class CounselDaoImpl implements CounselDao {
 	public int selectAnswerBool(int counselNo) {
 
 		return session.selectOne("counsel.selectAnswerBool", counselNo);
+
 	}
 
 	@Override

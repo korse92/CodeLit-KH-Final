@@ -41,12 +41,38 @@
 		from member
 		where member_id = #{id}
 	</select>
-	
+		
+	<select id="selectOne" resultType="member">
+		select *
+		from member
+		where member_id = #{id}
+	</select>
+		
 	<update id="updateMemberProfile">
 		update member
 		set member_profile = #{memberProfile},
 			member_re_profile = #{memberReProfile}
-		where member_id = #{id}
+		where member_id = #{meberId}
 	</update>
 	
+	<update id="updateMember">
+		update 
+		    member
+		set 	
+			member_pw =	#{memberPw},
+		    member_profile = #{memberProfile},
+			member_re_profile = #{memberReProfile}			
+		where
+		member_id = #{memberId}
+		
+	</update>
+	
+		<delete id="delete">
+			delete 
+			 from
+			
+			where
+			member_id = #{memberId}
+		
+	</delete>	
 </mapper>

@@ -6,13 +6,15 @@
 
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title" />
 </jsp:include>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- 컨텐츠 시작 -->
 
@@ -28,6 +30,18 @@
 <link href="${pageContext.request.contextPath}/resources/css/lecture.css" media="all" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
 
+<script>
+window.onload = function() {
+	const mainSearchBtn = document.getElementById("mainSearchBtn");
+	mainSearchBtn.addEventListener('click', function(e) {
+		
+		var searchKeyword = document.getElementById("mainSearch").value;
+		location.href=`${pageContext.request.contextPath}/lecture/mainSearchResult.do?keyword=\${searchKeyword}`;
+	});
+	
+};
+
+</script>
 
 
 <div class="container">
@@ -66,24 +80,25 @@
 		<div class="rollingPage">
 
 			<div class="rollingHead">
-				<p>추천검색</p>
+				<p>인기 강의</p>
 			</div>
 
 			<div class="rolling">
+				<%-- <form method="GET" id="rolling" action="${pageContext.request.contextPath}/lecture/rollingLecList.do"> --%>
 				<ul>
-					<li><a href="#">김진하, kh 떠나나?</a></li>
-					<li><a href="#">마이클황, 여행기 펴내다</a></li>
-					<li><a href="#">유득삼 아직도 아이언 "사람이 아냐"</a></li>
+					<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
+					<li><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${rolling.refLectureNo}">${vs.count}.&nbsp;&nbsp;${rolling.lectureName}</a></li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
 
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
-			<input type="text" class="form-control" placeholder="강의 검색"
+			<input type="search" class="form-control" placeholder="강의 검색" id="mainSearch" name="mainSearch"
 				aria-label="Recipient's username" aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary bg-light" type="button"
-				id="button-addon2">검색</button>
+				id="mainSearchBtn">검색</button>
 		</div>
 	</div>
 	<hr />

@@ -40,6 +40,7 @@ $(() => {
 <div class="container my-3">
 	<div class="card mx-auto">
 		<div class="card-header mb-3">
+		<!-- 분기처리 -->
 			<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 				<ol class="breadcrumb mb-0">
 					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/lecture/lectureList.do" class="text-decoration-none">전체 목록</a></li>
@@ -58,6 +59,8 @@ $(() => {
 						<h2 class="card-title">${lecture.lectureName}</h2>
 						<div class="card-subtitle text-muted mt-2">
 							<div class="row">
+							<!-- 분기처리 -->
+							<sec:authorize access="!hasRole('ADMIN')">
 								<div class="col-sm-auto">
 								<c:forEach var="i" begin="1" end="5">
 									<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
@@ -65,6 +68,7 @@ $(() => {
 								</div>
 								<div class="col-sm-auto">후기 : ${lecture.lectureCommentList.size()} 개</div>
 								<div class="col-auto">수강생 : 몇명</div>
+							</sec:authorize>
 							</div>
 							<div class="row my-1">
 								<div class="col-sm-auto">
@@ -88,6 +92,7 @@ $(() => {
 						</c:choose>
 						</p>
 					</div>
+					<sec:authorize access="!hasRole('ADMIN')">
 					<div class="row">
 						<div class="col-sm-2 p-0 me-2">
 							<button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="찜하기">
@@ -100,7 +105,14 @@ $(() => {
 							</button>
 						</div>
 					</div>
+					</sec:authorize>
 				</div>
+
+			</div>
+			<div class="row lec-thumbnail w-50">
+				<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${lecture.lectureThumbRenamed}" alt="" id ="photo_img" />
+
+
 
 			</div>
 		</div>
@@ -116,11 +128,13 @@ $(() => {
 						data-bs-target="#curriculum" type="button" role="tab"
 						aria-controls="curriculum" aria-selected="false">커리큘럼</button>
 				</li>
+				<sec:authorize access="!hasRole('ADMIN')">
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
 						data-bs-target="#review" type="button" role="tab"
 						aria-controls="review" aria-selected="false">강의 후기</button>
 				</li>
+				</sec:authorize>
 			</ul>
 			<div class="tab-content p-2" id="DetailTabContent" style="min-height: 500px;">
 				<div class="tab-pane fade show active" id="intro" role="tabpanel"
