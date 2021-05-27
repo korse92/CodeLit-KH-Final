@@ -52,7 +52,7 @@ function deleteTeacher(id){
 	          <td>${teacherList.lecCatName}</td>
 	          <td>${teacherList.refMemberId}</td>
 	          <td>${teacherList.teacherName}</td>
-	          <td>${teacherList.teacherLink}</td>
+	          <td><a href="${teacherList.teacherLink}">${teacherList.teacherLink}</a></td>
 	          <td>
 	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveTeacher.do?id=${teacherList.refMemberId}';">승인</button>
 	             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteTeacher('${teacherList.refMemberId}');">거절</button>
