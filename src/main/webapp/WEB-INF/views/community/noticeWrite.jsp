@@ -26,8 +26,8 @@ window.onload = function() {
 }
 // 유효성검사
 function checkContent() {
-	const title = $("[name=noticeTitle]");
-	const content = $("[name=noticeContent]");
+	const $title = $("#msgTitle");
+	const $content = $("#msgContent");
 	if(/^(.|\n)+$/.test(title.val()) == false){
 		alert("제목을 입력하세요");
 		return false;
@@ -36,6 +36,7 @@ function checkContent() {
 		alert("내용을 입력하세요");
 		return false;
 	}
+	sendMessage("/app/user");
 	return true;
 }
 </script>
@@ -51,13 +52,13 @@ function checkContent() {
           <div class="row title-group">
             <h5 class="col-sm-2 board-title">제목</h5>
             <div class="col-sm-10">
-              <input class="form-control" type="text" name="noticeTitle" id="noticeTitle">
+              <input class="form-control" type="text" name="noticeTitle" id="msgTitle">
             </div>
           </div>
           <div class="board-container">
             <!-- 이미지가 들어가면 콘텐츠에서 보여줘야함. 어떻게 서버처리할지 생각해볼것. -->
             <div class="form-group content">
-              <textarea class="form-control" name="noticeContent" id="noticeContent" rows="10"></textarea>
+              <textarea class="form-control" name="noticeContent" id="msgContent" rows="10"></textarea>
               	<div class="custom-file">
 	              	<img src="" alt="" id="photo_img">
 	                <input type="file" class="custom-file-input" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
@@ -67,7 +68,7 @@ function checkContent() {
           <div class="boardList-footer mt-2">
             <!-- 관리자-->
             <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeList.do'">취소</button>
-            <button type="submit" class="btn btn-primary complete-btn">완료</button>
+            <button type="submit" id="sendBtn" class="btn btn-primary complete-btn">완료</button>
           </div>
         </form>
       </div>
