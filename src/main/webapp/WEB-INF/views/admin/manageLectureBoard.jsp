@@ -114,6 +114,7 @@ window.onload = function() {
 								</button>
 							</td>
 						</tr>
+						<input type="hidden" name="memberId" value="${lec.refMemberId}" />
 					</c:forEach>
 				</c:if>
 			</tbody>

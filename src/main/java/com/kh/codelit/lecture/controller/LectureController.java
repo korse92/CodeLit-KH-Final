@@ -146,6 +146,19 @@ public class LectureController {
 		return mav;
 	}
 	
+	@GetMapping("/lecture.do")
+	public void lecture(
+			
+			) {
+		
+		try {
+			
+		} catch(Exception e) {
+			
+		}
+		
+	}
+	
 	
 
 	@GetMapping("/myAllLecture.do")

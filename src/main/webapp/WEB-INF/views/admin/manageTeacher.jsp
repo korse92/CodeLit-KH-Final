@@ -56,7 +56,6 @@
 
 		<script>
 			window.onload = function() {
-				
 				let $del = $('.deleteTeacherFrm');
 				
 				$del.each(function(i, elem) {
@@ -64,7 +63,12 @@
 					elem.addEventListener('submit', function(e) {
 						
 						if(confirm("정말로 삭제하시겠습니까?")) {
-							return true;
+						    
+							//지헌 - 알림관련 추가 스크립트
+						    const $id = $("[name=memberId]").val();
+						    sendMessage("/app/reject/"+$id);
+							
+						    return true;
 						} else {
 							e.preventDefault();
 						}
@@ -147,12 +151,15 @@
                     </td>
                     <td>
                     	<form:form method="POST" class="deleteTeacherFrm"
-                    				action="${pageContext.request.contextPath}/admin/deleteTeacher.do">
-                    	<input type="hidden" name="memberId" value="${teacher.refMemberId}" />
-                        <button type="submit" class="btn btn-danger text-light">권한삭제</button>
+                    				action="${pageContext.request.contextPath}/admin/deleteTeacherAndAuth.do">
+	                    	<input type="hidden" name = "refMemberId" value="${teacher.refMemberId}" />		
+	                        <button type="submit" class="btn btn-danger text-light">권한삭제</button>
                     	</form:form>
                     </td>
                 </tr>
+                <!-- 지헌 알림 관련 태그 추가 -->
+                   	<input type="hidden" name="memberId" value="${teacher.refMemberId}" />
+              	<!-- 지헌 알림 관련 태그 종료 -->
                 </c:forEach>
               </tbody>
             </table>

@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.kh.codelit.admin.model.service.AdminService;
 import com.kh.codelit.common.HelloSpringUtils;
+import com.kh.codelit.lecture.model.service.LectureService;
+import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.order.model.vo.Payment;
 import com.kh.codelit.teacher.model.vo.Teacher;
@@ -36,6 +38,9 @@ public class adminController {
 	@Autowired
 	private AdminService adminService;
 
+	@Autowired
+	private LectureService lectureService;
+	
 	@GetMapping("/manageMemberIndex.do")
 	public void manageMemberIndex() {
 	}
@@ -176,6 +181,29 @@ public class adminController {
 		return mav;
 	}
 	
+	@PostMapping("/deleteTeacherAndAuth.do")
+	public String deleteTeacherAndAuth(
+				@RequestParam String refMemberId,
+				RedirectAttributes redirectAttr
+			) {
+		
+		log.debug("deleteTeacherAndAuth : refMemberId = ", refMemberId);
+		
+		String msg = null;
+		try {
+			
+			int result = adminService.deleteTeacherAndAuth(refMemberId);
+			msg = result > 0 ? "삭제에 성공했습니다." : "삭제에 실패했습니다.";
+			
+			
+		} catch(Exception e) {
+			throw e;
+		}
+		
+		redirectAttr.addFlashAttribute("msg", msg);
+		
+		return "redirect:/admin/manageTeacher.do";
+	}
 
 	
 	//강의 신청 목록
@@ -202,8 +230,11 @@ public class adminController {
 	@GetMapping("/approveLecture.do")
 	public void approveLecture(@RequestParam int no, Model model) {
 		//log.debug("getapproveLecture no = {}", no); 잘나옴
+		//지헌 알림관련 추가 코드
+		Lecture lec = lectureService.selectOneLecture(no);
+		model.addAttribute("lec", lec);
+
 		model.addAttribute("no", no);
-		
 
 	}
 
@@ -251,7 +282,6 @@ public class adminController {
 
 	@GetMapping("/approveTeacher.do")
 	public void approveTeacher(@RequestParam String id, Model model) {
-
 		model.addAttribute("id", id);
 
 	}
@@ -373,7 +403,10 @@ public class adminController {
 
 	@GetMapping("/rejectPlayingLecture.do")
 	public void rejectPlayingLecture(@RequestParam int no, Model model) {
-		//log.debug("getapproveLecture no = {}", no); 
+		//log.debug("getapproveLecture no = {}", no);
+		Lecture lec = lectureService.selectOneLecture(no);
+		model.addAttribute("lec", lec);
+
 		model.addAttribute("no", no);
 	}
 
