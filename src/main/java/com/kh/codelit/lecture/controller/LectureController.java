@@ -160,4 +160,52 @@ public class LectureController {
 	}
 	
 	
+
+	@GetMapping("/myAllLecture.do")
+	public ModelAndView myAllLecture(ModelAndView mav,
+									 Authentication authentication,
+									 HttpServletRequest request,
+									 @RequestParam(defaultValue ="1") int cPage) { 
+		
+
+		//페이징처리
+		int numPerPage = 10;
+		
+	try {
+		// 로그인 정보
+		Member loginTeacher = (Member)authentication.getPrincipal();
+		log.debug("loginTeacher = {}", loginTeacher);
+		loginTeacher.getMemberId();
+		log.debug("loginTeacher.id = {}", loginTeacher.getMemberId());
+		//loginTeacher.id = teacher
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("cPage", cPage);
+		param.put("numPerPage", numPerPage);
+		param.put("teacherId", loginTeacher.getMemberId());
+		log.debug("강의자의 내 강의 보기 param = {}", param);
+		
+		// b. pageBar 영역
+		int totalContents = lectureService.getTeacherTotalContents(param);
+		log.debug("강의자 목록 totalContents = {}", totalContents);
+		List<Map<String,Object>> list = lectureService.myAllLecture(param);
+		log.debug("list = {}", list);
+		 
+		
+		String url = HelloSpringUtils.convertToParamUrl(request);
+		log.debug("url = {}", url);
+		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		log.debug("pageBar = {}", pageBar);
+		
+		mav.addObject("list",list);
+		mav.addObject("pageBar",pageBar);
+		mav.setViewName("/teacher/myAllLecture");
+		
+	}catch(Exception e) {
+		throw e;
+	}
+		
+		return mav;
+	}
+	
 }

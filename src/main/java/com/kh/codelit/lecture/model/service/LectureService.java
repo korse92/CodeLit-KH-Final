@@ -31,4 +31,8 @@ public interface LectureService {
 	List<Map<String, Object>> rollingLecList();
 
 	List<Map<String, Object>> mainSearchResult(Map<String, Object> param);
+
+	List<Map<String, Object>> myAllLecture(Map<String,Object> param);
+
+	int getTeacherTotalContents(Map<String, Object> param);
 }
