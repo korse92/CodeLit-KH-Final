@@ -183,40 +183,37 @@ function tooltipInit(elem) {
 
 //파트, 챕터값을 map(part, chapter[])로 만들어주기
 function createCurriculum(){
-	//var curMap = new Map();
 	const curArr = new Array();
 	const $partGroup = $("#inputCurriculum").find(".part-group");
 	//console.log($partGroup);
-	
+
 	var formData = new FormData($('#lectureEnrollFrm')[0]);
-	
+
 	$partGroup.each((pIdx, elem) => {
 		let $partInput = $(elem).find(".partInput");
-		//curMap에 key: Part객체 생성, value: Array객체 생성
 
 		if(!$partInput.val())
 			return true;
 
 		const lecturePart = new LecturePart(pIdx, $partInput.val());
 
-		//curMap.set(lecturePart, new Array());
-		
-		
-
 		let $chapterInputs = $(elem).find(".chapterInput");
 		//console.log($chapterInputs);
+
 		$chapterInputs.each((cIdx, elem) => {
 			if(!$(elem).val()) {
 				$(elem).parent().next().val("");
 				return true;// jQuery의 each에서 true리턴 : continue, false리턴 : break;
 			}
-			//let chapArr = curMap.get(lecturePart);
-			
-			if($(elem).parent().next().val())
 
-			//console.log(chapArr);
 			let lectureChapter = new LectureChapter(cIdx, $(elem).val(), null);
 			//chapArr.push(lectureChapter);
+
+			//첨부파일이 있을경우 form데이터 videoChapterNo에 참조할 챕터번호(임시) 삽입
+			if($(elem).parent().next().val()){
+
+			}
+
 			lecturePart.chapterArr.push(lectureChapter);
 		});
 		curArr.push(lecturePart);
