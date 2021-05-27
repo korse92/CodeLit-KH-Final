@@ -10,11 +10,13 @@
 	</insert>
 	
 	<insert id="insertPayLecture" parameterType="list">
-		insert into pay_lecture
-		values
+		insert all 
 		<foreach collection="list" item="item">
+		into pay_lecture
+		values
 		(#{item.payCode}, #{item.no})
 		</foreach>
+		select * from dual
 	</insert>
 	<delete id="deleteBasket">
 		delete from basket

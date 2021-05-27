@@ -24,8 +24,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/main.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/locales/ko.js"></script>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -45,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-     	themeSystem: 'bootstrap',
+     	//themeSystem: 'bootstrap',
       initialDate: new Date(),
       locale: "ko",
       editable: true,
@@ -126,6 +124,7 @@ $(function() {
        dayNamesMin: ['일','월','화','수','목','금','토'],
        dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
 	});
+
 	$("#startDate").datepicker();
 	$("#endDate").datepicker();
 

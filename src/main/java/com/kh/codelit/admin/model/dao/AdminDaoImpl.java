@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.order.model.vo.Payment;
 import com.kh.codelit.teacher.model.vo.Teacher;
 
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +62,19 @@ public class AdminDaoImpl implements AdminDao {
 
 	}
 	
-	
+	@Override
+	public List<Payment> selectMemberOrderList(Map<String, Object> param) {
+	int cPage = (int)param.get("cPage");
+		
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit; // 1 -> 0, 2 -> 5, 3 -> 10....
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		String keyword = (String)param.get("keyword");
+		
+		return session.selectList("admin.selectMemberOrderList", param, rowBounds);		
+	}
+
 	/**
 	 * RowBounds : mybatis가 제공하는 paging기능
 	 * - offset : 건너뛸 행수
@@ -154,6 +167,16 @@ public class AdminDaoImpl implements AdminDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("admin.selectTeacherCount", param);
 	}
+
+	@Override
+	public int selectMemberOrderCount(Map<String, Object> param) {
+		
+		return session.selectOne("admin.selectMemberOrderCount", param);
+	}
+
+
+
+
 
 	
 

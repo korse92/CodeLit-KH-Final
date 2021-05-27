@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -275,24 +276,22 @@ public class MemberController {
 	}
 	
 	@PostMapping("/deleteMember.do")
-	public String deleteMember(	@ModelAttribute String memberId , RedirectAttributes redirectAttr) {
-
+	public String deleteMember(	@RequestParam String memberId , RedirectAttributes redirectAttr,
+			SessionStatus sessionstaus) {
+		
+		int result = memberService.deleteMember(memberId);
 		log.debug("deleteMember = {}", memberId);
-		String msg = null;
-		try {
-			int result = memberService.delete(memberId);
-			msg = "탈퇴에 되었습니다";
-
-		} catch (Exception e) {
-			msg = "탈퇴에 실패하였습니다";
-			throw e;
+		
+		if(result> 0 ) {
+			redirectAttr.addFlashAttribute("msg","성공적으로 회원정보를 삭제했습니다");
+			SecurityContextHolder.clearContext();
+		}else
+			redirectAttr.addFlashAttribute("msg","회원정보 삭제에 실패했습니다");
+		
+			return "redirect:/";
 		}
-		redirectAttr.addFlashAttribute("msg", msg);
 
-		return "redirect:/member/myProfile.do";
 
-	}
-	
 	
     @GetMapping("/myProfile.do") 
 
@@ -318,9 +317,7 @@ public class MemberController {
 		  log.debug("list = {}", list);
 	     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
 		  
-		  List<Messenger> message = msgService.alarmList(memberId);
 
-		  mav.addObject("message",message);
 		  mav.addObject("list",list);
 		  mav.setViewName("/member/myProfile");
 

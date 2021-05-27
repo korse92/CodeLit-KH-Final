@@ -23,6 +23,7 @@ import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.order.model.vo.Payment;
 import com.kh.codelit.teacher.model.vo.Teacher;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,39 @@ public class adminController {
 	@GetMapping("/manageMemberIndex.do")
 	public void manageMemberIndex() {
 	}
-
+	@GetMapping("/manageOrder.do")
+	public ModelAndView manageOrder(
+				ModelAndView mav,
+				@RequestParam(defaultValue = "1") int cPage,
+				@RequestParam(required = false) String searchId,
+				@RequestParam(required = false) String searchName,
+				@RequestParam(required = false) String searchLecture,
+				HttpServletRequest request
+				)				 {
+		
+		int numPerPage = 10;
+		Map<String, Object> param = new HashMap<>();
+		param.put("numPerPage", numPerPage);
+		param.put("cPage", cPage);
+		param.put("searchId", searchId);
+		param.put("searchName", searchName);
+		param.put("searchLecture", searchLecture);
+		
+		try {
+			
+			int totalContents = adminService.selectMemberOrderCount(param);
+			List<Payment> list = adminService.selectMemberOrderList(param);
+			String url = HelloSpringUtils.convertToParamUrl(request);
+			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+			mav.addObject("manageOrderList", list);
+			mav.addObject("pageBar", pageBar);
+			mav.setViewName("/admin/manageOrder");
+		} catch(Exception e) {
+			throw e;
+		}
+		
+		return mav;
+	}
 	
 	@GetMapping("/manageMember.do")
 	public ModelAndView manageMember(
@@ -148,32 +181,7 @@ public class adminController {
 		return mav;
 	}
 	
-	@GetMapping("/manageOrder.do")
-	public ModelAndView manageOrder(
-				ModelAndView mav,
-				@RequestParam(defaultValue = "1") int cPage,
-				@RequestParam(required = false) String searchId,
-				@RequestParam(required = false) String searchName,
-				@RequestParam(required = false) String searchLecture
-			) {
-		
-		int numPerPage = 10;
-		Map<String, Object> param = new HashMap<>();
-		param.put("numPerPage", numPerPage);
-		param.put("cPage", cPage);
-		param.put("searchId", searchId);
-		param.put("searchName", searchName);
-		param.put("searchLecture", searchLecture);
-		
-		try {
-//			int totalContents = adminService.selectMemberOrderCount(param);
-//			List<Map<String, Object>> memberOrderList = adminService.selectMemberOrderList();
-		} catch(Exception e) {
-			throw e;
-		}
-		
-		return mav;
-	}
+
 	
 	//강의 신청 목록
 	@GetMapping("/applyLectureList.do")
