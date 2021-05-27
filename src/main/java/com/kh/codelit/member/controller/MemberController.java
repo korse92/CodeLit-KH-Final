@@ -27,32 +27,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
-import com.kh.codelit.teacher.model.vo.Teacher;
+import com.kh.codelit.websocket.model.service.MessengerService;
+import com.kh.codelit.websocket.model.vo.Messenger;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("/member")
-
 public class MemberController {
 
 	@Autowired
@@ -64,6 +61,9 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
+	@Autowired
+	private MessengerService msgService;
+	
 	@GetMapping("/memberEnroll.do")
 	public void memberEnroll() {
 		log.debug("회원가입 = {}", "회원가입");
@@ -274,6 +274,7 @@ public class MemberController {
 		
 		return "redirect:/member/memberDetail.do";
 	}
+	
 	@PostMapping("/deleteMember.do")
 	public String deleteMember(	@RequestParam String memberId , RedirectAttributes redirectAttr,
 			SessionStatus sessionstaus) {
@@ -289,7 +290,8 @@ public class MemberController {
 		
 			return "redirect:/";
 		}
-	
+
+
 	
     @GetMapping("/myProfile.do") 
 
@@ -314,6 +316,7 @@ public class MemberController {
 		  List<Lecture> list = lectureService.selectMyLecture(memberId);
 		  log.debug("list = {}", list);
 	     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
+		  
 
 		  mav.addObject("list",list);
 		  mav.setViewName("/member/myProfile");
@@ -332,5 +335,42 @@ public class MemberController {
     	log.debug("calendar = {}", "calendar");
     }
 
+    
+    @GetMapping("/memberLectureList.do")
+    public String MemberLectureList(
+			@PathVariable(required = false) Integer catNo,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request,
+			Model model,
+			Principal principal) {
+		//1. 사용자 입력값
+		if(catNo == null)
+			catNo = 0;
+		int numPerPage = 12;
+		String memberId = principal != null ? principal.getName() : null;
+		log.debug("catNo = {}", catNo);
+		log.debug("cPage = {}", cPage);
+		log.debug("memberId = {}", memberId);
+		Map<String, Object> param = new HashMap<>();
+		param.put("numPerPage", numPerPage);
+		param.put("catNo", catNo);
+		param.put("cPage", cPage);
+		param.put("memberId", memberId);
 
+		//2. 업무로직
+		//a. contents영역
+		List<Lecture> list = lectureService.selectLectureList(param);
+		log.debug("list = {}", list);
+
+		//b. pageBar영역
+		int totalContents = lectureService.getTotalContents(catNo);
+		String url = HelloSpringUtils.convertToParamUrl(request);
+		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+
+		//3.jsp 위임처리
+		model.addAttribute("list", list);
+		model.addAttribute("pageBar", pageBar);
+
+		return "/member/memberLectureList";
+	}
 }

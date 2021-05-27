@@ -16,15 +16,9 @@
         </div>
           <div class="row title-group">
             <h5 class="col-sm-2 board-title">제목</h5>
-             <div class="col-2">
-			    <select id="stomp-url" class="form-select">
-					<option value="">전송대상</option>
-					<option value="/app/user">유저</option>
-					<option value="/app/teacher">강사</option>
-			    </select>
-		 	  </div>
-            <div class="col-sm-7">
+            <div class="col-sm-9">
               <input class="form-control" type="text" name="msgTitle" id="msgTitle" placeholder="title">
+   	 		  <input type="hidden" value="/app/user" id="url">
             </div>
           </div>
  		  <div class="board-container">
@@ -43,7 +37,7 @@
 $("#sendBtn").click(() => {
 	const $message = $("#msgContent");
 	const $title = $("#msgTitle");
-	const $url = $("#stomp-url"); 
+	const $url = $("#url"); 
 	
 	if($title.val() == '') {
 		alert("제목을 작성하세요.");
@@ -61,21 +55,6 @@ $("#sendBtn").click(() => {
 	
 	location.href='${pageContext.request.contextPath}/alarm/alarmList.do';
 });
-
-//유효성검사
-function checkContent() {
-	const title = $("[name=msgTitle]");
-	const content = $("[name=msgContent]");
-	if(/^(.|\n)+$/.test(title.val()) == false){
-		alert("제목을 입력하세요");
-		return false;
-	}
-	if(/^(.|\n)+$/.test(content.val()) == false){
-		alert("내용을 입력하세요");
-		return false;
-	}
-	return true;
-}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

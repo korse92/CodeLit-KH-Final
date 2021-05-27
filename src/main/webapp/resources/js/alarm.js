@@ -12,22 +12,26 @@ stompClient.connect({}, (frame) => {
 	stompClient.subscribe("/topic/user", (frame) => {
 		const msgObj = JSON.parse(frame.body);
 		const {msgTitle, msgContent} = msgObj;
-		toastr.info(msgContent, "[유저알림] "+msgTitle, {timeOut: 5000});
-	});
-		stompClient.subscribe("/topic", (message) => {
-		toastr.info(message, "[새로운 공지] ", {timeOut: 5000});
+		toastr.info(msgContent, "[전체알림] "+msgTitle, {timeOut: 5000});
 	});
 	
-	stompClient.subscribe("/topic/teacher", (frame) => {
+	stompClient.subscribe("/topic/reject/{memberId}", (frame) => {
 		const msgObj = JSON.parse(frame.body);
 		const {msgTitle, msgContent} = msgObj;
-		toastr.info(msgContent, "[강사알림] "+msgTitle, {timeOut: 5000});
+		toastr.error(msgContent, "[신청 반려]"+msgTitle, {timeOut: 5000});
 	});
+
+	stompClient.subscribe("/topic/success/{memberId}", (frame) => {
+		const msgObj = JSON.parse(frame.body);
+		const {msgTitle, msgContent} = msgObj;
+		toastr.success(msgContent, "[신청 승인]"+msgTitle, {timeOut: 5000});
+	});
+	
 });
 
 	function sendMessage(url){
-	const $message = $("#msgContent");
 	const $title = $("#msgTitle");
+	const $message = $("#msgContent");
 	
 	const message = {
 		msgTitle : $title.val(),
