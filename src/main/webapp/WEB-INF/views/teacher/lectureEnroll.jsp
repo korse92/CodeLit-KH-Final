@@ -24,8 +24,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/main.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/locales/ko.js"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    	themeSystem: 'bootstrap',
+     	themeSystem: 'bootstrap',
       initialDate: new Date(),
       locale: "ko",
       editable: true,
@@ -89,13 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
    		var startDate = $("#startDate").val();
    		var endDate = $("#endDate").val();
 
-   		calendar.addEvent({
-    		title: title,
-    		start: startDate,
-    		end: endDate,
-    		allDay: true
-    	});
-
         if (startDate > endDate) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
@@ -105,6 +98,13 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('일정명은 필수입니다.');
             return false;
         }
+
+   		calendar.addEvent({
+    		title: title,
+    		start: startDate,
+    		end: endDate,
+    		allDay: true
+    	});
 
         $("#eventModal").modal('hide');
     });
@@ -262,7 +262,7 @@ img#thumbImage {
 				<div class="col-sm-10">
 					<img
 						src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image"
-						class="img-thumbnail" id="thumbImage" alt="썸네일 이미지">
+						class="img-thumbnail w-100" id="thumbImage" alt="썸네일 이미지">
 					<input
 						class="form-control d-none" type="file" name="lectureThumbnail"
 						id="lectureThumbnail">
@@ -275,56 +275,53 @@ img#thumbImage {
 				</div>
 			</div>
 			<div class="selectedVideo row">
-				<div class="row">
-					<label class="form-label mb-2" for="lectureGuideline">가이드라인 (권장하는 하루에 들을 영상개수)</label>
-					<div class="col-sm">
-						<input class="form-control" type="number" name="lectureGuideline" min="1" max="10"
-							id="lectureGuideline" placeholder="입력안할 시 기본값 1, 최대 10">
-					</div>
+				<label class="form-label mb-2" for="lectureGuideline">가이드라인 (권장하는 하루에 들을 영상개수)</label>
+				<div class="col-sm">
+					<input class="form-control" type="number" name="lectureGuideline" min="1" max="10"
+						id="lectureGuideline" placeholder="입력안할 시 기본값 1, 최대 10">
 				</div>
 			</div>
 
 			<div class="selectedVideo row">
 				<label class="form-label mb-2" for="">커리큘럼 등록</label>
-				<div class="row my-0 justify-content-end">
+				<!-- <div class="row my-0 justify-content-end">
 					<div class="col-auto">
 						<button type="button" class="btn p-0" id="partAddBtn"><i class="fas fa-plus-square text-primary fs-3"></i></button>
 						<button type="button" class="btn p-0" id="partDelBtn"><i class="fas fa-minus-square text-warning fs-3"></i></button>
 					</div>
-				</div>
-				<div class="row justify-content-start">
-					<div class="col-sm-12" id="inputCurriculum">
-						<div class="partDiv row justify-content-end my-1">
-							<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
-							<div class="col-sm-11 chapterDiv">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
+				</div> -->
+				<div class="col-sm">
+					<div class="d-flex flex-column align-items-start" id="inputCurriculum">
+						<!--
+						<div class="partDiv w-100">
+							<div class="input-group">
+								<button type="button" class="btn p-0 me-2 partDelBtn"
+										data-bs-toggle="tooltip" data-bs-placement="left" title="파트 삭제">
+									<i class="fas fa-minus-square text-warning fs-3"></i>
+								</button>
+								<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
+							</div>
+							<div class="input-group ps-5">
+								<button type="button" class="btn p-0 me-2 chapDelBtn"
+										data-bs-toggle="tooltip" data-bs-placement="left" title="챕터 삭제">
+									<i class="fas fa-minus-square text-warning fs-3"></i>
+								</button>
 								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
 							</div>
+							<button type="button" class="btn chapAddBtn ms-5 p-0"
+									data-bs-toggle="tooltip" data-bs-placement="left" title="챕터 추가">
+								<i class="fas fa-plus-square text-primary fs-3"></i>
+							</button>
 						</div>
-						<div class="partDiv row justify-content-end my-1">
-							<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
-							<div class="col-sm-11 chapterDiv">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-							</div>
-						</div>
-						<div class="partDiv row justify-content-end my-1">
-							<input type="text" class="partInput form-control my-1" placeholder="파트 제목 입력">
-							<div class="col-sm-11 chapterDiv">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-								<input type="text" class="chapterInput form-control my-1" placeholder="챕터 제목 입력">
-							</div>
-						</div>
-						<input type="button" value="테스트" id="curtest"/>
+						-->
+						<button type="button" class="btn p-0 partAddBtn"
+								data-bs-toggle="tooltip" data-bs-placement="left" title="파트 추가">
+							<i class="fas fa-plus-square text-primary fs-3"></i>
+						</button>
 					</div>
+					<input type="button" value="테스트" id="curtest"/>
 				</div>
-				<input type="hidden" name="curriculumMap" />
+				<input type="hidden" name="curriculum" />
 			</div>
 
 			<div id="selectedStreaming" class="row">
@@ -414,7 +411,6 @@ img#thumbImage {
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div> <!-- container -->
-<script>
 
   $("[name=lectureEnrollFrm]").on('reset', e => {
     document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
@@ -563,6 +559,9 @@ img#thumbImage {
 		return value;
 	}
 </script>
+
+<!-- 강의 등록관련 js -->
+<script src="${pageContext.request.contextPath}/resources/js/lectureEnroll.js"></script>
 
 <!-- 컨텐츠 끝 -->
 

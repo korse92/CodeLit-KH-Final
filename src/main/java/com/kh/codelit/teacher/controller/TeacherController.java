@@ -177,26 +177,25 @@ public class TeacherController {
 			@ModelAttribute Lecture lecture,
 			@RequestParam(required = false) MultipartFile lectureThumbnail,
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
-			@RequestParam String curriculumMap,
+			@RequestParam String curriculum,
 			HttpServletRequest request,
 			Authentication authentication,
 			RedirectAttributes redirectAttr) {
 
 		try {
 			log.debug("lecture(필드값 Set 전) = {}", lecture);
-			log.debug("curriculumMap = {}", curriculumMap);
 
 			Gson gson = new Gson();
 
-			/*
-			 * Type listType = new TypeToken<List<>>
-			 *
-			 * JsonArray array = gson.fromJson(curriculumMap, JsonArray.class);
-			 * for(JsonElement elem : array) { log.debug(elem.toString()); }
-			 */
+			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
+			log.debug("lecturePartArr = {}", lecturePartArr);
 
-			//log.debug("array = {}", array);
-
+			for(LecturePart part : lecturePartArr) {
+				log.debug("{}", part);
+				for(LectureChapter chap : part.getChapterArr()) {
+					log.debug("{}", chap);
+				}
+			}
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
 			String thumbnailsSaveDirectory =
@@ -411,6 +410,5 @@ public class TeacherController {
 		return mav;
 
 	}
-
 
 }
