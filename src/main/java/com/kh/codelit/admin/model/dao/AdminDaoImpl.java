@@ -164,7 +164,7 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public int selectTeacherCount(Map<String, Object> param) {
-		// TODO Auto-generated method stub
+
 		return session.selectOne("admin.selectTeacherCount", param);
 	}
 

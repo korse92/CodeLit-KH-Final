@@ -133,34 +133,6 @@
 		<result column="ref_member_id" property="refMemberId"/>
 	</resultMap> 
 
-	
- 	
-              <!--   left join payment p
-                    on p.pay_code = m.member_id
-                left join lecture l
-                 on l.lecture_no = p.ref_member_id;
-	<where>
-		m.member_id not in 
-		    (select member_id from authorities where auth = 'ROLE_ADMIN')
-		    <if test="keyword != null and keyword != ''">
-		    and
-		    	m.member_id like '%' || #{keyword} || '%'
-		    </if>		
-		</where>
-		 
-	 </select>
-		<resultMap type="payment" id="memberOrderMap">
-				
-		<id column="pay_code" property="payCode"/>
-		<result column="ref_member_id" property="refMemberId"/>
-		<result column="pay_no" property="payNo"/>
-		<result column="pay_cost" property="payCost"/>
-		<result column="pay_date" property="payDate"/>
-		<result column="lecture_name" property="lectureName"/>
-		<result column="lecture_type" property="lectureType"/>
-		<result column="teacher_name" property="teacherName"/>
-		
-		</resultMap> -->
 	<update id="approveLecture">
 		update
 	    	lecture
@@ -186,30 +158,7 @@
 	</update>
 
 	<select id="selectAllLecture" resultMap="LectureListMap">
-	<!-- select 
-		rownum, l.*
-	from ( select 
-				*
-           from lecture l join lecture_category c 
-           		on ref_lec_cat_no = lec_cat_no
-           			
-     <where>
-     lecture_accept_yn = 'Y'
-     <if test="searchKeyword != null and searchKeyword != ''">
-       	   and
-       	   		l.ref_member_id like '%' || #{searchKeyword} || '%' 
-     </if>
-     <if test="category != null and category != ''">
-       	   and 
-       	  		ref_lec_cat_no = #{category}
-       	   
-    </if>
-    </where>
-	        ) l
-	 order by 
-	 		rownum desc -->
-	 		
-	 		
+			
 	 select 
     	 l.*
 	 from ( select 
