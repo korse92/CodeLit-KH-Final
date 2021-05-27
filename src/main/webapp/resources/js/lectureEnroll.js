@@ -59,8 +59,8 @@ $((e) => {
 
 	$(".partAddBtn").click(e => {
 		//최상위 div
-		let $partDiv = $("<div></div>",{
-			"class" : "partDiv w-100"
+		let $partGroup = $("<div></div>",{
+			"class" : "part-group w-100"
 		});
 
 		//파트 .input-group div
@@ -89,7 +89,7 @@ $((e) => {
 		//챕터 추가 버튼
 		let $chapAddBtn = $("<button></button>", {
 			"type" : "button",
-			"class" : "btn chapAddBtn ms-5 p-0",
+			"class" : "btn chapAddBtn ms-5 mt-1 p-0",
 			"data-bs-toggle" : "tooltip",
 			"data-bs-placement" : "left",
 			"title" : "챕터 추가"
@@ -99,14 +99,14 @@ $((e) => {
 		$chapAddBtn.click(chapAddBtnClickListener);
 
 		//div.input-group, button.chapAddBtn 추가
-		$partDiv.append($inputGroup, $chapAddBtn);
+		$partGroup.append($inputGroup, $chapAddBtn);
 
 		//console.log($partDiv);
 		//console.log($(e.target).parent());
 
 		//파트 추가 버튼 이전의 형제요소로 추가
 		const $partAddBtn = $("#inputCurriculum > .partAddBtn");
-		$partAddBtn.before($partDiv);
+		$partAddBtn.before($partGroup);
 		tooltipInit($partAddBtn.prev());
 	});
 
@@ -116,9 +116,15 @@ $((e) => {
 });
 
 function chapAddBtnClickListener(e) {
+	//최상위 .chapter-group div
+	let $chapterGroup = $("<div></div>", {
+		"class" : "chapter-group ps-5"
+	});
+
+
 	//챕터 .input-group div
 	let $inputGroup = $("<div></div>", {
-		"class" : "input-group ps-5"
+		"class" : "input-group"
 	});
 
 	let $chapDelBtn = $("<button></button>", {
@@ -132,7 +138,7 @@ function chapAddBtnClickListener(e) {
 	$chapDelBtn.append("<i class='fas fa-minus-square text-warning fs-3'></i>");
 	$chapDelBtn.click(chapDelBtnClickListener);
 
-	let $chapterInput= $("<input>", {
+	let $chapterInput = $("<input>", {
 		"type" : "text",
 		"class" : "chapterInput form-control my-1",
 		"placeholder" : "챕터 제목 입력"
@@ -140,19 +146,30 @@ function chapAddBtnClickListener(e) {
 
 	$inputGroup.append($chapDelBtn, $chapterInput);
 
+	//챕터 input:file
+	let $chapterInputFile = $("<input>", {
+		"type" : "file",
+		"class" : "form-control form-control-sm",
+		"name" : "chapterVideo",
+		"accept" : "video/*"
+	});
+
+	//.chapter-group div에 자식요소 추가
+	$chapterGroup.append($inputGroup, $chapterInputFile);
+
 	//챕터 추가버튼 이전의 형제요소로 추가
-	const $chapAddBtn = $(e.target).parents(".partDiv").find(".chapAddBtn");
-	$chapAddBtn.before($inputGroup);
+	const $chapAddBtn = $(e.target).parents(".part-group").find(".chapAddBtn");
+	$chapAddBtn.before($chapterGroup);
 	tooltipInit($chapAddBtn.prev());
 }
 
 function partDelBtnClickListener(e) {
-	$(e.target).parents(".partDiv").remove();
+	$(e.target).parents(".part-group").remove();
 	$(".tooltip").remove();
 }
 
 function chapDelBtnClickListener(e) {
-	$(e.target).parents(".input-group").remove();
+	$(e.target).parents(".chapter-group").remove();
 	$(".tooltip").remove();
 }
 
@@ -168,9 +185,12 @@ function tooltipInit(elem) {
 function createCurriculum(){
 	//var curMap = new Map();
 	const curArr = new Array();
-	const $partDiv = $("#inputCurriculum").find(".partDiv");
-	//console.log($partDiv);
-	$partDiv.each((pIdx, elem) => {
+	const $partGroup = $("#inputCurriculum").find(".part-group");
+	//console.log($partGroup);
+	
+	var formData = new FormData($('#lectureEnrollFrm')[0]);
+	
+	$partGroup.each((pIdx, elem) => {
 		let $partInput = $(elem).find(".partInput");
 		//curMap에 key: Part객체 생성, value: Array객체 생성
 
@@ -180,13 +200,19 @@ function createCurriculum(){
 		const lecturePart = new LecturePart(pIdx, $partInput.val());
 
 		//curMap.set(lecturePart, new Array());
+		
+		
 
 		let $chapterInputs = $(elem).find(".chapterInput");
 		//console.log($chapterInputs);
 		$chapterInputs.each((cIdx, elem) => {
-			if(!$(elem).val())
+			if(!$(elem).val()) {
+				$(elem).parent().next().val("");
 				return true;// jQuery의 each에서 true리턴 : continue, false리턴 : break;
+			}
 			//let chapArr = curMap.get(lecturePart);
+			
+			if($(elem).parent().next().val())
 
 			//console.log(chapArr);
 			let lectureChapter = new LectureChapter(cIdx, $(elem).val(), null);
