@@ -55,6 +55,17 @@
 		</if>
 		</where>
 	</select>
+	
+	<delete id="deleteTeacherAndAuth">
+		delete from teacher
+		where ref_member_id = #{refMemberId}
+	</delete>
+	
+	<delete id="deleteTeacherAndAuth2">
+		delete from teacher
+		where member_id = #{refMemberId}
+			and auth = "ROLE_TEACHER"
+	</delete>
 
 	 <select id="selectMemberOrderList "  resultMap="paymentMap">
 	 select * from
