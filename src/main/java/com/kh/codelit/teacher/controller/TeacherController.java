@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +31,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.kh.codelit.attachment.model.exception.AttachmentException;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
-import com.kh.codelit.community.notice.model.vo.Notice;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
@@ -178,7 +176,8 @@ public class TeacherController {
 			@RequestParam(required = false) MultipartFile lectureThumbnail,
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
 			@RequestParam String curriculum,
-			@RequestParam(required = false) MultipartFile[] chapterVideos,
+			@RequestParam(value = "chapterVideo", required = false) MultipartFile[] chapterVideos,
+			@RequestParam(value = "videoChapNoArr") String videoChapNoArrJsonStr,
 			HttpServletRequest request,
 			Authentication authentication,
 			RedirectAttributes redirectAttr) {
@@ -190,19 +189,19 @@ public class TeacherController {
 
 			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
 			log.debug("lecturePartArr = {}", lecturePartArr);
-
-			for(LecturePart part : lecturePartArr) {
-				log.debug("{}", part);
-				for(LectureChapter chap : part.getChapterArr()) {
-					log.debug("{}", chap);
-				}
-			}
+			
+//			log.info("chapterVideos = {}", chapterVideos);
+			
+			int[] videoChapNoArr = gson.fromJson(videoChapNoArrJsonStr, int[].class);
+			log.info("videoChapNoArr = {}", videoChapNoArr);
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
 			String thumbnailsSaveDirectory =
 					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_THUMBNAIL);
 			String handoutsSaveDirectory =
 					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_HANDOUT);
+			String videosSaveDirectory =
+					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_VIDEO);
 
 			File dirThumb = new File(thumbnailsSaveDirectory);
 			if(!dirThumb.exists()) {
@@ -212,6 +211,11 @@ public class TeacherController {
 			File dirHandout = new File(handoutsSaveDirectory);
 			if(!dirHandout.exists()) {
 				dirHandout.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
+			}
+			
+			File dirVideo = new File(videosSaveDirectory);
+			if(!dirVideo.exists()) {
+				dirVideo.mkdirs();
 			}
 
 			if(!lectureThumbnail.isEmpty() || !(lectureThumbnail.getSize() == 0)) {
@@ -250,19 +254,63 @@ public class TeacherController {
 
 				attachList.add(attach);
 			}
-
+			
+			int vIdx = 0;
+			int prevChapterArrlength = 0;					
+			for(int i = 0; i < lecturePartArr.length; i++) {
+				log.debug("lecturePart[{}] = {}", i, lecturePartArr[i]);
+				
+				LectureChapter[] lectureChapterArr = lecturePartArr[i].getChapterArr();
+				int ChapterArrlength = lectureChapterArr.length;
+				
+				if(i > 0)
+					prevChapterArrlength += lecturePartArr[i-1].getChapterArr().length;
+				
+				for(int j = 0; j < ChapterArrlength; j++) {
+					log.debug("prevChapterArrlength = {}", prevChapterArrlength);
+					log.debug("j = {}", j);
+					log.debug("Arrays.asList(videoChapNoArr) = {}", Arrays.asList(videoChapNoArr));
+					log.debug("contains = {}", Arrays.asList(videoChapNoArr).contains(prevChapterArrlength + j));
+					
+					if(Arrays.asList(videoChapNoArr).contains(prevChapterArrlength + j)) {
+						while(chapterVideos[vIdx].isEmpty() || chapterVideos[vIdx].getSize() == 0) {
+							vIdx++;
+						}
+						
+						log.debug("vIdx = {}", vIdx);
+						
+						MultipartFile currentChapterVideo = chapterVideos[vIdx++];
+						log.debug("currentChapterVideo = {}", currentChapterVideo);
+						log.debug("currentChapterVideo.name = {}", currentChapterVideo.getOriginalFilename());
+						log.debug("currentChapterVideo.size = {}", currentChapterVideo.getSize());
+						
+						File renamedFile = HelloSpringUtils.getRenamedFile(videosSaveDirectory, currentChapterVideo.getOriginalFilename());
+						//currentChapterVideo.transferTo(renamedFile);
+						
+						lectureChapterArr[j].setLecChapterVideo(currentChapterVideo.getOriginalFilename());
+						lectureChapterArr[j].setLecChapterReVideo(renamedFile.getName());			
+					}
+					log.debug("lectureChapter[{}] = {}", j, lectureChapterArr[j]);
+				}
+			}
 
 			//1. 업무로직
 			lecture.setAttachList(attachList);
 			lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("lecture", lecture);
+			param.put("lecturePartArr", lecturePartArr);
+			
 			log.debug("lecture(필드값 Set 후) = {}", lecture);
 
-			//int result = lectureService.insertLecture(lecture);
+			//int result = lectureService.insertLecture(param);
 
 			//2. 사용자 피드백
 			//String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
 			//redirectAttr.addFlashAttribute("msg", msg);
 
+//		} catch (IOException | IllegalStateException e) {
 		} catch (IllegalStateException e) {
 			log.error("첨부파일 등록 오류!", e);
 			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
@@ -415,8 +463,11 @@ public class TeacherController {
 
 
 
-
-
+	
+	
+	
+		
+	
 
 }
 

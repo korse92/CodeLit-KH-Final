@@ -26,7 +26,7 @@
 
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- timepicker -->
@@ -36,14 +36,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.min.js" ></script><!-- 타이머js -->
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.css" media=""/><!-- 타이머css -->
 
-
 <!-- full Calendar script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-     	//themeSystem: 'bootstrap',
+     	themeSystem: 'bootstrap',
       initialDate: new Date(),
       locale: "ko",
       editable: true,
@@ -324,6 +323,7 @@ img#thumbImage {
 					<input type="button" value="테스트" id="curtest"/>
 				</div>
 				<input type="hidden" name="curriculum" />
+				<input type="hidden" name="videoChapNoArr" />
 			</div>
 
 			<div id="selectedStreaming" class="row">

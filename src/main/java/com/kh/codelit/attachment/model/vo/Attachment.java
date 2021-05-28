@@ -12,6 +12,7 @@ public class Attachment {
 	//저장경로 상수
 	public static final String PATH_LECTURE_HANDOUT = "/resources/upload/lecture/handouts";
 	public static final String PATH_LECTURE_THUMBNAIL = "/resources/upload/lecture/thumbnails";
+	public static final String PATH_LECTURE_VIDEO = "/resources/upload/lecture/mp4";
 	public static final String PATH_NOTICE = "/resources/upload/notice";
 	public static final String PATH_STUDYBOARD = "/resources/upload/studyBoard";
 	public static final String PATH_COUNSEL = "/resources/upload/counsel";
