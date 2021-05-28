@@ -34,4 +34,6 @@ public interface LectureDao {
 
 	int getTeacherTotalContents(Map<String, Object> param);
 
+	List<Object> selectOrderedLectureList(String memberId);
+
 }
