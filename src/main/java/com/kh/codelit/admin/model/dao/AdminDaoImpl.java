@@ -70,7 +70,7 @@ public class AdminDaoImpl implements AdminDao {
 		int offset = (cPage - 1) * limit; // 1 -> 0, 2 -> 5, 3 -> 10....
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		String keyword = (String)param.get("keyword");
+		
 		
 		return session.selectList("admin.selectMemberOrderList", param, rowBounds);		
 	}
@@ -164,7 +164,7 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public int selectTeacherCount(Map<String, Object> param) {
-		// TODO Auto-generated method stub
+		
 		return session.selectOne("admin.selectTeacherCount", param);
 	}
 
@@ -172,6 +172,12 @@ public class AdminDaoImpl implements AdminDao {
 	public int selectMemberOrderCount(Map<String, Object> param) {
 		
 		return session.selectOne("admin.selectMemberOrderCount", param);
+	}
+
+	@Override
+	public List<Member> selectMemberOrderList(String memberId) {
+		
+		return session.selectList("admin.selectMemberOrderList",memberId);
 	}
 
 

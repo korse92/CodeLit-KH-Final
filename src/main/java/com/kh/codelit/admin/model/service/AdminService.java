@@ -51,6 +51,8 @@ public interface AdminService {
 
 	List<Payment> selectMemberOrderList(Map<String, Object> param);
 
+	List<Member> selectMemberOrderList(String memberId);
+
 
 ;
 }

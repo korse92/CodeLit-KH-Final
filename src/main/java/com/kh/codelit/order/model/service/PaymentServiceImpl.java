@@ -43,9 +43,9 @@ public class PaymentServiceImpl implements PaymentService {
 		for(Basket basket : basketList) {
 			refLectureNoList.add(basket.getRefLectureNo());
 		}
-		payment.setRefLectureNo(refLectureNoList);
+		payment.setRefLectureNo(refLectureNoList); 
 
-		// payment 집어넣기
+		// payment 집어넣기 
 		int a = orderDao.insertOrder(payment);
 		if(a <= 0) {return 0;}
 		log.debug("insertOrdrer = {}", "성공");
@@ -55,7 +55,7 @@ public class PaymentServiceImpl implements PaymentService {
 		List<Map<String, Object>> list = new ArrayList<>();
 		
 		String payCode = payment.getPayCode();
-		List<Integer> integerList = payment.getRefLectureNo();		
+		List<Integer> integerList = payment.getRefLectureNo();	//강의가 여러개 (Integer)	
 		
 		Map<String, Object> param = null;
 		for(int n : integerList) {

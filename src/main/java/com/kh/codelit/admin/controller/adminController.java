@@ -1,5 +1,6 @@
 package com.kh.codelit.admin.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,29 +49,30 @@ public class adminController {
 	@GetMapping("/manageOrder.do")
 	public ModelAndView manageOrder(
 				ModelAndView mav,
-				@RequestParam(defaultValue = "1") int cPage,
-				@RequestParam(required = false) String searchId,
-				@RequestParam(required = false) String searchName,
-				@RequestParam(required = false) String searchLecture,
-				HttpServletRequest request
-				)				 {
+				@RequestParam(defaultValue = "1") int cPage, 
+				HttpServletRequest request,
+				Member memberId
+				){
+		
 		
 		int numPerPage = 10;
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
 		param.put("cPage", cPage);
-		param.put("searchId", searchId);
-		param.put("searchName", searchName);
-		param.put("searchLecture", searchLecture);
+		param.put("memberId",memberId);
 		
+	
 		try {
 			
 			int totalContents = adminService.selectMemberOrderCount(param);
 			List<Payment> list = adminService.selectMemberOrderList(param);
+	
 			String url = HelloSpringUtils.convertToParamUrl(request);
 			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
+		     
 			mav.addObject("manageOrderList", list);
 			mav.addObject("pageBar", pageBar);
+		
 			mav.setViewName("/admin/manageOrder");
 		} catch(Exception e) {
 			throw e;

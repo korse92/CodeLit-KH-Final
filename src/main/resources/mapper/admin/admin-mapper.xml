@@ -56,53 +56,28 @@
 		</where>
 	</select>
 
-	 <select id="selectMemberOrderList "  resultMap="paymentMap">
-            
-     select * from
-	 		
-	 	payment p
-	 	left join lecture l
-	 	
-	 	on p.pay_code = l.lecture_no
-	 	
-	 	where 
-	 	 p.pay_code = #{payCode}
-	 	 
-		  
-	<!--        	select 
-			*
-		from 
-			member m
-		    	left join authorities a
-		        	on m.member_id = a.member_id
-                left join payment p
-                    on p.pay_code = m.member_id
-                left join lecture l
-                 on l.lecture_no = p.ref_member_id
-            where
-                   p.pay_code = #{payCode}; -->
-	 
-	
+	 <select id="selectMemberOrderList"  resultMap="paymentMap">
+		select p.*, 
+		(select count(*) from pay_lecture where pay_code = p.pay_code)
+			from payment p  
+			
+			  where
+			 ref_member_id =  #{memberId}
+			
 	</select>
-	
-	<resultMap id="paymentMap" type="payment">
+		<resultMap id="paymentMap" type="payment" >
 		<id column="pay_code" property="payCode"/>
-		<result column="ref_member_id" property="refMemberId"/>
-		<result column="pay_no" property="payNo"/>
-		<result column="pay_cost" property="payCost"/>
-		<result column="pay_date" property="payDate"/>
-		<result column="lecture_name" property="lectureName"/>
-		<result column="lecture_type" property="lectureType"/>
-		<result column="teacher_name" property="teacherName"/>
-	
-	</resultMap>
+		<result column="ref_member_id" property="ref_member_id"/>
+		<result column="pay_cost" property="payCost" />
+		<result column="count" property="count" />
+		<result column="pay_date" property="payDate" />
+		
+		</resultMap> 
 	<select id="applyTeacherList" resultMap="TeacherListMap">
-		select
-   			 *
-		from
+		select          
     		teacher left join lecture_category
        			 on ref_lec_cat_no = lec_cat_no
-         		  left join (select * from authorities where auth = 'ROLE_TEACHER')
+         		  left join (select * from authorities where auth = 'ROLE_ADMIN')
           			on ref_member_id = member_id
 		where auth is null
 	</select>

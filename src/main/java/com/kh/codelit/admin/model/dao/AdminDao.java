@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.order.model.vo.Payment;
 import com.kh.codelit.teacher.model.vo.Teacher;
+import com.kh.codelit.websocket.model.vo.Messenger;
 
 import java.util.Map;
 
@@ -45,10 +46,12 @@ public interface AdminDao {
 
 	int selectMemberOrderCount(Map<String, Object> param);
 
+
+	List<Member> selectMemberOrderList(String memberId);
+
 	List<Payment> selectMemberOrderList(Map<String, Object> param);
 
-
-
+	
 	
 
 }

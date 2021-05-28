@@ -117,6 +117,12 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectMemberOrderList(param);
 	}
 
+	@Override
+	public List<Member> selectMemberOrderList(String memberId) {
+	
+		return adminDao.selectMemberOrderList(memberId);
+	}
+
 
 	
 

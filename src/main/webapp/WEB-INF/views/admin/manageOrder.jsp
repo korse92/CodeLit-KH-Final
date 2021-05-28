@@ -10,7 +10,7 @@
 
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="CodeLit" name="title"/>
+	<jsp:param value="memberOrderTable" name="title"/>
 </jsp:include>
 
 <!-- 컨텐츠 시작 -->
@@ -43,98 +43,65 @@
         
         
         
-          #memberBoardTable button {
+          #memberOrderTable button {
             height: 2rem;
             padding: auto;
           }
-          #membeBoardTable td {
+          #memberOrderTable td {
             padding:  auto;
           }
 
         </style>
 
-		<script>
-
-				
-				
-				const searchBtn = document.getElementById("searchBtn");
-				searchBtn.addEventListener('click', function(e) {
-					
-					var searchKeyword = document.getElementById("memberSearchKeyword").value;
-					location.href=`${pageContext.request.contextPath}/admin/manageMember.do?keyword=\${searchKeyword}`;
-				});
-				
-			};
-		</script>
-
+	
 
         <div class="container">
-
+        <section class="container">
           <div class="row mt-5">
-            <h2 class=" jb-larger mt-3 col-sm-8">회원 관리</h2>
-            
-            <!-- <div class="mt-4 col-sm-2">
-              <select class="form-select">
-                <option selected>검색</option>
-                <option value="1">작성자</option>
-                <option value="2">제목</option>
-                <option value="3">내용</option>
-              </select>
-            </div> -->
-              
+            <h2 class=" jb-larger mt-3 col-sm-8">회원 결제내역</h2>
             <div class="col-4 mt-4">
               <div class="input-group">
-                <div class="form-outline">
-                  <input type="search" id="memberSearchKeyword" class="form-control"  placeholder="아이디 포함값 검색"/>              
-                </div>
-                <button type="button" class="btn btn-primary" id="searchBtn">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
             </div>
           </div>
-          
           <div class="mt-5">
-            <table class="table text-center" id="memberBoardTable">
+            <table class="table text-center" id="memberOrderTable">
               <thead class="table-primary">
                 <tr>
-                  <th scope="col">번호</th>
+              	
+                  <th scope="col">주문번호</th>
                   <th scope="col">아이디</th>
-                  <th scope="col">이름</th>
-                  <th scope="col">강의카테고리</th>
-                  <th scope="col">강의명</th>
-                  <th scope="col">강의자명</th>
                   <th scope="col">금액</th>
+                  <th scope="col">강의 갯수</th>
                   <th scope="col">결제일</th>
                 </tr>
-              </thead>
-              <tbody>
-              	<c:forEach items="${memberList}" var="member" varStatus="vs">
-                <tr>
-                    <td>${vs.count}</td>
-                    <td><a href="#">${member.memberId}</a></td>
-                    <td>
-                    
-                    </td>
-                    <td>대기</td>
-                    <td>
-                    	
-                    
-                    </td>
-                </tr>
-                </c:forEach>
-              </tbody>
-            </table>
-          </div>
-  
-				${pageBar}
-              
-            </div>
+        <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
+	  
+     </thead>
+	 	<tbody>
+		
+	  	 	<c:forEach items="${manageOrderList}" var="payment"   varStatus="vs">
+	       	<tr>
+	     	
+	      	<td>${payment.payCode}</td>
+	        <td>${payment.refMemberId}</td>
+	        <td>${payment.payCost}</td>
+	        <td>${payment.payCount}</td>
+	        <td>${payment.payDate}</td>
+	       	</tr>
+	  	 	</c:forEach>
+	
+		</table>
+           
+     
+		
+		 <div>
+		  ${pageBar}
+		 </div>
+		
+		  </div>
+		</section>
+	</div>   
 
-        </div> <!-- 컨테이너-->
-
-			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-			<hr/>
 
 <!-- 컨텐츠 끝 -->
 
