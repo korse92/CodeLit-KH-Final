@@ -51,10 +51,10 @@ public class adminController {
 				ModelAndView mav,
 				@RequestParam(defaultValue = "1") int cPage, 
 				HttpServletRequest request,
-				Member memberId
+				Principal principal
 				){
 		
-		
+		String memberId = principal.getName();
 		int numPerPage = 10;
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
@@ -63,16 +63,16 @@ public class adminController {
 		
 	
 		try {
-			
+			List<Member> member = adminService.selectMemberOrderList(memberId);
 			int totalContents = adminService.selectMemberOrderCount(param);
 			List<Payment> list = adminService.selectMemberOrderList(param);
-	
+			
 			String url = HelloSpringUtils.convertToParamUrl(request);
 			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 		     
 			mav.addObject("manageOrderList", list);
 			mav.addObject("pageBar", pageBar);
-		
+			mav.addObject("member",member);
 			mav.setViewName("/admin/manageOrder");
 		} catch(Exception e) {
 			throw e;

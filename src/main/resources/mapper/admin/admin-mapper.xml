@@ -69,17 +69,16 @@
 
 	 <select id="selectMemberOrderList"  resultMap="paymentMap">
 		select p.*, 
-		(select count(*) from pay_lecture where pay_code = p.pay_code)
+		(select count(*) from pay_lecture where pay_code = p.pay_code) count
 			from payment p  
-			
-			  where
-			 ref_member_id =  #{memberId}
+		
 			
 	</select>
 		<resultMap id="paymentMap" type="payment" >
 		<id column="pay_code" property="payCode"/>
-		<result column="ref_member_id" property="ref_member_id"/>
+		<result column="ref_member_id" property="refMemberId"/>
 		<result column="pay_cost" property="payCost" />
+		<result column="pay_no" property="payNo" />
 		<result column="count" property="count" />
 		<result column="pay_date" property="payDate" />
 		
