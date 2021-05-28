@@ -164,7 +164,9 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public int selectTeacherCount(Map<String, Object> param) {
-		
+
+
+
 		return session.selectOne("admin.selectTeacherCount", param);
 	}
 
@@ -175,9 +177,21 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
+
 	public List<Member> selectMemberOrderList(String memberId) {
 		
 		return session.selectList("admin.selectMemberOrderList",memberId);
+	}
+	public int deleteTeacherAndAuth(String refMemberId) {
+
+		return session.delete("admin.deleteTeacherAndAuth", refMemberId);
+	}
+
+	@Override
+	public int deleteTeacherAndAuth2(String refMemberId) {
+
+		return session.delete("admin.deleteTeacherAndAuth2", refMemberId);
+
 	}
 
 

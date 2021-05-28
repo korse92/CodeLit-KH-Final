@@ -151,8 +151,9 @@
                     </td>
                     <td>
                     	<form:form method="POST" class="deleteTeacherFrm"
-                    				action="${pageContext.request.contextPath}/admin/deleteTeacher.do">
-                        <button type="submit" class="btn btn-danger text-light">권한삭제</button>
+                    				action="${pageContext.request.contextPath}/admin/deleteTeacherAndAuth.do">
+	                    	<input type="hidden" name = "refMemberId" value="${teacher.refMemberId}" />		
+	                        <button type="submit" class="btn btn-danger text-light">권한삭제</button>
                     	</form:form>
                     </td>
                 </tr>

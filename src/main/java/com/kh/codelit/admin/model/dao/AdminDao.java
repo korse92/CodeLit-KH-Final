@@ -51,7 +51,14 @@ public interface AdminDao {
 
 	List<Payment> selectMemberOrderList(Map<String, Object> param);
 
-	
+
+	int deleteTeacherAndAuth(String refMemberId);
+
+	int deleteTeacherAndAuth2(String refMemberId);
+
+
+
+
 	
 
 }

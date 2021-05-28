@@ -30,4 +30,8 @@ public interface LectureDao {
 
 	List<Map<String, Object>> mainSearchResult(Map<String, Object> param);
 
+	List<Map<String, Object>> myAllLecture(Map<String,Object> param);
+
+	int getTeacherTotalContents(Map<String, Object> param);
+
 }
