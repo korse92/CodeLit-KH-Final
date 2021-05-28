@@ -181,13 +181,15 @@ function tooltipInit(elem) {
 	});
 }
 
-//파트, 챕터값을 map(part, chapter[])로 만들어주기
 function createCurriculum(){
 	const curArr = new Array();
 	const $partGroup = $("#inputCurriculum").find(".part-group");
 	//console.log($partGroup);
 
-	var formData = new FormData($('#lectureEnrollFrm')[0]);
+	//var formData = new FormData($('#lectureEnrollFrm')[0]);
+	var videoChapNoArr = new Array();
+	
+	var videoIdx = 0;
 
 	$partGroup.each((pIdx, elem) => {
 		let $partInput = $(elem).find(".partInput");
@@ -203,6 +205,7 @@ function createCurriculum(){
 		$chapterInputs.each((cIdx, elem) => {
 			if(!$(elem).val()) {
 				$(elem).parent().next().val("");
+				videoIdx++;
 				return true;// jQuery의 each에서 true리턴 : continue, false리턴 : break;
 			}
 
@@ -211,8 +214,11 @@ function createCurriculum(){
 
 			//첨부파일이 있을경우 form데이터 videoChapterNo에 참조할 챕터번호(임시) 삽입
 			if($(elem).parent().next().val()){
-
+				//formData.append("videoChapNo", videoIdx);
+				videoChapNoArr.push(videoIdx);
 			}
+			
+			videoIdx++;
 
 			lecturePart.chapterArr.push(lectureChapter);
 		});
@@ -224,6 +230,11 @@ function createCurriculum(){
 
 	const jsonStr = JSON.stringify(curArr);
 	console.log("jsonStr", jsonStr);
+	
+	//console.log(formData.getAll("videoChapNo"));
+	console.log(videoChapNoArr);
+	
+	$("[name=videoChapNoArr]").val(JSON.stringify(videoChapNoArr));
 
 	return jsonStr;
 }
