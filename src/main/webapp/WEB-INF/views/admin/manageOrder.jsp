@@ -71,7 +71,6 @@
                   <th scope="col">주문번호</th>
                   <th scope="col">아이디</th>
                   <th scope="col">금액</th>
-                  <th scope="col">갯수</th>
                   <th scope="col">강의 갯수</th>
                   <th scope="col">결제일</th>
                 </tr>
@@ -82,11 +81,9 @@
 		
 	  	 	<c:forEach items="${manageOrderList}" var="payment"   varStatus="vs">
 	       	<tr>
-	     	
 	      	<td>${payment.payCode}</td>
 	        <td>${payment.refMemberId}</td>
 	        <td>${payment.payCost}</td>
-	         <td>${payment.payNo}</td>
 	        <td>${payment.count}</td>
 	        <td>${payment.payDate}</td>
 	       	</tr>
