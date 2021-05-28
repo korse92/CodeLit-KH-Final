@@ -110,7 +110,9 @@ window.onload = function() {
 			<div class="row row-cols-auto my-1 px-5 justify-content-center">
 			</c:if>
 				<div class="col-sm-3">
-					<div class="card position-relative text-decoration-none text-dark">
+					<div class="card position-relative text-decoration-none text-dark"
+						 style="cursor: pointer;"
+							onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${mainLec.lectureNo}';">
 						<img
 							src="${empty mainLec.lectureThumbRenamed ? 'https://via.placeholder.com/450x300.png?text=Thumbnail+Image'
 								:pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += mainLec.lectureThumbRenamed}"
