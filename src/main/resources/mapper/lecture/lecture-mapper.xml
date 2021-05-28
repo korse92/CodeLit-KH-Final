@@ -251,9 +251,26 @@
 		<result column="lec_assessment" property="lecAssessment"/>
 	</resultMap>
 	
+	<select id="myAllLecture" resultType="lecture">
+	select
+		ref_member_id "refMemberId",
+     	lecture_type "lectureType",
+     	ref_lec_cat_no "refLecCatNo",
+     	lecture_name "lectureName",
+     	lecture_accept_yn "lectureAcceptYn"
+	from 
+    	lecture
+    where ref_member_id = #{id}
 	
+	</select>
+	<select id="getTeacherTotalContents" resultType="_int">
+	select
+		  count(*)
+	 from
+		  lecture
 	
-	
+	</select>
+
 
 </mapper>
 

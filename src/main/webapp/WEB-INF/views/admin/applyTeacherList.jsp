@@ -17,7 +17,11 @@ function deleteTeacher(id){
 	if(confirm(`\${id}의 강사 신청을 거절하시겠습니까?`)){
 		var $frm = $(document.deleteTeacherFrm);
 		$frm.find("[name=id]").val(id);
-		$frm.submit();
+		
+		//지헌 - 알림관련 스크립트 추가
+	    sendMessage("/app/reject/"+id);
+		
+	    $frm.submit();
 	}
 }
 
@@ -66,6 +70,12 @@ function deleteTeacher(id){
 	      method="POST" >
 	 <input type="hidden" name="id"/>
 	</form:form>
+	
+	<!-- 지헌 - 알림 관련 hidden input 추가 -->
+	<input type="hidden" value="[반려]강사 신청이 거절되었습니다." id="msgTitle">
+	<input type="hidden" value="강사 신청이 거절되었습니다." id="msgContent">
+	<!-- 지헌 - 알림관련 태그 종료 -->
+	
 	<!-- 페이지 바 -->
 	  <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 	 	<c:if test="${!empty list}">

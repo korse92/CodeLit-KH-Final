@@ -20,5 +20,9 @@ public interface MessengerService {
 	int updateReadVal(int msgNo);
 
 	Messenger selectOneMsg(int msgNo);
+
+	List<Messenger> alarmList(String memberId);
+
+	List<String> selectAuthTeacher();
 	
 }

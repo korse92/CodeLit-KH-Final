@@ -25,7 +25,7 @@ public interface MemberService extends UserDetailsService{
 
 	int updateMember(Member member);
 
-	int delete(String memberId);
+	int deleteMember(String memberId);
 
 
 

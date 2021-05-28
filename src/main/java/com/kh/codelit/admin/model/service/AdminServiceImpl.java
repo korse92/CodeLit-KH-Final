@@ -1,15 +1,15 @@
 package com.kh.codelit.admin.model.service;
 
 import java.util.List;
-
 import java.util.Map;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.codelit.admin.model.dao.AdminDao;
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.order.model.vo.Payment;
 import com.kh.codelit.teacher.model.vo.Teacher;
 
 @Service
@@ -103,6 +103,36 @@ public class AdminServiceImpl implements AdminService {
 
 		return adminDao.selectTeacherCount(param);
 	}
+
+	@Override
+	public int selectMemberOrderCount(Map<String, Object> param) {
+		
+		return adminDao.selectMemberOrderCount(param);
+	}
+
+	@Override
+	public List<Payment> selectMemberOrderList(Map<String, Object> param) {
+		
+		return adminDao.selectMemberOrderList(param);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int deleteTeacherAndAuth(String refMemberId) {
+		
+		int result = adminDao.deleteTeacherAndAuth(refMemberId);
+		if(result > 0) {
+			result = adminDao.deleteTeacherAndAuth2(refMemberId);			
+		}
+		
+		return result;
+	}
+
+
+	
+
+
+	
 
 
 }

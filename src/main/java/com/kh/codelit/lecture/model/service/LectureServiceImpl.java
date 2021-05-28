@@ -128,4 +128,17 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 
+	@Override
+	public List<Map<String, Object>> myAllLecture(Map<String,Object> param) {
+		return lectureDao.myAllLecture(param);
+	}
+
+
+	@Override
+	public int getTeacherTotalContents(Map<String, Object> param) {
+		
+		return lectureDao.getTeacherTotalContents(param);
+	}
+
+
 }

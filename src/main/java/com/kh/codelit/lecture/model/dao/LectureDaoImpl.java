@@ -89,4 +89,21 @@ public class LectureDaoImpl implements LectureDao {
 		return session.selectList("lecture.mainSearchResult", param);
 	}
 
+	@Override
+	public List<Map<String, Object>> myAllLecture(Map<String,Object> param) {
+		int cPage = (int)param.get("cPage");
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+				
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return session.selectList("lecture.myAllLecture", param, rowBounds);
+	}
+
+	@Override
+	public int getTeacherTotalContents(Map<String, Object> param) {
+		
+		return session.selectOne("lecture.getTeacherTotalContents", param);
+	}
+
 }

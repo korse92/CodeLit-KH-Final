@@ -55,7 +55,55 @@
 		</if>
 		</where>
 	</select>
+	
+	<delete id="deleteTeacherAndAuth">
+		delete from teacher
+		where ref_member_id = #{refMemberId}
+	</delete>
+	
+	<delete id="deleteTeacherAndAuth2">
+		delete from teacher
+		where member_id = #{refMemberId}
+			and auth = "ROLE_TEACHER"
+	</delete>
 
+	 <select id="selectMemberOrderList "  resultMap="paymentMap">
+	 select * from
+	 		
+	 	payment p
+	 	left join lecture l
+	 	
+	 	on p.pay_code = l.lecture_no
+	 	where 
+	 	  p.ref_member_id = #{RefmemberId}
+		  
+	<!--        	select 
+			*
+		from 
+			member m
+		    	left join authorities a
+		        	on m.member_id = a.member_id
+                left join payment p
+                    on p.pay_code = m.member_id
+                left join lecture l
+                 on l.lecture_no = p.ref_member_id
+            where
+                   p.pay_code = #{payCode}; -->
+	 
+	
+	</select>
+	
+	<resultMap id="paymentMap" type="payment">
+		<id column="pay_code" property="payCode"/>
+		<result column="ref_member_id" property="refMemberId"/>
+		<result column="pay_no" property="payNo"/>
+		<result column="pay_cost" property="payCost"/>
+		<result column="pay_date" property="payDate"/>
+		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_type" property="lectureType"/>
+		<result column="teacher_name" property="teacherName"/>
+	
+	</resultMap>
 	<select id="applyTeacherList" resultMap="TeacherListMap">
 		select
    			 *
@@ -96,8 +144,6 @@
 		<result column="ref_member_id" property="refMemberId"/>
 	</resultMap> 
 
-	 
-
 	<update id="approveLecture">
 		update
 	    	lecture
@@ -123,30 +169,7 @@
 	</update>
 
 	<select id="selectAllLecture" resultMap="LectureListMap">
-	<!-- select 
-		rownum, l.*
-	from ( select 
-				*
-           from lecture l join lecture_category c 
-           		on ref_lec_cat_no = lec_cat_no
-           			
-     <where>
-     lecture_accept_yn = 'Y'
-     <if test="searchKeyword != null and searchKeyword != ''">
-       	   and
-       	   		l.ref_member_id like '%' || #{searchKeyword} || '%' 
-     </if>
-     <if test="category != null and category != ''">
-       	   and 
-       	  		ref_lec_cat_no = #{category}
-       	   
-    </if>
-    </where>
-	        ) l
-	 order by 
-	 		rownum desc -->
-	 		
-	 		
+			
 	 select 
     	 l.*
 	 from ( select 
@@ -217,7 +240,19 @@
 			</if>
 		</where>
 	</select>
-	
+		<select id="selectMemberOrderCount" resultType="_int">
+		select count(*)
+		from member m
+			left join (select * from authorities where auth = 'ROLE_ADMIN') a
+			on m.member_id = a.member_id
+		<where>
+			auth is null
+			<if test="keyword != null and keyword != ''">
+				and
+					m.member_id like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
 	<select id="searchCategory" resultMap="LectureListMap">
 	<!-- 이클립스의 emp_mapper참고 -->
 	select 

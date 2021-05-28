@@ -50,7 +50,7 @@
 						</p>
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">수강중인 강의 목록</a></span>
+						<span class=""><a href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의 목록</a></span>
 					</div>
 				</div>
 			</div>
@@ -140,19 +140,22 @@
 				<h3 class="card-header">알림</h3>
 				<div class="card-body">
 					<div class="alamList">
-						<p>
-							<a href="#">알림</a>
-						</p>
-						<p>
-							<a href="#">알림</a>
-						</p>
-						<p>
-							<a href="#">알림</a>
-						</p>
+					<c:if test="${empty message}">
+						<h1>등록된 알림이 없습니다.</h1>
+					</c:if>
+					<c:if test="${not empty message}">
+						<c:forEach items="${message}" var="message" end="2">
+							<p>
+								<a href="${pageContext.request.contextPath}/alarm/alarmDetail.do?msgNo=${message.msgNo}">${message.msgTitle} / 
+								${message.readYN = 'N' ? "읽지않음" : '읽음'}
+								</a> 
+							</p>
+						</c:forEach>
+					</c:if>
 					</div>
-					<div class="text-end">
-						<span class=""><a href="${pageContext.request.contextPath}/alarm/alarmList.do">받은알림 목록</a></span>
-					</div>
+						<div class="text-end">
+							<span class=""><a href="${pageContext.request.contextPath}/alarm/alarmList.do">받은알림 목록</a></span>
+						</div>
 				</div>
 			</div>
 		</div>

@@ -12,20 +12,7 @@
 </jsp:include>
 
 <script>
-function deleteLecture(no) {
-	if(confirm(`강의 신청을 거절하시겠습니까?`)){
-		
-	  var $frm = $(document.deleteLectureFrm);
-	  $frm.find("[name=no]").val(no);
-	  
-	  // 지헌 - 알림관련 스크립트 추가
-	  const id = $("#id").val();
-	  sendMessage("/app/reject/"+id);
-	  
-	  $frm.submit();
-	}
 
-}
 
 </script>
 <!-- 컨텐츠 시작 -->
@@ -33,16 +20,18 @@ function deleteLecture(no) {
 <section class="container">
   <div class="page-header">
    <div class="row mt-5">
-     <h2 class=" jb-larger m-3 col-sm-3">강의 신청 목록</h2>
+     <h2 class=" jb-larger m-3 col-sm-3">회원 결제 내역</h2>
    </div>
 	<table class="table mt-3 col-sm text-center">
 	<thead class="thead-light">
 	    <tr>
-	     <td class="" style="display:none">강의 번호</td>
-	      <th scope="col">카테고리</th>
-	      <th scope="col">강사 아이디</th>
-	      <th scope="col">강의 링크</th>
-	      <th scope="col">비고</th>
+	     <td class="" style="display:none">번호</td>
+	      <th scope="col">회원아이디</th>
+	      <th scope="col">이름</th>
+	      <th scope="col">강의 카테고리</th>
+	      <th scope="col">강의명</th>
+	      <th scope="col">강의자명</th>
+	      <th scope="col">결제 금액</th>
 	    </tr>
 	   <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 	  <c:if test="${empty list}">
@@ -53,7 +42,7 @@ function deleteLecture(no) {
 	 </thead>
 	  <tbody>
 	  	<c:if test="${!empty list}">
-	  	 <c:forEach items="${list}" var="lectureList">
+	  	 <c:forEach items="${list}" var="paymentList">
 	       <tr>
 	          <td style="display:none">${lectureList.lectureNo}</td>
 	          <td>${lectureList.lecCatName}</td>
@@ -64,14 +53,6 @@ function deleteLecture(no) {
 	             <button type="button" class="btn btn-secondary btn-sm" onclick="deleteLecture('${lectureList.lectureNo}');">거절</button>
 	          </td>
 	        </tr>
-	        
-	        <!-- 지헌 / 알림관련 hidden 값 추가 -->
-		  	<input type="hidden" value="[반려]강의 신청이 거절되었습니다." id="msgTitle" />
-			<input type="hidden" 
-				value="강의번호 ${lectureList.lectureNo} 가 신청이 거절되었습니다." id="msgContent" />
-			<input type="hidden" id="id" value="${lectureList.refMemberId}"/>
-			<!-- 지헌 / 알림관련 종료-->
-			
 	  	 </c:forEach>
 	  	</c:if> 
 	</table>
@@ -79,7 +60,7 @@ function deleteLecture(no) {
 	  		action="${pageContext.request.contextPath}/admin/deleteLecture.do"
 	  		method="POST"	>
 	  	<input type="hidden" name="no">
-	  </form:form>	
+	  </form:form>	    	
 	 <!-- 페이지 바 -->
 	  <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 	 	<c:if test="${!empty list}">

@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.order.model.vo.Payment;
 import com.kh.codelit.teacher.model.vo.Teacher;
 
 import java.util.Map;
@@ -46,4 +47,12 @@ public interface AdminService {
 	int selectTeacherCount(Map<String, Object> param);
 
 	
+	int selectMemberOrderCount(Map<String, Object> param);
+
+	List<Payment> selectMemberOrderList(Map<String, Object> param);
+
+	int deleteTeacherAndAuth(String refMemberId);
+
+
+;
 }
