@@ -148,13 +148,14 @@ public class LectureController {
 	
 	@GetMapping("/lecture.do")
 	public void lecture(
-			
+				Model model
 			) {
 		
 		try {
-			
+			Lecture lecture = lectureService.selectOneLecture(3);
+			model.addAttribute("lecture", lecture);
 		} catch(Exception e) {
-			
+			throw e;
 		}
 		
 	}

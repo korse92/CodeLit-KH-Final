@@ -33,13 +33,13 @@
 
       #left {
         width: 50rem;
-        height: 70rem;
+        min-height: 50rem;
         margin-right: 2rem;
       }
       #right {
         width: 30rem;
-        height: 70rem;
-        border: 1px solid black;
+        min-height: 50rem;
+/*         border: 1px solid black; */
       }
 
     </style>
@@ -57,6 +57,19 @@
 			lectureVideo.src = url;
 		});
 		
+		   /*
+	          <script>
+	              var xhr = new XMLHttpRequest();
+	              xhr.open("GET", "test.mp4", true);
+	              xhr.responseType = "blob";
+	              xhr.onreadystatechange = function () {
+	                if (xhr.readyState == xhr.DONE) {
+	                  var blob = xhr.reponse;
+	                  var video = URL.createObjectURL(blob);
+	                }
+	              }
+	              xhr.send();
+			*/
 	}
 
   </script>
@@ -75,39 +88,31 @@
         </div>
 
         <div id="right">
-	          
-		   <!--
-	          <script>
-	              var xhr = new XMLHttpRequest();
-	              xhr.open("GET", "test.mp4", true);
-	              xhr.responseType = "blob";
-	              xhr.onreadystatechange = function () {
-	                if (xhr.readyState == xhr.DONE) {
-	                  var blob = xhr.reponse;
-	                  var video = URL.createObjectURL(blob);
-	                }
-	              }
-	              xhr.send();
-	          </script>
-			-->
 
-				<div class="tab-pane fade" id="curriculum" role="tabpanel"
-					aria-labelledby="profile-tab">
+				<!-- 우측 커리큘럼 파트 -->
+				<div  id="curriculum" class="mt-5">
+				
+					<!--  전체 접기/펴기 버튼 -->
 					<button id="allCollapseBtn"
 						class="btn btn-primary d-block ms-auto mb-3" type="button" data-bs-toggle="collapse"
 						data-bs-target=".accordion-collapse" aria-expanded="false">모두 펼치기 / 접기</button>
+					
+					<!-- 커리큘럼 몸통 -->
 					<div class="accordion" id="curriculumAccordionPanels">
 						<c:forEach items="${lecture.partList}" var="part" varStatus="pvs">
 						<div class="accordion-item">
+						
+								<!-- 파트 -->
 								<button class="accordion-button collapsed" type="button"
 									data-bs-toggle="collapse"
 									data-bs-target="#collapseChapterOfPart${part.lecturePartNo}"
 									aria-expanded="false" aria-controls="collapseChapterOfPart${part.lecturePartNo}">
 									<i class="fas fa-bars me-3"></i>
-									<span>파트 ${pvs.count }. ${part.lecturePartTitle}</span>
+									<span>파트 ${pvs.count}. ${part.lecturePartTitle}</span>
 									<span class="badge bg-primary ms-2">${part.chepterList.size()}</span>
 								</button>
-							</h2>
+							
+							<!-- 파트당 내부 챕터들 -->
 							<div id="collapseChapterOfPart${part.lecturePartNo}"
 								class="accordion-collapse collapse"
 								aria-labelledby="partPanel${part.lecturePartNo}">
@@ -126,19 +131,10 @@
 						</c:forEach>
 					</div>
 				</div>
-
-
+				
         </div> <!-- div#right -->
 
-
 	</div> <!-- container -->
-
-
-
-
-
-
-
 
 
 
