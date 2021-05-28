@@ -182,10 +182,11 @@ $(() => {
 						<ul class="nav nav-pills justify-content-end" id="myTab" role="tablist">
 						<c:forEach var="i" begin="1" end="${totalCmtPage}" varStatus="vs">
 							<li class="nav-item" role="presentation">
-						  		<button class="nav-link ${vs.first ? 'active' : ''}" id="cmt-pageBtn${i}" data-bs-toggle="tab" data-bs-target="#cmt-page${i}" type="button" role="tab" aria-controls="cmt-page${i}" aria-selected="true">${i}</button>
+								<button class="nav-link ${vs.first ? 'active' : ''}" id="cmt-pageBtn${i}" data-bs-toggle="tab" data-bs-target="#cmt-page${i}" type="button" role="tab" aria-controls="cmt-page${i}" aria-selected="true">${i}</button>
 							</li>
 						</c:forEach>
-							<!-- <li class="nav-item" role="presentation">
+							<!--
+							<li class="nav-item" role="presentation">
 						  		<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">2</button>
 							</li>
 							<li class="nav-item" role="presentation">
@@ -193,7 +194,8 @@ $(() => {
 							</li>
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">4</button>
-							</li> -->
+							</li>
+							-->
 						</ul>
 
 
@@ -204,7 +206,10 @@ $(() => {
 							<fmt:parseNumber var="pageNo" integerOnly="true" value="${vs.count/numPerCmtPage + 1}"/>
 							<div class="tab-pane ${vs.first ? 'active' : ''}" id="cmt-page${pageNo}" role="tabpanel" aria-labelledby="cmt-pageBtn${pageNo}">
 							</c:if>
-								<div class="row">${cmt}</div>
+								<div class="row">
+
+									${cmt}
+								</div>
 							<c:if test="${vs.count % numPerCmtPage == 0 or vs.last}">
 							</div>
 							</c:if>

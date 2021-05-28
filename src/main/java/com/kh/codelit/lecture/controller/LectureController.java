@@ -62,7 +62,9 @@ public class LectureController {
 		//2. 업무로직
 		//a. contents영역
 		List<Lecture> list = lectureService.selectLectureList(param);
+		List<Object> orderedlectureNoList = lectureService.selectOrderedLectureList(memberId);
 		log.debug("list = {}", list);
+		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 
 		//b. pageBar영역
 		int totalContents = lectureService.getTotalContents(catNo);
@@ -73,6 +75,7 @@ public class LectureController {
 
 		//3.jsp 위임처리
 		model.addAttribute("list", list);
+		model.addAttribute("orderedlectureNoList", orderedlectureNoList);
 		model.addAttribute("pageBar", pageBar);
 
 		return "lecture/lectureList";
@@ -84,29 +87,29 @@ public class LectureController {
 									  ModelAndView mav,
 									  Authentication authentication) {
 		//1. 업무로직
-	
-		
+
+
 		// 로그인 정보
 		Member loginMember = (Member)authentication.getPrincipal();
 		//log.debug("loginMember = {}", loginMember);
 		loginMember.getMemberId();
 		log.debug("loginMember id = {}", loginMember);
 
-		
+
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
 		int numPerCmtPage = 5;
 		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
 		log.debug("totalCmtPage = {}", totalCmtPage);
-		
-		
+
+
 		//map객체에 담아보기
 		Map<String,Object> param = new HashMap<>();
 		param.put("ref_member_id", loginMember.getMemberId());
 		param.put("no", no);
 		log.debug("param = {}", param);
-		
+
 		//강의id 담아 클릭수
 		int result = lectureService.clickCount(param);
 		log.debug("clickCountresult = {}", result);
@@ -120,57 +123,57 @@ public class LectureController {
 		return mav;
 	}
 
-	
+
 	@GetMapping("/mainSearchResult.do")
 	public ModelAndView mainSearchResult(ModelAndView mav,
 										@RequestParam(required = false) String keyword
-										) 
+										)
 	{
-		
+
 		//log.debug("메인 검색 컨트롤러 연결 완@searchKeyword = {}", keyword);
-		
+
 	try {
 		Map<String, Object> param = new HashMap<>();
 		param.put("searchKeyword", keyword);
 		log.debug("param = {}", param);
-		
+
 		List<Map<String, Object>> list = lectureService.mainSearchResult(param);
 		log.debug("mainSearchResult@list = {}", list);
-		
+
 		mav.addObject("list",list);
 		mav.setViewName("/lecture/mainSearchResult");
 	}catch(Exception e) {
 		throw e;
 	}
-	
+
 		return mav;
 	}
-	
+
 	@GetMapping("/lecture.do")
 	public void lecture(
-			
+
 			) {
-		
+
 		try {
-			
+
 		} catch(Exception e) {
-			
+
 		}
-		
+
 	}
-	
-	
+
+
 
 	@GetMapping("/myAllLecture.do")
 	public ModelAndView myAllLecture(ModelAndView mav,
 									 Authentication authentication,
 									 HttpServletRequest request,
-									 @RequestParam(defaultValue ="1") int cPage) { 
-		
+									 @RequestParam(defaultValue ="1") int cPage) {
+
 
 		//페이징처리
 		int numPerPage = 10;
-		
+
 	try {
 		// 로그인 정보
 		Member loginTeacher = (Member)authentication.getPrincipal();
@@ -178,34 +181,34 @@ public class LectureController {
 		loginTeacher.getMemberId();
 		log.debug("loginTeacher.id = {}", loginTeacher.getMemberId());
 		//loginTeacher.id = teacher
-		
+
 		Map<String, Object> param = new HashMap<>();
 		param.put("cPage", cPage);
 		param.put("numPerPage", numPerPage);
 		param.put("teacherId", loginTeacher.getMemberId());
 		log.debug("강의자의 내 강의 보기 param = {}", param);
-		
+
 		// b. pageBar 영역
 		int totalContents = lectureService.getTeacherTotalContents(param);
 		log.debug("강의자 목록 totalContents = {}", totalContents);
 		List<Map<String,Object>> list = lectureService.myAllLecture(param);
 		log.debug("list = {}", list);
-		 
-		
+
+
 		String url = HelloSpringUtils.convertToParamUrl(request);
 		log.debug("url = {}", url);
 		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 		log.debug("pageBar = {}", pageBar);
-		
+
 		mav.addObject("list",list);
 		mav.addObject("pageBar",pageBar);
 		mav.setViewName("/teacher/myAllLecture");
-		
+
 	}catch(Exception e) {
 		throw e;
 	}
-		
+
 		return mav;
 	}
-	
+
 }
