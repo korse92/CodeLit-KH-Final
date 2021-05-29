@@ -1,8 +1,10 @@
 package com.kh.codelit.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -70,6 +72,22 @@ public class MemberDaoImpl implements MemberDao {
 	public int deleteMember(String memberId) {
 	
 		return session.delete(memberId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectLectureList(Map<String, Object> param) {
+		int cPage = (int)param.get("cPage");
+
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return session.selectList("member.selectLectureList", param, rowBounds);
+	}
+
+	@Override
+	public int getTotalContents(String memberId) {
+		return session.selectOne("member.getTotalContents", memberId);
 	}
 
 

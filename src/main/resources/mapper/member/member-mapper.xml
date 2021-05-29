@@ -75,4 +75,43 @@
 			member_id = #{memberId}
 		
 	</delete>	
+	
+	<select id="selectLectureList" resultType="lecture">
+		select 
+		    l.*
+		from
+		    payment p
+		full 
+			outer 
+		join
+		    pay_lecture pl
+		on
+		    p.pay_code = pl.pay_code
+		join
+		    lecture l
+		on
+		    pl.ref_lecture_no = l.lecture_no 
+		where 
+		    p.ref_member_id = #{memberId}
+	</select>
+	<select id="getTotalContents" resultType="_int">
+		select 
+		    count(*)
+		from
+		    payment p
+		full 
+			outer 
+		join
+		    pay_lecture pl
+		on
+		    p.pay_code = pl.pay_code
+		join
+		    lecture l
+		on
+		    pl.ref_lecture_no = l.lecture_no 
+		where 
+		    p.ref_member_id = #{memberId}
+	</select>
+
 </mapper>
+

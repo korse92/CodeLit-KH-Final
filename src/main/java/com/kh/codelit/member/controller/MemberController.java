@@ -348,9 +348,6 @@ public class MemberController {
 			catNo = 0;
 		int numPerPage = 12;
 		String memberId = principal != null ? principal.getName() : null;
-		log.debug("catNo = {}", catNo);
-		log.debug("cPage = {}", cPage);
-		log.debug("memberId = {}", memberId);
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
 		param.put("catNo", catNo);
@@ -359,11 +356,10 @@ public class MemberController {
 
 		//2. 업무로직
 		//a. contents영역
-		List<Lecture> list = lectureService.selectLectureList(param);
-		log.debug("list = {}", list);
+		List<Map<String, String>> list = memberService.selectLectureList(param);
 
 		//b. pageBar영역
-		int totalContents = lectureService.getTotalContents(catNo);
+		int totalContents = memberService.getTotalContents(memberId);
 		String url = HelloSpringUtils.convertToParamUrl(request);
 		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 

@@ -1,6 +1,7 @@
 package com.kh.codelit.member.model.service;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,18 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteMember(String memberId) {
 
 		return memberDao.deleteMember(memberId);
+	}
+
+
+	@Override
+	public List<Map<String, String>> selectLectureList(Map<String, Object> param) {
+		return memberDao.selectLectureList(param);
+	}
+
+
+	@Override
+	public int getTotalContents(String memberId) {
+		return memberDao.getTotalContents(memberId);
 	}
 
 
