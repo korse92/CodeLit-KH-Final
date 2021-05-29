@@ -42,6 +42,9 @@
 /*         border: 1px solid black; */
       }
 
+	  .chap {
+	  	text-decoration: none;
+	  }
     </style>
 
 	<script>
@@ -51,7 +54,7 @@
 		// 파일 가져오는 비동기 요청 -> blob url 생성 -> video src에 삽입
 		const lectureVideo = document.getElementById("lectureVideo");
 		
-		loadXHR('test.mp4')
+		loadXHR("${videoRename}")
 		.then(blobUrlCreator)
 		.then(url => {
 			lectureVideo.src = url;
@@ -79,8 +82,18 @@
 	<div class="container d-flex">
 
         <div id="left">
-          <h3 class="mt-5" id="lectureTitle">강의 제목 자리</h3>
-          <h4 class="mt-5" id="videoTitle">영상 제목 자리</h4>
+          <h3 class="mt-5" id="lectureTitle">${lecture.lectureName}</h3>
+          <h4 class="mt-5 mb-2" id="videoTitle">
+          	<%-- 파트 --%>
+          	<c:forEach items="${lecture.partList}" var="part" varStatus="pvs">
+	          	<%-- 챕터 --%>
+	          	<c:forEach items="${part.chepterList}" var="chapter" varStatus="cvs">
+	          		<c:if test="${playPosition eq chapter.lecChapterNo}">
+		          		파트 ${pvs.count} 챕터 ${cvs.count}. ${chapter.lecChapterTitle}
+	          		</c:if>
+	          	</c:forEach>
+          	</c:forEach>
+          </h4>
   
             <video id="lectureVideo" src="" controlsList="nodownload" controls>
             </video>
@@ -119,10 +132,18 @@
 								<div class="accordion-body px-0">
 									<ul class="list-group-flush p-0 m-0">
 										<c:forEach items="${part.chepterList}" var="chapter" varStatus="cvs">
-										<li class="list-group-item">
-											<i class="fas fa-play-circle"></i>
-											<span>챕터 ${cvs.count}. ${chapter.lecChapterTitle}</span>
-										</li>
+										<a class="chap" href="${pageContext.request.contextPath}/lecture/lecture.do?lectureNo=${lecture.lectureNo}&chapterNo=${chapter.lecChapterNo}">
+											<li class="list-group-item d-flex">
+												<i class="fas fa-play-circle me-1"></i>
+												<span>챕터 ${cvs.count}. ${chapter.lecChapterTitle}</span>
+												<c:forEach items="${progList}" var="prog">
+													<c:if test="${prog.chapterNo eq chapter.lecChapterNo 
+																	and prog.yn eq 'Y'}">
+														<span class="text-primary fs-5 ms-auto">수강</span>
+													</c:if>
+												</c:forEach>
+											</li>
+										</a>
 										</c:forEach>
 									</ul>
 								</div>

@@ -34,4 +34,11 @@ public interface LectureDao {
 
 	int getTeacherTotalContents(Map<String, Object> param);
 
+	List<Map<String, Object>> selectLectureProgress(Map<String, Object> param);
+
+	int updateProgress(Map<String, Object> param);
+
+	String selectVideoRename(int playPosition);
+
+
 }

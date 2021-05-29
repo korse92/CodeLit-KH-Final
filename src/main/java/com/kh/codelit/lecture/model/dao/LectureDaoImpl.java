@@ -106,4 +106,24 @@ public class LectureDaoImpl implements LectureDao {
 		return session.selectOne("lecture.getTeacherTotalContents", param);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectLectureProgress(Map<String, Object> param) {
+
+		return session.selectList("lecture.selectLectureProgress", param);
+	}
+
+	@Override
+	public int updateProgress(Map<String, Object> param) {
+
+		return session.update("lecture.updateProgress", param);
+	}
+
+	@Override
+	public String selectVideoRename(int playPosition) {
+
+		return session.selectOne("lecture.selectVideoRename", playPosition);
+	}
+
+
+	
 }

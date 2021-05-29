@@ -1,12 +1,10 @@
 package com.kh.codelit.lecture.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.codelit.common.HelloSpringUtils;
@@ -146,14 +142,76 @@ public class LectureController {
 		return mav;
 	}
 	
+	
+	
 	@GetMapping("/lecture.do")
 	public void lecture(
-				Model model
+				// 강의번호와 영상챕터번호 받아옴. (영상챕터번호 없다면, 막 상세보기면 -1 배정)
+				@RequestParam(defaultValue = "3") int lectureNo,
+				@RequestParam(defaultValue="-1") int chapterNo,
+				Model model,
+				Authentication authentication
 			) {
 		
 		try {
-			Lecture lecture = lectureService.selectOneLecture(3);
+			// 아이디 추출
+			Member loginMember = (Member)authentication.getPrincipal();
+			String refMemberId = loginMember.getMemberId();
+			
+			// 강의 추출
+			Lecture lecture = lectureService.selectOneLecture(lectureNo);
+			
+			// 매개변수
+			Map<String, Object> param = new HashMap<>();
+			param.put("refMemberId", refMemberId);
+			param.put("refLectureNo", 3);
+			
+			// 챕터번호와 영상시청여부 추출 (chapterNo, yn)
+			List<Map<String, Object>> progList = lectureService.selectLectureProgress(param);
+			
+			log.debug("{}", lecture);
+			log.debug("{}", progList);
+
+			int playPosition = 0;
+			// 지정된 챕터번호가 없다면 yn 보고 찾음
+			if(chapterNo == -1) {
+				// 재생할 영상 번호 기본값 : 첫 번째 영상번호
+				playPosition = Integer.parseInt((progList.get(0).get("chapterNo")).toString());
+				
+				// 두번째 영상 번호부터 yn여부 판별
+				for(int i=1; i<progList.size(); i++) {
+					// Y가 아닌 것을 찾으면 그 바로 전 번호 영상을 재생 (전부 Y이면 기본값 적용)
+					if(!progList.get(i).get("yn").equals("Y")) {
+						playPosition = Integer.parseInt((progList.get(i-1).get("chapterNo")).toString());
+						break;
+					}
+				}
+			} else {
+				playPosition = chapterNo;
+			}
+			
+			log.debug("재생할 번호 찾음 = {}", playPosition);
+			// 챕터번호에 맞는 영상 이름 가져오기.
+			String videoRename = lectureService.selectVideoRename(playPosition);
+			
+			// refMemberId, refLectureNo, chapterNo 3개가 담긴 파라미터맵.
+			param.put("chapterNo", playPosition);
+			// 재생할 동영상의 yn을 Y로 바꿔줌. (param에서 memberId, chapterNo 사용)
+			int result = lectureService.updateProgress(param);
+			
+			for(Map<String, Object> prog : progList) {
+				if(Integer.parseInt(prog.get("chapterNo").toString()) == playPosition) {
+					prog.put("yn", "Y");
+				}
+			}
+			
+			
 			model.addAttribute("lecture", lecture);
+			model.addAttribute("progList", progList);
+			// 저장 챕터번호 및 비디오이름
+			model.addAttribute("playPosition", playPosition);
+			model.addAttribute("videoRename", videoRename);
+			
 		} catch(Exception e) {
 			throw e;
 		}

@@ -141,4 +141,27 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 
+	@Override
+	public List<Map<String, Object>> selectLectureProgress(Map<String, Object> param) {
+
+		return lectureDao.selectLectureProgress(param);
+	}
+
+
+	@Override
+	public int updateProgress(Map<String, Object> param) {
+
+		return lectureDao.updateProgress(param);
+	}
+
+
+	@Override
+	public String selectVideoRename(int playPosition) {
+
+		return lectureDao.selectVideoRename(playPosition);
+	}
+
+
+
+
 }
