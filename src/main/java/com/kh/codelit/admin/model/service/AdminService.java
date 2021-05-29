@@ -51,6 +51,8 @@ public interface AdminService {
 
 	List<Payment> selectMemberOrderList(Map<String, Object> param);
 
+	int deleteTeacherAndAuth(String refMemberId);
+
 
 ;
 }

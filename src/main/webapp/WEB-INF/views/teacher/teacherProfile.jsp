@@ -44,7 +44,7 @@
 					</c:forEach>
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">강의 전체 보기</a></span>
+						<span class="" onclick="location.href='${pageContext.request.contextPath}/lecture/myAllLecture.do';">강의 전체 보기</a></span>
 					</div>
 				</div>
 			</div>

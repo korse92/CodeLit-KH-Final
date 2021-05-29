@@ -14,6 +14,8 @@
 	<jsp:param value="CodeLit" name="title" />
 </jsp:include>
 
+<script src="${pageContext.request.contextPath}/resources/js/lecture.js"></script>
+
 <!-- 컨텐츠 시작 -->
 
 <!-- 개인 CSS, JS 위치 -->
@@ -42,6 +44,23 @@
 
     </style>
 
+	<script>
+		
+	window.onload = function() {
+		
+		// 파일 가져오는 비동기 요청 -> blob url 생성 -> video src에 삽입
+		const lectureVideo = document.getElementById("lectureVideo");
+		
+		loadXHR('test.mp4')
+		.then(blobUrlCreator)
+		.then(url => {
+			lectureVideo.src = url;
+		});
+		
+	}
+
+  </script>
+
 
 
 	<div class="container d-flex">
@@ -50,17 +69,12 @@
           <h3 class="mt-5" id="lectureTitle">강의 제목 자리</h3>
           <h4 class="mt-5" id="videoTitle">영상 제목 자리</h4>
   
-            <video src="" controlsList="nodownload" controls>
+            <video id="lectureVideo" src="" controlsList="nodownload" controls>
             </video>
-
 
         </div>
 
         <div id="right">
-
-	    	<input type="file" name="file" id="fileItem" onchange="onChange()" >
-	    	<input type="submit" value="Play">
-	    	<video></video>
 	          
 		   <!--
 	          <script>

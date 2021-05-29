@@ -135,28 +135,41 @@
 						<div class="col-auto">강의종류 : ${lecture.lectureType eq 'V' ? '일반 강의' : '스트리밍 강의'}</div>
 					</div>
 					<div class="d-flex justify-content-end">
-						<div class="m-1">
-							<form:form id="basketFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}" method="POST">
-	                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
-							<button
-								type="submit"
-								class="btn ${lecture.basketed ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
-								data-bs-placement="right" title="${lecture.basketed ? '장바구니에서 삭제' : '장바구니에 담기'}">
-								<i class="${lecture.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
-							</button>
-							</form:form>
-						</div>
-						<div class="m-1">
-	                		<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
-	                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
-							<button
-								type="submit"
-								class="btn ${lecture.picked ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
-								data-bs-placement="right" title="${lecture.picked ? '찜삭제' : '찜하기'}">
-								<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
-							</button>
-							</form:form>
-						</div>
+						<c:set var="contains" value="false" />
+						<c:forEach var="item" items="${orderedlectureNoList}">
+							<c:if test="${item eq lecture.lectureNo}">
+								<c:set var="contains" value="true" />
+							</c:if>
+						</c:forEach>
+						<c:choose>
+							<c:when test="${contains}">
+							<div class="m-1"><p>이미 결제된 강의입니다.</p></div>
+							</c:when>
+							<c:otherwise>
+							<div class="m-1">
+								<form:form id="basketFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}" method="POST">
+		                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+								<button
+									type="submit"
+									class="btn ${lecture.basketed ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
+									data-bs-placement="right" title="${lecture.basketed ? '장바구니에서 삭제' : '장바구니에 담기'}">
+									<i class="${lecture.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
+								</button>
+								</form:form>
+							</div>
+							<div class="m-1">
+		                		<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
+		                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+								<button
+									type="submit"
+									class="btn ${lecture.picked ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
+									data-bs-placement="right" title="${lecture.picked ? '찜삭제' : '찜하기'}">
+									<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
+								</button>
+								</form:form>
+							</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>

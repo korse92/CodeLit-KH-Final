@@ -26,7 +26,7 @@
 
 <!-- datepicker -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- timepicker -->
@@ -36,14 +36,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.min.js" ></script><!-- 타이머js -->
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.css" media=""/><!-- 타이머css -->
 
-
 <!-- full Calendar script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-     	//themeSystem: 'bootstrap',
+     	themeSystem: 'bootstrap',
       initialDate: new Date(),
       locale: "ko",
       editable: true,
@@ -58,16 +57,29 @@ document.addEventListener('DOMContentLoaded', function() {
       dateClick: function(info) {
     	  $("#eventModal").modal("show");
           var date = info.dateStr
-          $("#startDate").val(date);
-          $("#endDate").val(date);
-          var lectureName = $("#lectureName").val();
-          $("#title").val(lectureName);
+          $("#eventModal").find("#startDate").val(date);
+          $("#eventModal").find("#endDate").val(date);
           $('#close').on('click', function(){
       		$("#eventModal").modal("hide");
       		});
       },
+      select : function(info) {
+    	  $("#eventModal").modal("show");
+
+    	  $("#eventModal").find("#startDate").val(info.startStr);
+    	  $("#eventModal").find("#endDate").val(info.endStr);
+          $('#close').on('click', function(){
+			 $("#eventModal").modal("hide");
+       	  });
+      },
       eventClick: function(info){
   		$("#eventModal").modal("show");
+  		$("#eventModal").find("#title").val(info.event.title)
+  		$("#eventModal").find("#startDate").val(info.event.startStr);
+  		$("#eventModal").find("#endDate").val(info.event.endStr);
+        $('#close').on('click', function(){
+			 $("#eventModal").modal("hide");
+     	  });
 		console.log(info);
       },
       //연월 표기 한국어 설정
@@ -77,6 +89,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calendar.render();
+
+    $(calTest).click(e => {
+    	var eventArr = calendar.getEvents();
+    	console.log(eventArr);
+    	$(eventArr).each((idx, elem) => {
+    		eventArr[idx] = elem.toPlainObject();
+    	});
+
+    	console.log(eventArr);
+
+    	$("[name=streamingDateList]").val(JSON.stringify(eventArr));
+    	console.log($("[name=streamingDateList]").val());
+    });
 
 
     /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
@@ -155,12 +180,11 @@ $(document).ready(function() {
         'maxTime': '22:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
         'timeFormat': 'H:i',
         'step': 30 // 30분 단위로 지정. ( 10을 넣으면 10분 단위 )
-});
+	});
 
-$(window).scroll(function(){
-    $(".ui-timepicker-wrapper").hide();
-});
-
+	$(window).scroll(function(){
+	    $(".ui-timepicker-wrapper").hide();
+	});
 });
 
 </script>
@@ -324,6 +348,7 @@ img#thumbImage {
 					<input type="button" value="테스트" id="curtest"/>
 				</div>
 				<input type="hidden" name="curriculum" />
+				<input type="hidden" name="videoChapNoArr" />
 			</div>
 
 			<div id="selectedStreaming" class="row">
@@ -331,6 +356,7 @@ img#thumbImage {
 				<div class="col-sm">
 					<input type="hidden" name="streamingDateList" />
 	 				<div id='calendar'></div>
+	 				<input type="button" value="테스트" id="calTest" />
 				</div>
 			</div>
 
