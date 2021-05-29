@@ -107,10 +107,28 @@ public class LectureDaoImpl implements LectureDao {
 	}
 
 	@Override
+	public List<Map<String, Object>> selectLectureProgress(Map<String, Object> param) {
+
+		return session.selectList("lecture.selectLectureProgress", param);
+	}
+
+	@Override
+	public int updateProgress(Map<String, Object> param) {
+
+		return session.update("lecture.updateProgress", param);
+	}
+
+	@Override
+	public String selectVideoRename(int playPosition) {
+
+		return session.selectOne("lecture.selectVideoRename", playPosition);
+	}
+
+	@Override
 	public List<Object> selectOrderedLectureList(String memberId) {
 		return session.selectList("order.selectOrderedLectureList", memberId);
 	}
 
 
-
+	
 }

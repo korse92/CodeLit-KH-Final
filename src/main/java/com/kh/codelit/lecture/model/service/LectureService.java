@@ -21,7 +21,7 @@ public interface LectureService {
 	Map<Integer, Object> getCategoryMapInstance();
 
 	List<Map<String, Object>> mainLecture();
-
+	
 	Lecture selectOneLecture(int no);
 
 	List<Map<String, Object>> selectLectureCmtList(int no);
@@ -35,6 +35,13 @@ public interface LectureService {
 	List<Map<String, Object>> myAllLecture(Map<String,Object> param);
 
 	int getTeacherTotalContents(Map<String, Object> param);
+
+	List<Map<String, Object>> selectLectureProgress(Map<String, Object> param);
+
+	int updateProgress(Map<String, Object> param);
+
+	String selectVideoRename(int playPosition);
+
 
 	List<Object> selectOrderedLectureList(String memberId);
 }
