@@ -41,6 +41,7 @@ function deleteLecture(no) {
 	     <td class="" style="display:none">강의 번호</td>
 	      <th scope="col">카테고리</th>
 	      <th scope="col">강사 아이디</th>
+	      <th scope="col">강의명</th>
 	      <th scope="col">강의 링크</th>
 	      <th scope="col">비고</th>
 	    </tr>
@@ -58,6 +59,7 @@ function deleteLecture(no) {
 	          <td style="display:none">${lectureList.lectureNo}</td>
 	          <td>${lectureList.lecCatName}</td>
 	          <td>${lectureList.refMemberId}</td>
+	          <td>${lectureList.lectureName}</td>
 	          <td><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureList.lectureNo}">강의 상세보기</a></td>
 	          <td>
 	             <button type="button" class="btn btn-warning btn-sm" onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?no=${lectureList.lectureNo}';">승인</button>

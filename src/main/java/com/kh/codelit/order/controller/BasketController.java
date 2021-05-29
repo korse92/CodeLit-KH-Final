@@ -35,7 +35,7 @@ public class BasketController {
 
 	@GetMapping("basket.do")
 	public void basket(Model model, Principal pri) {
-		String refMemberId = pri.getName();
+		String refMemberId = pri != null ? pri.getName() : null;
 		List<Basket> basketList = basketService.selectBasketList(refMemberId);
 		log.debug("refMemberIdPick = {}", refMemberId);
 		log.debug("basketList = {}", basketList);
@@ -103,25 +103,25 @@ public class BasketController {
 //		return result;
 //	}
 
-	
+
 	@ResponseBody
 	@PostMapping("/deleteBasketAjax.do")
 	public List<Basket> deleteBasketAjax(
 				@RequestParam(value="basketNo") int basketNo,
 				Principal pri
 			) {
-		
+
 		log.debug("deleteBasketAjax 도착. basketNo = {}", basketNo);
 		List<Basket> list = null;
 		try {
 			String refMemberId = pri.getName();
 			list = basketService.deleteBasketAjax(basketNo, refMemberId);
 			log.debug("deleteBasketAjax Controller = {}", "전부 성공");
-			
+
 		} catch(Exception e) {
 			throw e;
 		}
-		
+
 		return list;
 	}
 
