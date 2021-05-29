@@ -8,9 +8,9 @@
 		insert into payment
 		values(#{payCode}, #{refMemberId}, seq_pay_no.nextval, #{payCost}, default)
 	</insert>
-	
+
 	<insert id="insertPayLecture" parameterType="list">
-		insert all 
+		insert all
 		<foreach collection="list" item="item">
 		into pay_lecture
 		values
@@ -22,4 +22,15 @@
 		delete from basket
 		where ref_member_id = #{refMemberId}
 	</delete>
+
+	<select id="selectOrderedLectureList" resultType="_int">
+		select
+			ref_lecture_no
+		from
+			payment p
+		    	join pay_lecture pl
+		    on p.pay_code = pl.pay_code
+		where
+			ref_member_id = #{memberId}
+	</select>
 </mapper>
