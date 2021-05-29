@@ -96,7 +96,7 @@ public class LectureDaoImpl implements LectureDao {
 		int offset = (cPage - 1) * limit;
 
 		RowBounds rowBounds = new RowBounds(offset, limit);
-
+		//	log.debug("강의자 내강의목록dao param = {}", param);
 		return session.selectList("lecture.myAllLecture", param, rowBounds);
 	}
 

@@ -177,28 +177,30 @@ public class LectureController {
 	try {
 		// 로그인 정보
 		Member loginTeacher = (Member)authentication.getPrincipal();
-		log.debug("loginTeacher = {}", loginTeacher);
+		//log.debug("loginTeacher = {}", loginTeacher);
 		loginTeacher.getMemberId();
-		log.debug("loginTeacher.id = {}", loginTeacher.getMemberId());
+		String loginTeacherId = loginTeacher.getMemberId();
+		//log.debug("loginTeacherId = {}", loginTeacherId);
 		//loginTeacher.id = teacher
 
 		Map<String, Object> param = new HashMap<>();
 		param.put("cPage", cPage);
 		param.put("numPerPage", numPerPage);
-		param.put("teacherId", loginTeacher.getMemberId());
-		log.debug("강의자의 내 강의 보기 param = {}", param);
+		param.put("teacherId", loginTeacherId);
+		//log.debug("강의자의 내 강의 보기 param = {}", param);
 
 		// b. pageBar 영역
-		int totalContents = lectureService.getTeacherTotalContents(param);
-		log.debug("강의자 목록 totalContents = {}", totalContents);
 		List<Map<String,Object>> list = lectureService.myAllLecture(param);
-		log.debug("list = {}", list);
+		//log.debug("list = {}", list);
+		
+		int totalContents = lectureService.getTeacherTotalContents(param);
+		//log.debug("강의자 목록 totalContents = {}", totalContents);
 
 
 		String url = HelloSpringUtils.convertToParamUrl(request);
-		log.debug("url = {}", url);
+		//log.debug("url = {}", url);
 		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
-		log.debug("pageBar = {}", pageBar);
+		//log.debug("pageBar = {}", pageBar);
 
 		mav.addObject("list",list);
 		mav.addObject("pageBar",pageBar);

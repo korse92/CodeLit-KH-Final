@@ -33,6 +33,7 @@
 				<table class="table mx-3 my-3 col-sm text-center">
 					<thead class="thead-light">
 						<tr>
+							<th scope="col">글 번호</th>
 							<th scope="col">강의 종류</th>
 							<th scope="col">카테고리</th>
 							<th scope="col">강의 제목</th>
@@ -46,9 +47,10 @@
 						</c:if>
 					</thead>
 					<tbody>
-					  <c:forEach items="${list}" var="teacher">
+					  <c:forEach items="${list}" var="teacher" varStatus="vs">
 						<c:if test="${not empty list}">
 							<tr>
+								<td>${vs.count}</td>
 								<c:if test="${teacher.lectureType eq 'V'}">
 									<td>일반 강의</td>
 								</c:if>
