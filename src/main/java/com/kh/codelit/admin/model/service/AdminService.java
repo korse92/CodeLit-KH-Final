@@ -12,13 +12,11 @@ import java.util.Map;
 
 public interface AdminService {
 
-
 	List<Member> selectMemberList(Map<String, Object> param);
 
 	int deleteMember(String memberId);
 
 	List<Teacher> selectTeacherList(Map<String, Object> param);
-
 
 	List<Map<String, Object>> selectAllBySearching(String searchByAdmin);
 
@@ -46,11 +44,9 @@ public interface AdminService {
 
 	int selectTeacherCount(Map<String, Object> param);
 
-	
 	int selectMemberOrderCount(Map<String, Object> param);
 
 	List<Payment> selectMemberOrderList(Map<String, Object> param);
-
 
 	List<Member> selectMemberOrderList(String memberId);
 
