@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -193,7 +194,9 @@ public class TeacherController {
 //			log.info("chapterVideos = {}", chapterVideos);
 			
 			int[] videoChapNoArr = gson.fromJson(videoChapNoArrJsonStr, int[].class);
-			log.info("videoChapNoArr = {}", videoChapNoArr);
+			List<Integer> videoChapNoList = Arrays.stream(videoChapNoArr).boxed().collect(Collectors.toList());
+			log.debug("videoChapNoArr = {}", videoChapNoArr);
+			log.debug("videoChapNoList = {}", videoChapNoList);
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
 			String thumbnailsSaveDirectory =
@@ -267,17 +270,12 @@ public class TeacherController {
 					prevChapterArrlength += lecturePartArr[i-1].getChapterArr().length;
 				
 				for(int j = 0; j < ChapterArrlength; j++) {
-					log.debug("prevChapterArrlength = {}", prevChapterArrlength);
-					log.debug("j = {}", j);
-					log.debug("Arrays.asList(videoChapNoArr) = {}", Arrays.asList(videoChapNoArr));
-					log.debug("contains = {}", Arrays.asList(videoChapNoArr).contains(prevChapterArrlength + j));
-					
-					if(Arrays.asList(videoChapNoArr).contains(prevChapterArrlength + j)) {
+					if(videoChapNoList.contains(prevChapterArrlength + j)) {
 						while(chapterVideos[vIdx].isEmpty() || chapterVideos[vIdx].getSize() == 0) {
 							vIdx++;
 						}
 						
-						log.debug("vIdx = {}", vIdx);
+						//log.debug("vIdx = {}", vIdx);
 						
 						MultipartFile currentChapterVideo = chapterVideos[vIdx++];
 						log.debug("currentChapterVideo = {}", currentChapterVideo);
