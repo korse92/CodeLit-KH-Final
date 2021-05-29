@@ -260,15 +260,22 @@
      	lecture_accept_yn "lectureAcceptYn"
 	from 
     	lecture
-    where ref_member_id = #{id}
+    where 
+    	 ref_member_id = #{teacherId}
+    order by 
+    	 lecture_no desc
 	
 	</select>
+	
 	<select id="getTeacherTotalContents" resultType="_int">
 	select
 		  count(*)
 	 from
 		  lecture
-	
+	 where 
+	 		ref_member_id = #{teacherId}
+     order by 
+     		lecture_no desc
 	</select>
 
 	<select id="selectLectureProgress" resultMap="progMap">

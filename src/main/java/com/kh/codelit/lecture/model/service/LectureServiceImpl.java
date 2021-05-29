@@ -164,4 +164,11 @@ public class LectureServiceImpl implements LectureService {
 
 
 
+	@Override
+	public List<Object> selectOrderedLectureList(String memberId) {
+		return lectureDao.selectOrderedLectureList(memberId);
+	}
+
+
+
 }

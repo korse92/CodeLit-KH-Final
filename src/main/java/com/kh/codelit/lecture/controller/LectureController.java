@@ -1,10 +1,12 @@
 package com.kh.codelit.lecture.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.codelit.common.HelloSpringUtils;
@@ -58,7 +62,9 @@ public class LectureController {
 		//2. 업무로직
 		//a. contents영역
 		List<Lecture> list = lectureService.selectLectureList(param);
+		List<Object> orderedlectureNoList = lectureService.selectOrderedLectureList(memberId);
 		log.debug("list = {}", list);
+		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 
 		//b. pageBar영역
 		int totalContents = lectureService.getTotalContents(catNo);
@@ -69,6 +75,7 @@ public class LectureController {
 
 		//3.jsp 위임처리
 		model.addAttribute("list", list);
+		model.addAttribute("orderedlectureNoList", orderedlectureNoList);
 		model.addAttribute("pageBar", pageBar);
 
 		return "lecture/lectureList";
@@ -151,6 +158,7 @@ public class LectureController {
 				@RequestParam(defaultValue="-1") int chapterNo,
 				Model model,
 				Authentication authentication
+
 			) {
 		
 		try {
@@ -214,6 +222,7 @@ public class LectureController {
 			
 		} catch(Exception e) {
 			throw e;
+
 		}
 		
 	}

@@ -41,4 +41,6 @@ public interface LectureDao {
 	String selectVideoRename(int playPosition);
 
 
+	List<Object> selectOrderedLectureList(String memberId);
+
 }

@@ -70,7 +70,7 @@ public class LectureDaoImpl implements LectureDao {
 
 	@Override
 	public List<Map<String, Object>> mainLecture() {
-		
+
 		return session.selectList("lecture.mainLecture");
 	}
 
@@ -94,15 +94,15 @@ public class LectureDaoImpl implements LectureDao {
 		int cPage = (int)param.get("cPage");
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
-				
+
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
+		//	log.debug("강의자 내강의목록dao param = {}", param);
 		return session.selectList("lecture.myAllLecture", param, rowBounds);
 	}
 
 	@Override
 	public int getTeacherTotalContents(Map<String, Object> param) {
-		
+
 		return session.selectOne("lecture.getTeacherTotalContents", param);
 	}
 
@@ -122,6 +122,11 @@ public class LectureDaoImpl implements LectureDao {
 	public String selectVideoRename(int playPosition) {
 
 		return session.selectOne("lecture.selectVideoRename", playPosition);
+	}
+
+	@Override
+	public List<Object> selectOrderedLectureList(String memberId) {
+		return session.selectList("order.selectOrderedLectureList", memberId);
 	}
 
 

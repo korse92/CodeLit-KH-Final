@@ -42,4 +42,6 @@ public interface LectureService {
 
 	String selectVideoRename(int playPosition);
 
+
+	List<Object> selectOrderedLectureList(String memberId);
 }
