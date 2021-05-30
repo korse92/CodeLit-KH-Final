@@ -12,13 +12,13 @@
 		order by
 			lec_cat_no
 	</select>
-	
-	
+
+
 	<resultMap type="map" id="categoryMap">
 		<id column="lec_cat_no" property="no" javaType="integer"/>
 		<result column="lec_cat_name" property="name" javaType="string"/>
 	</resultMap>
-	
+
 	<insert id="insertLecture">
 		insert into
 			lecture
@@ -33,7 +33,7 @@
 			#{lectureThumbRenamed},
 			#{lecturePrice},
 			default,
-			#{lectureGuideline}			
+			#{lectureGuideline}
 		)
 		<selectKey resultType="_int" keyProperty="lectureNo" order="AFTER">
 			select
@@ -42,9 +42,37 @@
 				dual
 		</selectKey>
 	</insert>
-	
+
+	<insert id="insertLecturePart">
+		insert into
+			lecture_part
+		values (
+			seq_lec_part_no.nextval,
+			#{refLectureNo},
+			#{lecturePartTitle}
+		)
+		<selectKey resultType="_int" keyProperty="lecturePartNo" order="AFTER">
+			select
+				seq_lec_part_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
+
+	<insert id="insertLectureChapter">
+		insert into
+			lecture_chapter
+		values (
+			seq_lec_chapter_no.nextval,
+			#{refLecPartNo},
+			#{lecChapterTitle},
+			#{lecChapterVideo},
+			#{lecChapterReVideo}
+		)
+	</insert>
+
 	<select id="selectLectureList" resultType="lecture">
-		select 
+		select
 			l.*,
 			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
 			(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
@@ -64,7 +92,7 @@
 		order by
 		    lecture_no
 	</select>
-	
+
 	<select id="getTotalContents" resultType="_int">
 		select
 			count(*)
@@ -77,19 +105,19 @@
 		</if>
 		</where>
 	</select>
-	
+
 	<select id="selectMyLecture" resultType="lecture">
 	select rownum, l.*
-	from (       
+	from (
            select
                 lecture_name
            from
                lecture
            <where>
                 lecture_accept_yn = 'Y' and ref_member_id = #{id}
-           </where> 
+           </where>
        ) l
-    　　　 
+    　　　
 	where rownum <![CDATA[ <= ]]> 3
 	</select>
 
@@ -166,18 +194,18 @@
 
 	<select id="mainLecture" resultMap="mainLecMap">
 	select rownum, a.*
-        from (       
+        from (
                 select
                     *
                  from
                     lecture left join teacher using(ref_member_id)
                 where
-                    lecture_accept_yn = 'Y' 
+                    lecture_accept_yn = 'Y'
                 order by lecture_no desc) a
-    　　　 
+    　　　
 	where rownum <![CDATA[ <= ]]> 8
 	</select>
-	
+
 	<resultMap type="map" id="mainLecMap">
 		<id column="lecture_no" property="lectureNo"/>
 		<result column="lecture_name" property="lectureName"/>
@@ -187,9 +215,9 @@
 		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
 		<result column="teacher_name" property="teacherName"/>
 	</resultMap>
-	
+
 	<update id="clickCount" statementType="CALLABLE" parameterType="HashMap">
-	
+
 	{
 		 call proc_upsert_lecture_click(
 						#{no},
@@ -197,48 +225,48 @@
 		)
 	}
 	</update>
-	
+
 	<select id="rollingLecList" resultMap="bestLectureMap">
-	select 
+	select
 			rownum, e.*
-	from (select 
+	from (select
         		c.ref_lecture_no,
         		l.lecture_name,
         		sum(c.click_no) as clickNo
-          from 
+          from
             	lecture_click c join lecture l
              		on c.ref_lecture_no = l.lecture_no
           group by
             	c.ref_lecture_no, l.lecture_name
-          order by 
+          order by
             	clickNo desc) e
 	where rownum <![CDATA[ <= ]]> 3
-	
+
 	</select>
-	
+
 	<resultMap type="map" id="bestLectureMap">
 		<id column="ref_lecture_no" property="refLectureNo"/>
 		<result column="lecture_name" property="lectureName"/>
 		<result column="click_no" property="clickNo"/>
 	</resultMap>
-	
+
 	<select id="mainSearchResult" resultMap="mainSearchMap">
-	
+
 	select
     	*
-	from 
-    	lecture l left join teacher t 
+	from
+    	lecture l left join teacher t
         	on l.ref_member_id = t.ref_member_id
-            	left join lecture_comment c 
+            	left join lecture_comment c
                 	on t.ref_member_id = c.ref_member_id
 	<where>
     	l.lecture_name like '%' || #{searchKeyword} || '%' and l.lecture_accept_yn = 'Y'
-    </where>	
+    </where>
 	order by
     	l.lecture_no desc
-	
+
 	</select>
-	
+
 	<resultMap type="map" id="mainSearchMap">
 		<id column="lecture_no" property="lectureNo"/>
 		<result column="ref_lec_cat_no" property="refLecCatNo"/>
@@ -250,7 +278,7 @@
 		<result column="teacher_name" property="teacherName"/>
 		<result column="lec_assessment" property="lecAssessment"/>
 	</resultMap>
-	
+
 	<select id="myAllLecture" resultType="lecture">
 	select
 		ref_member_id "refMemberId",
@@ -258,30 +286,30 @@
      	ref_lec_cat_no "refLecCatNo",
      	lecture_name "lectureName",
      	lecture_accept_yn "lectureAcceptYn"
-	from 
+	from
     	lecture
-    where 
+    where
     	 ref_member_id = #{teacherId}
-    order by 
+    order by
     	 lecture_no desc
-	
+
 	</select>
-	
+
 	<select id="getTeacherTotalContents" resultType="_int">
 	select
 		  count(*)
 	 from
 		  lecture
-	 where 
+	 where
 	 		ref_member_id = #{teacherId}
-     order by 
+     order by
      		lecture_no desc
 	</select>
 
 	<select id="selectLectureProgress" resultMap="progMap">
-		select 
+		select
 			ref_lec_chapter_no,
-			section_sign_up_yn 
+			section_sign_up_yn
 		from lecture_progress
 		where ref_member_id = #{refMemberId}
 			and ref_lecture_no = #{refLectureNo}
@@ -299,11 +327,11 @@
 		where ref_member_id = #{refMemberId}
 			and ref_lec_chapter_no = #{chapterNo}
 	</update>
-	
+
 	<select id="selectVideoRename" resultType="string">
 		select lec_chapter_re_video
 		from lecture_chapter
 		where lec_chapter_no = #{playPosition}
 	</select>
-	
+
 </mapper>
