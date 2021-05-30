@@ -55,7 +55,7 @@
 						
 				        payCode.value = "" + ms + random1 + random2;
 				        refMemberId.value = 
-				        	<sec:authentication property='principal.username'/>;
+				        	"<sec:authentication property='principal.username'/>";
 				        payCost.value = money;
 				        
 				        $("#orderFrm").submit();
