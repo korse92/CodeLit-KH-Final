@@ -14,7 +14,7 @@
 		null
 	)
 	</insert>
-	
+
 	<insert id="insertMemberByGoogle">
 	insert into
 		member
@@ -25,7 +25,7 @@
 		null
 	)
 	</insert>
-	
+
 <!-- 	<select id="loginByGoogle" resultType="member">
 		select
 			*
@@ -41,38 +41,98 @@
 		from member
 		where member_id = #{id}
 	</select>
-		
+
 	<select id="selectOne" resultType="member">
 		select *
 		from member
 		where member_id = #{id}
 	</select>
-		
+
 	<update id="updateMemberProfile">
 		update member
 		set member_profile = #{memberProfile},
 			member_re_profile = #{memberReProfile}
 		where member_id = #{meberId}
 	</update>
-	
+
 	<update id="updateMember">
-		update 
+		update
 		    member
-		set 	
+		set
 			member_pw =	#{memberPw},
 		    member_profile = #{memberProfile},
-			member_re_profile = #{memberReProfile}			
+			member_re_profile = #{memberReProfile}
 		where
 		member_id = #{memberId}
-		
+
 	</update>
-	
-		<delete id="deleteMember">
-			delete 
-			 from
+
+	<delete id="deleteMember">
+		delete
+		from
 			member
-			where
+		where
 			member_id = #{memberId}
-		
-	</delete>	
+	</delete>
+
+	<select id="selectLectureList" resultType="lecture">
+			select
+				l.*
+			from
+			    payment p
+			full outer join
+			    pay_lecture pl
+			on
+			    p.pay_code = pl.pay_code
+			full outer join
+			    lecture l
+			on
+			    pl.ref_lecture_no = l.lecture_no
+			where
+			    p.ref_member_id = #{memberId}
+            order by
+	            l.lecture_no
+	        nulls last,
+	            l.lecture_accept_yn
+           	desc,
+	            l.lecture_name
+            asc
+	</select>
+	<select id="getTotalContents" resultType="_int">
+		select
+		    count(*)
+		from
+		     payment p
+		 full outer join
+		     pay_lecture pl
+		 on
+		     p.pay_code = pl.pay_code
+		 where
+		     p.ref_member_id = #{memberId}
+	</select>
+	<select id="getLectureList" resultType="lecture">
+			select
+				l.*
+			from
+			    payment p
+			full outer join
+			    pay_lecture pl
+			on
+			    p.pay_code = pl.pay_code
+			full outer join
+			    lecture l
+			on
+			    pl.ref_lecture_no = l.lecture_no
+			where
+			    p.ref_member_id = #{memberId}
+            order by
+	            l.lecture_no
+	        nulls last,
+	            l.lecture_accept_yn
+           	desc,
+	            l.lecture_name
+            asc
+	</select>
+
 </mapper>
+

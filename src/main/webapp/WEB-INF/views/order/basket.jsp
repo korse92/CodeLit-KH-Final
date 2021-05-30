@@ -28,55 +28,82 @@
 			
 			orderBtn.addEventListener('click', function(e) {
 
-				var money = document.getElementById("money").innerText;
-				
-				if(money == 0) {
+				// noneBasket 문구가 있는지 여부로 결제 가능 여부 확인
+				if(document.getElementById("noneBasket")) {
 					e.preventDefault;
 					alert("결제할 내역이 없습니다.");
-				}
-				
-				var orderName = document.getElementById("orderName").innerText;
-				var memberId = document.getElementById("memberId").innerText;
-				
-				IMP.request_pay({
-				    pg : 'inicis', // version 1.1.0부터 지원.
-				    pay_method : 'card',
-				    merchant_uid : 'merchant_' + new Date().getTime(),
-				    name : orderName,
-				    amount : money,
-				    buyer_email : 'asrisk@naver.com',	// 회원아이디 메일 사용시 memberId 지정 가능
-				    buyer_name : memberId
-				}, function(rsp) {
-				    if ( rsp.success ) {
-				        var msg = '결제가 완료되었습니다.';
-				        
-				        var payCode = document.getElementById("payCode");
-				        var refMemberId = document.getElementById("refMemberId");
-				        var payCost = document.getElementById("payCost");
-				        
-				        payCode.value = rsp.apply_num;
-				        refMemberId.value = memberId;
+					
+				} else {
+
+					var money = document.getElementById("money").innerText;
+					
+			        var payCode = document.getElementById("payCode");
+			        var refMemberId = document.getElementById("refMemberId");
+			        var payCost = document.getElementById("payCost");
+			        
+			        // 무료강의만 담아서 결제비용 0원일 때 처리
+					if(money == 0) {
+						
+						if(!confirm("0원 결제는 자동 수강됩니다. 진행하시겠습니까?")) {
+							e.preventDefault;
+						}
+						
+						const ms = new Date().getTime();
+						const random1 = Math.floor(Math.random() * 10);
+						const random2 = Math.floor(Math.random() * 10);
+						
+						
+				        payCode.value = "" + ms + random1 + random2;
+				        refMemberId.value = 
+				        	"<sec:authentication property='principal.username'/>";
 				        payCost.value = money;
 				        
 				        $("#orderFrm").submit();
+						
 				        
-// 				        msg += '고유ID : ' + rsp.imp_uid;
-// 				        msg += '상점 거래ID : ' + rsp.merchant_uid;
-// 				        msg += '결제 금액 : ' + rsp.paid_amount;
-// 				        msg += '카드 승인번호 : ' + rsp.apply_num;
-				    } else {
-				        var msg = '결제에 실패하였습니다.';
-				        msg += '에러내용 : ' + rsp.error_msg;
-				    }
-				    alert(msg);
-				});
+				    // 장바구니 있고, 결제금액 있을 때의 정상 결제처리
+					} else {
+						
+						var orderName = document.getElementById("orderName").innerText;
+						var memberId = document.getElementById("memberId").innerText;
+						
+						IMP.request_pay({
+						    pg : 'inicis', // version 1.1.0부터 지원.
+						    pay_method : 'card',
+						    merchant_uid : 'merchant_' + new Date().getTime(),
+						    name : orderName,
+						    amount : money,
+						    buyer_email : 'asrisk@naver.com',	// 회원아이디 메일 사용시 memberId 지정 가능
+						    buyer_name : memberId
+						}, function(rsp) {
+						    if ( rsp.success ) {
+						        console.log('결제가 완료되었습니다.');
+						        
+						        payCode.value = rsp.apply_num;
+						        refMemberId.value = memberId;
+						        payCost.value = money;
+						        
+						        $("#orderFrm").submit();
+						        
+		// 				        msg += '고유ID : ' + rsp.imp_uid;
+		// 				        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		// 				        msg += '결제 금액 : ' + rsp.paid_amount;
+		// 				        msg += '카드 승인번호 : ' + rsp.apply_num;
+						    } else {
+						        var msg = '결제에 실패하였습니다.';
+						        msg += '에러내용 : ' + rsp.error_msg;
+						    }
+						    alert(msg);
+						});
+						
+						
+					} // money==0  else
+					
+				} // document.getElementById("noneBasket")  else
+				
+			}); // 결제버튼 클릭
 			
-			});
-			
-			
-			
-			
-		}
+		} // window.onload
 		
 		
 		// 삭제버튼 ajax
@@ -104,7 +131,7 @@
 
 					if(data.length == 0) {
 						let orderTableTop = document.getElementById("orderTableTop");
-						orderTableTop.innerHTML = "<p class='text-center ps-5'>장바구니에 담긴 강의가 없습니다.</p>";
+						orderTableTop.innerHTML = "<p id='noneBasket' class='text-center ps-5'>장바구니에 담긴 강의가 없습니다.</p>";
 						money.innerText = 0;
 
 					} else if(data.length == 1) {
@@ -189,7 +216,7 @@
 				            <span class="col-3">강의 : </span><p id="orderName" class="col-9 text-start ps-3">${basketList.get(0).lectureName} 외 ${basketList.size() - 1}종</p>
 						</c:when>
 						<c:otherwise>
-							<p class="text-center ps-5">장바구니에 담긴 강의가 없습니다.</p>
+							<p id="noneBasket" class="text-center ps-5">장바구니에 담긴 강의가 없습니다.</p>
 						</c:otherwise>
 					</c:choose>
 				</div>

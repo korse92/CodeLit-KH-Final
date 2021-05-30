@@ -1,12 +1,15 @@
 package com.kh.codelit.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
-	private SqlSessionTemplate session; 
-	
+	private SqlSessionTemplate session;
+
 	@Override
 	public Member selectOneMember(String id) {
 		// TODO Auto-generated method stub
@@ -32,7 +35,7 @@ public class MemberDaoImpl implements MemberDao {
 		log.debug("insertmemberDao = {}", member);
 		return session.insert("member.insertMember", member);
 	}
-	
+
 	@Override
 	public int updateMemberProfile(Map<String, String> map) {
 		return session.update("member.updateMemberProfile", map);
@@ -54,24 +57,43 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public Member selectDetail(String memberId) {
-		
+
 		return session.selectOne("member.selectDetail",memberId);
 	}
 
 	@Override
 	public int updateMember(Member member) {
-	
+
 		return session.update("member.updateMember", member);
 	}
 
-	
+
 
 	@Override
 	public int deleteMember(String memberId) {
-	
-		return session.delete(memberId);
+
+		return session.delete("member.deleteMember", memberId);
 	}
 
+	@Override
+	public List<Map<String, String>> selectLectureList(Map<String, Object> param) {
+		int cPage = (int)param.get("cPage");
 
+		int limit = (int)param.get("numPerPage");
+		int offset = (cPage - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return session.selectList("member.selectLectureList", param, rowBounds);
+	}
+
+	@Override
+	public int getTotalContents(String memberId) {
+		return session.selectOne("member.getTotalContents", memberId);
+	}
+
+	@Override
+	public List<Lecture> getLectureList(String memberId) {
+		return session.selectList("member.getLectureList", memberId);
+	}
 
 }

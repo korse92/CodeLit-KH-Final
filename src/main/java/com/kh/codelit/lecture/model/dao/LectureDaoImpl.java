@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +51,8 @@ public class LectureDaoImpl implements LectureDao {
 	}
 
 	@Override
-	public int getTotalContents(Integer catNo) {
-		return session.selectOne("lecture.getTotalContents", catNo);
+	public int getTotalContents(Map<String, Object> param) {
+		return session.selectOne("lecture.getTotalContents", param);
 	}
 
 	@Override
@@ -69,9 +71,9 @@ public class LectureDaoImpl implements LectureDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> mainLecture() {
+	public List<Map<String, Object>> mainLecture(String memberId) {
 
-		return session.selectList("lecture.mainLecture");
+		return session.selectList("lecture.mainLecture", memberId);
 	}
 
 	@Override
@@ -129,6 +131,16 @@ public class LectureDaoImpl implements LectureDao {
 		return session.selectList("order.selectOrderedLectureList", memberId);
 	}
 
+	@Override
+	public int insertLecturePart(LecturePart part) {
+		return session.insert("lecture.insertLecturePart", part);
+	}
 
-	
+	@Override
+	public int insertLectureChapter(LectureChapter chapter) {
+		return session.insert("lecture.insertLectureChapter", chapter);
+	}
+
+
+
 }

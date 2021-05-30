@@ -11,6 +11,8 @@ import com.kh.codelit.attachment.model.dao.AttachDao;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.lecture.model.dao.LectureDao;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,32 +22,32 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class LectureServiceImpl implements LectureService {
-	
+
 	@Autowired
 	private LectureDao lectureDao;
-	
+
 	@Autowired
 	private AttachDao attachDao;
 
 	private static List<Map<String, Object>> categoryListInstance; //싱글톤 객체로 처리
 	private static Map<Integer, Object> categoryMapInstance;
-	
+
 	@Override
 	public List<Map<String, Object>> selectCategoryListInstance() {
 		if(categoryListInstance == null || categoryListInstance.isEmpty()) {
 			categoryListInstance = lectureDao.selectCategoryList();
 			log.debug("categoryListInstance 생성 = {}", categoryListInstance);
 		}
-		
+
 		return categoryListInstance;
 	}
 
-	
+
 	@Override
 	public Map<Integer, Object> getCategoryMapInstance() {
 		if(categoryListInstance == null || categoryListInstance.isEmpty())
 			categoryListInstance = selectCategoryListInstance();
-		
+
 		if(categoryMapInstance == null || categoryMapInstance.isEmpty()) {
 			categoryMapInstance = new HashMap<>();
 			for(Map<String, Object> category : categoryListInstance) {
@@ -54,26 +56,46 @@ public class LectureServiceImpl implements LectureService {
 				categoryMapInstance.put(no, name);
 			}
 			log.debug("categoryMapInstance 생성 = {}", categoryMapInstance);
-		}		
-		
+		}
+
 		return categoryMapInstance;
 	}
 
 	@Override
-	public int insertLecture(Lecture lecture) {		
+	public int insertLecture(Map<String, Object> param) {
 		int result = 0;
-		
+		Lecture lecture = (Lecture)param.get("lecture");
+		LecturePart[] leturePartArr = (LecturePart[])param.get("lecturePartArr");
+
 		//1. lecture객체 등록
 		result = lectureDao.insertLecture(lecture);
 		log.debug("lecture.no = {}", lecture.getLectureNo());//insert한 lecture 번호 확인
-		
+
+		//2.첨부파일 등록
 		if(!lecture.getAttachList().isEmpty()) {
 			for(Attachment attach : lecture.getAttachList()) {
 				attach.setRefContentsNo(lecture.getLectureNo());
 				result = attachDao.insertAttachment(attach);
 			}
 		}
-		
+		//3.쿼리큘럼 등록
+		if(leturePartArr != null || leturePartArr.length > 0) {
+			for(LecturePart part : leturePartArr) {
+				part.setRefLectureNo(lecture.getLectureNo());
+				result = lectureDao.insertLecturePart(part);
+				log.debug("part.no = {}", part.getLecturePartNo());//insert한 lecturePart 번호 확인
+
+				LectureChapter[] chapterArr = part.getChapterArr();
+
+				if(chapterArr != null || chapterArr.length > 0) {
+					for(LectureChapter chapter : chapterArr) {
+						chapter.setRefLecPartNo(part.getLecturePartNo());
+						result = lectureDao.insertLectureChapter(chapter);
+					}
+				}
+			}
+		}
+
 		return result;
 	}
 
@@ -83,8 +105,8 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public int getTotalContents(Integer catNo) {
-		return lectureDao.getTotalContents(catNo);
+	public int getTotalContents(Map<String, Object> param) {
+		return lectureDao.getTotalContents(param);
 	}
 
 	@Override
@@ -94,8 +116,8 @@ public class LectureServiceImpl implements LectureService {
 
 
 	@Override
-	public List<Map<String, Object>> mainLecture() {
-		return lectureDao.mainLecture();
+	public List<Map<String, Object>> mainLecture(String memberId) {
+		return lectureDao.mainLecture(memberId);
 	}
 
 
@@ -136,7 +158,7 @@ public class LectureServiceImpl implements LectureService {
 
 	@Override
 	public int getTeacherTotalContents(Map<String, Object> param) {
-		
+
 		return lectureDao.getTeacherTotalContents(param);
 	}
 

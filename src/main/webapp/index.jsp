@@ -6,7 +6,8 @@
 
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 
 <fmt:requestEncoding value="utf-8" />
@@ -20,15 +21,28 @@
 
 <!-- 개인 CSS, JS 위치 -->
 <script src="${pageContext.request.contextPath}/resources/js/rolling.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/rolling.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/rolling.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/style.css">
 
-<link href="${pageContext.request.contextPath}/resources/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-fa.css" media="all" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-svg.css" media="all" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-uni.css" media="all" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/lecture.css" media="all" rel="stylesheet" type="text/css" />
-<script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
+<link
+	href="${pageContext.request.contextPath}/resources/css/star-rating.css"
+	media="all" rel="stylesheet" type="text/css" />
+<link
+	href="${pageContext.request.contextPath}/resources/css/theme-krajee-fa.css"
+	media="all" rel="stylesheet" type="text/css" />
+<link
+	href="${pageContext.request.contextPath}/resources/css/theme-krajee-svg.css"
+	media="all" rel="stylesheet" type="text/css" />
+<link
+	href="${pageContext.request.contextPath}/resources/css/theme-krajee-uni.css"
+	media="all" rel="stylesheet" type="text/css" />
+<link
+	href="${pageContext.request.contextPath}/resources/css/lecture.css"
+	media="all" rel="stylesheet" type="text/css" />
+<script
+	src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
 
 <script>
 window.onload = function() {
@@ -41,8 +55,24 @@ window.onload = function() {
 	
 };
 
-</script>
+$(() => {
+	//$("#input-id").rating();
+	//$("#input-id").rating({min:1, max:10, step:2, size:'lg'});
 
+	//Bootstrap Tooltip을 사용하기 위한 tooltip 초기화 코드
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	  return new bootstrap.Tooltip(tooltipTriggerEl)
+	});
+
+	$(".overlay .btn").click(e => {
+
+		//e.preventDefault(); //태그의 고유동작을 중단시킴(a태그 주소이동, submit버튼의 form전송 등)\
+		e.stopPropagation(); //상위 요소로의 이벤트전파 중단(태그 고유동작은 중단시키지 못함(ex.a태그의 주소이동)
+	});
+});
+
+</script>
 
 <div class="container">
 	<div class="col-8 row mx-auto my-lg-5">
@@ -87,7 +117,8 @@ window.onload = function() {
 				<%-- <form method="GET" id="rolling" action="${pageContext.request.contextPath}/lecture/rollingLecList.do"> --%>
 				<ul>
 					<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
-					<li><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${rolling.refLectureNo}">${vs.count}.&nbsp;&nbsp;${rolling.lectureName}</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${rolling.refLectureNo}">${vs.count}.&nbsp;&nbsp;${rolling.lectureName}</a></li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -95,357 +126,117 @@ window.onload = function() {
 
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
-			<input type="search" class="form-control" placeholder="강의 검색" id="mainSearch" name="mainSearch"
-				aria-label="Recipient's username" aria-describedby="button-addon2">
+			<input type="search" class="form-control" placeholder="강의 검색"
+				id="mainSearch" name="mainSearch" aria-label="Recipient's username"
+				aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary bg-light" type="button"
 				id="mainSearchBtn">검색</button>
 		</div>
 	</div>
 	<hr />
-	<!-- 다솜 : 영상리스트 박스 시작 -->
-	<div class="row main-content p-5">
-
-		<c:forEach items="${list}" var="mainLec" varStatus="vs" end="7">
+	<div class="container mt-3">
+		<c:forEach items="${list}" var="lecture" varStatus="vs">
 			<c:if test="${vs.count % 4 == 1}">
-			<div class="row row-cols-auto my-1 px-5 justify-content-center">
+				<div class="row row-cols-auto">
 			</c:if>
-				<div class="col-sm-3">
-					<div class="card position-relative text-decoration-none text-dark"
-						 style="cursor: pointer;"
-							onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${mainLec.lectureNo}';">
-						<img
-							src="${empty mainLec.lectureThumbRenamed ? 'https://via.placeholder.com/450x300.png?text=Thumbnail+Image'
-								:pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += mainLec.lectureThumbRenamed}"
-							class="card-img-top" alt="..." style="height: 10rem;" />
+			<div class="col-sm-3 my-3">
+				<div class="card mx-auto position-relative" style="cursor: pointer;"
+					onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lecture.lectureNo}';">
+					<img
+						src="${empty lecture.lectureThumbRenamed ?
+							'https://via.placeholder.com/450x300.png?text=Thumbnail+Image'
+							: pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += lecture.lectureThumbRenamed}"
+						class="card-img-top" alt="..." style="height: 13rem;" />
 						<div class="card-body">
-							<h5 class="card-title">${mainLec.lectureName}</h5>
-							<div class="card-text text-end">
+						<h5 class="card-title">${lecture.lectureName}</h5>
+						<p class="card-subtitle">${lecture.teacherName}</p>
+						<p class="card-subtitle my-1">
+							<c:forEach var="i" begin="1" end="5">
+								<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
+							</c:forEach>
+						</p>
+						<p class="card-text">
 							<c:choose>
-							  <c:when test="${mainLec.lecturePrice == 0}">
-							   무료
-							  </c:when>
-							  <c:otherwise>
-							    <fmt:formatNumber value="${mainLec.lecturePrice}" type="currency"/>
-							  </c:otherwise>
+							   <c:when test="${lecture.lecturePrice == 0}">
+									무료
+							   </c:when>
+								<c:otherwise>
+									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency" />
+								</c:otherwise>
 							</c:choose>
+						</p>
+					</div>
+					<div class="overlay d-flex flex-column justify-content-end p-3">
+						<div class="row my-1">
+							<div class="col-auto">
+								<h5>${lecture.lectureName}</h5>
 							</div>
-							<div class="card-text text-end">${mainLec.teacherName}</div>
 						</div>
-						<div class="overlay d-flex flex-column justify-content-start p-3">
-						  <div class="row my-2">
-						  	<div class="col-auto">
-						  		<c:forEach items="${categoryList}" var="category">
-						  		 <c:if test="${category.no eq mainLec.refLecCatNo}">
-									<h4>${category.name}</h4>
-								 </c:if>	
-								</c:forEach>
-							</div>
-						  </div>
-							<div class="row my-2">
-								<div class="col-auto">
-									<h5>${mainLec.lectureName}</h5>
-								</div>
-							</div>
-							<div class="row my-1">
-								<div class="lecture-intro col-auto">
-									<h6>${mainLec.lectureIntro}</h6>
-								</div>
-							</div>
+						<div class="row my-1">
+							<div class="lecture-intro col-auto">
+								${lecture.lectureIntro}</div>
+						</div>
+						<div class="row my-1">
+							<div class="col-auto">카테고리 :
+								${categoryMap.get(lecture.refLecCatNo)}</div>
+						</div>
+						<div class="row my-1">
+							<div class="col-auto">강의종류 : ${lecture.lectureType eq 'V' ? '일반 강의' : '스트리밍 강의'}</div>
+						</div>
+						<div class="d-flex justify-content-end">
+							<c:set var="contains" value="false" />
+							<c:forEach var="item" items="${orderedlectureList}">
+								<c:if test="${item eq lecture.lectureNo}">
+									<c:set var="contains" value="true" />
+								</c:if>
+							</c:forEach>
+							<c:choose>
+								<c:when test="${contains}">
+									<div class="m-1">
+										<p>이미 결제된 강의입니다.</p>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="m-1">
+									<form:form id="basketFrm${lecture.lectureNo}"
+										action="${pageContext.request.contextPath}${lecture.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}"
+										method="POST">
+										<input name="lectureNo" type="hidden"
+											value="${lecture.lectureNo}" type="hidden" />
+										<button type="submit"
+											class="btn ${lecture.basketed ? 'btn-light' : 'btn-outline-light'}"
+											data-bs-toggle="tooltip" data-bs-placement="right"
+											title="${lecture.basketed ? '장바구니에서 삭제' : '장바구니에 담기'}">
+											<i
+												class="${lecture.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
+										</button>
+									</form:form>
+									</div>
+									<div class="m-1">
+									<form:form id="pickFrm${lecture.lectureNo}"
+										action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}"
+										method="POST">
+										<input name="lectureNo" type="hidden"
+											value="${lecture.lectureNo}" type="hidden" />
+										<button type="submit"
+											class="btn ${lecture.picked ? 'btn-light' : 'btn-outline-light'}"
+											data-bs-toggle="tooltip" data-bs-placement="right"
+											title="${lecture.picked ? '찜삭제' : '찜하기'}">
+											<i
+												class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
+										</button>
+									</form:form>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
-			<c:if test="${vs.count % 4 == 0}">
 			</div>
-			</c:if>
-			
-		</c:forEach>
+			<c:if test="${(vs.count%4 == 0) || vs.last}">
 	</div>
-
-	<!-- 다솜 : 영상리스트 끝 -->
-		
-		
-		<!-- 인기영상 & 추천 영상 리스트 시작 -->
-		
-		<div class="row my-4 px-5">
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">UI/UX 설계</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								4.5 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">66,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">빅데이터 입문</h5>
-							<p class="card-text">양꼬치앤 칭따오</p>
-							<p class="card-text">
-								3.7 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">30,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">자바 기초</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								3.2 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">54,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">mySQL DB 입문</h5>
-							<p class="card-text">한꼬장</p>
-							<p class="card-text">
-								4.8 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">28,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-		</div>
-		<!-- 영상박스 row -->
-
-		<div class="row my-4 px-5">
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">UI/UX 설계</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								4.5 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">66,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">UI/UX 설계</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								4.5 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">66,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">UI/UX 설계</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								4.5 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">66,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">UI/UX 설계</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								4.5 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">66,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-		</div>
-		<!-- 영상박스 row -->
-
-		<div class="row my-4 px-5">
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">UI/UX 설계</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								4.5 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">66,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-3">
-				<a href="#" class="text-decoration-none text-dark">
-					<div class="card mx-auto" style="width: 15rem;">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">UI/UX 설계</h5>
-							<p class="card-text">김병순</p>
-							<p class="card-text">
-								4.5 <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt=""> <img
-									src="${pageContext.request.contextPath}/resources/images/star.png"
-									style="width: 1rem; height: 1rem;" alt="">
-							</p>
-							<p class="card-text">66,000원</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-
-		</div>
-		<!-- 영상박스 row -->
-
-
-	</div>
-
-
-
+	</c:if>
+	</c:forEach>
 </div>
 <!-- 컨텐츠 끝 -->
 

@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
-	private PaymentDao orderDao;
+	private PaymentDao paymentDao;
 
 	@Autowired
 	private BasketDao basketDao;
@@ -35,8 +35,12 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public int paymentHandling(Payment payment) {
 		
+		
+		
 		// 장바구니 리스트 가져옴
 		List<Basket> basketList = basketDao.selectBasketList(payment.getRefMemberId());
+		
+		
 		
 		// 장바구니 번호들 가져옴
 		List<Integer> refLectureNoList = new ArrayList<>();
@@ -45,10 +49,13 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 		payment.setRefLectureNo(refLectureNoList);
 
+		
+		
 		// payment 집어넣기
-		int a = orderDao.insertOrder(payment);
+		int a = paymentDao.insertOrder(payment);
 		if(a <= 0) {return 0;}
 		log.debug("insertOrdrer = {}", "성공");
+		
 		
 		
 		// pay_lecture 집어넣기
@@ -66,17 +73,42 @@ public class PaymentServiceImpl implements PaymentService {
 			log.debug("param no = {}", param.get("no") == null ? "없음" : param.get("no"));
 			list.add(param);
 		}
+		// param에 주문번호, 강의번호 담겨있음
 		
-		int b = orderDao.insertPayLecture(list);
+		int b = paymentDao.insertPayLecture(list);
 		if(b <= 0) {return 0;}
 		log.debug("insertPayLecture = {}", "성공");
 		
+		
+		
 		// basket 삭제하기
-		int c = orderDao.deleteBasket(payment.getRefMemberId());
+		int c = paymentDao.deleteBasket(payment.getRefMemberId());
 		log.debug("deleteBasket = {}", "성공");
 		
-		return c;
-	}
-	
+		
+		
+		// 찜 삭제하기
+		param = new HashMap<>();
+		param.put("refMemberId", payment.getRefMemberId());
+		param.put("refLectureNoList", refLectureNoList);
+		int d = paymentDao.deletePayPick(param);
+		
+				
+				
+		// 챕터번호들 가져오기
+		List<Map<String, Object>> chapList = paymentDao.selectPayChapter(refLectureNoList);
+		log.debug("chapList = {}", chapList);
+		
+		
+		
+		// progress 집어넣기
+		param.put("chapList", chapList);
+		int e = paymentDao.insertPayChapter(param);
+		
+		
+		
+		return e;
+		
+	} // paymentHandling
 	
 }

@@ -42,6 +42,10 @@ import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.order.model.service.BasketService;
+import com.kh.codelit.order.model.service.PickService;
+import com.kh.codelit.order.model.vo.Basket;
+import com.kh.codelit.order.model.vo.Pick;
 import com.kh.codelit.websocket.model.service.MessengerService;
 import com.kh.codelit.websocket.model.vo.Messenger;
 
@@ -63,7 +67,13 @@ public class MemberController {
 
 	@Autowired
 	private MessengerService msgService;
-	
+
+	@Autowired
+	private PickService pickService;
+
+	@Autowired
+	private BasketService basketService;
+
 	@GetMapping("/memberEnroll.do")
 	public void memberEnroll() {
 		log.debug("회원가입 = {}", "회원가입");
@@ -170,43 +180,43 @@ public class MemberController {
 	public void memberLogin_() {
 		log.debug("로그인 포스트 {}", "도착");
 	}
-	
+
 //	@GetMapping("/memberDetail.do")
 //	public void memberDetail(Model model ,Principal pri){
-//		
+//
 //		String memberId = pri.getName();
-//		
+//
 //		model.addAttribute("id",memberId);
 //		Member member = memberService.selectDetail(memberId);
-//		 model.addAttribute("member", member); 
-//		 log.debug("member = {}", member); 
-//			
+//		 model.addAttribute("member", member);
+//		 log.debug("member = {}", member);
+//
 //	}
 	@GetMapping("/memberDetail.do")
 	  public void detail(Model model, Principal pri  ) {
 
 
 		  String MemberId = pri.getName();
-		  model.addAttribute("refMemberId", MemberId); 
-		  
+		  model.addAttribute("refMemberId", MemberId);
+
 		  Member member = memberService.selectOneMember(MemberId);
-		  model.addAttribute("member", member); 
+		  model.addAttribute("member", member);
 		  log.debug("member = {}", member);
 
 		  }
-	
-	
+
+
 	@PostMapping("/memberUpdate.do")
 
 	public String membetUpdate(
-						@ModelAttribute Member member, 
+						@ModelAttribute Member member,
 						RedirectAttributes redirectAttr,
 						@RequestParam(value = "upFile", required = false) MultipartFile upFile,
 						HttpServletRequest request, Authentication oldAuthentication) {
-		
+
 		int result = 0;
 		log.info("member = {}", member);
-		
+
 		try {
 			String saveDirectory = request.getServletContext().getRealPath("/resources/upload/member");
 			// File은 오로지 파일만 가리키는 것이 아니라, 존재하지 않는 것도 가리킬 수 있음. (생성용)
@@ -214,7 +224,7 @@ public class MemberController {
 			if (!dir.exists()) {
 				dir.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
 			}
-			
+
 			String rawPassword = member.getPassword();
 			String encodedPassword = bcryptPasswordEncoder.encode(rawPassword);
 			log.info("rawPassword = {}", rawPassword);
@@ -227,15 +237,15 @@ public class MemberController {
 				member = memberService.selectOneMember(member.getMemberId());
 				String oldFilePath = request.getServletContext()
 						.getRealPath("/resources/upload/member/" + member.getMemberReProfile());
-				
+
 				File oldFile = new File(oldFilePath);//암호화 처리
-				
+
 				File renamedFile = HelloSpringUtils.getRenamedFile(saveDirectory, upFile.getOriginalFilename());
 
 				log.debug("upFile = {}", upFile);
 				log.debug("renamedFile = {}", renamedFile);
-				
-				
+
+
 				// 티처 정보 및 파일네임을 담은 메소드
 				if (oldFile != null)
 					oldFile.delete(); // 기존 파일 삭제
@@ -247,12 +257,12 @@ public class MemberController {
 
 				log.debug("변경된 프로필 확인 = {}", ((Member) oldAuthentication.getPrincipal()).getMemberProfile());
 			}
-			
+
 			result = memberService.updateMember(member);
 			String msg =  result > 0 ? "수정  성공!" : "수정 실패!";
-			
+
 			if(result > 0) {
-				Authentication newAuthentication = 
+				Authentication newAuthentication =
 						new UsernamePasswordAuthenticationToken(
 									member,
 									oldAuthentication.getCredentials(),
@@ -260,10 +270,10 @@ public class MemberController {
 								);
 				SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 			}
-			
+
 			//2. 사용자 피드백 준비 및 리다이렉트
 			redirectAttr.addFlashAttribute("msg", msg);
-			
+
 			} catch (IOException | IllegalStateException e) {
 				log.error("강사 수정 첨부파일 오류", e);
 				throw new RuntimeException("강사수정 첨부파일 저장 오류");
@@ -271,54 +281,54 @@ public class MemberController {
 				log.error(e.getMessage(), e);
 				throw e;
 			}
-		
+
 		return "redirect:/member/memberDetail.do";
 	}
-	
+
 	@PostMapping("/deleteMember.do")
-	public String deleteMember(	@RequestParam String memberId , RedirectAttributes redirectAttr,
-			SessionStatus sessionstaus) {
-		
-		int result = memberService.deleteMember(memberId);
-		log.debug("deleteMember = {}", memberId);
-		
-		if(result> 0 ) {
-			redirectAttr.addFlashAttribute("msg","성공적으로 회원정보를 삭제했습니다");
+	public String deleteMember(
+			@RequestParam String memberId,
+			RedirectAttributes redirectAttr,
+			SecurityContextHolderAwareRequestWrapper requestWrapper) {
+
+		log.debug("{}", requestWrapper.isUserInRole("TEACHER"));
+
+		log.debug("memberId = {}", memberId);
+
+		if (requestWrapper.isUserInRole("TEACHER")) {
+			redirectAttr.addFlashAttribute("msg", "성공적으로 회원정보를 삭제할수 없습니다");
+		} else if (!requestWrapper.isUserInRole("TEACHER")) {
+			// 현준님이 만든 회원탈퇴 비지니스 로직
+			int result = memberService.deleteMember(memberId);
+			redirectAttr.addFlashAttribute("msg", "성공적으로 회원정보를 삭제했습니다");
 			SecurityContextHolder.clearContext();
-		}else
-			redirectAttr.addFlashAttribute("msg","회원정보 삭제에 실패했습니다");
-		
-			return "redirect:/";
 		}
 
+		return "redirect:/";
 
-	
-    @GetMapping("/myProfile.do") 
+	}
 
 
+
+    @GetMapping("/myProfile.do")
     public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
 		  							ModelAndView mav,
 		  							Authentication authentication) {
 
-	  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
-
-
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		  log.debug("userDetails = {}", userDetails);
-		  // userDetails = Member(memberId=teacher, memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2,
-		  //                       memberProfile=null, memberReProfile=null, authorities=[ROLE_TEACHER, ROLE_USER])
 		  String memberId =  ((Member) userDetails).getMemberId();
-		  log.debug("memberId = {}", memberId); //memberId = teacher
 
-			//lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
-			//log.debug("myProfileMethod@lecture = {}", lecture);
-		  List<Lecture> list = lectureService.selectMyLecture(memberId);
-		  log.debug("list = {}", list);
-	     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
-		  
+		  List<Lecture> lectureList = memberService.getLectureList(memberId);
+		  List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
+		  List<Pick> pickList = pickService.selectPickList(memberId);
+		  List<Basket> basketList = basketService.selectBasketList(memberId);
 
-		  mav.addObject("list",list);
+		  mav.addObject("basketList", basketList);
+		  mav.addObject("message", msgList);
+		  mav.addObject("pickList", pickList);
+		  mav.addObject("lectureList",lectureList);
+
 		  mav.setViewName("/member/myProfile");
 
 	  }catch(Exception e) {
@@ -335,7 +345,7 @@ public class MemberController {
     	log.debug("calendar = {}", "calendar");
     }
 
-    
+
     @GetMapping("/memberLectureList.do")
     public String MemberLectureList(
 			@PathVariable(required = false) Integer catNo,
@@ -348,9 +358,6 @@ public class MemberController {
 			catNo = 0;
 		int numPerPage = 12;
 		String memberId = principal != null ? principal.getName() : null;
-		log.debug("catNo = {}", catNo);
-		log.debug("cPage = {}", cPage);
-		log.debug("memberId = {}", memberId);
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
 		param.put("catNo", catNo);
@@ -359,11 +366,12 @@ public class MemberController {
 
 		//2. 업무로직
 		//a. contents영역
-		List<Lecture> list = lectureService.selectLectureList(param);
-		log.debug("list = {}", list);
+		List<Map<String, String>> list = memberService.selectLectureList(param);
 
 		//b. pageBar영역
-		int totalContents = lectureService.getTotalContents(catNo);
+		int totalContents = memberService.getTotalContents(memberId);
+
+
 		String url = HelloSpringUtils.convertToParamUrl(request);
 		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 

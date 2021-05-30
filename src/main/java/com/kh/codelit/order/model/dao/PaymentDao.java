@@ -15,4 +15,10 @@ public interface PaymentDao {
 
 	int deleteBasket(String refMemberId);
 
+	List<Map<String, Object>> selectPayChapter(List<Integer> refLectureNoList);
+
+	int insertPayChapter(Map<String, Object> param);
+
+	int deletePayPick(Map<String, Object> param);
+
 }

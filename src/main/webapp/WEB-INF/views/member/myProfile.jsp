@@ -16,6 +16,11 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	crossorigin="anonymous"></script>
+<style>
+.card{
+	padding :0;
+}
+</style>
 
 <section class="profile-Uclass">
 <div class="container">
@@ -141,7 +146,7 @@
 				<div class="card-body">
 					<div class="alamList">
 					<c:if test="${empty message}">
-						<h1>등록된 알림이 없습니다.</h1>
+						<p class="card-text">등록된 알림이 없습니다.</p>
 					</c:if>
 					<c:if test="${not empty message}">
 						<c:forEach items="${message}" var="message" end="2">

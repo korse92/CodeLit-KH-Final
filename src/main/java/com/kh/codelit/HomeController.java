@@ -1,12 +1,15 @@
 package com.kh.codelit;
 
 import java.beans.PropertyEditor;
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,17 +48,28 @@ public class HomeController {
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale,Model model) {		
+	public String home(Locale locale, 
+					   Model model,
+					   HttpServletRequest request,
+					   Principal principal) {		
 		
 		logger.info("/홈 요청");
 	
 	try {	
-		List<Map<String, Object>> list = lectureService.mainLecture();
-		//log.debug("list = {}", list);
+		String memberId = principal != null ? principal.getName() : null;
+		log.debug("home-memberId = {}", memberId);
+		
+		List<Object> orderedlectureList = lectureService.selectOrderedLectureList(memberId);
+		log.debug("orderedlectureList = {}", orderedlectureList);
+		
+		List<Map<String, Object>> list = lectureService.mainLecture(memberId);
+		log.debug("list = {}", list);
+		
 		List<Map<String, Object>> rollingList = lectureService.rollingLecList();
 		//log.debug("rollingList = {}", rollingList);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("orderedlectureList", orderedlectureList);
 		model.addAttribute("rollingList", rollingList);
 		
 	}catch (Exception e) {
