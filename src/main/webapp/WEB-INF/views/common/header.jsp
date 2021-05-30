@@ -159,7 +159,7 @@ alert("${msg}");
 				                  <sec:authorize access="hasRole('TEACHER')">
 				                  	  <hr/>
 				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureEnroll.do">강의등록</a></li>
+					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureEnroll.do">강의등록</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('ADMIN')">

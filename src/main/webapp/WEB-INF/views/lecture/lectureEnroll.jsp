@@ -15,6 +15,7 @@
 <!-- 컨텐츠 시작 -->
 <!-- 개인 CSS, JS 위치 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar-custom.css"/>
 
 <!-- full Calendar -->
 <!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' /> -->
@@ -32,105 +33,105 @@
 <!-- timepicker -->
 <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
- -->
+-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.min.js" ></script><!-- 타이머js -->
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.css" media=""/><!-- 타이머css -->
 
 <!-- full Calendar script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+		var calendarEl = document.getElementById('calendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-     	themeSystem: 'bootstrap',
-      initialDate: new Date(),
-      locale: "ko",
-      editable: true,
-      selectable: true,
-      selectMirror: true,
-      businessHours: true,
-      dayMaxEvents: true, // allow "more" link when too many events
-      dayHeaderContent: function (date) {
-          let weekList = ["일", "월", "화", "수", "목", "금", "토"];
-              return weekList[date.dow];
-          },
-      dateClick: function(info) {
-    	  $("#eventModal").modal("show");
-          var date = info.dateStr
-          $("#eventModal").find("#startDate").val(date);
-          $("#eventModal").find("#endDate").val(date);
-          $('#close').on('click', function(){
-      		$("#eventModal").modal("hide");
-      		});
-      },
-      select : function(info) {
-    	  $("#eventModal").modal("show");
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			//themeSystem: 'bootstrap',//fullcalendar bootstrap테마는 bootstrap4 기반
+			initialDate: new Date(),
+			locale: "ko",
+			editable: true,
+			selectable: true,
+			selectMirror: true,
+			businessHours: true,
+			dayMaxEvents: true, // allow "more" link when too many events
+			dayHeaderContent: function (date) {
+					let weekList = ["일", "월", "화", "수", "목", "금", "토"];
+							return weekList[date.dow];
+					},
+			dateClick: function(info) {
+				$("#eventModal").modal("show");
+					var date = info.dateStr
+					$("#eventModal").find("#startDate").val(date);
+					$("#eventModal").find("#endDate").val(date);
+					$('#close').on('click', function(){
+					$("#eventModal").modal("hide");
+					});
+			},
+			select : function(info) {
+				$("#eventModal").modal("show");
 
-    	  $("#eventModal").find("#startDate").val(info.startStr);
-    	  $("#eventModal").find("#endDate").val(info.endStr);
-          $('#close').on('click', function(){
-			 $("#eventModal").modal("hide");
-       	  });
-      },
-      eventClick: function(info){
-  		$("#eventModal").modal("show");
-  		$("#eventModal").find("#title").val(info.event.title)
-  		$("#eventModal").find("#startDate").val(info.event.startStr);
-  		$("#eventModal").find("#endDate").val(info.event.endStr);
-        $('#close').on('click', function(){
-			 $("#eventModal").modal("hide");
-     	  });
+				$("#eventModal").find("#startDate").val(info.startStr);
+				$("#eventModal").find("#endDate").val(info.endStr);
+					$('#close').on('click', function(){
+			$("#eventModal").modal("hide");
+					});
+			},
+			eventClick: function(info){
+			$("#eventModal").modal("show");
+			$("#eventModal").find("#title").val(info.event.title)
+			$("#eventModal").find("#startDate").val(info.event.startStr);
+			$("#eventModal").find("#endDate").val(info.event.endStr);
+				$('#close').on('click', function(){
+			$("#eventModal").modal("hide");
+				});
 		console.log(info);
-      },
-      //연월 표기 한국어 설정
-      titleFormat : function(date) {
-      	return date.date.year +"년 "+(date.date.month +1)+"월";
-      }
-    });
+			},
+			//연월 표기 한국어 설정
+			titleFormat : function(date) {
+				return date.date.year +"년 "+(date.date.month +1)+"월";
+			}
+		});
 
-    calendar.render();
+		calendar.render();
 
-    $(calTest).click(e => {
-    	var eventArr = calendar.getEvents();
-    	console.log(eventArr);
-    	$(eventArr).each((idx, elem) => {
-    		eventArr[idx] = elem.toPlainObject();
-    	});
+		$(calTest).click(e => {
+			var eventArr = calendar.getEvents();
+			console.log(eventArr);
+			$(eventArr).each((idx, elem) => {
+				eventArr[idx] = elem.toPlainObject();
+			});
 
-    	console.log(eventArr);
+			console.log(eventArr);
 
-    	$("[name=streamingDateList]").val(JSON.stringify(eventArr));
-    	console.log($("[name=streamingDateList]").val());
-    });
+			$("[name=streamingDateList]").val(JSON.stringify(eventArr));
+			console.log($("[name=streamingDateList]").val());
+		});
 
 
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-    var eventId = 1 + Math.floor(Math.random() * 1000);
+		/******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
+		var eventId = 1 + Math.floor(Math.random() * 1000);
 
-    $("#save-event").on('click', function(){
-    	var title = $("#title").val();
-   		var startDate = $("#startDate").val();
-   		var endDate = $("#endDate").val();
+		$("#save-event").on('click', function(){
+			var title = $("#title").val();
+			var startDate = $("#startDate").val();
+			var endDate = $("#endDate").val();
 
-        if (startDate > endDate) {
-            alert('끝나는 날짜가 앞설 수 없습니다.');
-            return false;
-        }
+				if (startDate > endDate) {
+						alert('끝나는 날짜가 앞설 수 없습니다.');
+						return false;
+				}
 
-        if (title === '') {
-            alert('일정명은 필수입니다.');
-            return false;
-        }
+				if (title === '') {
+						alert('일정명은 필수입니다.');
+						return false;
+				}
 
-   		calendar.addEvent({
-    		title: title,
-    		start: startDate,
-    		end: endDate,
-    		allDay: true
-    	});
+			calendar.addEvent({
+				title: title,
+				start: startDate,
+				end: endDate,
+				allDay: true
+			});
 
-        $("#eventModal").modal('hide');
-    });
+				$("#eventModal").modal('hide');
+		});
 });
 
 //datepicker
@@ -143,11 +144,11 @@ $(function() {
 		showMonthAfterYear : true,
 		changeYear : true,
 		changeMonth : true,
-       	yearSuffix: "년",
-      	monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-      	monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-       dayNamesMin: ['일','월','화','수','목','금','토'],
-       dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+				yearSuffix: "년",
+				monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+				monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			dayNamesMin: ['일','월','화','수','목','금','토'],
+			dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
 	});
 
 	$("#startDate").datepicker();
@@ -159,31 +160,31 @@ $(function() {
 
 //timepicker
 /* $('#startTime')
-    .timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00','scrollDefaultNow': true }) //stime 시작 기본 설정
-    .on('changeTime',function() {                           //stime 을 선택한 후 동작
-        var from_time = $("input[name='startTime']").val(); //stime 값을 변수에 저장
-        $('#endTime').timepicker('option','minTime', from_time);//etime의 mintime 지정
-        if ($('#endTime').val() && $('#endTime').val() < from_time) {
-            $('#endTime').timepicker('setTime', from_time);
+		.timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00','scrollDefaultNow': true }) //stime 시작 기본 설정
+		.on('changeTime',function() {                           //stime 을 선택한 후 동작
+				var from_time = $("input[name='startTime']").val(); //stime 값을 변수에 저장
+				$('#endTime').timepicker('option','minTime', from_time);//etime의 mintime 지정
+				if ($('#endTime').val() && $('#endTime').val() < from_time) {
+						$('#endTime').timepicker('setTime', from_time);
 //etime을 먼저 선택한 경우 그리고 etime시간이 stime시간보다 작은경우 etime시간 변경
-        }
-    });
+				}
+		});
 
 $('#endTime').timepicker({timeFormat:'H:i','minTime':'06:00','maxTime':'23:00'});//etime 시간 기본 설정
  */
 
 //timepicker
 $(document).ready(function() {
-    // INPUT 박스에 들어간 ID값을 적어준다.
-    $("#startTime,#endTime").timepicker({
-        'minTime': '09:00am', // 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
-        'maxTime': '22:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
-        'timeFormat': 'H:i',
-        'step': 30 // 30분 단위로 지정. ( 10을 넣으면 10분 단위 )
+		// INPUT 박스에 들어간 ID값을 적어준다.
+		$("#startTime,#endTime").timepicker({
+				'minTime': '09:00am', // 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
+				'maxTime': '22:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
+				'timeFormat': 'H:i',
+				'step': 30 // 30분 단위로 지정. ( 10을 넣으면 10분 단위 )
 	});
 
 	$(window).scroll(function(){
-	    $(".ui-timepicker-wrapper").hide();
+			$(".ui-timepicker-wrapper").hide();
 	});
 });
 
@@ -207,14 +208,14 @@ img#thumbImage {
 
 /* full Calendar */
 #calendar {
-  max-width: 1100px;
-  margin: 0 auto;
+	max-width: 1100px;
+	margin: 0 auto;
 }
 
 .inputModal {
-  width: 65%;
-  margin-bottom: 10px;
-  justify-content: end;
+	width: 65%;
+	margin-bottom: 10px;
+	justify-content: end;
 }
 </style>
 
@@ -223,7 +224,7 @@ img#thumbImage {
 		<form:form
 			id="lectureEnrollFrm"
 			name="lectureEnrollFrm"
-			action="${pageContext.request.contextPath}/teacher/lectureEnroll.do"
+			action="${pageContext.request.contextPath}/lecture/lectureEnroll.do"
 			method="post"
 			enctype="multipart/form-data">
 			<div class="row justify-content-center">
@@ -355,8 +356,8 @@ img#thumbImage {
 				<label class="form-label mb-2" for="">강의일정</label>
 				<div class="col-sm">
 					<input type="hidden" name="streamingDateList" />
-	 				<div id='calendar'></div>
-	 				<input type="button" value="테스트" id="calTest" />
+					<div id='calendar'></div>
+					<input type="button" value="테스트" id="calTest" />
 				</div>
 			</div>
 
@@ -390,54 +391,54 @@ img#thumbImage {
 	</div>
 
 	<!-- 스트리밍 강의 등록 모달 -->
-	<div class="modal fade" tabindex="-1" role="dialog" id="eventModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+	<div class="modal fade" tabindex="-1" id="eventModal" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+						<div class="modal-content">
 
-            	<!-- modal-header -->
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                </div>
+							<!-- modal-header -->
+								<div class="modal-header">
+										<h4 class="modal-title"></h4>
+								</div>
 
 				<!-- modal-body -->
-                <div class="modal-body">
-	                <div class="row mb-3">
-					    <label for="title" class="col-sm-2 col-form-label">일정명</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="title" required="required" />
-					    </div>
-				  	</div>
+								<div class="modal-body">
+									<div class="row mb-3">
+							<label for="title" class="col-sm-2 col-form-label">일정명</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="title" required="required" />
+							</div>
+						</div>
 
-	                <div class="row mb-3">
-					    <label for="start" class="col-sm-2 col-form-label">시작</label>
-					    <div class="col-sm-10 form-group">
-				        	<input type="text" class="datepicker form-control" id="startDate" name="startDate"/>
-					    </div>
-				  	</div>
+									<div class="row mb-3">
+							<label for="start" class="col-sm-2 col-form-label">시작</label>
+							<div class="col-sm-10 form-group">
+									<input type="text" class="datepicker form-control" id="startDate" name="startDate"/>
+							</div>
+						</div>
 
-	                <div class="row mb-3">
-					    <label for="end" class="col-sm-2 col-form-label">끝</label>
-					    <div class="col-sm-10 form-group">
-				        	<input type="text" class="datepicker form-control" id="endDate" name="endDate"/>
-					    </div>
-				  	</div>
-                </div>
+									<div class="row mb-3">
+							<label for="end" class="col-sm-2 col-form-label">끝</label>
+							<div class="col-sm-10 form-group">
+									<input type="text" class="datepicker form-control" id="endDate" name="endDate"/>
+							</div>
+						</div>
+								</div>
 
 				<!-- modal-footer -->
-                <div class="modal-footer modalBtnContainer-addEvent">
-                    <button type="button" class="btn btn-default" id="close">취소</button>
-                    <button type="button" class="btn btn-primary" id="save-event">저장</button>
-                </div>
-                <!--
-                <div class="modal-footer modalBtnContainer-modifyEvent">
-                    <button type="button" class="btn btn-default" id="close">닫기</button>
-                    <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
-                    <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
-                </div>
- 				-->
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+								<div class="modal-footer modalBtnContainer-addEvent">
+										<button type="button" class="btn btn-default" id="close">취소</button>
+										<button type="button" class="btn btn-primary" id="save-event">저장</button>
+								</div>
+								<!--
+								<div class="modal-footer modalBtnContainer-modifyEvent">
+										<button type="button" class="btn btn-default" id="close">닫기</button>
+										<button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+										<button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+								</div>
+				-->
+						</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 </div> <!-- container -->
 
 <!-- 강의 등록관련 js -->

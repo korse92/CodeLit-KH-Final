@@ -188,6 +188,7 @@
        	  		l.ref_lec_cat_no = #{category}	   
     </if>
     </where>
+    	 order by lecture_no desc
 	</select>
 	
 	<select id="getTotalContents" resultType="_int">
