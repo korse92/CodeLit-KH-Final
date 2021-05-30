@@ -60,8 +60,6 @@ public class TeacherController {
 	@Autowired
 	private MemberService memberService;
 
-	private String memberId;
-
 	@GetMapping("/teacherRequest.do")
 	public ModelAndView teacherRequest(Authentication authentication, ModelAndView mav) {
 		log.debug("강사등록 요청 {}", "컨트롤러 매핑 도착");
@@ -166,160 +164,6 @@ public class TeacherController {
 
 		return mav;
 	}
-
-	@GetMapping("/lectureEnroll.do")
-	public void lectureEnroll() {
-	}
-
-	@PostMapping("/lectureEnroll.do")
-	public String lectureEnroll(
-			@ModelAttribute Lecture lecture,
-			@RequestParam(required = false) MultipartFile lectureThumbnail,
-			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
-			@RequestParam String curriculum,
-			@RequestParam(value = "chapterVideo", required = false) MultipartFile[] chapterVideos,
-			@RequestParam(value = "videoChapNoArr") String videoChapNoArrJsonStr,
-			HttpServletRequest request,
-			Authentication authentication,
-			RedirectAttributes redirectAttr) {
-
-		try {
-			log.debug("lecture(필드값 Set 전) = {}", lecture);
-
-			Gson gson = new Gson();
-
-			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
-			log.debug("lecturePartArr = {}", lecturePartArr);
-			
-//			log.info("chapterVideos = {}", chapterVideos);
-			
-			int[] videoChapNoArr = gson.fromJson(videoChapNoArrJsonStr, int[].class);
-			List<Integer> videoChapNoList = Arrays.stream(videoChapNoArr).boxed().collect(Collectors.toList());
-			log.debug("videoChapNoArr = {}", videoChapNoArr);
-			log.debug("videoChapNoList = {}", videoChapNoList);
-
-			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
-			String thumbnailsSaveDirectory =
-					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_THUMBNAIL);
-			String handoutsSaveDirectory =
-					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_HANDOUT);
-			String videosSaveDirectory =
-					request.getServletContext().getRealPath(Attachment.PATH_LECTURE_VIDEO);
-
-			File dirThumb = new File(thumbnailsSaveDirectory);
-			if(!dirThumb.exists()) {
-				dirThumb.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
-			}
-
-			File dirHandout = new File(handoutsSaveDirectory);
-			if(!dirHandout.exists()) {
-				dirHandout.mkdirs(); // 복수개 폴더 생성 가능 (경로상에 없는거 다 만들어줌)
-			}
-			
-			File dirVideo = new File(videosSaveDirectory);
-			if(!dirVideo.exists()) {
-				dirVideo.mkdirs();
-			}
-
-			if(!lectureThumbnail.isEmpty() || !(lectureThumbnail.getSize() == 0)) {
-				log.debug("lectureThumbnail = {}", lectureThumbnail);
-				log.debug("lectureThumbnail.name = {}", lectureThumbnail.getOriginalFilename());
-				log.debug("lectureThumbnail.size = {}", lectureThumbnail.getSize());
-
-				//저장할 파일명 생성
-				File renamedFile = HelloSpringUtils.getRenamedFile(thumbnailsSaveDirectory, lectureThumbnail.getOriginalFilename());
-				//파일 저장
-				//lectureThumbnail.transferTo(renamedFile);
-
-				lecture.setLectureThumbOrigin(lectureThumbnail.getOriginalFilename());
-				lecture.setLectureThumbRenamed(renamedFile.getName());
-			}
-
-			List<Attachment> attachList = new ArrayList<>();
-
-			for(MultipartFile lectureHandout : lectureHandouts) {
-				if(lectureHandout.isEmpty() || lectureHandout.getSize() == 0)
-					continue;
-
-				log.debug("lectureHandout = {}", lectureHandouts);
-				log.debug("lectureHandout.name = {}", lectureHandout.getOriginalFilename());
-				log.debug("lectureHandout.size = {}", lectureHandout.getSize());
-
-				//저장할 파일명 생성
-				File renamedFile = HelloSpringUtils.getRenamedFile(handoutsSaveDirectory, lectureHandout.getOriginalFilename());
-				//파일 저장
-				//lectureHandout.transferTo(renamedFile);
-				//Attachment객체 생성
-				Attachment attach = new Attachment();
-				attach.setOriginalFilename(lectureHandout.getOriginalFilename());
-				attach.setRenamedFilename(renamedFile.getName());
-				attach.setRefContentsGroupCode(Attachment.CODE_LECTURE_HANDOUT);
-
-				attachList.add(attach);
-			}
-			
-			int vIdx = 0;
-			int prevChapterArrlength = 0;					
-			for(int i = 0; i < lecturePartArr.length; i++) {
-				log.debug("lecturePart[{}] = {}", i, lecturePartArr[i]);
-				
-				LectureChapter[] lectureChapterArr = lecturePartArr[i].getChapterArr();
-				int ChapterArrlength = lectureChapterArr.length;
-				
-				if(i > 0)
-					prevChapterArrlength += lecturePartArr[i-1].getChapterArr().length;
-				
-				for(int j = 0; j < ChapterArrlength; j++) {
-					if(videoChapNoList.contains(prevChapterArrlength + j)) {
-						while(chapterVideos[vIdx].isEmpty() || chapterVideos[vIdx].getSize() == 0) {
-							vIdx++;
-						}
-						
-						//log.debug("vIdx = {}", vIdx);
-						
-						MultipartFile currentChapterVideo = chapterVideos[vIdx++];
-						log.debug("currentChapterVideo = {}", currentChapterVideo);
-						log.debug("currentChapterVideo.name = {}", currentChapterVideo.getOriginalFilename());
-						log.debug("currentChapterVideo.size = {}", currentChapterVideo.getSize());
-						
-						File renamedFile = HelloSpringUtils.getRenamedFile(videosSaveDirectory, currentChapterVideo.getOriginalFilename());
-						//currentChapterVideo.transferTo(renamedFile);
-						
-						lectureChapterArr[j].setLecChapterVideo(currentChapterVideo.getOriginalFilename());
-						lectureChapterArr[j].setLecChapterReVideo(renamedFile.getName());			
-					}
-					log.debug("lectureChapter[{}] = {}", j, lectureChapterArr[j]);
-				}
-			}
-
-			//1. 업무로직
-			lecture.setAttachList(attachList);
-			lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
-			
-			Map<String, Object> param = new HashMap<>();
-			param.put("lecture", lecture);
-			param.put("lecturePartArr", lecturePartArr);
-			
-			log.debug("lecture(필드값 Set 후) = {}", lecture);
-
-			//int result = lectureService.insertLecture(param);
-
-			//2. 사용자 피드백
-			//String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
-			//redirectAttr.addFlashAttribute("msg", msg);
-
-//		} catch (IOException | IllegalStateException e) {
-		} catch (IllegalStateException e) {
-			log.error("첨부파일 등록 오류!", e);
-			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
-		} catch (Exception e) {
-			log.error("강의 등록 오류!", e);
-			throw e;
-		}
-
-		return "redirect:/teacher/lectureEnroll.do";
-	}
-
 
 	@GetMapping("/teacherDetail.do")
 	public void detail(Model model, Principal pri ,Member member ) {
@@ -461,11 +305,11 @@ public class TeacherController {
 
 
 
-	
-	
-	
-		
-	
+
+
+
+
+
 
 }
 
