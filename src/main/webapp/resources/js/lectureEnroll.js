@@ -43,7 +43,14 @@ $((e) => {
 			$lecturePrice.val(0);
 		}
 
-		$("[name=curriculum]").val(createCurriculum());
+		var curriculum = createCurriculum();
+
+		if(!curriculum) {
+			alert("강의 커리큘럼을 등록해주세요.");
+			e.preventDefault();
+		}
+
+		$("[name=curriculum]").val(curriculum);
 
 		//e.preventDefault();//테스트용
 	});
@@ -269,15 +276,19 @@ function createCurriculum(){
 	//console.log(curMap);
 	console.log("curArr", curArr);
 
-	const jsonStr = JSON.stringify(curArr);
-	console.log("jsonStr", jsonStr);
+	if(Array.isArray(curArr) && curArr.length === 0)
+		return false;
+	else {
+		const jsonStr = JSON.stringify(curArr);
+		console.log("jsonStr", jsonStr);
 
-	//console.log(formData.getAll("videoChapNo"));
-	console.log(videoChapNoArr);
+		//console.log(formData.getAll("videoChapNo"));
+		console.log(videoChapNoArr);
 
-	$("[name=videoChapNoArr]").val(JSON.stringify(videoChapNoArr));
+		$("[name=videoChapNoArr]").val(JSON.stringify(videoChapNoArr));
 
-	return jsonStr;
+		return jsonStr;
+	}
 }
 
 function LecturePart(lecturePartNo, lecturePartTitle) {
