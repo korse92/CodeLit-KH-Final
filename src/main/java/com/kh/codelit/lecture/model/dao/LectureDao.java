@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
 public interface LectureDao {
@@ -42,5 +44,9 @@ public interface LectureDao {
 
 
 	List<Object> selectOrderedLectureList(String memberId);
+
+	int insertLecturePart(LecturePart part);
+
+	int insertLectureChapter(LectureChapter chapter);
 
 }
