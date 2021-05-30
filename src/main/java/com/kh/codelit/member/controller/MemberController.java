@@ -42,6 +42,10 @@ import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.order.model.service.BasketService;
+import com.kh.codelit.order.model.service.PickService;
+import com.kh.codelit.order.model.vo.Basket;
+import com.kh.codelit.order.model.vo.Pick;
 import com.kh.codelit.websocket.model.service.MessengerService;
 import com.kh.codelit.websocket.model.vo.Messenger;
 
@@ -63,6 +67,12 @@ public class MemberController {
 
 	@Autowired
 	private MessengerService msgService;
+	
+	@Autowired
+	private PickService pickService;
+	
+	@Autowired
+	private BasketService basketService;
 	
 	@GetMapping("/memberEnroll.do")
 	public void memberEnroll() {
@@ -294,31 +304,24 @@ public class MemberController {
 
 	
     @GetMapping("/myProfile.do") 
-
-
     public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
 		  							ModelAndView mav,
 		  							Authentication authentication) {
 
-	  log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
-
-
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		  log.debug("userDetails = {}", userDetails);
-		  // userDetails = Member(memberId=teacher, memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2,
-		  //                       memberProfile=null, memberReProfile=null, authorities=[ROLE_TEACHER, ROLE_USER])
 		  String memberId =  ((Member) userDetails).getMemberId();
-		  log.debug("memberId = {}", memberId); //memberId = teacher
 
-			//lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
-			//log.debug("myProfileMethod@lecture = {}", lecture);
-		  List<Lecture> list = lectureService.selectMyLecture(memberId);
-		  log.debug("list = {}", list);
-	     // list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null, lectureName=테스트1,
+		  List<Lecture> lectureList = memberService.getLectureList(memberId);
+		  List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
+		  List<Pick> pickList = pickService.selectPickList(memberId);
+		  List<Basket> basketList = basketService.selectBasketList(memberId);
 		  
-
-		  mav.addObject("list",list);
+		  mav.addObject("basketList", basketList);
+		  mav.addObject("message", msgList);
+		  mav.addObject("pickList", pickList);
+		  mav.addObject("lectureList",lectureList);
+		 
 		  mav.setViewName("/member/myProfile");
 
 	  }catch(Exception e) {
@@ -357,9 +360,11 @@ public class MemberController {
 		//2. 업무로직
 		//a. contents영역
 		List<Map<String, String>> list = memberService.selectLectureList(param);
-
+		
 		//b. pageBar영역
 		int totalContents = memberService.getTotalContents(memberId);
+		
+		
 		String url = HelloSpringUtils.convertToParamUrl(request);
 		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 

@@ -33,12 +33,6 @@ public interface MemberService extends UserDetailsService{
 
 	int getTotalContents(String memberId);
 
-
-
-
-
-
-
-
+	List<Lecture> getLectureList(String memberId);
 
 }

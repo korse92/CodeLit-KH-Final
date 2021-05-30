@@ -3,6 +3,7 @@ package com.kh.codelit.member.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.vo.Member;
 
 public interface MemberDao {
@@ -36,9 +37,7 @@ public interface MemberDao {
 	int getTotalContents(String memberId);
 
 
-
-
-
+	List<Lecture> getLectureList(String memberId);
 
 
 }

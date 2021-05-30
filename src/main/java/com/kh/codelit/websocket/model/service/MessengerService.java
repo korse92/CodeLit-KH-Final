@@ -24,5 +24,7 @@ public interface MessengerService {
 	List<Messenger> alarmList(String memberId);
 
 	List<String> selectAuthTeacher();
+
+	List<Messenger> alarmListMyprofile(String memberId);
 	
 }

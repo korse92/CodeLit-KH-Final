@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -90,6 +91,9 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.getTotalContents", memberId);
 	}
 
-
+	@Override
+	public List<Lecture> getLectureList(String memberId) {
+		return session.selectList("member.getLectureList", memberId);
+	}
 
 }

@@ -77,40 +77,62 @@
 	</delete>	
 	
 	<select id="selectLectureList" resultType="lecture">
-		select 
-		    l.*
-		from
-		    payment p
-		full 
-			outer 
-		join
-		    pay_lecture pl
-		on
-		    p.pay_code = pl.pay_code
-		join
-		    lecture l
-		on
-		    pl.ref_lecture_no = l.lecture_no 
-		where 
-		    p.ref_member_id = #{memberId}
+			select 
+				l.*
+			from
+			    payment p
+			full outer join
+			    pay_lecture pl
+			on
+			    p.pay_code = pl.pay_code
+			full outer join
+			    lecture l
+			on
+			    pl.ref_lecture_no = l.lecture_no 
+			where 
+			    p.ref_member_id = #{memberId}
+            order by
+	            l.lecture_no 
+	        nulls last,
+	            l.lecture_accept_yn 
+           	desc,
+	            l.lecture_name 
+            asc
 	</select>
 	<select id="getTotalContents" resultType="_int">
 		select 
 		    count(*)
-		from
-		    payment p
-		full 
-			outer 
-		join
-		    pay_lecture pl
-		on
-		    p.pay_code = pl.pay_code
-		join
-		    lecture l
-		on
-		    pl.ref_lecture_no = l.lecture_no 
-		where 
-		    p.ref_member_id = #{memberId}
+		from 
+		     payment p 
+		 full outer join 
+		     pay_lecture pl
+		 on
+		     p.pay_code = pl.pay_code
+		 where
+		     p.ref_member_id = #{memberId}
+	</select>
+	<select id="getLectureList" resultType="lecture">
+			select 
+				l.*
+			from
+			    payment p
+			full outer join
+			    pay_lecture pl
+			on
+			    p.pay_code = pl.pay_code
+			full outer join
+			    lecture l
+			on
+			    pl.ref_lecture_no = l.lecture_no 
+			where 
+			    p.ref_member_id = #{memberId}
+            order by
+	            l.lecture_no 
+	        nulls last,
+	            l.lecture_accept_yn 
+           	desc,
+	            l.lecture_name 
+            asc
 	</select>
 
 </mapper>
