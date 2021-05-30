@@ -93,4 +93,5 @@ ide : sts4, vsCode
 
 2021.05.31
 * 일반강의 등록 완료
+* 스트리밍강의 등록 fullcalendar까지 완료 (DB등록 남음)
 <br/>
