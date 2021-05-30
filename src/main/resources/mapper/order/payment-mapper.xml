@@ -33,4 +33,53 @@
 		where
 			ref_member_id = #{memberId}
 	</select>
+	
+	<delete id="deletePayPick">
+		delete from pick
+			where ref_member_id = #{refMemberId}
+				and ref_lecture_no in
+				<foreach collection="refLectureNoList" item="lecNo"
+					open="(" separator="," close=")">
+				#{lecNo}	
+				</foreach>
+	</delete>
+	
+	
+	<select id="selectPayChapter" resultMap="payChapMap">
+		select
+			l.lecture_no,
+			c.lec_chapter_no
+			
+		from lecture l
+			left join lecture_part p
+				on l.lecture_no = p.ref_lecture_no
+			left join lecture_chapter c
+				on p.lecture_part_no = c.ref_lec_part_no
+				
+		where l.lecture_no 
+			in
+			<foreach collection="list" item="lecNo"
+				open="(" separator="," close=")">
+				#{lecNo}
+			</foreach>
+		order by lec_chapter_no asc
+	</select>
+	
+	<resultMap id="payChapMap" type="map">
+		<id column="lecture_no" property="lectureNo"/>
+		<result column="lec_chapter_no" property="chapterNo"/>
+	</resultMap>
+	
+	
+	
+	<insert id="insertPayChapter">
+		insert all
+		<foreach collection="chapList" item="chap">
+		into lecture_progress
+		values
+		(#{refMemberId}, #{chap.lectureNo}, #{chap.chapterNo}, 'N', null, null, null)
+		</foreach>
+		select * from dual
+	</insert>
+	
 </mapper>

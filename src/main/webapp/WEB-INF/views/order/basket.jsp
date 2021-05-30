@@ -33,6 +33,7 @@
 				if(money == 0) {
 					e.preventDefault;
 					alert("결제할 내역이 없습니다.");
+
 				}
 				
 				var orderName = document.getElementById("orderName").innerText;
@@ -71,12 +72,10 @@
 				    alert(msg);
 				});
 			
-			});
+				
+			}); // 결제버튼 클릭
 			
-			
-			
-			
-		}
+		} // window.onload
 		
 		
 		// 삭제버튼 ajax
