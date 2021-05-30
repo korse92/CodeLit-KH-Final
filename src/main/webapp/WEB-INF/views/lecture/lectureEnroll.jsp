@@ -15,6 +15,7 @@
 <!-- 컨텐츠 시작 -->
 <!-- 개인 CSS, JS 위치 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar-custom.css"/>
 
 <!-- full Calendar -->
 <!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' /> -->
@@ -38,79 +39,85 @@
 
 <!-- full Calendar script -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+var globalEvent;
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-     	themeSystem: 'bootstrap',//fullcalendar bootstrap테마는 bootstrap4 기반
-      initialDate: new Date(),
-      locale: "ko",
-      editable: true,
-      selectable: true,
-      selectMirror: true,
-      businessHours: true,
-      dayMaxEvents: true, // allow "more" link when too many events
-      dayHeaderContent: function (date) {
-          let weekList = ["일", "월", "화", "수", "목", "금", "토"];
-              return weekList[date.dow];
-          },
-      dateClick: function(info) {
-    	  $("#eventModal").modal("show");
-          var date = info.dateStr
-          $("#eventModal").find("#startDate").val(date);
-          $("#eventModal").find("#endDate").val(date);
-          $('#close').on('click', function(){
-      		$("#eventModal").modal("hide");
-      		});
-      },
-      select : function(info) {
-    	  $("#eventModal").modal("show");
+$(function() {
+	var calendarEl = document.getElementById('calendar');
 
-    	  $("#eventModal").find("#startDate").val(info.startStr);
-    	  $("#eventModal").find("#endDate").val(info.endStr);
-          $('#close').on('click', function(){
-			 $("#eventModal").modal("hide");
-       	  });
-      },
-      eventClick: function(info){
-  		$("#eventModal").modal("show");
-  		$("#eventModal").find("#title").val(info.event.title)
-  		$("#eventModal").find("#startDate").val(info.event.startStr);
-  		$("#eventModal").find("#endDate").val(info.event.endStr);
-        $('#close').on('click', function(){
-			 $("#eventModal").modal("hide");
-     	  });
-		console.log(info);
-      },
-      //연월 표기 한국어 설정
-      titleFormat : function(date) {
-      	return date.date.year +"년 "+(date.date.month +1)+"월";
-      }
-    });
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+		//themeSystem: 'bootstrap', //fullcalendar bootstrap테마는 bootstrap4 기반
+		initialDate: new Date(),
+		locale: "ko",
+		editable: true,
+		selectable: true,
+		selectMirror: true,
+		businessHours: true,
+		dayMaxEvents: true, // allow "more" link when too many events
+		dateClick: function(info) {
+			$(".modalBtnContainer-addEvent").removeClass("d-none");
+			$(".modalBtnContainer-modifyEvent").addClass("d-none");
 
-    calendar.render();
+			$("#eventModal").modal("show");
+			var date = info.dateStr
+			$("#eventModal").find("#startDate").val(date);
+			$("#eventModal").find("#endDate").val(date);
+		},
+		select : function(info) {
+			$(".modalBtnContainer-addEvent").removeClass("d-none");
+			$(".modalBtnContainer-modifyEvent").addClass("d-none");
 
-    $(calTest).click(e => {
-    	var eventArr = calendar.getEvents();
-    	console.log(eventArr);
-    	$(eventArr).each((idx, elem) => {
-    		eventArr[idx] = elem.toPlainObject();
-    	});
+			$("#eventModal").modal("show");
+			$("#eventModal").find("#startDate").val(info.startStr);
+			$("#eventModal").find("#endDate").val(info.endStr);
+		},
+		eventClick: function(info){
+			$(".modalBtnContainer-modifyEvent").removeClass("d-none");
+			$(".modalBtnContainer-addEvent").addClass("d-none");
 
-    	console.log(eventArr);
+			$("#eventModal").modal("show");
+			$("#eventModal").find("#title").val(info.event.title)
+			$("#eventModal").find("#startDate").val(info.event.startStr);
+			$("#eventModal").find("#endDate").val(info.event.endStr);
 
-    	$("[name=streamingDateList]").val(JSON.stringify(eventArr));
-    	console.log($("[name=streamingDateList]").val());
-    });
+			console.log(info);
+
+			$("#updateEvent").click(() => {
+				updateEvent(info.event);
+			});
+
+			$("#deleteEvent").click(() => {
+				removeEvent(info.event);
+			});
+		},
+		//연월 표기 한국어 설정
+		titleFormat : function(date) {
+			return date.date.year +"년 "+(date.date.month +1)+"월";
+		}
+	});
+
+	calendar.render();
+
+	$(calTest).click(e => {
+		var eventArr = calendar.getEvents();
+		console.log(eventArr);
+		$(eventArr).each((idx, elem) => {
+			eventArr[idx] = elem.toPlainObject();
+		});
+
+		console.log(eventArr);
+
+		$("[name=streamingDateList]").val(JSON.stringify(eventArr));
+		console.log($("[name=streamingDateList]").val());
+	});
 
 
     /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
     var eventId = 1 + Math.floor(Math.random() * 1000);
 
-    $("#save-event").on('click', function(){
-    	var title = $("#title").val();
-   		var startDate = $("#startDate").val();
-   		var endDate = $("#endDate").val();
+   $("#saveEvent").on('click', function(){
+		var title = $("#title").val();
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
 
         if (startDate > endDate) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
@@ -122,19 +129,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
 
-   		calendar.addEvent({
-    		title: title,
-    		start: startDate,
-    		end: endDate,
-    		allDay: true
-    	});
+   		calendarEvent.setProp("title", title);
+		calendarEvent.setStart(startDate);
+		calendarEvent.setEnd(endDate);
+		$("#eventModal").modal('hide');
+	}
 
-        $("#eventModal").modal('hide');
-    });
-});
+	function removeEvent(calendarEvent) {
+		calendarEvent.remove();
+		$("#eventModal").modal('hide');
+	}
 
-//datepicker
-$(function() {
+	$('#eventModal').on('hidden.bs.modal', function(){
+		$("#title").val('');
+		$("#startDate").val('');
+		$("#endDate").val('');
+	});
+
+	//datepicker
 	$.datepicker.setDefaults({
 		dateFormat : 'yy-mm-dd',
 		startDate: '7d', //달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
@@ -377,8 +389,6 @@ img#thumbImage {
 					<input class="timepicker form-control" type="text" name="endTime" id="endTime" value="" maxlength="10"/>
 				</div>
 			</div>
-
-
 
 			<div class="row form-group justify-content-end">
 				<div class="col-sm-auto">

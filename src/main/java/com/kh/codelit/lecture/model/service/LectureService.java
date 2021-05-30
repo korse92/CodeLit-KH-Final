@@ -10,7 +10,7 @@ public interface LectureService {
 
 	List<Map<String, Object>> selectCategoryListInstance();
 
-	int insertLecture(Lecture lecture);
+	int insertLecture(Map<String, Object> param);
 
 	List<Lecture> selectLectureList(Map<String, Object> param);
 

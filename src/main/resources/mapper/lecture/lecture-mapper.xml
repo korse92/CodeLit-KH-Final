@@ -42,7 +42,35 @@
 				dual
 		</selectKey>
 	</insert>
-	
+
+	<insert id="insertLecturePart">
+		insert into
+			lecture_part
+		values (
+			seq_lec_part_no.nextval,
+			#{refLectureNo},
+			#{lecturePartTitle}
+		)
+		<selectKey resultType="_int" keyProperty="lecturePartNo" order="AFTER">
+			select
+				seq_lec_part_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
+
+	<insert id="insertLectureChapter">
+		insert into
+			lecture_chapter
+		values (
+			seq_lec_chapter_no.nextval,
+			#{refLecPartNo},
+			#{lecChapterTitle},
+			#{lecChapterVideo},
+			#{lecChapterReVideo}
+		)
+	</insert>
+
 	<select id="selectLectureList" resultType="lecture">
 		select 
 			l.*,

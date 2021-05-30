@@ -38,7 +38,7 @@ public class PickController {
 		model.addAttribute("refMemberId", refMemberId);
 		List<Pick> pickList = pickService.selectPickList(refMemberId);
 //		log.debug("refMemberIdPick = {}", refMemberId);
-//		log.debug("pickList = {}", pickList);
+		log.debug("pickList = {}", pickList);
 
 		model.addAttribute("pickList", pickList);
 	}
