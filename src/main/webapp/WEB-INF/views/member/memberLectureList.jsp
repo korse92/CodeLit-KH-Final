@@ -22,6 +22,9 @@
 <script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/lecture.css" media="all" rel="stylesheet" type="text/css" />
 
+<script type="text/javascript">
+	
+</script>
 
 <!-- 컨텐츠 헤더 시작 -->
 <div class="container mt-5 mb-3">
@@ -31,54 +34,74 @@
 	<div class="row mt-2">
 	</div>
 </div>
-<div class="container">
-	<div class="row">
-		<div class="col-sm-auto">
-			<select class="form-select">
-				<option value="1">모든 수업보기</option>
-				<option value="2">학습중인 강의</option>
-				<option value="3">완료한 강의</option>
-			</select>
-		</div>
-		<div class="col-sm-auto">
-			<select class="form-select">
-				<option value="1">최근 학습한 강의</option>
-				<option value="2">강의 제목순</option>
-			</select>
-		</div>
-	</div>
-</div>
 <!-- 컨텐츠 헤더 끝 -->
 <!-- 강의 리스트 시작 -->
 <div class="container mt-3">
+	<c:if test="${empty list}">
+	<div class="d-flex justify-content-center mt-3">
+		<h1>수강중인 강의가 없습니다.</h1>
+	</div>
+	</c:if>
+	<c:if test="${not empty list}">
 	<c:forEach items="${list}" var="lecture" varStatus="vs">
 	<c:if test="${vs.count % 4 == 1}">
 	<div class="row row-cols-auto">
 	</c:if>
 		<div class="col-sm-3 my-3">
-			<div class="card mx-auto position-relative"
-				style="cursor: pointer;"
-				onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lecture.lectureNo}';">
-				<img
-					src="${empty lecture.lectureThumbRenamed ?
-								'https://via.placeholder.com/450x300.png?text=Thumbnail+Image'
-								: pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += lecture.lectureThumbRenamed}"
-					class="card-img-top"
-					alt="..."
-					style="height: 13rem;"/>
+			<!-- 이동 -->
+			<c:choose>
+				<c:when test='${lecture.lectureAcceptYn == "Y"}'>
+					<div class="card mx-auto position-relative"
+						style="cursor: pointer;"
+						onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lecture.lectureNo}';">
+						<img
+							src="${empty lecture.lectureThumbRenamed ?
+										'https://via.placeholder.com/450x300.png?text=Thumbnail+Image'
+										: pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += lecture.lectureThumbRenamed}"
+							class="card-img-top"
+							alt="..."
+							style="height: 13rem;"/>
+				</c:when>
+				<c:when test='${lecture.lectureAcceptYn == "W"}'>
+					<div class="card mx-auto position-relative" style="cursor: no-drop;">
+					<img
+						src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/stop.jpg"
+						class="card-img-top"
+						alt="..."
+						style="height: 13rem;"/>
+				</c:when>
+				<c:when test='${lecture.lectureAcceptYn == null}'>
+					<div class="card mx-auto position-relative" style="cursor: no-drop;">
+					<img
+						src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/delete.jpg"
+						class="card-img-top"
+						alt="..."
+						style="height: 13rem;"/>
+				</c:when>
+			</c:choose>
 				<div class="card-body">
-					<h5 class="card-title">${lecture.lectureName}</h5>
-					<p class="card-subtitle">${lecture.teacherName}</p>
-					<p class="card-subtitle my-1">
-						<c:forEach var="i" begin="1" end="5">
-							<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
-						</c:forEach>
-					</p>
-					<p class="card-text">
-						학습률 : 
+					<c:choose>
+					<c:when test='${lecture.lectureAcceptYn == "Y"}'>
+						<h5 class="card-title">${lecture.lectureName}</h5>
+						<p class="card-subtitle">${lecture.refMemberId}</p>
+						<p class="card-subtitle my-1">
+					</c:when>
+					<c:when test='${lecture.lectureAcceptYn == "W"}'>
+						<h5 class="card-title">현재 정지되어있는 강의입니다.</h5>
+						<p class="card-subtitle">현재 정지되어있는 강의입니다.</p>
+						<p class="card-subtitle my-1">
+					</c:when>
+					<c:when test="${lecture.lectureAcceptYn == null}">
+						<h5 class="card-title">삭제된 강의입니다.</h5>
+						<p class="card-subtitle">삭제된 강의입니다.</p>
+						<p class="card-subtitle my-1">
+					</c:when>
+					</c:choose>
 					</p>
 				</div>
-				<div class="overlay d-flex flex-column justify-content-end p-3">
+					<div class="overlay d-flex flex-column justify-content-end p-3">
+				<c:choose>
+				<c:when test='${lecture.lectureAcceptYn == "Y"}'>
 					<div class="row my-1">
 						<div class="col-auto">
 							<h5>${lecture.lectureName}</h5>
@@ -97,8 +120,24 @@
 					</div>
 					<div class="d-flex justify-content-end">
 					</div>
+				</c:when>
+				<c:when test='${lecture.lectureAcceptYn == "W"}'>
+					<div class="row my-1">
+						<div class="col-auto">
+							<h5>${lecture.lectureName}</h5>
+							<h4>정지 되어있는 상태입니다.</h4>
+						</div>
+					</div>
+				</c:when>
+				<c:when test="${lecture.lectureAcceptYn == null}">
+					<div class="row my-1">
+						<div class="col-auto">
+							<h5>삭제된 강의입니다.</h5>
+						</div>
+					</div>
+				</c:when>
+				</c:choose>
 				</div>
-				
 			</div>
 		</div>
 	<c:if test="${(vs.count%4 == 0) || vs.last}">
@@ -108,6 +147,7 @@
 	<div class="row my-3">
 		${pageBar}
 	</div>
+	</c:if>
 </div>
 <!-- 강의 리스트 끝 -->
 <!-- 컨텐츠 끝 -->

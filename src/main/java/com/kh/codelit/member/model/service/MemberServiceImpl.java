@@ -1,6 +1,7 @@
 package com.kh.codelit.member.model.service;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.dao.MemberDao;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -88,20 +90,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public List<Map<String, String>> selectLectureList(Map<String, Object> param) {
+		return memberDao.selectLectureList(param);
+	}
 
 
+	@Override
+	public int getTotalContents(String memberId) {
+		return memberDao.getTotalContents(memberId);
+	}
 
 
+	@Override
+	public List<Lecture> getLectureList(String memberId) {
+		return memberDao.getLectureList(memberId);
+	}
 
-
-
-
-
-	
-
-
-
-
-	
 
 }
