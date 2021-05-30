@@ -141,7 +141,7 @@
 				<div class="card-body">
 					<div class="alamList">
 					<c:if test="${empty message}">
-						<h1>등록된 알림이 없습니다.</h1>
+						<h6>등록된 알림이 없습니다.</h6>
 					</c:if>
 					<c:if test="${not empty message}">
 						<c:forEach items="${message}" var="message" end="2">

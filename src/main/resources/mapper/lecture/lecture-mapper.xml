@@ -164,29 +164,25 @@
 			lec_cmt_enroll_date desc
 	</select>
 
-	<select id="mainLecture" resultMap="mainLecMap">
-	select rownum, a.*
-        from (       
-                select
-                    *
-                 from
-                    lecture left join teacher using(ref_member_id)
-                where
-                    lecture_accept_yn = 'Y' 
-                order by lecture_no desc) a
-    　　　 
-	where rownum <![CDATA[ <= ]]> 8
+	<select id="mainLecture" resultType="lecture">
+	
+	select 
+		  rownum,
+    	  l.*,
+    	  round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
+   		 (select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
+    	 (select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked",
+    	 (select count(*) from basket where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "basketed"
+	from lecture l
+	<where>
+    	lecture_accept_yn = 'Y' and rownum <![CDATA[ <= ]]> 8
+    </where>	
+	order by rownum desc
+	
+
 	</select>
 	
-	<resultMap type="map" id="mainLecMap">
-		<id column="lecture_no" property="lectureNo"/>
-		<result column="lecture_name" property="lectureName"/>
-		<result column="lecture_intro" property="lectureIntro"/>
-		<result column="lecture_price" property="lecturePrice"/>
-		<result column="ref_lec_cat_no" property="refLecCatNo"/>
-		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
-		<result column="teacher_name" property="teacherName"/>
-	</resultMap>
+	
 	
 	<update id="clickCount" statementType="CALLABLE" parameterType="HashMap">
 	
@@ -222,34 +218,25 @@
 		<result column="click_no" property="clickNo"/>
 	</resultMap>
 	
-	<select id="mainSearchResult" resultMap="mainSearchMap">
+	<select id="mainSearchResult" resultType="lecture">
 	
-	select
-    	*
+    select
+    	l.*,
+    	round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
+    	(select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
+    	(select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked",
+    	(select count(*) from basket where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "basketed"
 	from 
-    	lecture l left join teacher t 
-        	on l.ref_member_id = t.ref_member_id
-            	left join lecture_comment c 
-                	on t.ref_member_id = c.ref_member_id
+   		lecture l
 	<where>
     	l.lecture_name like '%' || #{searchKeyword} || '%' and l.lecture_accept_yn = 'Y'
     </where>	
 	order by
-    	l.lecture_no desc
+    	l.lecture_no desc	
 	
 	</select>
 	
-	<resultMap type="map" id="mainSearchMap">
-		<id column="lecture_no" property="lectureNo"/>
-		<result column="ref_lec_cat_no" property="refLecCatNo"/>
-		<result column="ref_member_id" property="refMemberId"/>
-		<result column="lecture_name" property="lectureName"/>
-		<result column="lecture_intro" property="lectureIntro"/>
-		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
-		<result column="lecture_price" property="lecturePrice"/>
-		<result column="teacher_name" property="teacherName"/>
-		<result column="lec_assessment" property="lecAssessment"/>
-	</resultMap>
+	
 	
 	<select id="myAllLecture" resultType="lecture">
 	select

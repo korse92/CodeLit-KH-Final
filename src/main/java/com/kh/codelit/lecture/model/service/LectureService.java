@@ -20,7 +20,7 @@ public interface LectureService {
 
 	Map<Integer, Object> getCategoryMapInstance();
 
-	List<Map<String, Object>> mainLecture();
+	List<Map<String, Object>> mainLecture(String memberId);
 	
 	Lecture selectOneLecture(int no);
 

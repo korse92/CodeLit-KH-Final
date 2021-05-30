@@ -289,22 +289,32 @@ public class LectureController {
 
 
 	@GetMapping("/mainSearchResult.do")
-	public ModelAndView mainSearchResult(ModelAndView mav,
-										@RequestParam(required = false) String keyword
-										)
+	public ModelAndView mainSearchResult(
+									ModelAndView mav,
+									@RequestParam(required = false) String keyword,
+									HttpServletRequest request,
+									Principal principal													
+		)
 	{
 
 		//log.debug("메인 검색 컨트롤러 연결 완@searchKeyword = {}", keyword);
 
 	try {
+		String memberId = principal != null ? principal.getName() : null;
+		log.debug("result-memberId = {}", memberId);
+		
 		Map<String, Object> param = new HashMap<>();
 		param.put("searchKeyword", keyword);
+		param.put("memberId", memberId);
 		log.debug("param = {}", param);
 
 		List<Map<String, Object>> list = lectureService.mainSearchResult(param);
 		log.debug("mainSearchResult@list = {}", list);
+		List<Object> orderedlectureList = lectureService.selectOrderedLectureList(memberId);
+		log.debug("orderedlectureList = {}", orderedlectureList);
 
 		mav.addObject("list",list);
+		mav.addObject("orderedlectureList", orderedlectureList);
 		mav.setViewName("/lecture/mainSearchResult");
 	}catch(Exception e) {
 		throw e;

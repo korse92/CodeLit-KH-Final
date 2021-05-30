@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-     	//themeSystem: 'bootstrap',//fullcalendar bootstrap테마는 bootstrap4 기반
+     	themeSystem: 'bootstrap',//fullcalendar bootstrap테마는 bootstrap4 기반
       initialDate: new Date(),
       locale: "ko",
       editable: true,
