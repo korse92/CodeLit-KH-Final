@@ -64,12 +64,14 @@
 <div class="container">
 	<div class="row justify-content-end">
 		<div class="col-sm-auto">
-			<div class="input-group">
-				<input type="search" id="form1" class="form-control" placeholder="강의자 / 강의명" />
-				<button type="button" class="btn btn-primary">
-					<i class="fas fa-search"></i>
-				</button>
-			</div>
+			<form action="">
+				<div class="input-group">
+					<input type="search" name="searchKeyword" class="form-control" placeholder="강의자 / 강의명" />
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-search"></i>
+					</button>
+				</div>
+			</form>
 		</div>
 		<div class="col-sm-auto">
 			<select class="form-select">

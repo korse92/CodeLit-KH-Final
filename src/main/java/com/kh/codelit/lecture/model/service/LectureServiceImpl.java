@@ -105,8 +105,8 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public int getTotalContents(Integer catNo) {
-		return lectureDao.getTotalContents(catNo);
+	public int getTotalContents(Map<String, Object> param) {
+		return lectureDao.getTotalContents(param);
 	}
 
 	@Override
