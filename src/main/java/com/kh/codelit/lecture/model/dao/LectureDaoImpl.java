@@ -71,9 +71,9 @@ public class LectureDaoImpl implements LectureDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> mainLecture() {
+	public List<Map<String, Object>> mainLecture(String memberId) {
 
-		return session.selectList("lecture.mainLecture");
+		return session.selectList("lecture.mainLecture", memberId);
 	}
 
 	@Override
