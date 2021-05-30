@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-     	themeSystem: 'bootstrap',
+     	//themeSystem: 'bootstrap',//fullcalendar bootstrap테마는 bootstrap4 기반
       initialDate: new Date(),
       locale: "ko",
       editable: true,
@@ -223,7 +223,7 @@ img#thumbImage {
 		<form:form
 			id="lectureEnrollFrm"
 			name="lectureEnrollFrm"
-			action="${pageContext.request.contextPath}/teacher/lectureEnroll.do"
+			action="${pageContext.request.contextPath}/lecture/lectureEnroll.do"
 			method="post"
 			enctype="multipart/form-data">
 			<div class="row justify-content-center">
@@ -390,7 +390,7 @@ img#thumbImage {
 	</div>
 
 	<!-- 스트리밍 강의 등록 모달 -->
-	<div class="modal fade" tabindex="-1" role="dialog" id="eventModal" aria-hidden="true">
+	<div class="modal fade" tabindex="-1" id="eventModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
