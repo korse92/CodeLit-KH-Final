@@ -199,7 +199,7 @@ public class LectureController {
 			throw e;
 		}
 
-		return "redirect:/teacher/lectureEnroll.do";
+		return "redirect:/lecture/lectureEnroll.do";
 	}
 
 	@GetMapping(value = {"/lectureList.do/{catNo}", "/lectureList.do"})
