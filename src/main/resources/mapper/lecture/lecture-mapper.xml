@@ -260,18 +260,50 @@
      	lecture_accept_yn "lectureAcceptYn"
 	from 
     	lecture
-    where ref_member_id = #{id}
+    where 
+    	 ref_member_id = #{teacherId}
+    order by 
+    	 lecture_no desc
 	
 	</select>
+	
 	<select id="getTeacherTotalContents" resultType="_int">
 	select
 		  count(*)
 	 from
 		  lecture
-	
+	 where 
+	 		ref_member_id = #{teacherId}
+     order by 
+     		lecture_no desc
 	</select>
 
+	<select id="selectLectureProgress" resultMap="progMap">
+		select 
+			ref_lec_chapter_no,
+			section_sign_up_yn 
+		from lecture_progress
+		where ref_member_id = #{refMemberId}
+			and ref_lecture_no = #{refLectureNo}
+		order by ref_lec_chapter_no asc
+	</select>
 
+	<resultMap id="progMap" type="map">
+		<id column="ref_lec_chapter_no" property="chapterNo"/>
+		<result column="section_sign_up_yn" property="yn"/>
+	</resultMap>
+
+	<update id="updateProgress">
+		update lecture_progress
+		set section_sign_up_yn = 'Y'
+		where ref_member_id = #{refMemberId}
+			and ref_lec_chapter_no = #{chapterNo}
+	</update>
+	
+	<select id="selectVideoRename" resultType="string">
+		select lec_chapter_re_video
+		from lecture_chapter
+		where lec_chapter_no = #{playPosition}
+	</select>
+	
 </mapper>
-
-

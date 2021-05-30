@@ -201,14 +201,38 @@ $(() => {
 
 						<!-- Tab panes -->
 						<div class="tab-content">
+								<div class="card-body">
+									<div class="row">
+										<div class="form-group col-sm-8">
+											<input class="form-control input-sm" id="newReview" type="text" placeholder="후기 작성">
+										</div>
+										<div class="form-group col-sm-2">
+											<button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn"><i class="fas fa-edit"></i> 입력 </button>
+										</div>
+									</div>
+								</div>
+
+
 							<c:forEach items="${lecture.lectureCommentList}" var="cmt" varStatus="vs">
 							<c:if test="${vs.count % numPerCmtPage == 1 or vs.first}"> <%-- ${(int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage) } --%>
 							<fmt:parseNumber var="pageNo" integerOnly="true" value="${vs.count/numPerCmtPage + 1}"/>
 							<div class="tab-pane ${vs.first ? 'active' : ''}" id="cmt-page${pageNo}" role="tabpanel" aria-labelledby="cmt-pageBtn${pageNo}">
 							</c:if>
 								<div class="row">
-
-									${cmt}
+									<div class="col-sm-auto">
+									${cmt.refMemberId}
+									<c:forEach var="i" begin="1" end="5">
+										<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
+									</c:forEach>
+									</div>
+									<div class="card-footer">
+										<nav aria-label="Contacts Page Navigation">
+											<ul class="justify-content-start m-0">
+											${cmt.lecComment}
+											</ul>
+										</nav>
+									</div>
+										<fmt:formatDate value="${cmt.lecCmtEnrollDate}" pattern="yy/mm/dd"/>
 								</div>
 							<c:if test="${vs.count % numPerCmtPage == 0 or vs.last}">
 							</div>
