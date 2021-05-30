@@ -51,8 +51,8 @@ public class LectureDaoImpl implements LectureDao {
 	}
 
 	@Override
-	public int getTotalContents(Integer catNo) {
-		return session.selectOne("lecture.getTotalContents", catNo);
+	public int getTotalContents(Map<String, Object> param) {
+		return session.selectOne("lecture.getTotalContents", param);
 	}
 
 	@Override

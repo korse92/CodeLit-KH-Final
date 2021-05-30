@@ -204,6 +204,7 @@ public class LectureController {
 	public String lectureList(
 			@PathVariable(required = false) Integer catNo,
 			@RequestParam(defaultValue = "1") int cPage,
+			@RequestParam(required = false) String searchKeyword,
 			HttpServletRequest request,
 			Model model,
 			Principal principal) {
@@ -220,6 +221,7 @@ public class LectureController {
 		param.put("catNo", catNo);
 		param.put("cPage", cPage);
 		param.put("memberId", memberId);
+		param.put("searchKeyword", searchKeyword);
 
 		//2. 업무로직
 		//a. contents영역
@@ -229,7 +231,7 @@ public class LectureController {
 		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 
 		//b. pageBar영역
-		int totalContents = lectureService.getTotalContents(catNo);
+		int totalContents = lectureService.getTotalContents(param);
 		String url = HelloSpringUtils.convertToParamUrl(request);
 		log.debug("totalContents = {}", totalContents);
 		log.debug("url = {}", url);
@@ -291,7 +293,7 @@ public class LectureController {
 									ModelAndView mav,
 									@RequestParam(required = false) String keyword,
 									HttpServletRequest request,
-									Principal principal													
+									Principal principal
 		)
 	{
 
@@ -300,7 +302,7 @@ public class LectureController {
 	try {
 		String memberId = principal != null ? principal.getName() : null;
 		log.debug("result-memberId = {}", memberId);
-		
+
 		Map<String, Object> param = new HashMap<>();
 		param.put("searchKeyword", keyword);
 		param.put("memberId", memberId);
