@@ -123,5 +123,16 @@
 			msg_date
 		asc
 	</select>
+	<select id="alarmListMyprofile" resultType="Messenger">
+		select
+		    *
+		from
+		    messenger
+		where 
+		    ref_receiver_id = #{refREceiverId}
+		order by
+		    read_Yn asc,
+		    msg_no desc
+	</select>
 
 </mapper>
