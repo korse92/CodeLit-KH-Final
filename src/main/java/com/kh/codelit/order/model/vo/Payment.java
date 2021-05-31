@@ -14,17 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Payment {
 
-	private String payCode;
-	private String refMemberId;
-	private int payNo;
-	private int payCost;
-	private Date payDate;
+	private String payCode; //주문번호
+	private String refMemberId; //결제한 iD
+	private int payNo; 
+	private int payCost;   //결제금액
+	private Date payDate;  //
 	
 	private List<Integer> refLectureNo;
-	private String lectureThumbRenamed;
-	private String lectureName;
-	private String teacherName;
-	private int lecturePrice;
-	private String lecCatName;
-	private String lectureIntro;
+	private int count;//강의 갯수 
 }

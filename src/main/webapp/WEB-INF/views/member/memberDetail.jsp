@@ -30,7 +30,23 @@
 
         }
         
-  
+        window.onload = function() {
+        	
+        	let $del = $('.deleteMemberOrderFrm');
+        	
+        	$del.each(function(i, elem) {
+        		
+        		elem.addEventListener('submit', function(e) {
+        			
+        			if(confirm("정말로 탈퇴 하시겠습니까?")) {
+        				return true;
+        			} else {
+        				e.preventDefault();
+        			}
+        			
+        		});
+        		
+        	});
 	
     </script>
     
@@ -97,9 +113,9 @@
 				<div class="col-auto">
 					
 					
-					<form:form method="POST" class="deleteMemberFrm"
+					<form:form method="POST" class="deleteMemberOrderFrm"
                     				action="${pageContext.request.contextPath}/member/deleteMember.do">
-                    				<input type="hidden" name="memberId" id="memberId" value="${member.memberId}"  />
+                    				<input type="hidden" name="memberId" value="${member.memberId}"  />
                     		
                     	<button type="submit" class="btn btn-warning me-auto mt-3 mb-6">탈퇴</button>
                     				
@@ -177,7 +193,7 @@
 	</div>
 		
 <script>
-/* 아이디 중복 확인 */
+
 
 /* 패스워드 확인 */
 $("#chkPassword").blur(function(){
@@ -188,23 +204,8 @@ $("#chkPassword").blur(function(){
 	}
 	return true;
 });
-window.onload = function() {
-	
-	let $del = $('.deleteMemberFrm');
-	
-	$del.each(function(i, elem) {
-		
-		elem.addEventListener('submit', function(e) {
-			
-			if(confirm("정말로 삭제하시겠습니까?")) {
-				return true;
-			} else {
-				e.preventDefault();
-			}
-			
-		});
-		
-	});
+
+
 </script>
 
 

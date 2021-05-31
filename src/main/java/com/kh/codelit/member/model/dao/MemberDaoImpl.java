@@ -35,7 +35,7 @@ public class MemberDaoImpl implements MemberDao {
 		log.debug("insertmemberDao = {}", member);
 		return session.insert("member.insertMember", member);
 	}
-
+	
 	@Override
 	public int updateMemberProfile(Map<String, String> map) {
 		return session.update("member.updateMemberProfile", map);
@@ -57,22 +57,22 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public Member selectDetail(String memberId) {
-
+		
 		return session.selectOne("member.selectDetail",memberId);
 	}
 
 	@Override
 	public int updateMember(Member member) {
-
+	
 		return session.update("member.updateMember", member);
 	}
 
-
+	
 
 	@Override
 	public int deleteMember(String memberId) {
-
-		return session.delete("member.deleteMember", memberId);
+	
+		return session.delete("member.deleteMember",memberId);
 	}
 
 	@Override

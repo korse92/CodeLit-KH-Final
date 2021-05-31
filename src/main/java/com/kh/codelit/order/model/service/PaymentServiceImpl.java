@@ -51,7 +51,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 		
 		
-		// payment 집어넣기
+		// payment 집어넣기 
 		int a = paymentDao.insertOrder(payment);
 		if(a <= 0) {return 0;}
 		log.debug("insertOrdrer = {}", "성공");
