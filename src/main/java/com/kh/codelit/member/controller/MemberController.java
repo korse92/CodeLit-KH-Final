@@ -19,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,7 +45,6 @@ import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.websocket.model.service.MessengerService;
-import com.kh.codelit.websocket.model.vo.Messenger;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -276,26 +277,41 @@ public class MemberController {
 	}
 	
 	@PostMapping("/deleteMember.do")
-	public String deleteMember(	@RequestParam String memberId , RedirectAttributes redirectAttr,
-			SessionStatus sessionstaus) {
+	public String deleteMember(
+			@RequestParam String memberId ,
+			RedirectAttributes redirectAttr,
+			
+			SecurityContextHolderAwareRequestWrapper requestWrapper) {
 		
-		int result = memberService.deleteMember(memberId);
+		/*
+		 * List<SimpleGrantedAuthority> authorities = (List<SimpleGrantedAuthority>)
+		 * authentication.getAuthorities();
+		 * log.debug("requestWrapper.isUserInRole(\"ADMIN\") = {}",
+		 * requestWrapper.isUserInRole("ADMIN"));
+		 * log.debug("authorities.contains(\"ROLE_ADMIN\") = {}",
+		 * authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")));//권한
+		 * 체크(equals, hashCode 오버라이딩되서 가능) log.debug("authentication = {}",
+		 * authorities);
+		 */
+		
+		 
 		log.debug("deleteMember = {}", memberId);
+		if(requestWrapper.isUserInRole("TEACHER")) {
+			redirectAttr.addFlashAttribute("msg","회원정보를 삭제할수 없습니다");
+			} else if(!requestWrapper.isUserInRole("TEACHER")) {
+			//현준님이 만든 회원탈퇴 비지니스 로직 
+				int result = memberService.deleteMember(memberId);
+				redirectAttr.addFlashAttribute("msg","성공적으로 회원정보를 삭제했습니다");
+				SecurityContextHolder.clearContext();
+			}
 		
-		if(result> 0 ) {
-			redirectAttr.addFlashAttribute("msg","성공적으로 회원정보를 삭제했습니다");
-			SecurityContextHolder.clearContext();
-		}else
-			redirectAttr.addFlashAttribute("msg","회원정보 삭제에 실패했습니다");
+		
 		
 			return "redirect:/";
-		}
-
+	}
 
 	
     @GetMapping("/myProfile.do") 
-
-
     public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
 		  							ModelAndView mav,
 		  							Authentication authentication) {

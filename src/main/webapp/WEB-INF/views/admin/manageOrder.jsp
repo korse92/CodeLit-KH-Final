@@ -42,7 +42,6 @@
 			}
         
         
-        
           #memberOrderTable button {
             height: 2rem;
             padding: auto;
@@ -56,18 +55,14 @@
 	
 
         <div class="container">
-        <section class="container">
-          <div class="row mt-5">
-            <h2 class=" jb-larger mt-3 col-sm-8">회원 결제내역</h2>
-            <div class="col-4 mt-4">
-              <div class="input-group">
-            </div>
-          </div>
-          <div class="mt-5">
+      
+       
+           <h2 class=" jb-larger mt-3 col-sm-8">회원 결제내역</h2>
+           <div class="mt-4">
+           
             <table class="table text-center" id="memberOrderTable">
               <thead class="table-primary">
                 <tr>
-              	
                   <th scope="col">주문번호</th>
                   <th scope="col">아이디</th>
                   <th scope="col">금액</th>
@@ -88,17 +83,14 @@
 	        <td>${payment.payDate}</td>
 	       	</tr>
 	  	 	</c:forEach>
-	
+			</tbody>
 		</table>
-           
-     
-		
-		 <div>
-		  ${pageBar}
-		 </div>
-		
+	 <div>
+		  ${pageBar}  
+	 </div>
+	
 		  </div>
-		</section>
+		
 	</div>   
 
 

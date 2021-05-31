@@ -68,11 +68,8 @@
 	</update>
 	
 		<delete id="deleteMember">
-			delete 
-			 from
-			member
-			where
-			member_id = #{memberId}
+			delete from member
+			where member_id = #{memberId}
 		
 	</delete>	
 </mapper>

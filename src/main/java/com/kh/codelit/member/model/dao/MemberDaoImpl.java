@@ -69,7 +69,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int deleteMember(String memberId) {
 	
-		return session.delete(memberId);
+		return session.delete("member.deleteMember",memberId);
 	}
 
 

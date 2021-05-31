@@ -56,7 +56,7 @@
 		</where>
 	</select>
 	
-	<delete id="deleteTeacherAndAuth">
+	<delete id="deleteTeacher-AndAuth">
 		delete from teacher
 		where ref_member_id = #{refMemberId}
 	</delete>
@@ -71,7 +71,8 @@
 		select p.*, 
 		(select count(*) from pay_lecture where pay_code = p.pay_code) count
 			from payment p  
-		
+			order by
+			pay_date desc
 			
 	</select>
 		<resultMap id="paymentMap" type="payment" >
@@ -217,19 +218,10 @@
 			</if>
 		</where>
 	</select>
-		<select id="selectMemberOrderCount" resultType="_int">
-		select count(*)
-		from member m
-			left join (select * from authorities where auth = 'ROLE_ADMIN') a
-			on m.member_id = a.member_id
-		<where>
-			auth is null
-			<if test="keyword != null and keyword != ''">
-				and
-					m.member_id like '%' || #{keyword} || '%'
-			</if>
-		</where>
-	</select>
+	 	<select id="selectMemberOrderCount" resultType="_int">
+		select count(*) from payment
+			
+		</select> 
 	<select id="searchCategory" resultMap="LectureListMap">
 	<!-- 이클립스의 emp_mapper참고 -->
 	select 
