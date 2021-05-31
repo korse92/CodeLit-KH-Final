@@ -141,6 +141,11 @@ public class LectureDaoImpl implements LectureDao {
 		return session.insert("lecture.insertLectureChapter", chapter);
 	}
 
+	@Override
+	public int reApplyLecture(int lectureNo) {
+		return session.update("lecture.reApplyLecture", lectureNo);
+	}
+
 
 
 }
