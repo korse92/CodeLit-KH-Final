@@ -41,8 +41,6 @@
 			  float: right;
 			}
         
-        
-        
           #memberBoardTable button {
             height: 2rem;
             padding: auto;

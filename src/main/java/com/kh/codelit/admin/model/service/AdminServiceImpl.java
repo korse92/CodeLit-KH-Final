@@ -116,6 +116,12 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectMemberOrderList(param);
 	}
 
+
+	@Override
+	public List<Member> selectMemberOrderList(String memberId) {
+	
+		return adminDao.selectMemberOrderList(memberId);
+	}
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteTeacherAndAuth(String refMemberId) {
@@ -126,6 +132,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 		
 		return result;
+
 	}
 
 
