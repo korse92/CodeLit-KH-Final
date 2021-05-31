@@ -317,21 +317,24 @@ $((e) => {
 
 		$("[name=curriculum]").val(curriculum);
 
-		var eventArr = calendar.getEvents();
+		if($("[name=lectureType]").val() === 'S') {
+			var eventArr = calendar.getEvents();
 
-		if(eventArr.length > 0) {
-			$(eventArr).each((idx, elem) => {
-				eventArr[idx] = elem.toPlainObject();
-			});
+			if(eventArr.length > 0) {
+				$(eventArr).each((idx, elem) => {
+					eventArr[idx] = elem.toPlainObject();
+				});
 
-			console.log(eventArr);
+				console.log(eventArr);
 
-			$("[name=streamingDateList]").val(JSON.stringify(eventArr));
-			console.log($("[name=streamingDateList]").val());
-		} else {
-			alert("스트리밍 일정을 등록해주세요.");
-			e.preventDefault();
+				$("[name=streamingDateList]").val(JSON.stringify(eventArr));
+				console.log($("[name=streamingDateList]").val());
+			} else {
+				alert("스트리밍 일정을 등록해주세요.");
+				e.preventDefault();
+			}
 		}
+
 
 		//e.preventDefault();//테스트용
 	});
