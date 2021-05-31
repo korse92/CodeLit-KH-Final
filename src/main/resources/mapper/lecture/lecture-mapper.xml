@@ -281,6 +281,7 @@
 
 	<select id="myAllLecture" resultType="lecture">
 	select
+		lecture_no "lectureNo",
 		ref_member_id "refMemberId",
      	lecture_type "lectureType",
      	ref_lec_cat_no "refLecCatNo",
@@ -333,5 +334,15 @@
 		from lecture_chapter
 		where lec_chapter_no = #{playPosition}
 	</select>
+	
+	<update id="reApplyLecture">
+	update 
+    	lecture
+	set 
+    	lecture_accept_yn ='W'
+	where 
+    	lecture_no = #{lectureNo}
+	
+	</update>
 
 </mapper>

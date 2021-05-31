@@ -22,7 +22,8 @@ window.onload = function() {
 		.modal()
 		.on('hide.bs.modal', e => {
 			//modal 비활성화(X,취소,모달외 영역 클릭시) 이전페이지로 이동한다. //bs의 이벤트핸들링
-			location.href = '${empty header.referer || fn:contains(header.referer, '/member/memberLogin.do') ? pageContext.request.contextPath : header.referer}'; //referer가 없거나,로그인페이지를 경로로 들어간 경우 contextPath로 이동
+			location.href = '${empty header.referer || fn:contains(header.referer, '/member/memberLogin.do') ? pageContext.request.contextPath : header.referer}'; 
+			//referer가 없거나,로그인페이지를 경로로 들어간 경우 contextPath로 이동
 		})
 	});
 

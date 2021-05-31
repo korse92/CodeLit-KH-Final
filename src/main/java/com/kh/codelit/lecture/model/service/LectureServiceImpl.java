@@ -192,5 +192,11 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 
+	@Override
+	public int reApplyLecture(int lectureNo) {
+		return lectureDao.reApplyLecture(lectureNo);
+	}
+
+
 
 }
