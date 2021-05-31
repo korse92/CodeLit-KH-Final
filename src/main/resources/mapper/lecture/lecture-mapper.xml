@@ -33,7 +33,9 @@
 			#{lectureThumbRenamed},
 			#{lecturePrice},
 			default,
-			#{lectureGuideline}
+			#{lectureGuideline},
+			#{streamingStartTime},
+			#{streamingEndTime}
 		)
 		<selectKey resultType="_int" keyProperty="lectureNo" order="AFTER">
 			select

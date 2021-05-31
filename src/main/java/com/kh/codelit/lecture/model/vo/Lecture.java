@@ -27,6 +27,8 @@ public class Lecture {
 	private int lecturePrice;
 	private String lectureAcceptYn;
 	private int lectureGuideline;
+	private String streamingStartTime;
+	private String streamingEndTime;
 
 	//파트 리스트
 	private List<LecturePart> partList;
@@ -46,7 +48,7 @@ public class Lecture {
 	//찜,장바구니
 	private boolean picked;
 	private boolean basketed;
-	
+
 	//강의 클릭 수
 	private int clickNo;
 
