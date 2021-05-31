@@ -56,7 +56,7 @@
 		</where>
 	</select>
 	
-	<delete id="deleteTeacher-AndAuth">
+	<delete id="deleteTeacherAndAuth">
 		delete from teacher
 		where ref_member_id = #{refMemberId}
 	</delete>
@@ -88,7 +88,7 @@
 		select          
     		teacher left join lecture_category
        			 on ref_lec_cat_no = lec_cat_no
-         		  left join (select * from authorities where auth = 'ROLE_ADMIN')
+         		  left join (select * from authorities where auth = 'ROLE_TEACHER')
           			on ref_member_id = member_id
 		where auth is null
 	</select>
