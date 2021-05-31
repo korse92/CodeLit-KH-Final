@@ -310,7 +310,6 @@ public class MemberController {
 			return "redirect:/";
 	}
 
-	
     @GetMapping("/myProfile.do") 
     public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
 		  							ModelAndView mav,
