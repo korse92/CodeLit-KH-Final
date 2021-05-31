@@ -91,7 +91,9 @@ ide : sts4, vsCode
 * 영상재생화면 완료
 <br/>
 
-2021.05.31
+2021.05.30
 * 일반강의 등록 완료
 * 스트리밍강의 등록 fullcalendar까지 완료 (DB등록 남음)
+* 결제 디비처리, 수강진도 디비 완료
+* DB FK 제약조건 중 delete set null인 컬럼들 nullable로 수정
 <br/>

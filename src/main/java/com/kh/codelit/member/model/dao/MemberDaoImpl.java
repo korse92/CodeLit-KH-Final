@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
-	private SqlSessionTemplate session; 
-	
+	private SqlSessionTemplate session;
+
 	@Override
 	public Member selectOneMember(String id) {
 		// TODO Auto-generated method stub
@@ -72,7 +72,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int deleteMember(String memberId) {
 	
-		return session.delete(memberId);
+		return session.delete("member.deleteMember",memberId);
 	}
 
 	@Override

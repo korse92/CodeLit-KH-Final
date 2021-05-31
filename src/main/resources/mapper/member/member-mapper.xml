@@ -67,17 +67,16 @@
 		
 	</update>
 	
-		<delete id="deleteMember">
-			delete 
-			 from
+	<delete id="deleteMember">
+		delete
+		from
 			member
-			where
+		where
 			member_id = #{memberId}
-		
-	</delete>	
-	
+	</delete>
+
 	<select id="selectLectureList" resultType="lecture">
-			select 
+			select
 				l.*
 			from
 			    payment p
@@ -88,23 +87,23 @@
 			full outer join
 			    lecture l
 			on
-			    pl.ref_lecture_no = l.lecture_no 
-			where 
+			    pl.ref_lecture_no = l.lecture_no
+			where
 			    p.ref_member_id = #{memberId}
             order by
-	            l.lecture_no 
+	            l.lecture_no
 	        nulls last,
-	            l.lecture_accept_yn 
+	            l.lecture_accept_yn
            	desc,
-	            l.lecture_name 
+	            l.lecture_name
             asc
 	</select>
 	<select id="getTotalContents" resultType="_int">
-		select 
+		select
 		    count(*)
-		from 
-		     payment p 
-		 full outer join 
+		from
+		     payment p
+		 full outer join
 		     pay_lecture pl
 		 on
 		     p.pay_code = pl.pay_code
@@ -112,7 +111,7 @@
 		     p.ref_member_id = #{memberId}
 	</select>
 	<select id="getLectureList" resultType="lecture">
-			select 
+			select
 				l.*
 			from
 			    payment p
@@ -123,17 +122,15 @@
 			full outer join
 			    lecture l
 			on
-			    pl.ref_lecture_no = l.lecture_no 
-			where 
+			    pl.ref_lecture_no = l.lecture_no
+			where
 			    p.ref_member_id = #{memberId}
             order by
-	            l.lecture_no 
+	            l.lecture_no
 	        nulls last,
-	            l.lecture_accept_yn 
+	            l.lecture_accept_yn
            	desc,
-	            l.lecture_name 
+	            l.lecture_name
             asc
 	</select>
-
 </mapper>
-
