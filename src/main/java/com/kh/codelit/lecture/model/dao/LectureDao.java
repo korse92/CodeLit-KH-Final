@@ -49,4 +49,6 @@ public interface LectureDao {
 
 	int insertLectureChapter(LectureChapter chapter);
 
+	List<Lecture> teacherProfileLecture(String memberId);
+
 }

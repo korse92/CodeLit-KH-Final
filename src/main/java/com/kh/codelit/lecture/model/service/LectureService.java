@@ -44,4 +44,6 @@ public interface LectureService {
 
 
 	List<Object> selectOrderedLectureList(String memberId);
+
+	List<Lecture> teacherProfileLecture(String memberId);
 }

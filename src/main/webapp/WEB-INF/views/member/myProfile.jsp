@@ -19,6 +19,9 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile.css" />
 
+<style>
+
+</style>
 <section class="profile-Uclass">
 <div class="container">
 	  <!-- 유저 프로필 시작 -->
@@ -27,40 +30,29 @@
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">마이페이지</h3>
 				<div class="card-body">
-<<<<<<< HEAD
 					<div class="card-text">
+		          	<c:if test="${not empty member.memberReProfile}">
+						<div class="img-box">
+				            <img img src="${pageContext.request.contextPath}/resources/upload/member/${member.memberReProfile}">
+						</div>
+		          	</c:if>
 						<span class="fs-5"> 
 							<sec:authentication property="principal.username" />
 						</span> 
 						<span class="fs-5">님</span> 
 						<span class="fs-5">,&nbsp;안녕하세요.</span>
 					</div>
-=======
-					<div class="img">
-						<%--   <img src="${pageContext.request.contextPath}" alt=""> --%>
-					</div>
-					<p class="card-text">
-						<span class="fs-5"> <sec:authentication
-								property="principal.username" />
-						</span> <span class="fs-5">님</span> <span class="fs-5">,&nbsp;안녕하세요.</span>
-					</p>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					<div class="text-end">
-<<<<<<< HEAD
 						<sapn class="link-box profile-update-box" onclick="location.href='${pageContext.request.contextPath}/member/memberDetail.do'">
 							<span></span><span></span><span></span><span></span>
 								프로필 수정
 						</sapn>
-=======
-						<a href="${pageContext.request.contextPath}/member/memberDetail.do">프로필 수정</a>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</div>
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">수강중인 강의</h3>
 				<div class="card-body">
-<<<<<<< HEAD
 					<div class="card-text">
 					<c:choose>
 						<c:when test="${empty lectureList}">
@@ -78,18 +70,8 @@
 							</c:forEach>
 						</c:when>
 					</c:choose>
-=======
-					<div class="basket">
-						<p>
-							<a href="#">수강중인 강의</a>
-						</p>
-						<p>
-							<a href="#">수강중인 강의</a>
-						</p>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</div>
 					<div class="text-end">
-<<<<<<< HEAD
 					<c:choose>
 					<c:when test="${empty lectureList}">
 						<sapn class="text-end link-box" onclick="location.href='${pageContext.request.contextPath}/lecture/lectureList.do'">
@@ -104,16 +86,12 @@
 						</span>
 					</c:when>
 					</c:choose>
-=======
-						<span class=""><a href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의 목록</a></span>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</div>
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">관심 강의</h3>
 				<div class="card-body">
-<<<<<<< HEAD
 					<div class="card-text">
 					<c:choose>
 						<c:when test="${empty pickList}">
@@ -129,30 +107,8 @@
 							</c:forEach>
 						</c:when>
 					</c:choose>
-=======
-					<div class="Calendar">
-						<p>
-							<a href="#">강의</a>
-						</p>
-						<p>
-							<a href="#">강의</a>
-						</p>
-						<p>
-							<a href="#">강의</a>
-						</p>
-						<p>
-							<a href="#">강의</a>
-						</p>
-						<p>
-							<a href="#">강의</a>
-						</p>
-						<p>
-							<a href="#">강의</a>
-						</p>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</div>
 					<div class="text-end">
-<<<<<<< HEAD
 						<c:choose>
 							<c:when test="${not empty pickList}">
 								<span class="link-box" onclick='location.href="${pageContext.request.contextPath}/order/pick.do"'>
@@ -161,16 +117,12 @@
 								</span>
 							</c:when>
 						</c:choose>
-=======
-						<span class=""><a href="#">강의 전체 보기</a></span>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</div>
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">장바구니</h3>
 				<div class="card-body">
-<<<<<<< HEAD
 					<div class="card-text">
 						<c:choose>
 							<c:when test="${empty basketList}">
@@ -186,32 +138,16 @@
 								</c:forEach>
 							</c:when>
 						</c:choose>
-=======
-					<div class="Calendar">
-						<p>
-							<a href="#">장바구니 아이템</a>
-						</p>
-						<p>
-							<a href="#">장바구니 아이템</a>
-						</p>
-						<p>
-							<a href="#">장바구니 아이템</a>
-						</p>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</div>
 					<div class="text-end">
-<<<<<<< HEAD
 					<c:choose>
 						<c:when test="${not empty basketList}">
-						<span class="link-box" onclick='href="${pageContext.request.contextPath}/order/basket.do"'>
+						<span class="link-box" onclick='location.href="${pageContext.request.contextPath}/order/basket.do"'>
 							<span></span><span></span><span></span><span></span>
 							장바구니 바로가기
 						</span>
 						</c:when>
 					</c:choose>
-=======
-						<span class=""><a href="#">장바구니 바로가기</a></span>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 					</div>
 				</div>
 			</div>
@@ -219,44 +155,19 @@
 				<h3 class="card-header">캘린더</h3>
 				<div class="card-body">
 					<div class="card-text">
-						<p>
-							<a href="#">다음 강의 일정</a>
-						</p>
-						<p>
-							<a href="${pageContext.request.contextPath}/member/streamingCalendar.do">스트리밍 강의 일정</a>
-						</p>
+						<li>
+							구체적인 계획 미정
+						</li>
 					</div>
 					<div class="text-end">
-					<span class="link-box" onclick="#">
-						<span></span><span></span><span></span><span></span>
-						캘린더 전체보기
-					</span>
+						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/streamingCalendar.do'">
+							<span></span><span></span><span></span><span></span>
+							캘린더 전체보기
+						</span>
 					</div>
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
-<<<<<<< HEAD
-=======
-				<h3 class="card-header">구매 내역</h3>
-				<div class="card-body">
-					<div class="Calendar">
-						<p>
-							<a href="#">구매한 강의</a>
-						</p>
-						<p>
-							<a href="#">구매한 강의</a>
-						</p>
-						<p>
-							<a href="#">구매한 강의</a>
-						</p>
-					</div>
-					<div class="text-end">
-						<span class=""><a href="#">전체 구매내역</a></span>
-					</div>
-				</div>
-			</div>
-			<div class="card border-warning m-5" style="max-width: 23rem;">
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 				<h3 class="card-header">알림</h3>
 				<div class="card-body">
 					<div class="card-text">
@@ -265,34 +176,20 @@
 					</c:if>
 					<c:if test="${not empty message}">
 						<c:forEach items="${message}" var="message" end="2">
-<<<<<<< HEAD
 						<li >
 							<span onclick="location.href='${pageContext.request.contextPath}/alarm/alarmDetail.do?msgNo=${message.msgNo}'">
 								${message.msgTitle}
 							</span>
 						</li>
-=======
-							<p>
-								<a href="${pageContext.request.contextPath}/alarm/alarmDetail.do?msgNo=${message.msgNo}">${message.msgTitle} / 
-								${message.readYN = 'N' ? "읽지않음" : '읽음'}
-								</a> 
-							</p>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 						</c:forEach>
 					</c:if>
 					</div>
-<<<<<<< HEAD
 					<c:if test="${not empty message}">
 						<span class="link-box" onclick='location.href="${pageContext.request.contextPath}/alarm/alarmList.do"'>
 							<span></span><span></span><span></span><span></span>
 							받은알림 목록
 						</span>
 					</c:if>
-=======
-						<div class="text-end">
-							<span class=""><a href="${pageContext.request.contextPath}/alarm/alarmList.do">받은알림 목록</a></span>
-						</div>
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 				</div>
 			</div>
 		</div>

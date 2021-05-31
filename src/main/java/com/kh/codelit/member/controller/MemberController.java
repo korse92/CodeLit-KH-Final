@@ -318,12 +318,14 @@ public class MemberController {
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		  String memberId =  ((Member) userDetails).getMemberId();
-
+		  
+		  Member member = memberService.selectOneMember(memberId);
 		  List<Lecture> lectureList = memberService.getLectureList(memberId);
 		  List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
 		  List<Pick> pickList = pickService.selectPickList(memberId);
 		  List<Basket> basketList = basketService.selectBasketList(memberId);
 
+		  mav.addObject("member",member);
 		  mav.addObject("basketList", basketList);
 		  mav.addObject("message", msgList);
 		  mav.addObject("pickList", pickList);

@@ -19,11 +19,16 @@
 <div class="container">
 <section class="profile-Tclass">
 	<sec:authorize access="hasRole('TEACHER')">
-		<div class="row m-5 p-5">
+		<div class="row m-5 p-5 ml-1">
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">강사 마이페이지</h3>
 				<div class="card-body">
 					<div class="card-text">
+		          	<c:if test="${not empty attach}">
+						<div class="img-box">
+				            <img img src="${pageContext.request.contextPath}/resources/upload/member/${member.memberReProfile}">
+						</div>
+		          	</c:if>
 						<span class="fs-5">
 			               <sec:authentication property="principal.username"/>
 			            </span>
@@ -48,7 +53,9 @@
 						</c:when>
 						<c:when test="${not empty list}">
 							<c:forEach items="${list}" var="lec">
-								${lec.lectureName}
+								<li onclick='location.href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lec.lectureNo}"'>
+									${lec.lectureName}
+								</li>
 							</c:forEach>
 						</c:when>
 					</c:choose>
@@ -89,12 +96,14 @@
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">캘린더</h3>
 				<div class="card-body">
-					<div class="alamList">
-						<p><a href="#">다음 강의 일정</a></p> 
-						<p><a href="#">스트리밍 강의 일정</a></p> 
+					<div class="card-text">
+						<li>구체적인 계획 미정</li>
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">캘린더 전체보기</a></span>
+						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/streamingCalendar.do'">
+							<span></span><span></span><span></span><span></span>
+							캘린더 전체보기	
+						</span>
 					</div>
 				</div>
 			</div>
@@ -111,19 +120,22 @@
 				</div>
 			</div> -->
 			
-			<div class="card border-warning m-5" style="max-width: 23rem;">
+<!-- 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">강의자 페이지</h3>
 				<div class="card-body">
 					<div class="card-text">
-						<p><a href="#">새 강의 공지</a></p> 
-						<p><a href="#">강의 질답</a></p> 
-						<p><a href="#">공지사항</a></p> 
+						<li>새 강의 공지</li> 
+						<li>강의 질답</li> 
+						<li>공지사항</li> 
 					</div>
 					<div class="text-end">
-						<span class=""><a href="#">상세 프로필보기</a></span>
+						<span class="link-box" onclick="#">
+							<span></span><span></span><span></span><span></span>
+							상세 프로필 보기	
+						</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	  </sec:authorize>
 	  <!-- 강사 프로필 끝 -->

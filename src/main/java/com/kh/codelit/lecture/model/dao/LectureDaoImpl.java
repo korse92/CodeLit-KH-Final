@@ -141,6 +141,11 @@ public class LectureDaoImpl implements LectureDao {
 		return session.insert("lecture.insertLectureChapter", chapter);
 	}
 
+	@Override
+	public List<Lecture> teacherProfileLecture(String memberId) {
+		return session.selectList("lecture.teacherProfileLecture", memberId);
+	}
+
 
 
 }

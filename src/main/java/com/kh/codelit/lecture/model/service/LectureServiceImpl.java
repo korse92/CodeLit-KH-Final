@@ -192,5 +192,11 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 
+	@Override
+	public List<Lecture> teacherProfileLecture(String memberId) {
+		return lectureDao.teacherProfileLecture(memberId);
+	}
+
+
 
 }
