@@ -333,6 +333,17 @@
 		from lecture_chapter
 		where lec_chapter_no = #{playPosition}
 	</select>
+	
+	<update id="reApplyLecture">
+	update 
+    	lecture
+	set 
+    	lecture_accept_yn ='W'
+	where 
+    	lecture_no = #{lectureNo}
+	
+	</update>
+	
 	<select id="teacherProfileLecture" resultType="lecture">
 	select 
 	    l.lecture_no,

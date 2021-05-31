@@ -140,8 +140,12 @@ public class LectureDaoImpl implements LectureDao {
 	public int insertLectureChapter(LectureChapter chapter) {
 		return session.insert("lecture.insertLectureChapter", chapter);
 	}
-
+	
 	@Override
+	public int reApplyLecture(int lectureNo) {
+	return session.update("lecture.reApplyLecture", lectureNo);
+	}
+		@Override
 	public List<Lecture> teacherProfileLecture(String memberId) {
 		return session.selectList("lecture.teacherProfileLecture", memberId);
 	}
