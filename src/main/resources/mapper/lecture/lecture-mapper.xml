@@ -344,5 +344,22 @@
     	lecture_no = #{lectureNo}
 	
 	</update>
+	
+	<select id="teacherProfileLecture" resultType="lecture">
+	select 
+	    l.lecture_no,
+	    l.lecture_name
+	from
+	   lecture l
+	where
+	    ref_member_id = #{memeberId}
+	and 
+	    lecture_accept_yn = 'Y'
+	and  
+		rownum <![CDATA[ <= ]]> 3
+	order by
+	 	l.lecture_no 
+	 desc
+	</select>
 
 </mapper>

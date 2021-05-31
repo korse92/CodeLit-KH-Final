@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
@@ -119,7 +120,6 @@ public class MemberController {
 		map.put("usable", usable);
 		map.put("id", memberId);
 		map.put("serverTime", new Date());
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 		return new ResponseEntity<>(map, headers, HttpStatus.OK);
@@ -329,12 +329,14 @@ public class MemberController {
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		  String memberId =  ((Member) userDetails).getMemberId();
-
+		  
+		  Member member = memberService.selectOneMember(memberId);
 		  List<Lecture> lectureList = memberService.getLectureList(memberId);
 		  List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
 		  List<Pick> pickList = pickService.selectPickList(memberId);
 		  List<Basket> basketList = basketService.selectBasketList(memberId);
 
+		  mav.addObject("member",member);
 		  mav.addObject("basketList", basketList);
 		  mav.addObject("message", msgList);
 		  mav.addObject("pickList", pickList);
