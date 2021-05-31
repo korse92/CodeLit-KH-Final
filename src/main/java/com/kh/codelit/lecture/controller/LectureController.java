@@ -251,15 +251,6 @@ public class LectureController {
 									  ModelAndView mav,
 									  Authentication authentication) {
 		//1. 업무로직
-
-
-		// 로그인 정보
-		Member loginMember = (Member)authentication.getPrincipal();
-		//log.debug("loginMember = {}", loginMember);
-		loginMember.getMemberId();
-		log.debug("loginMember id = {}", loginMember);
-
-
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
 		int numPerCmtPage = 5;
@@ -267,16 +258,21 @@ public class LectureController {
 		log.debug("lecture = {}", lecture);
 		log.debug("totalCmtPage = {}", totalCmtPage);
 
+		if(authentication != null) {
+			// 로그인 정보
+			Member loginMember = (Member)authentication.getPrincipal();
+			log.debug("loginMember id = {}", loginMember);
 
-		//map객체에 담아보기
-		Map<String,Object> param = new HashMap<>();
-		param.put("ref_member_id", loginMember.getMemberId());
-		param.put("no", no);
-		log.debug("param = {}", param);
+			//map객체에 담아보기
+			Map<String,Object> param = new HashMap<>();
+			param.put("ref_member_id", loginMember.getMemberId());
+			param.put("no", no);
+			log.debug("param = {}", param);
 
-		//강의id 담아 클릭수
-		int result = lectureService.clickCount(param);
-		log.debug("clickCountresult = {}", result);
+			//강의id 담아 클릭수
+			int result = lectureService.clickCount(param);
+			log.debug("clickCountresult = {}", result);
+		}
 
 		//2. jsp 위임
 		mav.addObject("lecture", lecture);

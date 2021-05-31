@@ -16,7 +16,7 @@
 
 <!-- 개인 CSS, JS 위치 -->
 <style>
-.card-body {
+.container > .card > .card-body {
 	padding-left: 3rem;
 	padding-right: 3rem;
 }
@@ -109,12 +109,6 @@ $(() => {
 				</div>
 
 			</div>
-			<div class="row lec-thumbnail w-50">
-				<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${lecture.lectureThumbRenamed}" alt="" id ="photo_img" />
-
-
-
-			</div>
 		</div>
 		<div class="card-body">
 			<ul class="nav nav-tabs mb-3" id="DetailTab" role="tablist">
@@ -176,71 +170,69 @@ $(() => {
 						</c:forEach>
 					</div>
 				</div>
+				<!-- #review.tab-pane -->
 				<div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="contact-tab">
 					<!-- Nav tabs -->
 					<c:if test="${!empty lecture.lectureCommentList}">
-						<ul class="nav nav-pills justify-content-end" id="myTab" role="tablist">
-						<c:forEach var="i" begin="1" end="${totalCmtPage}" varStatus="vs">
-							<li class="nav-item" role="presentation">
-								<button class="nav-link ${vs.first ? 'active' : ''}" id="cmt-pageBtn${i}" data-bs-toggle="tab" data-bs-target="#cmt-page${i}" type="button" role="tab" aria-controls="cmt-page${i}" aria-selected="true">${i}</button>
-							</li>
-						</c:forEach>
-							<!--
-							<li class="nav-item" role="presentation">
-						  		<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">2</button>
-							</li>
-							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">3</button>
-							</li>
-							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">4</button>
-							</li>
-							-->
-						</ul>
+					<ul class="nav nav-pills justify-content-end" id="myTab" role="tablist">
+					<c:forEach var="i" begin="1" end="${totalCmtPage}" varStatus="vs">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link ${vs.first ? 'active' : ''}" id="cmt-pageBtn${i}" data-bs-toggle="tab" data-bs-target="#cmt-page${i}" type="button" role="tab" aria-controls="cmt-page${i}" aria-selected="true">${i}</button>
+						</li>
+					</c:forEach>
+					</ul>
+					</c:if><!-- Nav tabs -->
 
+					<!-- tab-content -->
+					<div class="tab-content">
 
-						<!-- Tab panes -->
-						<div class="tab-content">
-								<div class="card-body">
-									<div class="row">
-										<div class="form-group col-sm-8">
-											<input class="form-control input-sm" id="newReview" type="text" placeholder="후기 작성">
-										</div>
-										<div class="form-group col-sm-2">
-											<button type="button" class="btn btn-primary btn-sm btn-block replyAddBtn"><i class="fas fa-edit"></i> 입력 </button>
-										</div>
-									</div>
-								</div>
+						<!-- 후기 작성 row 시작 -->
+						<div class="row">
+							<div class="input-group my-3">
+								<input class="form-control input-sm" id="newReview" type="text" placeholder="후기 작성">
+								<button type="button" class="btn btn-primary"><i class="fas fa-edit"></i> 입력 </button>
+							</div>
+						</div>
+						<!-- 후기 작성 row 끝 -->
 
-
+						<!-- 후기리스트 row 시작 -->
+						<c:if test="${!empty lecture.lectureCommentList}">
+						<div class="row">
 							<c:forEach items="${lecture.lectureCommentList}" var="cmt" varStatus="vs">
 							<c:if test="${vs.count % numPerCmtPage == 1 or vs.first}"> <%-- ${(int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage) } --%>
 							<fmt:parseNumber var="pageNo" integerOnly="true" value="${vs.count/numPerCmtPage + 1}"/>
+							<!-- Tab panes(후기 리스트) -->
 							<div class="tab-pane ${vs.first ? 'active' : ''}" id="cmt-page${pageNo}" role="tabpanel" aria-labelledby="cmt-pageBtn${pageNo}">
 							</c:if>
-								<div class="row">
-									<div class="col-sm-auto">
-									${cmt.refMemberId}
-									<c:forEach var="i" begin="1" end="5">
-										<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
-									</c:forEach>
+								<!-- 후기 개별card 시작 -->
+								<div class="card my-3 text-dark bg-light">
+									<div class="card-header">
+										<h5 class="card-title">${cmt.refMemberId}</h5>
+										<h6 class="card-subtitle">
+											<c:forEach var="i" begin="1" end="5">
+												<i class="${i <= cmt.lecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
+											</c:forEach>
+										</h6>
 									</div>
-									<div class="card-footer">
-										<nav aria-label="Contacts Page Navigation">
-											<ul class="justify-content-start m-0">
-											${cmt.lecComment}
-											</ul>
-										</nav>
+									<div class="card-body">
+										<p class="card-text">${cmt.lecComment}</p>
 									</div>
-										<fmt:formatDate value="${cmt.lecCmtEnrollDate}" pattern="yy/mm/dd"/>
+									<div class="card-footer text-muted text-end">
+										<p class="fs-6 m-0">
+											<fmt:formatDate value="${cmt.lecCmtEnrollDate}" pattern="yy/MM/dd"/>
+										</p>
+									</div>
 								</div>
+								<!-- 후기 개별card 끝 -->
+
 							<c:if test="${vs.count % numPerCmtPage == 0 or vs.last}">
-							</div>
+							</div><!-- Tab panes(후기 리스트) -->
 							</c:if>
 							</c:forEach>
-						</div>
-					</c:if>
-				</div>
+						</div><!-- 후기리스트 row 시작 -->
+						</c:if>
+					</div><!-- tab-content -->
+				</div><!-- #review.tab-pane -->
 			</div>
 		</div>
 	</div>
