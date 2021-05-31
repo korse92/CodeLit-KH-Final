@@ -14,6 +14,7 @@
 </jsp:include>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile.css" />
 
 <div class="container">
 <section class="profile-Tclass">
@@ -22,43 +23,67 @@
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">강사 마이페이지</h3>
 				<div class="card-body">
-					<p class="card-text">
+					<div class="card-text">
 						<span class="fs-5">
 			               <sec:authentication property="principal.username"/>
 			            </span>
 			            <span class="fs-5">님</span>
 			            <span class="fs-5">,&nbsp;안녕하세요.</span>
-					</p>
-					<div class="text">
-						<a href="${pageContext.request.contextPath}/teacher/teacherDetail.do">프로필 수정</a>
+					</div>
+					<div class="text-end">
+						<sapn class="link-box" onclick="location.href='${pageContext.request.contextPath}/teacher/teacherDetail.do'">
+							<span></span><span></span><span></span><span></span>
+								프로필 수정
+						</sapn>
 					</div>
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">내 강의 목록</h3>
-				<form method="GET" id="lecFrm" action="${pageContext.request.contextPath}/teacher/teacherProfile.do">
 				<div class="card-body">
-					<div class="Calendar">
-					<c:forEach items="${list}" var="lec">
-						<p><a href="#">${lec.lectureName}</p>
-					</c:forEach>
+					<div class="card-text">
+					<c:choose>
+						<c:when test="${empty list}">
+							등록하신 강의가 존재하지 않습니다.
+						</c:when>
+						<c:when test="${not empty list}">
+							<c:forEach items="${list}" var="lec">
+								${lec.lectureName}
+							</c:forEach>
+						</c:when>
+					</c:choose>
 					</div>
 					<div class="text-end">
-						<span class="" onclick="location.href='${pageContext.request.contextPath}/lecture/myAllLecture.do';">강의 전체 보기</a></span>
+						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/lecture/myAllLecture.do';">
+							<span></span><span></span><span></span><span></span>
+							강의 전체 보기
+						</span>
 					</div>
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">알림</h3>
 				<div class="card-body">
-					<div class="alamList">
-						<p><a href="${pageContext.request.contextPath}/teacher/teacherDetail.do">알림</a></p> 
-						<p><a href="#">알림</a></p>
-						<p><a href="#">알림</a></p>
+					<div class="card-text">
+					<c:if test="${empty message}">
+						<p>등록된 알림이 없습니다.</p>
+					</c:if>
+					<c:if test="${not empty message}">
+						<c:forEach items="${message}" var="message" end="2">
+						<li >
+							<span onclick="location.href='${pageContext.request.contextPath}/alarm/alarmDetail.do?msgNo=${message.msgNo}'">
+								${message.msgTitle}
+							</span>
+						</li>
+						</c:forEach>
+					</c:if>
 					</div>
-					<div class="text-end">
-						<span class=""><a href="${pageContext.request.contextPath}/alarm/alarmList.do">받은알림 목록</a></span>
-					</div>
+					<c:if test="${not empty message}">
+						<span class="link-box" onclick='location.href="${pageContext.request.contextPath}/alarm/alarmList.do"'>
+							<span></span><span></span><span></span><span></span>
+							받은알림 목록
+						</span>
+					</c:if>
 				</div>
 			</div>
 			<div class="card border-warning m-5" style="max-width: 23rem;">
@@ -73,10 +98,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="card border-warning m-5" style="max-width: 23rem;">
+<!-- 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">정산내역</h3>
 				<div class="card-body">
-				  <div class="">
+				  <div class="card-text">
 					<p><a href="#">2021년 상반기 정산내역</a></p> 
 					<p><a href="#">2020년 하반기 정산내역</a></p> 
 					</div>
@@ -84,12 +109,12 @@
 						<span class=""><a href="#">정산 상세 내역</a></span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			
 			<div class="card border-warning m-5" style="max-width: 23rem;">
 				<h3 class="card-header">강의자 페이지</h3>
 				<div class="card-body">
-					<div class="Calendar">
+					<div class="card-text">
 						<p><a href="#">새 강의 공지</a></p> 
 						<p><a href="#">강의 질답</a></p> 
 						<p><a href="#">공지사항</a></p> 
