@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -13,14 +13,14 @@
 </jsp:include>
 
 <script>
-	
+
 </script>
 
 <!-- 컨텐츠 시작 -->
 <div class="container">
 	<section class="container">
 		<div class="page-header">
-			
+
 				<div class="row mt-5 mx-auto">
 				<p>
 				<span class="fs-2">
@@ -89,7 +89,7 @@
 				<c:if test="${!empty list}">
 					<div>${pageBar}</div>
 				</c:if>
-			
+
 		</div>
 	</section>
 </div>
