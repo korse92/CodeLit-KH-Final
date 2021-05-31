@@ -85,7 +85,9 @@
 		
 		</resultMap> 
 	<select id="applyTeacherList" resultMap="TeacherListMap">
-		select          
+		select
+		 	 *
+        from
     		teacher left join lecture_category
        			 on ref_lec_cat_no = lec_cat_no
          		  left join (select * from authorities where auth = 'ROLE_TEACHER')
