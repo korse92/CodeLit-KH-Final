@@ -67,5 +67,10 @@ public class MessengerDAOImpl implements MessengerDAO{
 		return session.selectList("msg.selectAuth");
 	}
 
+	@Override
+	public List<Messenger> alarmListMyprofile(String memberId) {
+		return session.selectList("msg.alarmListMyprofile", memberId);
+	}
+
 	
 }

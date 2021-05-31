@@ -43,7 +43,14 @@ $((e) => {
 			$lecturePrice.val(0);
 		}
 
-		$("[name=curriculum]").val(createCurriculum());
+		var curriculum = createCurriculum();
+
+		if(!curriculum) {
+			alert("강의 커리큘럼을 등록해주세요.");
+			e.preventDefault();
+		}
+
+		$("[name=curriculum]").val(curriculum);
 
 		//e.preventDefault();//테스트용
 	});
@@ -108,11 +115,35 @@ $((e) => {
 		const $partAddBtn = $("#inputCurriculum > .partAddBtn");
 		$partAddBtn.before($partGroup);
 		tooltipInit($partAddBtn.prev());
+
+		/** 스크롤 오프셋 관련 테스트
+		let lastPartGroupOffset = $(".part-group").last().offset();
+
+		//
+		let navbarHeight = $("nav.navbar").outerHeight(true);
+		let bodyHeight = $('html, body').height();
+
+		//$('html, body')
+
+		console.log("navbarHeight : ", navbarHeight);
+		console.log("lastPartGroupOffset.top : ", lastPartGroupOffset.top);
+		console.log("$bodyHeight : ", bodyHeight);
+
+		console.log(navbarHeight + lastPartGroupOffset.top);
+		console.log("$(document).scrollTop() : ", $(document).scrollTop());// 현재스크롤 위치
+		*/
+
+		let scrollTop = $(window).scrollTop();
+		let partgroupHeight = $partGroup.height();
+
+		//$('html, body').animate({scrollTop : $(window).scrollTop() + $(".part-group").last().outerHeight(true)}, 100);
+		window.scrollTo({top: scrollTop + partgroupHeight, behavior: 'smooth'});
+
 	});
 
-	$(".chapAddBtn").click(chapAddBtnClickListener);
-	$(".partDelBtn").click(partDelBtnClickListener);
-	$(".chapDelBtn").click(chapDelBtnClickListener);
+	//$(".chapAddBtn").click(chapAddBtnClickListener);
+	//$(".partDelBtn").click(partDelBtnClickListener);
+	//$(".chapDelBtn").click(chapDelBtnClickListener);
 });
 
 function chapAddBtnClickListener(e) {
@@ -120,7 +151,6 @@ function chapAddBtnClickListener(e) {
 	let $chapterGroup = $("<div></div>", {
 		"class" : "chapter-group ps-5"
 	});
-
 
 	//챕터 .input-group div
 	let $inputGroup = $("<div></div>", {
@@ -149,7 +179,7 @@ function chapAddBtnClickListener(e) {
 	//챕터 input:file
 	let $chapterInputFile = $("<input>", {
 		"type" : "file",
-		"class" : "form-control form-control-sm",
+		"class" : "form-control form-control-sm col-sm-12",
 		"name" : "chapterVideo",
 		"accept" : "video/*"
 	});
@@ -161,16 +191,34 @@ function chapAddBtnClickListener(e) {
 	const $chapAddBtn = $(e.target).parents(".part-group").find(".chapAddBtn");
 	$chapAddBtn.before($chapterGroup);
 	tooltipInit($chapAddBtn.prev());
+
+	let scrollTop = $(window).scrollTop();
+	let chapterGroupHeight = $chapterGroup.height();
+
+	//$('html, body').animate({scrollTop : $(window).scrollTop() + $(".part-group").last().outerHeight(true)}, 100);
+	window.scrollTo({top: scrollTop + chapterGroupHeight, behavior: 'smooth'});
 }
 
 function partDelBtnClickListener(e) {
-	$(e.target).parents(".part-group").remove();
+	let $deletedElem = $(e.target).parents(".part-group");
+	let deletedElemHeight = $deletedElem.height();
+
+	$deletedElem.remove()
 	$(".tooltip").remove();
+
+	let scrollTop = $(window).scrollTop();
+	window.scrollTo({top: scrollTop - deletedElemHeight, behavior: 'smooth'});
 }
 
 function chapDelBtnClickListener(e) {
-	$(e.target).parents(".chapter-group").remove();
+	let $deletedElem = $(e.target).parents(".chapter-group");
+	let deletedElemHeight = $deletedElem.height();
+
+	$deletedElem.remove();
 	$(".tooltip").remove();
+
+	let scrollTop = $(window).scrollTop();
+	window.scrollTo({top: scrollTop - deletedElemHeight, behavior: 'smooth'});
 }
 
 function tooltipInit(elem) {
@@ -188,7 +236,7 @@ function createCurriculum(){
 
 	//var formData = new FormData($('#lectureEnrollFrm')[0]);
 	var videoChapNoArr = new Array();
-	
+
 	var videoIdx = 0;
 
 	$partGroup.each((pIdx, elem) => {
@@ -217,7 +265,7 @@ function createCurriculum(){
 				//formData.append("videoChapNo", videoIdx);
 				videoChapNoArr.push(videoIdx);
 			}
-			
+
 			videoIdx++;
 
 			lecturePart.chapterArr.push(lectureChapter);
@@ -228,15 +276,19 @@ function createCurriculum(){
 	//console.log(curMap);
 	console.log("curArr", curArr);
 
-	const jsonStr = JSON.stringify(curArr);
-	console.log("jsonStr", jsonStr);
-	
-	//console.log(formData.getAll("videoChapNo"));
-	console.log(videoChapNoArr);
-	
-	$("[name=videoChapNoArr]").val(JSON.stringify(videoChapNoArr));
+	if(Array.isArray(curArr) && curArr.length === 0)
+		return false;
+	else {
+		const jsonStr = JSON.stringify(curArr);
+		console.log("jsonStr", jsonStr);
 
-	return jsonStr;
+		//console.log(formData.getAll("videoChapNo"));
+		console.log(videoChapNoArr);
+
+		$("[name=videoChapNoArr]").val(JSON.stringify(videoChapNoArr));
+
+		return jsonStr;
+	}
 }
 
 function LecturePart(lecturePartNo, lecturePartTitle) {

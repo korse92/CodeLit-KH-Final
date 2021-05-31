@@ -11,6 +11,8 @@ import com.kh.codelit.attachment.model.dao.AttachDao;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.lecture.model.dao.LectureDao;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,17 +62,37 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public int insertLecture(Lecture lecture) {
+	public int insertLecture(Map<String, Object> param) {
 		int result = 0;
+		Lecture lecture = (Lecture)param.get("lecture");
+		LecturePart[] leturePartArr = (LecturePart[])param.get("lecturePartArr");
 
 		//1. lecture객체 등록
 		result = lectureDao.insertLecture(lecture);
 		log.debug("lecture.no = {}", lecture.getLectureNo());//insert한 lecture 번호 확인
 
+		//2.첨부파일 등록
 		if(!lecture.getAttachList().isEmpty()) {
 			for(Attachment attach : lecture.getAttachList()) {
 				attach.setRefContentsNo(lecture.getLectureNo());
 				result = attachDao.insertAttachment(attach);
+			}
+		}
+		//3.쿼리큘럼 등록
+		if(leturePartArr != null || leturePartArr.length > 0) {
+			for(LecturePart part : leturePartArr) {
+				part.setRefLectureNo(lecture.getLectureNo());
+				result = lectureDao.insertLecturePart(part);
+				log.debug("part.no = {}", part.getLecturePartNo());//insert한 lecturePart 번호 확인
+
+				LectureChapter[] chapterArr = part.getChapterArr();
+
+				if(chapterArr != null || chapterArr.length > 0) {
+					for(LectureChapter chapter : chapterArr) {
+						chapter.setRefLecPartNo(part.getLecturePartNo());
+						result = lectureDao.insertLectureChapter(chapter);
+					}
+				}
 			}
 		}
 
@@ -83,8 +105,8 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
-	public int getTotalContents(Integer catNo) {
-		return lectureDao.getTotalContents(catNo);
+	public int getTotalContents(Map<String, Object> param) {
+		return lectureDao.getTotalContents(param);
 	}
 
 	@Override
@@ -94,8 +116,8 @@ public class LectureServiceImpl implements LectureService {
 
 
 	@Override
-	public List<Map<String, Object>> mainLecture() {
-		return lectureDao.mainLecture();
+	public List<Map<String, Object>> mainLecture(String memberId) {
+		return lectureDao.mainLecture(memberId);
 	}
 
 
@@ -139,6 +161,29 @@ public class LectureServiceImpl implements LectureService {
 
 		return lectureDao.getTeacherTotalContents(param);
 	}
+
+
+	@Override
+	public List<Map<String, Object>> selectLectureProgress(Map<String, Object> param) {
+
+		return lectureDao.selectLectureProgress(param);
+	}
+
+
+	@Override
+	public int updateProgress(Map<String, Object> param) {
+
+		return lectureDao.updateProgress(param);
+	}
+
+
+	@Override
+	public String selectVideoRename(int playPosition) {
+
+		return lectureDao.selectVideoRename(playPosition);
+	}
+
+
 
 
 	@Override

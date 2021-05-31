@@ -379,7 +379,9 @@ public class MemberController {
 		log.debug("list = {}", list);
 
 		//b. pageBar영역
-		int totalContents = lectureService.getTotalContents(catNo);
+		int totalContents = memberService.getTotalContents(memberId);
+		
+		
 		String url = HelloSpringUtils.convertToParamUrl(request);
 		String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 
