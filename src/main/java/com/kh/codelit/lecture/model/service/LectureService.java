@@ -10,18 +10,18 @@ public interface LectureService {
 
 	List<Map<String, Object>> selectCategoryListInstance();
 
-	int insertLecture(Lecture lecture);
+	int insertLecture(Map<String, Object> param);
 
 	List<Lecture> selectLectureList(Map<String, Object> param);
 
-	int getTotalContents(Integer catNo);
+	int getTotalContents(Map<String, Object> param);
 
 	List<Lecture> selectMyLecture(String id);
 
 	Map<Integer, Object> getCategoryMapInstance();
 
-	List<Map<String, Object>> mainLecture();
-	
+	List<Map<String, Object>> mainLecture(String memberId);
+
 	Lecture selectOneLecture(int no);
 
 	List<Map<String, Object>> selectLectureCmtList(int no);

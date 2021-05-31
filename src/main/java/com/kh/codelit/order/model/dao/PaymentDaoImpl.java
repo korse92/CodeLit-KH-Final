@@ -37,6 +37,25 @@ public class PaymentDaoImpl implements PaymentDao {
 
 		return session.delete("order.deleteBasket", refMemberId);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectPayChapter(List<Integer> refLectureNoList) {
+
+		log.debug("selectPayChapter lecno = {}", refLectureNoList);
+		return session.selectList("order.selectPayChapter", refLectureNoList);
+	}
+
+	@Override
+	public int insertPayChapter(Map<String, Object> param) {
+
+		return session.insert("order.insertPayChapter", param);
+	}
+
+	@Override
+	public int deletePayPick(Map<String, Object> param) {
+
+		return session.delete("order.deletePayPick", param);
+	}
 	
 	
 }

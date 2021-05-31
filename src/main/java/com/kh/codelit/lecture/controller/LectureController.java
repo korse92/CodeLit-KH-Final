@@ -1,6 +1,7 @@
 package com.kh.codelit.lecture.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -111,7 +110,7 @@ public class LectureController {
 				//저장할 파일명 생성
 				File renamedFile = HelloSpringUtils.getRenamedFile(thumbnailsSaveDirectory, lectureThumbnail.getOriginalFilename());
 				//파일 저장
-				//lectureThumbnail.transferTo(renamedFile);
+				lectureThumbnail.transferTo(renamedFile);
 
 				lecture.setLectureThumbOrigin(lectureThumbnail.getOriginalFilename());
 				lecture.setLectureThumbRenamed(renamedFile.getName());
@@ -130,7 +129,7 @@ public class LectureController {
 				//저장할 파일명 생성
 				File renamedFile = HelloSpringUtils.getRenamedFile(handoutsSaveDirectory, lectureHandout.getOriginalFilename());
 				//파일 저장
-				//lectureHandout.transferTo(renamedFile);
+				lectureHandout.transferTo(renamedFile);
 				//Attachment객체 생성
 				Attachment attach = new Attachment();
 				attach.setOriginalFilename(lectureHandout.getOriginalFilename());
@@ -165,7 +164,7 @@ public class LectureController {
 						log.debug("currentChapterVideo.size = {}", currentChapterVideo.getSize());
 
 						File renamedFile = HelloSpringUtils.getRenamedFile(videosSaveDirectory, currentChapterVideo.getOriginalFilename());
-						//currentChapterVideo.transferTo(renamedFile);
+						currentChapterVideo.transferTo(renamedFile);
 
 						lectureChapterArr[j].setLecChapterVideo(currentChapterVideo.getOriginalFilename());
 						lectureChapterArr[j].setLecChapterReVideo(renamedFile.getName());
@@ -184,14 +183,13 @@ public class LectureController {
 
 			log.debug("lecture(필드값 Set 후) = {}", lecture);
 
-			//int result = lectureService.insertLecture(param);
+			int result = lectureService.insertLecture(param);
 
 			//2. 사용자 피드백
-			//String msg = result > 0 ? "게시글 등록 성공!" : "게시글 등록 실패!";
-			//redirectAttr.addFlashAttribute("msg", msg);
+			String msg = result > 0 ? "강의 등록 성공!" : "강의 등록 실패!";
+			redirectAttr.addFlashAttribute("msg", msg);
 
-//		} catch (IOException | IllegalStateException e) {
-		} catch (IllegalStateException e) {
+		} catch (IOException | IllegalStateException e) {
 			log.error("첨부파일 등록 오류!", e);
 			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
 		} catch (Exception e) {
@@ -206,6 +204,7 @@ public class LectureController {
 	public String lectureList(
 			@PathVariable(required = false) Integer catNo,
 			@RequestParam(defaultValue = "1") int cPage,
+			@RequestParam(required = false) String searchKeyword,
 			HttpServletRequest request,
 			Model model,
 			Principal principal) {
@@ -222,6 +221,7 @@ public class LectureController {
 		param.put("catNo", catNo);
 		param.put("cPage", cPage);
 		param.put("memberId", memberId);
+		param.put("searchKeyword", searchKeyword);
 
 		//2. 업무로직
 		//a. contents영역
@@ -231,7 +231,7 @@ public class LectureController {
 		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 
 		//b. pageBar영역
-		int totalContents = lectureService.getTotalContents(catNo);
+		int totalContents = lectureService.getTotalContents(param);
 		String url = HelloSpringUtils.convertToParamUrl(request);
 		log.debug("totalContents = {}", totalContents);
 		log.debug("url = {}", url);
@@ -289,22 +289,32 @@ public class LectureController {
 
 
 	@GetMapping("/mainSearchResult.do")
-	public ModelAndView mainSearchResult(ModelAndView mav,
-										@RequestParam(required = false) String keyword
-										)
+	public ModelAndView mainSearchResult(
+									ModelAndView mav,
+									@RequestParam(required = false) String keyword,
+									HttpServletRequest request,
+									Principal principal
+		)
 	{
 
 		//log.debug("메인 검색 컨트롤러 연결 완@searchKeyword = {}", keyword);
 
 	try {
+		String memberId = principal != null ? principal.getName() : null;
+		log.debug("result-memberId = {}", memberId);
+
 		Map<String, Object> param = new HashMap<>();
 		param.put("searchKeyword", keyword);
+		param.put("memberId", memberId);
 		log.debug("param = {}", param);
 
 		List<Map<String, Object>> list = lectureService.mainSearchResult(param);
 		log.debug("mainSearchResult@list = {}", list);
+		List<Object> orderedlectureList = lectureService.selectOrderedLectureList(memberId);
+		log.debug("orderedlectureList = {}", orderedlectureList);
 
 		mav.addObject("list",list);
+		mav.addObject("orderedlectureList", orderedlectureList);
 		mav.setViewName("/lecture/mainSearchResult");
 	}catch(Exception e) {
 		throw e;
@@ -318,7 +328,7 @@ public class LectureController {
 	@GetMapping("/lecture.do")
 	public void lecture(
 				// 강의번호와 영상챕터번호 받아옴. (영상챕터번호 없다면, 막 상세보기면 -1 배정)
-				@RequestParam(defaultValue = "3") int lectureNo,
+				@RequestParam(defaultValue = "71") int lectureNo,
 				@RequestParam(defaultValue="-1") int chapterNo,
 				Model model,
 				Authentication authentication
@@ -336,7 +346,7 @@ public class LectureController {
 			// 매개변수
 			Map<String, Object> param = new HashMap<>();
 			param.put("refMemberId", refMemberId);
-			param.put("refLectureNo", 3);
+			param.put("refLectureNo", lectureNo);
 
 			// 챕터번호와 영상시청여부 추출 (chapterNo, yn)
 			List<Map<String, Object>> progList = lectureService.selectLectureProgress(param);
