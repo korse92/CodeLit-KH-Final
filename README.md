@@ -95,4 +95,5 @@ ide : sts4, vsCode
 * 일반강의 등록 완료
 * 스트리밍강의 등록 fullcalendar까지 완료 (DB등록 남음)
 * 결제 디비처리, 수강진도 디비 완료
+* DB FK 제약조건 중 delete set null인 컬럼들 nullable로 수정
 <br/>

@@ -43,6 +43,8 @@ import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.service.TeacherService;
 import com.kh.codelit.teacher.model.vo.Teacher;
+import com.kh.codelit.websocket.model.service.MessengerService;
+import com.kh.codelit.websocket.model.vo.Messenger;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,6 +62,9 @@ public class TeacherController {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private MessengerService msgService;
+	
 	@GetMapping("/teacherRequest.do")
 	public ModelAndView teacherRequest(Authentication authentication, ModelAndView mav) {
 		log.debug("강사등록 요청 {}", "컨트롤러 매핑 도착");
@@ -271,27 +276,17 @@ public class TeacherController {
 	@GetMapping("/teacherProfile.do")
 	public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper, ModelAndView mav,
 			Authentication authentication) {
-
-		log.debug("requestWrapper.isUserInRole('TEACHER') = {}", requestWrapper.isUserInRole("TEACHER"));
-
 		try {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			log.debug("userDetails = {}", userDetails);
-			// userDetails = Member(memberId=teacher,
-			// memberPw=$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2,
-			// memberProfile=null, memberReProfile=null, authorities=[ROLE_TEACHER,
-			// ROLE_USER])
 			String memberId = ((Member) userDetails).getMemberId();
-			log.debug("memberId = {}", memberId); // memberId = teacher
 
-			// lecture.setRefMemberId(((Member)authentication.getPrincipal()).getMemberId());
-			// log.debug("myProfileMethod@lecture = {}", lecture);
-			List<Lecture> list = lectureService.selectMyLecture(memberId);
-			log.debug("list = {}", list);
-			// list = [Lecture(lectureNo=0, refLecCatNo=0, refMemberId=null,
-			// lectureName=테스트1,
-
+			List<Lecture> list = lectureService.teacherProfileLecture(memberId);
+			List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
+			Member member = memberService.selectOneMember(memberId);
+			
+			mav.addObject("member",member);
 			mav.addObject("list", list);
+			mav.addObject("message",msgList);
 			mav.setViewName("/teacher/teacherProfile");
 
 		} catch (Exception e) {

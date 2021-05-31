@@ -283,6 +283,7 @@
 
 	<select id="myAllLecture" resultType="lecture">
 	select
+		lecture_no "lectureNo",
 		ref_member_id "refMemberId",
      	lecture_type "lectureType",
      	ref_lec_cat_no "refLecCatNo",
@@ -334,6 +335,33 @@
 		select lec_chapter_re_video
 		from lecture_chapter
 		where lec_chapter_no = #{playPosition}
+	</select>
+	
+	<update id="reApplyLecture">
+	update 
+    	lecture
+	set 
+    	lecture_accept_yn ='W'
+	where 
+    	lecture_no = #{lectureNo}
+	
+	</update>
+	
+	<select id="teacherProfileLecture" resultType="lecture">
+	select 
+	    l.lecture_no,
+	    l.lecture_name
+	from
+	   lecture l
+	where
+	    ref_member_id = #{memeberId}
+	and 
+	    lecture_accept_yn = 'Y'
+	and  
+		rownum <![CDATA[ <= ]]> 3
+	order by
+	 	l.lecture_no 
+	 desc
 	</select>
 
 </mapper>

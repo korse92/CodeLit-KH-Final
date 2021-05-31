@@ -64,17 +64,14 @@ public class AdminDaoImpl implements AdminDao {
 	
 	@Override
 	public List<Payment> selectMemberOrderList(Map<String, Object> param) {
-	int cPage = (int)param.get("cPage");
+		int cPage = (int)param.get("cPage");
 		
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit; // 1 -> 0, 2 -> 5, 3 -> 10....
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
 		String keyword = (String)param.get("keyword");
-		
-		return session.selectList("admin.selectMemberOrderList", param, rowBounds);		
+		return session.selectList("admin.selectMemberOrderList",param, rowBounds);
 	}
-
 	/**
 	 * RowBounds : mybatis가 제공하는 paging기능
 	 * - offset : 건너뛸 행수
@@ -165,6 +162,8 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public int selectTeacherCount(Map<String, Object> param) {
 
+
+
 		return session.selectOne("admin.selectTeacherCount", param);
 	}
 
@@ -175,6 +174,11 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
+
+	public List<Member> selectMemberOrderList(String memberId) {
+		
+		return session.selectList("admin.selectMemberOrderList",memberId);
+	}
 	public int deleteTeacherAndAuth(String refMemberId) {
 
 		return session.delete("admin.deleteTeacherAndAuth", refMemberId);
@@ -184,6 +188,7 @@ public class AdminDaoImpl implements AdminDao {
 	public int deleteTeacherAndAuth2(String refMemberId) {
 
 		return session.delete("admin.deleteTeacherAndAuth2", refMemberId);
+
 	}
 
 

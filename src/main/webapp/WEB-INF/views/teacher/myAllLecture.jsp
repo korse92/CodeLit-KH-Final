@@ -65,13 +65,18 @@
 								<td><a href="#">${teacher.lectureName}</a></td>
 								<c:choose>
 									<c:when test="${teacher.lectureAcceptYn eq 'Y'}">
-										<td><span class="badge bg-primary">승인</span></td>
+										<td><button type="button" class="btn btn-outline-primary btn-sm">승인</button></td>
 									</c:when>
 									<c:when test="${teacher.lectureAcceptYn eq 'W'}">
-										<td><span class="badge bg-warning text-dark">대기</span></td>
+										<td><button type="button" class="btn btn-outline-warning btn-sm">대기</button></td>
 									</c:when>
 									<c:otherwise>
-										<td><span class="badge bg-danger">거절</span></td>
+									<form:form 
+											   action="${pageContext.request.contextPath}/lecture/reApplyLecture.do?no=${teacher.lectureNo}"
+											   method="POST">
+										<input type="hidden" name="lectureNo" id="lectureNo" value="${teacher.lectureNo}" type="hidden"/>	   
+										<td><button type="submit" class="btn btn-outline-danger btn-sm">거절</button></td>
+									</form:form>	
 									</c:otherwise>
 								</c:choose>
 							</tr>

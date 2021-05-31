@@ -147,11 +147,11 @@ alert("${msg}");
 								  </form:form>
 								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
-					                  <li><a class="dropdown-item" href="#">내 글 보기</a></li>
+					                  <!-- <li><a class="dropdown-item" href="#">내 글 보기</a></li> -->
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do">장바구니</a></li>
-					                  <li><a class="dropdown-item" href="#">결제내역</a></li>
+					                  <!-- <li><a class="dropdown-item" href="#">결제내역</a></li> -->
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
@@ -160,7 +160,7 @@ alert("${msg}");
 				                  	  <hr/>
 				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
 					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureEnroll.do">강의등록</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li>
+					                  <%-- <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li> --%>
 				                  </sec:authorize>
 				                  <sec:authorize access="hasRole('ADMIN')">
 				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
