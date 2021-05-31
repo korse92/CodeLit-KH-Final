@@ -48,4 +48,5 @@ public interface LectureService {
 	int reApplyLecture(int lectureNo);
 	
 	List<Lecture> teacherProfileLecture(String memberId);
+
 }

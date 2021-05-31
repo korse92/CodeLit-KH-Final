@@ -53,4 +53,5 @@ public interface LectureDao {
 
 	List<Lecture> teacherProfileLecture(String memberId);
 
+
 }

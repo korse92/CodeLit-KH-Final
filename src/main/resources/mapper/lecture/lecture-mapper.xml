@@ -281,6 +281,7 @@
 
 	<select id="myAllLecture" resultType="lecture">
 	select
+		lecture_no "lectureNo",
 		ref_member_id "refMemberId",
      	lecture_type "lectureType",
      	ref_lec_cat_no "refLecCatNo",
@@ -360,6 +361,5 @@
 	 	l.lecture_no 
 	 desc
 	</select>
-
 
 </mapper>

@@ -20,7 +20,7 @@
 <section class="container">
   <div class="page-header">
    <div class="row mt-5">
-     <h2 class=" jb-larger m-3 col-sm-3">회원 결제 내역</h2>
+     <h2 class=" jb-larger m-3 col-sm-3">회원 관리</h2>
    </div>
 	<table class="table mt-3 col-sm text-center">
 	<thead class="thead-light">
