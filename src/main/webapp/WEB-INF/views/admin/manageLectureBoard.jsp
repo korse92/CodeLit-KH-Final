@@ -1,33 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%--form:form 태그용 --%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="강의 관리 게시판" name="title"/>
+	<jsp:param value="강의 관리 게시판" name="title" />
 </jsp:include>
 <script>
 
-// 카테고리
-  const menuRestApiHost = "http://localhost:9090/codelit";
-
-window.onload = function() {
-
-	$(() => {
+$(() => {
 		$("#rejectPlayingLecture")
 		.modal()
 		.on('hide.bs.modal', e => {
 			//modal 비활성화(X,취소,모달외 영역 클릭시) 이전페이지로 이동한다. //bs의 이벤트핸들링
-			location.href = '${empty header.referer || fn:contains(header.referer, '/member/memberLogin.do') ? pageContext.request.contextPath : header.referer}'; //referer가 없거나,로그인페이지를 경로로 들어간 경우 contextPath로 이동
+			location.href = '${empty header.referer || fn:contains(header.referer, '/member/memberLogin.do') ? pageContext.request.contextPath : header.referer}'; 
+			//referer가 없거나,로그인페이지를 경로로 들어간 경우 contextPath로 이동
 		})
 	});
-
-	
-};         
 
 
 </script>
@@ -37,24 +32,27 @@ window.onload = function() {
 <div class="container">
 	<div class="mt-5">
 		<h2 class=" jb-larger mt-3">강의 관리</h2>
-
 		<form method="GET" id="searchFrm"
 			action="${pageContext.request.contextPath}/admin/manageLectureBoard.do">
 			<div class="row mt-5 ms-1">
-			
+
 				<div class="col-sm-2">
 					<select class="form-select" id="category" name="category">
 						<option selected disabled>카테고리</option>
 						<c:forEach items="${categoryList}" var="category">
-							<option value="${category.no}" ${param.category eq category.no ? 'selected' : ''}>${category.name}</option>
+							<option value="${category.no}"
+								${param.category eq category.no ? 'selected' : ''}>${category.name}</option>
 						</c:forEach>
 					</select>
 				</div>
 				<div class="col-sm-2">
-					<select class="form-select" id="searchType" name="searchType" required>
+					<select class="form-select" id="searchType" name="searchType"
+						required>
 						<option value="" selected disabled>검색</option>
-						<option value="ref_member_id"  ${param.searchType eq 'ref_member_id' ? 'selected' : ''}>강의자</option>
-						<option value="lecture_name"   ${param.searchType eq 'lecture_name' ? 'selected' : ''}>강의명</option>
+						<option value="ref_member_id"
+							${param.searchType eq 'ref_member_id' ? 'selected' : ''}>강의자</option>
+						<option value="lecture_name"
+							${param.searchType eq 'lecture_name' ? 'selected' : ''}>강의명</option>
 					</select>
 				</div>
 				<div class="col-sm-4">
@@ -71,8 +69,6 @@ window.onload = function() {
 
 			</div>
 		</form>
-
-
 		<table class="table mt-3 col-sm text-center">
 			<thead class="thead-light">
 				<tr>
@@ -95,23 +91,18 @@ window.onload = function() {
 					<c:forEach items="${lecBoardList}" var="lec" varStatus="vs">
 						<tr>
 							<td>${vs.count}</td>
-							<td>
-								<c:forEach items="${categoryList}" var="category">
+							<td><c:forEach items="${categoryList}" var="category">
 									<c:if test="${lec.lecCatNo eq category.no}">
 										${category.name}
 				  					</c:if>
-								</c:forEach>
-							</td>
+								</c:forEach></td>
 							<td>${lec.refMemberId}</td>
 							<td>${lec.lectureName}</td>
-							<td><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lec.lectureNo}">강의 상세보기</a></td>
+							<td><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lec.lectureNo}">강의상세보기</a></td>
 							<td>
-								<button
-									type="button" 
-									class="btn btn-warning btn-sm"
+								<button type="button" class="btn btn-warning btn-sm"
 									onclick="location.href='${pageContext.request.contextPath}/admin/rejectPlayingLecture.do?no=${lec.lectureNo}';">
-								정지
-								</button>
+									정지</button>
 							</td>
 						</tr>
 						<input type="hidden" name="memberId" value="${lec.refMemberId}" />

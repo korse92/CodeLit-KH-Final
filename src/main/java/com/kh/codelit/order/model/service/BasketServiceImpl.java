@@ -44,7 +44,7 @@ public class BasketServiceImpl implements BasketService {
 		return basketDao.sumBasket(refMemberId);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	@Override
 	public List<Basket> deleteBasketAjax(int basketNo, String refMemberId) {
 

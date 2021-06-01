@@ -449,10 +449,8 @@ public class LectureController {
 	}catch(Exception e) {
 		throw e;
 	}
-
 		return mav;
 	}
-
 
 	@PostMapping("/cmtInsert.do")
 	public String cmtInsert(@ModelAttribute LectureComment lecCmt, Principal principal, RedirectAttributes redirectAttr) {
@@ -477,4 +475,19 @@ public class LectureController {
 
 	}
 
+	@PostMapping("/reApplyLecture.do")
+	public String reApplyLecture_(@RequestParam int lectureNo,
+							   RedirectAttributes redirectAttr) {
+		//log.debug("/reApplyLecture.do post도착 = {}", lectureNo);
+		String msg = null;
+	try {
+		int result = lectureService.reApplyLecture(lectureNo);
+		msg = "강의 재신청에 성공하였습니다";
+	}catch(Exception e) {
+		msg = "강의 재신청에 실패하였습니다";
+		throw e;
+	}
+		redirectAttr.addFlashAttribute("msg", msg);
+		return "redirect:/lecture/myAllLecture.do";
+	}
 }

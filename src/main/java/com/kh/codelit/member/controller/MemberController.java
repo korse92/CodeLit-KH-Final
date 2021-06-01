@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
@@ -119,7 +120,6 @@ public class MemberController {
 		map.put("usable", usable);
 		map.put("id", memberId);
 		map.put("serverTime", new Date());
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 		return new ResponseEntity<>(map, headers, HttpStatus.OK);
@@ -287,25 +287,36 @@ public class MemberController {
 
 	@PostMapping("/deleteMember.do")
 	public String deleteMember(
-			@RequestParam String memberId,
+			@RequestParam String memberId ,
 			RedirectAttributes redirectAttr,
+			
 			SecurityContextHolderAwareRequestWrapper requestWrapper) {
-
-		log.debug("{}", requestWrapper.isUserInRole("TEACHER"));
-
-		log.debug("memberId = {}", memberId);
-
-		if (requestWrapper.isUserInRole("TEACHER")) {
-			redirectAttr.addFlashAttribute("msg", "성공적으로 회원정보를 삭제할수 없습니다");
-		} else if (!requestWrapper.isUserInRole("TEACHER")) {
-			// 현준님이 만든 회원탈퇴 비지니스 로직
-			int result = memberService.deleteMember(memberId);
-			redirectAttr.addFlashAttribute("msg", "성공적으로 회원정보를 삭제했습니다");
-			SecurityContextHolder.clearContext();
-		}
-
-		return "redirect:/";
-
+		
+		/*
+		 * List<SimpleGrantedAuthority> authorities = (List<SimpleGrantedAuthority>)
+		 * authentication.getAuthorities();
+		 * log.debug("requestWrapper.isUserInRole(\"ADMIN\") = {}",
+		 * requestWrapper.isUserInRole("ADMIN"));
+		 * log.debug("authorities.contains(\"ROLE_ADMIN\") = {}",
+		 * authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN")));//권한
+		 * 체크(equals, hashCode 오버라이딩되서 가능) log.debug("authentication = {}",
+		 * authorities);
+		 */
+		
+		 
+		log.debug("deleteMember = {}", memberId);
+		if(requestWrapper.isUserInRole("TEACHER")) {
+			redirectAttr.addFlashAttribute("msg","회원정보를 삭제할수 없습니다");
+			} else if(!requestWrapper.isUserInRole("TEACHER")) {
+			//현준님이 만든 회원탈퇴 비지니스 로직 
+				int result = memberService.deleteMember(memberId);
+				redirectAttr.addFlashAttribute("msg","성공적으로 회원정보를 삭제했습니다");
+				SecurityContextHolder.clearContext();
+			}
+		
+		
+		
+			return "redirect:/";
 	}
 
 
@@ -318,12 +329,14 @@ public class MemberController {
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		  String memberId =  ((Member) userDetails).getMemberId();
-
+		  
+		  Member member = memberService.selectOneMember(memberId);
 		  List<Lecture> lectureList = memberService.getLectureList(memberId);
 		  List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
 		  List<Pick> pickList = pickService.selectPickList(memberId);
 		  List<Basket> basketList = basketService.selectBasketList(memberId);
 
+		  mav.addObject("member",member);
 		  mav.addObject("basketList", basketList);
 		  mav.addObject("message", msgList);
 		  mav.addObject("pickList", pickList);

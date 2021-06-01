@@ -42,9 +42,12 @@ public interface LectureService {
 
 	String selectVideoRename(int playPosition);
 
-
 	List<Object> selectOrderedLectureList(String memberId);
 
 	int cmtInsert(LectureComment lecCmt);
+
+	int reApplyLecture(int lectureNo);
+
+	List<Lecture> teacherProfileLecture(String memberId);
 
 }
