@@ -116,7 +116,7 @@ $(() => {
 	</div>
 	<hr />
 	<div class="container mt-3">
-		<c:forEach items="${list}" var="lecture" varStatus="vs">
+		<c:forEach items="${list}" var="lecture" varStatus="vs" end="11">
 			<c:if test="${vs.count % 4 == 1}">
 				<div class="row row-cols-auto">
 			</c:if>
