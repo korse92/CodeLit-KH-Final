@@ -496,7 +496,7 @@ public class LectureController {
 		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
 	}
 
-	@PostMapping("/cmtUpdate.do")
+
 
 
 	@PostMapping("/reApplyLecture.do")
