@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" --%>
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -109,12 +109,12 @@ $(() => {
 				</div>
 
 			</div>
-			<div class="row lec-thumbnail w-50">
+	<%-- 		<div class="row lec-thumbnail w-50">
 				<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${lecture.lectureThumbRenamed}" alt="" id ="photo_img" />
 
 
 
-			</div>
+			</div> --%>
 		</div>
 		<div class="card-body">
 			<ul class="nav nav-tabs mb-3" id="DetailTab" role="tablist">
