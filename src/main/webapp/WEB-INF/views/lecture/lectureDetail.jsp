@@ -264,23 +264,24 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 							<div class="tab-pane ${vs.first ? 'active' : ''}" id="cmt-page${pageNo}" role="tabpanel" aria-labelledby="cmt-pageBtn${pageNo}">
 							</c:if>
 								<!-- 후기 개별card 시작 -->
-								<div class="card my-3 text-dark bg-light">
+								<div class="card my-3 text-dark bg-light cmtGroup">
 									<div class="card-header">
 										<h5 class="card-title">${cmt.refMemberId}</h5>
 										<h6 class="card-subtitle">
+										<input type="hidden" class="lecAssessment" value="${cmt.lecAssessment}"/>
 											<c:forEach var="i" begin="1" end="5">
 												<i class="${i <= cmt.lecAssessment ? 'fas' : 'far'} fa-star text-danger"></i>
 											</c:forEach>
 										</h6>
 									</div>
 									<div class="card-body">
-										<p class="card-text">${cmt.lecComment}</p>
+										<p class="card-text lecComment">${cmt.lecComment}</p>
 									</div>
 									<div class="card-footer text-muted text-end">
 										<p class="fs-6 m-0">
 											<fmt:formatDate value="${cmt.lecCmtEnrollDate}" pattern="yy/MM/dd"/>
 											<c:if test="${cmt.refMemberId eq memberId}">
-											<button class="btn" onclick="updateCmt();"><i class="far fa-edit"></i></button>
+											<button type="button" class="btn" onclick="updateCmt(event);"><i class="far fa-edit"></i></button>
 											</c:if>
 										</p>
 									</div>
@@ -304,6 +305,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 									<!-- modal-body -->
 									<div class="modal-body">
 									<form:form id="cmtFrm" action="${pageContext.request.contextPath}/lecture/cmtUpdate.do" method="POST">
+										<input name="refLectureNo" id="refMemberId" type="hidden" value="${memberId}" type="hidden" />
 										<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 										<span class="star-input">
 											<span class="input">
@@ -333,16 +335,28 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 </div>
 <!-- 컨텐츠 끝 -->
 <script>
-function updateCmt(){
+function updateCmt(e){
 	$("#updateCmt").modal("show");
-	var content = $("#lecComment").val();
-	var lecAssessment = $('input:radio[name="lecAssessment"]:checked').val();
+	var $cardParent = $(e.target).parents(".cmtGroup");
 
-	console.log(content);
-	console.log(lecAssessment);
+	var $lecAssessment = $cardParent.find('.lecAssessment').val();
+	var $lecComment = $cardParent.find('.lecComment').text();
 
-	$("#lecComment").val(content);
-	$('input:radio[name="lecAssessment"]').val(lecAssessment);
+	console.log($cardParent);
+
+	console.log($lecAssessment);
+	console.log($lecComment);
+
+	$("#updateCmt #lecComment").val($lecComment);
+	$("#updateCmt #p" + $lecAssessment + "[name=lecAssessment]").prop("checked", true);
+
+	//var lecAssessment = $('input:radio[name="lecAssessment"]:checked').val();
+
+	//console.log(content);
+	//console.log(lecAssessment);
+
+	//$("#lecComment").val(content);
+	//$('input:radio[name="lecAssessment"]').val(lecAssessment);
 }
 </script>
 
