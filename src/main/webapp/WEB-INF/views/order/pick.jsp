@@ -87,6 +87,7 @@ $(() => {
 	                </div>
 	                <div class="addLecture d-flex justify-content-end">
 	                	<div class="m-0">
+	                	<c:forEach items="${list}"></c:forEach>
 	                		<form:form action="${pageContext.request.contextPath}/order/addBasket.do" method="POST">
 	                		<input name="lectureNo" type="hidden" value="${pick.refLectureNo}" type="hidden" />
 	                        <button type="submit" class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기">
