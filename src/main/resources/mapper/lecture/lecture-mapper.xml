@@ -99,7 +99,7 @@
 		</if>
 		</where>
 		order by
-		    l.lecture_no
+		    l.lecture_no desc
 	</select>
 
 	<select id="getTotalContents" resultType="_int">
