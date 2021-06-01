@@ -6,11 +6,11 @@
 	<settings>
 		<!-- under_scroe_casing을 CamelCasing으로 매핑 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
-		<!-- JDBC타입을 파라미터에 제공하지 않을때 null값을 처리한 JDBC타입을 명시한다. 
+		<!-- JDBC타입을 파라미터에 제공하지 않을때 null값을 처리한 JDBC타입을 명시한다.
 		일부 드라이버는 칼럼의 JDBC타입을 정의하도록 요구하지만 대부분은 NULL, VARCHAR 나 OTHER 처럼 일반적인 값을 사용해서 동작한다. -->
-		<setting name="jdbcTypeForNull" value="NULL"/>  	
+		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-	
+
 	<typeAliases>
 		<!-- simpleGrantedAuthority 인증에 필요한 것 -->
 		<typeAlias type="org.springframework.security.core.authority.SimpleGrantedAuthority" alias="simpleGrantedAuthority"/>
@@ -18,9 +18,9 @@
 		<!-- 이하패키지의 모든클래스를 소문자로 시작하는 별칭으로 등록해준다. -->
 		<package name="com.kh.codelit"/>
 	</typeAliases>
-	
+
 	<typeHandlers>
 		<!-- 패키지 이하의 모든 클래스를 타입핸들러로 지정 -->
-		<package name="com.kh.codelit.common.typehandler.com"/>
+		<package name="com.kh.codelit.common.typehandler"/>
 	</typeHandlers>
 </configuration>

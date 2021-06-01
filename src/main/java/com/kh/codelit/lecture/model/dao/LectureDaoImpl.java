@@ -5,11 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,7 +14,7 @@ import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
 import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
-import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -142,21 +138,23 @@ public class LectureDaoImpl implements LectureDao {
 	public int insertLectureChapter(LectureChapter chapter) {
 		return session.insert("lecture.insertLectureChapter", chapter);
 	}
-	
+
 	@Override
 	public int reApplyLecture(int lectureNo) {
 	return session.update("lecture.reApplyLecture", lectureNo);
 	}
-		@Override
+
+	@Override
 	public List<Lecture> teacherProfileLecture(String memberId) {
 		return session.selectList("lecture.teacherProfileLecture", memberId);
 	}
 
 	@Override
+	public int insertStreamingDate(Map<String, Object> streamingDate) {
+		return session.insert("lecture.insertStreamingDate", streamingDate);
+	}
+
 	public int cmtInsert(LectureComment lecCmt) {
 		return session.insert("lecture.cmtInsert", lecCmt);
 	}
-
-
-
 }

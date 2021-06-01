@@ -30,11 +30,13 @@ import com.google.gson.Gson;
 import com.kh.codelit.attachment.model.exception.AttachmentException;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
+import com.kh.codelit.lecture.model.exception.LectureException;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
 import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,12 +62,14 @@ public class LectureController {
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
 			@RequestParam String curriculum,
 			@RequestParam(value = "chapterVideo", required = false) MultipartFile[] chapterVideos,
-			@RequestParam(value = "videoChapNoArr") String videoChapNoArrJsonStr,
+			@RequestParam(value = "videoChapNoArr", required = false) String videoChapNoArrJsonStr,
+			@RequestParam(required = false) String streamingDates,
 			HttpServletRequest request,
 			Authentication authentication,
 			RedirectAttributes redirectAttr) {
 
 		try {
+			//0. 입력값 처리
 			log.debug("lecture(필드값 Set 전) = {}", lecture);
 
 			Gson gson = new Gson();
@@ -73,12 +77,32 @@ public class LectureController {
 			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
 			log.debug("lecturePartArr = {}", lecturePartArr);
 
-//			log.info("chapterVideos = {}", chapterVideos);
-
 			int[] videoChapNoArr = gson.fromJson(videoChapNoArrJsonStr, int[].class);
 			List<Integer> videoChapNoList = Arrays.stream(videoChapNoArr).boxed().collect(Collectors.toList());
 			log.debug("videoChapNoArr = {}", videoChapNoArr);
 			log.debug("videoChapNoList = {}", videoChapNoList);
+
+			//List<StreamingDate> streamingDateList = new ArrayList<>();
+			Map<String, Object>[] streamingDateArr = null;
+
+			if("S".equals(lecture.getLectureType())) {
+				log.debug("streamingDates = {}", streamingDates);
+				streamingDateArr = gson.fromJson(streamingDates, Map[].class);
+
+				log.debug("streamingDateArr = {}", streamingDateArr);
+
+//				for(Map<String, String> date : streamingDateArr) {
+//					log.debug("date = {}", date);
+//					StreamingDate streamingDate = new StreamingDate();
+//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//					streamingDate.setStreamingTitle(date.get("title"));
+//					streamingDate.setStreamingStartDate(sdf.parse(date.get("start")));
+//					streamingDate.setStreamingEndDate(sdf.parse(date.get("end")));
+//
+//					streamingDateList.add(streamingDate);
+//				}
+//				log.debug("streamingDateList = {}", streamingDateList);
+			}
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
 			String thumbnailsSaveDirectory =
@@ -181,6 +205,8 @@ public class LectureController {
 			Map<String, Object> param = new HashMap<>();
 			param.put("lecture", lecture);
 			param.put("lecturePartArr", lecturePartArr);
+			//param.put("streamingDateList", streamingDateList);
+			param.put("streamingDateArr", streamingDateArr);
 
 			log.debug("lecture(필드값 Set 후) = {}", lecture);
 
@@ -195,7 +221,7 @@ public class LectureController {
 			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
 		} catch (Exception e) {
 			log.error("강의 등록 오류!", e);
-			throw e;
+			throw new LectureException("강의등록 오류!");
 		}
 
 		return "redirect:/lecture/lectureEnroll.do";
@@ -250,41 +276,39 @@ public class LectureController {
 	public ModelAndView lectureDetail(HttpServletRequest request,
 									  @RequestParam int no,
 									  ModelAndView mav,
-									  Authentication authentication,
-									  Principal principal) {
+									  Authentication authentication) {
 		//1. 업무로직
+
+
+		// 로그인 정보
+		Member loginMember = (Member)authentication.getPrincipal();
+		//log.debug("loginMember = {}", loginMember);
+		loginMember.getMemberId();
+		log.debug("loginMember id = {}", loginMember);
+
+
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
-		String memberId = principal.getName();
-		List<Object> orderedlectureNoList = lectureService.selectOrderedLectureList(memberId);
-		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 		int numPerCmtPage = 5;
 		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
 		log.debug("totalCmtPage = {}", totalCmtPage);
 
-		if(authentication != null) {
-			// 로그인 정보
-			Member loginMember = (Member)authentication.getPrincipal();
-			log.debug("loginMember id = {}", loginMember);
 
-			//map객체에 담아보기
-			Map<String,Object> param = new HashMap<>();
-			param.put("ref_member_id", loginMember.getMemberId());
-			param.put("no", no);
-			log.debug("param = {}", param);
+		//map객체에 담아보기
+		Map<String,Object> param = new HashMap<>();
+		param.put("ref_member_id", loginMember.getMemberId());
+		param.put("no", no);
+		log.debug("param = {}", param);
 
-			//강의id 담아 클릭수
-			int result = lectureService.clickCount(param);
-			log.debug("clickCountresult = {}", result);
-		}
+		//강의id 담아 클릭수
+		int result = lectureService.clickCount(param);
+		log.debug("clickCountresult = {}", result);
 
 		//2. jsp 위임
 		mav.addObject("lecture", lecture);
 		mav.addObject("numPerCmtPage", numPerCmtPage);
 		mav.addObject("totalCmtPage", totalCmtPage);
-		mav.addObject("orderedlectureNoList", orderedlectureNoList);
-		mav.addObject("memberId", memberId);
 		mav.setViewName("lecture/lectureDetail");
 
 		return mav;
@@ -452,28 +476,6 @@ public class LectureController {
 		return mav;
 	}
 
-	@PostMapping("/cmtInsert.do")
-	public String cmtInsert(@ModelAttribute LectureComment lecCmt, Principal principal, RedirectAttributes redirectAttr) {
-		String memberId = principal.getName();
-		lecCmt.setRefMemberId(memberId);
-
-		int result = lectureService.cmtInsert(lecCmt);
-		boolean commented = (lecCmt == null);
-		log.debug("commented = {}", commented);
-
-		String msg = "후기 등록";
-		redirectAttr.addFlashAttribute("msg", msg);
-
-		log.debug("refMemberId = {}", principal.getName());
-		log.debug("lecCmt = {}", lecCmt);
-
-		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
-	}
-
-	@GetMapping("/selectOneCmt.do")
-	public void selectOneCmt(@ModelAttribute LectureComment lecCmt, Principal principal) {
-
-	}
 
 	@PostMapping("/reApplyLecture.do")
 	public String reApplyLecture_(@RequestParam int lectureNo,
@@ -490,4 +492,7 @@ public class LectureController {
 		redirectAttr.addFlashAttribute("msg", msg);
 		return "redirect:/lecture/myAllLecture.do";
 	}
+
+
+
 }

@@ -346,23 +346,34 @@
     	lecture_no = #{lectureNo}
 	
 	</update>
-	
+
 	<select id="teacherProfileLecture" resultType="lecture">
-	select 
-	    l.lecture_no,
-	    l.lecture_name
+	select
+		l.lecture_no,
+		l.lecture_name
 	from
-	   lecture l
+		lecture l
 	where
-	    ref_member_id = #{memeberId}
-	and 
-	    lecture_accept_yn = 'Y'
-	and  
+		ref_member_id = #{memeberId}
+	and
+		lecture_accept_yn = 'Y'
+	and
 		rownum <![CDATA[ <= ]]> 3
 	order by
-	 	l.lecture_no 
-	 desc
+		l.lecture_no
+	desc
 	</select>
+
+	<insert id="insertStreamingDate" parameterType="hashmap">
+	insert into
+		streaming_date
+	values(
+		#{refLectureNo},
+		#{title},
+		to_date(#{start}, 'yyyy-mm-dd'),
+		to_date(#{streamingEndDate}, 'yyyy-mm-dd')
+	)
+	</insert>
 
 	<insert id="cmtInsert">
 		insert into
