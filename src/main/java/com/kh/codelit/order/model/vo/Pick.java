@@ -10,20 +10,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pick {
-	
+
 	private int pickNo;
 	private String refMemberId;
 	private int refLectureNo;
 	private Date pickDate;
-	
+
 	private String lectureThumbRenamed;
 	private String lectureName;
 	private String teacherName;
 	private int lecturePrice;
 	private String lecCatName;
 	private String lectureIntro;
-	
+
 	private Double avgLecAssessment;
+
+	private boolean basketed;
 
 
 }
