@@ -496,10 +496,8 @@ public class LectureController {
 		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
 	}
 
-	@GetMapping("/selectOneCmt.do")
-	public void selectOneCmt(@ModelAttribute LectureComment lecCmt, Principal principal) {
+	@PostMapping("/cmtUpdate.do")
 
-	}
 
 	@PostMapping("/reApplyLecture.do")
 	public String reApplyLecture_(@RequestParam int lectureNo,
