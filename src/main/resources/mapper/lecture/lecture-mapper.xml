@@ -364,4 +364,23 @@
 	 desc
 	</select>
 
+	<insert id="cmtInsert">
+		insert into
+			lecture_comment(
+				ref_lecture_no,
+				ref_member_id,
+				lec_assessment,
+				lec_comment,
+				lec_cmt_enroll_date
+			)
+		values (
+			#{refLectureNo},
+			#{refMemberId},
+			#{lecAssessment},
+			#{lecComment},
+			default
+		)
+	</insert>
+
+
 </mapper>

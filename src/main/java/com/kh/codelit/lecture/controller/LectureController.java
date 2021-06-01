@@ -33,6 +33,7 @@ import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -249,39 +250,41 @@ public class LectureController {
 	public ModelAndView lectureDetail(HttpServletRequest request,
 									  @RequestParam int no,
 									  ModelAndView mav,
-									  Authentication authentication) {
+									  Authentication authentication,
+									  Principal principal) {
 		//1. 업무로직
-
-
-		// 로그인 정보
-		Member loginMember = (Member)authentication.getPrincipal();
-		//log.debug("loginMember = {}", loginMember);
-		loginMember.getMemberId();
-		log.debug("loginMember id = {}", loginMember);
-
-
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
+		String memberId = principal.getName();
+		List<Object> orderedlectureNoList = lectureService.selectOrderedLectureList(memberId);
+		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 		int numPerCmtPage = 5;
 		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
 		log.debug("totalCmtPage = {}", totalCmtPage);
 
+		if(authentication != null) {
+			// 로그인 정보
+			Member loginMember = (Member)authentication.getPrincipal();
+			log.debug("loginMember id = {}", loginMember);
 
-		//map객체에 담아보기
-		Map<String,Object> param = new HashMap<>();
-		param.put("ref_member_id", loginMember.getMemberId());
-		param.put("no", no);
-		log.debug("param = {}", param);
+			//map객체에 담아보기
+			Map<String,Object> param = new HashMap<>();
+			param.put("ref_member_id", loginMember.getMemberId());
+			param.put("no", no);
+			log.debug("param = {}", param);
 
-		//강의id 담아 클릭수
-		int result = lectureService.clickCount(param);
-		log.debug("clickCountresult = {}", result);
+			//강의id 담아 클릭수
+			int result = lectureService.clickCount(param);
+			log.debug("clickCountresult = {}", result);
+		}
 
 		//2. jsp 위임
 		mav.addObject("lecture", lecture);
 		mav.addObject("numPerCmtPage", numPerCmtPage);
 		mav.addObject("totalCmtPage", totalCmtPage);
+		mav.addObject("orderedlectureNoList", orderedlectureNoList);
+		mav.addObject("memberId", memberId);
 		mav.setViewName("lecture/lectureDetail");
 
 		return mav;
@@ -449,7 +452,29 @@ public class LectureController {
 		return mav;
 	}
 
-	
+	@PostMapping("/cmtInsert.do")
+	public String cmtInsert(@ModelAttribute LectureComment lecCmt, Principal principal, RedirectAttributes redirectAttr) {
+		String memberId = principal.getName();
+		lecCmt.setRefMemberId(memberId);
+
+		int result = lectureService.cmtInsert(lecCmt);
+		boolean commented = (lecCmt == null);
+		log.debug("commented = {}", commented);
+
+		String msg = "후기 등록";
+		redirectAttr.addFlashAttribute("msg", msg);
+
+		log.debug("refMemberId = {}", principal.getName());
+		log.debug("lecCmt = {}", lecCmt);
+
+		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
+	}
+
+	@GetMapping("/selectOneCmt.do")
+	public void selectOneCmt(@ModelAttribute LectureComment lecCmt, Principal principal) {
+
+	}
+
 	@PostMapping("/reApplyLecture.do")
 	public String reApplyLecture_(@RequestParam int lectureNo,
 							   RedirectAttributes redirectAttr) {
@@ -465,7 +490,4 @@ public class LectureController {
 		redirectAttr.addFlashAttribute("msg", msg);
 		return "redirect:/lecture/myAllLecture.do";
 	}
-	
-	
-	
 }

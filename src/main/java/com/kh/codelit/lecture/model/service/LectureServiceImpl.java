@@ -12,6 +12,7 @@ import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.lecture.model.dao.LectureDao;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -202,6 +203,14 @@ public class LectureServiceImpl implements LectureService {
 		return lectureDao.teacherProfileLecture(memberId);
 	}
 	
+
+	@Override
+	public int cmtInsert(LectureComment lecCmt) {
+		return lectureDao.cmtInsert(lecCmt);
+	}
+
+
+
 
 
 }
