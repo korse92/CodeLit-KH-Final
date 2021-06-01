@@ -99,7 +99,7 @@
 		</if>
 		</where>
 		order by
-		    l.lecture_no
+		    l.lecture_no desc
 	</select>
 
 	<select id="getTotalContents" resultType="_int">
@@ -336,15 +336,15 @@
 		from lecture_chapter
 		where lec_chapter_no = #{playPosition}
 	</select>
-	
+
 	<update id="reApplyLecture">
-	update 
+	update
     	lecture
-	set 
+	set
     	lecture_accept_yn ='W'
-	where 
+	where
     	lecture_no = #{lectureNo}
-	
+
 	</update>
 
 	<select id="teacherProfileLecture" resultType="lecture">

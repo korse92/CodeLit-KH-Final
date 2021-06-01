@@ -189,10 +189,10 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 				<div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="contact-tab">
 					<!-- Nav tabs -->
 					<c:if test="${!empty lecture.lectureCommentList}">
-					<ul class="nav nav-pills justify-content-end" id="myTab" role="tablist">
+					<ul class="nav nav-pills justify-content-end" id="reviewTab" role="tablist">
 					<c:forEach var="i" begin="1" end="${totalCmtPage}" varStatus="vs">
 						<li class="nav-item" role="presentation">
-							<button class="nav-link ${vs.first ? 'active' : ''}" id="cmt-pageBtn${i}" data-bs-toggle="tab" data-bs-target="#cmt-page${i}" type="button" role="tab" aria-controls="cmt-page${i}" aria-selected="true">${i}</button>
+							<button class="nav-link ${vs.first ? 'active' : ''}" id="cmt-pageBtn${i}" data-bs-toggle="tab" data-bs-target="#cmt-page${i}" type="button" role="tab" aria-controls="cmt-page${i}" aria-selected="${vs.first ? 'true' : 'false'}">${i}</button>
 						</li>
 					</c:forEach>
 					</ul>
@@ -217,31 +217,31 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 						<c:choose>
 						<c:when test="${contains and not commented}">
 						<div class="row">
-							<div class="input-group my-3">
-								<form:form id="cmtFrm" action="${pageContext.request.contextPath}/lecture/cmtInsert.do" method="POST">
-								<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
-								<input class="form-control input-" id="lecComment" name="lecComment" type="text" placeholder="후기 작성">
-								<span class="star-input">
-									<span class="input">
-								    	<input type="radio" name="lecAssessment" value="1" id="p1">
-								    	<label for="p1">1</label>
-								    	<input type="radio" name="lecAssessment" value="2" id="p2">
-								    	<label for="p2">2</label>
-								    	<input type="radio" name="lecAssessment" value="3" id="p3">
-								    	<label for="p3">3</label>
-								    	<input type="radio" name="lecAssessment" value="4" id="p4">
-								    	<label for="p4">4</label>
-								    	<input type="radio" name="lecAssessment" value="5" id="p5">
-								    	<label for="p5">5</label>
-								  	</span>
-								  	<output for="lecAssessment"><b>0</b>점</output>
-								</span>
-							</span>
-							<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
-							<script src="${pageContext.request.contextPath}/resources/js/star.js"></script>
-								<button type="submit" class="btn btn-primary" id="cmtInsertBtn"><i class="fas fa-edit"></i> 입력 </button>
-								</form:form>
-							</div>
+							<form:form id="cmtFrm" action="${pageContext.request.contextPath}/lecture/cmtInsert.do" method="POST">
+								<div class="input-group justify-content-end">
+									<span class="star-input h-100 p-0">
+										<span class="input">
+									    	<input type="radio" name="lecAssessment" value="1" id="p1">
+									    	<label for="p1">1</label>
+									    	<input type="radio" name="lecAssessment" value="2" id="p2">
+									    	<label for="p2">2</label>
+									    	<input type="radio" name="lecAssessment" value="3" id="p3">
+									    	<label for="p3">3</label>
+									    	<input type="radio" name="lecAssessment" value="4" id="p4">
+									    	<label for="p4">4</label>
+									    	<input type="radio" name="lecAssessment" value="5" id="p5">
+									    	<label for="p5">5</label>
+									  	</span>
+									  	<output for="lecAssessment"><b>0</b>점</output>
+									</span>
+									<script src="${pageContext.request.contextPath}/resources/js/star.js"></script>
+								</div>
+								<div class="input-group mt-2 mb-3">
+									<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+									<input class="form-control" id="lecComment" name="lecComment" type="text" placeholder="후기 작성">
+									<button type="submit" class="btn btn-primary" id="cmtInsertBtn"><i class="fas fa-edit"></i> 입력 </button>
+								</div>
+							</form:form>
 						</div>
 						</c:when>
 						<c:when test="${commented}">
@@ -261,7 +261,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 							<c:if test="${vs.count % numPerCmtPage == 1 or vs.first}"> <%-- ${(int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage) } --%>
 							<fmt:parseNumber var="pageNo" integerOnly="true" value="${vs.count/numPerCmtPage + 1}"/>
 							<!-- Tab panes(후기 리스트) -->
-							<div class="tab-pane ${vs.first ? 'active' : ''}" id="cmt-page${pageNo}" role="tabpanel" aria-labelledby="cmt-pageBtn${pageNo}">
+							<div class="tab-pane fade ${vs.first ? 'show active' : ''}" id="cmt-page${pageNo}" role="tabpanel" aria-labelledby="cmt-pageBtn${pageNo}">
 							</c:if>
 								<!-- 후기 개별card 시작 -->
 								<div class="card my-3 text-dark bg-light">
@@ -321,7 +321,8 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 										</span>
 										<input class="form-control input- my-3" id="lecComment" name="lecComment" type="text">
 										<button type="submit" class="btn btn-primary my-3" id="updateBtn"><i class="fas fa-edit"></i> 수정 </button>
-										</form:form>
+									</form:form>
+									</div>
 								</div><!-- /.modal-content -->
 							</div><!-- /.modal-dialog -->
 						</div><!-- /.modal -->
