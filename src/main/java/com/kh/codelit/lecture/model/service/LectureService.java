@@ -22,7 +22,7 @@ public interface LectureService {
 
 	List<Map<String, Object>> mainLecture(String memberId);
 
-	Lecture selectOneLecture(int no);
+	Lecture selectOneLecture(Map<String, Object> no);
 
 	List<Map<String, Object>> selectLectureCmtList(int no);
 
