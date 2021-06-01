@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
@@ -56,5 +57,7 @@ public interface LectureDao {
 
 	int insertStreamingDate(Map<String, Object> streamingDate);
 
+
+	int cmtInsert(LectureComment lecCmt);
 
 }

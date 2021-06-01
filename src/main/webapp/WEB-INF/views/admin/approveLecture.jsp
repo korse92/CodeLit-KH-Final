@@ -7,11 +7,8 @@
 
 <%--form:form 태그용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" crossorigin="anonymous"></script>
 <!-- bootstrap js: jquery load 이후에 작성할것.-->

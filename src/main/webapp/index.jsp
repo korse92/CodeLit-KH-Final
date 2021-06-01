@@ -6,8 +6,7 @@
 
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 <fmt:requestEncoding value="utf-8" />
@@ -21,38 +20,25 @@
 
 <!-- 개인 CSS, JS 위치 -->
 <script src="${pageContext.request.contextPath}/resources/js/rolling.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/rolling.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/rolling.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/star-rating.css"
-	media="all" rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/theme-krajee-fa.css"
-	media="all" rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/theme-krajee-svg.css"
-	media="all" rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/theme-krajee-uni.css"
-	media="all" rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/lecture.css"
-	media="all" rel="stylesheet" type="text/css" />
-<script
-	src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-fa.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-svg.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/theme-krajee-uni.css" media="all" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/lecture.css" media="all" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
 
 <script>
 window.onload = function() {
 	const mainSearchBtn = document.getElementById("mainSearchBtn");
 	mainSearchBtn.addEventListener('click', function(e) {
-		
+
 		var searchKeyword = document.getElementById("mainSearch").value;
 		location.href=`${pageContext.request.contextPath}/lecture/mainSearchResult.do?keyword=\${searchKeyword}`;
 	});
-	
+
 };
 
 $(() => {
@@ -102,19 +88,14 @@ $(() => {
 				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
-
 	</div>
 
 	<div class="row justify-content-center">
-
 		<div class="rollingPage">
-
 			<div class="rollingHead">
 				<p>인기 강의</p>
 			</div>
-
 			<div class="rolling">
-				<%-- <form method="GET" id="rolling" action="${pageContext.request.contextPath}/lecture/rollingLecList.do"> --%>
 				<ul>
 					<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
 						<li><a
@@ -127,7 +108,7 @@ $(() => {
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
 			<input type="search" class="form-control" placeholder="강의 검색"
-				id="mainSearch" name="mainSearch" aria-label="Recipient's username"
+				id="mainSearch" name="mainSearch" aria-label="mainSearchLabel"
 				aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary bg-light" type="button"
 				id="mainSearchBtn">검색</button>
@@ -152,7 +133,7 @@ $(() => {
 						<p class="card-subtitle">${lecture.teacherName}</p>
 						<p class="card-subtitle my-1">
 							<c:forEach var="i" begin="1" end="5">
-								<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
+								<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-danger"></i>
 							</c:forEach>
 						</p>
 						<p class="card-text">
@@ -207,8 +188,7 @@ $(() => {
 											class="btn ${lecture.basketed ? 'btn-light' : 'btn-outline-light'}"
 											data-bs-toggle="tooltip" data-bs-placement="right"
 											title="${lecture.basketed ? '장바구니에서 삭제' : '장바구니에 담기'}">
-											<i
-												class="${lecture.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
+											<i class="${lecture.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
 										</button>
 									</form:form>
 									</div>
@@ -216,14 +196,12 @@ $(() => {
 									<form:form id="pickFrm${lecture.lectureNo}"
 										action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}"
 										method="POST">
-										<input name="lectureNo" type="hidden"
-											value="${lecture.lectureNo}" type="hidden" />
+										<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 										<button type="submit"
 											class="btn ${lecture.picked ? 'btn-light' : 'btn-outline-light'}"
 											data-bs-toggle="tooltip" data-bs-placement="right"
 											title="${lecture.picked ? '찜삭제' : '찜하기'}">
-											<i
-												class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
+											<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
 										</button>
 									</form:form>
 									</div>

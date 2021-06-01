@@ -225,6 +225,8 @@
 
 	</select>
 
+
+
 	<update id="clickCount" statementType="CALLABLE" parameterType="HashMap">
 
 	{
@@ -276,6 +278,8 @@
     	l.lecture_no desc
 
 	</select>
+
+
 
 	<select id="myAllLecture" resultType="lecture">
 	select
@@ -332,15 +336,15 @@
 		from lecture_chapter
 		where lec_chapter_no = #{playPosition}
 	</select>
-
+	
 	<update id="reApplyLecture">
-	update
+	update 
     	lecture
-	set
+	set 
     	lecture_accept_yn ='W'
-	where
+	where 
     	lecture_no = #{lectureNo}
-
+	
 	</update>
 
 	<select id="teacherProfileLecture" resultType="lecture">
@@ -370,5 +374,24 @@
 		to_date(#{streamingEndDate}, 'yyyy-mm-dd')
 	)
 	</insert>
+
+	<insert id="cmtInsert">
+		insert into
+			lecture_comment(
+				ref_lecture_no,
+				ref_member_id,
+				lec_assessment,
+				lec_comment,
+				lec_cmt_enroll_date
+			)
+		values (
+			#{refLectureNo},
+			#{refMemberId},
+			#{lecAssessment},
+			#{lecComment},
+			default
+		)
+	</insert>
+
 
 </mapper>
