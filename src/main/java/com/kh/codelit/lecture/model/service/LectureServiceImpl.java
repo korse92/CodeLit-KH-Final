@@ -221,6 +221,12 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 
+	@Override
+	public int cmtUpdate(LectureComment lecCmt) {
+		return lectureDao.cmtUpdate(lecCmt);
+	}
+
+
 
 
 

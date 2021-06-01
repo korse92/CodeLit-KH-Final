@@ -95,32 +95,46 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<p class="h3 text-end">
+					<c:set var="contains" value="false"/>
+						<c:forEach var="item" items="${orderedlectureNoList}">
+							<c:if test="${item eq lecture.lectureNo}">
+								<c:set var="contains" value="true"/>
+							</c:if>
+						</c:forEach>
 						<c:choose>
-							<c:when test="${lecture.lecturePrice == 0}">
-							무료
-							</c:when>
-							<c:otherwise>
-							<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
-							</c:otherwise>
+						<c:when test="${contains}">
+							<p id="commented" class="text-center ps-5">수강중인 강의 입니다!</p>
+						</c:when>
+						<c:otherwise>
+							<div class="row">
+								<p class="h3 text-end">
+								<c:choose>
+									<c:when test="${lecture.lecturePrice == 0}">
+									무료
+									</c:when>
+									<c:otherwise>
+									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
+									</c:otherwise>
+								</c:choose>
+								</p>
+							</div>
+
+							<sec:authorize access="!hasRole('ADMIN')">
+							<div class="row">
+								<div class="col-sm-2 p-0 me-2">
+									<button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="찜하기">
+										<i class="fas fa-heart"></i>
+									</button>
+								</div>
+								<div class="col-sm p-0">
+									<button type="button" class="btn btn-warning w-100" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기">
+										결제
+									</button>
+								</div>
+							</div>
+							</sec:authorize>
+						</c:otherwise>
 						</c:choose>
-						</p>
-					</div>
-					<sec:authorize access="!hasRole('ADMIN')">
-					<div class="row">
-						<div class="col-sm-2 p-0 me-2">
-							<button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="찜하기">
-								<i class="fas fa-heart"></i>
-							</button>
-						</div>
-						<div class="col-sm p-0">
-							<button type="button" class="btn btn-warning w-100" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기">
-								결제
-							</button>
-						</div>
-					</div>
-					</sec:authorize>
 				</div>
 
 			</div>
@@ -219,8 +233,6 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 						<div class="row">
 							<div class="input-group my-3">
 								<form:form id="cmtFrm" action="${pageContext.request.contextPath}/lecture/cmtInsert.do" method="POST">
-								<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
-								<input class="form-control input-" id="lecComment" name="lecComment" type="text" placeholder="후기 작성">
 								<span class="star-input">
 									<span class="input">
 								    	<input type="radio" name="lecAssessment" value="1" id="p1">
@@ -234,11 +246,14 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 								    	<input type="radio" name="lecAssessment" value="5" id="p5">
 								    	<label for="p5">5</label>
 								  	</span>
-								  	<output for="lecAssessment"><b>0</b>점</output>
+								  	<output for="lecAssessment" id="lecAssessment"><b>0</b>점</output>
 								</span>
-							</span>
 							<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
 							<script src="${pageContext.request.contextPath}/resources/js/star.js"></script>
+							</div>
+							<div class="input-group my-3">
+								<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+								<input class="form-control input-" id="lecComment" name="lecComment" type="text" placeholder="후기 작성">
 								<button type="submit" class="btn btn-primary" id="cmtInsertBtn"><i class="fas fa-edit"></i> 입력 </button>
 								</form:form>
 							</div>
@@ -305,7 +320,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 									<!-- modal-body -->
 									<div class="modal-body">
 									<form:form id="cmtFrm" action="${pageContext.request.contextPath}/lecture/cmtUpdate.do" method="POST">
-										<input name="refLectureNo" id="refMemberId" type="hidden" value="${memberId}" type="hidden" />
+										<input name="refMemberId" id="refMemberId" type="hidden" value="${memberId}" type="hidden" />
 										<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 										<span class="star-input">
 											<span class="input">
@@ -335,6 +350,21 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 </div>
 <!-- 컨텐츠 끝 -->
 <script>
+$("#cmtInsertBtn").on('click', function(){
+	var lecComment = $("#lecComment").val();
+	var checked = $('input:radio[name="lecAssessment"]:checked').length;
+
+	if(lecComment === ''){
+		alert('후기를 작성해 주세요!');
+		return false;
+	}
+
+	if(checked == 0){
+		alert('점수를 남겨주세요!');
+		return false;
+	}
+});
+
 function updateCmt(e){
 	$("#updateCmt").modal("show");
 	var $cardParent = $(e.target).parents(".cmtGroup");
