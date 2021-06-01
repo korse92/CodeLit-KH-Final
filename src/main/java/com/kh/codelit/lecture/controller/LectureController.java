@@ -484,11 +484,12 @@ public class LectureController {
 		lecCmt.setRefMemberId(memberId);
 
 		int result = lectureService.cmtInsert(lecCmt);
-		boolean commented = (lecCmt == null);
-		log.debug("commented = {}", commented);
+		boolean commentInserted = (lecCmt != null);
+		log.debug("commented = {}", commentInserted);
 
-		String msg = "후기 등록";
+		String msg = result > 0 ? "후기 등록 성공!" : "후기 등록 실패!";
 		redirectAttr.addFlashAttribute("msg", msg);
+		redirectAttr.addFlashAttribute("commented", commentInserted);
 
 		log.debug("refMemberId = {}", principal.getName());
 		log.debug("lecCmt = {}", lecCmt);
