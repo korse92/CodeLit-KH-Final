@@ -59,8 +59,8 @@ public class LectureDaoImpl implements LectureDao {
 	}
 
 	@Override
-	public Lecture selectOneLecture(int no) {
-		return session.selectOne("lecture.selectOneLecture", no);
+	public Lecture selectOneLecture(Map<String, Object> param) {
+		return session.selectOne("lecture.selectOneLecture", param);
 	}
 
 	@Override

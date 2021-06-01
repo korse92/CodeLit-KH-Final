@@ -135,8 +135,8 @@ public class LectureServiceImpl implements LectureService {
 
 
 	@Override
-	public Lecture selectOneLecture(int no) {
-		return lectureDao.selectOneLecture(no);
+	public Lecture selectOneLecture(Map<String, Object> param) {
+		return lectureDao.selectOneLecture(param);
 	}
 
 	@Override

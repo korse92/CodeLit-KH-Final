@@ -36,7 +36,6 @@ import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
 import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
-import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -276,34 +275,36 @@ public class LectureController {
 	public ModelAndView lectureDetail(HttpServletRequest request,
 									  @RequestParam int no,
 									  ModelAndView mav,
-									  Authentication authentication,
-									  Principal principal) {
+									  Authentication authentication) {
 		//1. 업무로직
-		Lecture lecture = lectureService.selectOneLecture(no);
+		Map<String, Object> param = new HashMap<>();
+		param.put("no", no);
+		String memberId = null;
+
+		if(authentication != null) {
+			// 로그인 정보
+			Member loginMember = (Member)authentication.getPrincipal();
+			log.debug("loginMember id = {}", loginMember);
+			memberId = loginMember.getMemberId();
+
+			//map객체에 담아보기
+			param.put("ref_member_id", memberId);
+			log.debug("param = {}", param);
+
+			//강의id 담아 클릭수
+			int clickCount = lectureService.clickCount(param);
+			log.debug("clickCountresult = {}", clickCount);
+		}
+
+		Lecture lecture = lectureService.selectOneLecture(param);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
-		String memberId = principal.getName();
+
 		List<Object> orderedlectureNoList = lectureService.selectOrderedLectureList(memberId);
 		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 		int numPerCmtPage = 5;
 		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
 		log.debug("totalCmtPage = {}", totalCmtPage);
-
-		if(authentication != null) {
-			// 로그인 정보
-			Member loginMember = (Member)authentication.getPrincipal();
-			log.debug("loginMember id = {}", loginMember);
-
-			//map객체에 담아보기
-			Map<String,Object> param = new HashMap<>();
-			param.put("ref_member_id", loginMember.getMemberId());
-			param.put("no", no);
-			log.debug("param = {}", param);
-
-			//강의id 담아 클릭수
-			int result = lectureService.clickCount(param);
-			log.debug("clickCountresult = {}", result);
-		}
 
 		//2. jsp 위임
 		mav.addObject("lecture", lecture);
@@ -369,13 +370,13 @@ public class LectureController {
 			Member loginMember = (Member)authentication.getPrincipal();
 			String refMemberId = loginMember.getMemberId();
 
-			// 강의 추출
-			Lecture lecture = lectureService.selectOneLecture(lectureNo);
-
 			// 매개변수
 			Map<String, Object> param = new HashMap<>();
 			param.put("refMemberId", refMemberId);
 			param.put("refLectureNo", lectureNo);
+
+			// 강의 추출
+			Lecture lecture = lectureService.selectOneLecture(param);
 
 			// 챕터번호와 영상시청여부 추출 (chapterNo, yn)
 			List<Map<String, Object>> progList = lectureService.selectLectureProgress(param);
@@ -484,12 +485,11 @@ public class LectureController {
 		lecCmt.setRefMemberId(memberId);
 
 		int result = lectureService.cmtInsert(lecCmt);
-		boolean commentInserted = (lecCmt != null);
-		log.debug("commented = {}", commentInserted);
+		boolean reviewOpen = true;
 
 		String msg = result > 0 ? "후기 등록 성공!" : "후기 등록 실패!";
 		redirectAttr.addFlashAttribute("msg", msg);
-		redirectAttr.addFlashAttribute("commented", commentInserted);
+		redirectAttr.addFlashAttribute("reviewOpen", reviewOpen);
 
 		log.debug("refMemberId = {}", principal.getName());
 		log.debug("lecCmt = {}", lecCmt);
@@ -500,8 +500,12 @@ public class LectureController {
 	@PostMapping("/cmtUpdate.do")
 	public String cmtUpdate(@ModelAttribute LectureComment lecCmt, RedirectAttributes redirectAttr) {
 		int result = lectureService.cmtUpdate(lecCmt);
-		String msg = "수정 성공";
+		boolean reviewOpen = true;
+		String msg = result > 0 ? "후기 수정 성공" : "후기 수정 실패";
+
 		redirectAttr.addFlashAttribute("msg", msg);
+		redirectAttr.addFlashAttribute("reviewOpen", reviewOpen);
+
 		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
 	}
 
