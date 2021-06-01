@@ -50,4 +50,6 @@ public interface LectureService {
 
 	List<Lecture> teacherProfileLecture(String memberId);
 
+	int cmtUpdate(LectureComment lecCmt);
+
 }

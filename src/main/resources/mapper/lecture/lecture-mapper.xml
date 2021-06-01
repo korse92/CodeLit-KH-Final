@@ -336,15 +336,15 @@
 		from lecture_chapter
 		where lec_chapter_no = #{playPosition}
 	</select>
-	
+
 	<update id="reApplyLecture">
-	update 
+	update
     	lecture
-	set 
+	set
     	lecture_accept_yn ='W'
-	where 
+	where
     	lecture_no = #{lectureNo}
-	
+
 	</update>
 
 	<select id="teacherProfileLecture" resultType="lecture">
@@ -393,5 +393,17 @@
 		)
 	</insert>
 
+	<update id="cmtUpdate">
+		update
+			lecture_comment
+		set
+			lec_assessment = #{lecAssessment},
+			lec_comment = #{lecComment},
+			lec_cmt_Enroll_date = default
+		where
+			ref_member_id = #{refMemberId}
+		and
+			ref_lecture_no = #{refLectureNo}
+	</update>
 
 </mapper>
