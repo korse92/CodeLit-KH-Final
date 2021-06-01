@@ -81,7 +81,7 @@ $(() => {
 	            </div> <!-- show -->
 	            <div class="hide d-flex flex-column justify-content-between p-3 m-0">
 	                <div class="link_info">
-	                    <a href="${pageContext.request.contextPath}/lecture/lectureDetail?no=${pick.refLectureNo}" class="moreInfo">
+	                    <a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${pick.refLectureNo}" class="moreInfo">
 	                        <span class="info">${pick.lectureIntro}</span>
 	                    </a>
 	                </div>
