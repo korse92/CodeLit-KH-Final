@@ -3,6 +3,7 @@ package com.kh.codelit.lecture.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,10 +31,12 @@ import com.google.gson.Gson;
 import com.kh.codelit.attachment.model.exception.AttachmentException;
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
+import com.kh.codelit.lecture.model.exception.LectureException;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
 import com.kh.codelit.lecture.model.vo.LecturePart;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -59,12 +62,14 @@ public class LectureController {
 			@RequestParam(value = "lectureHandout", required = false) MultipartFile[] lectureHandouts,
 			@RequestParam String curriculum,
 			@RequestParam(value = "chapterVideo", required = false) MultipartFile[] chapterVideos,
-			@RequestParam(value = "videoChapNoArr") String videoChapNoArrJsonStr,
+			@RequestParam(value = "videoChapNoArr", required = false) String videoChapNoArrJsonStr,
+			@RequestParam(required = false) String streamingDates,
 			HttpServletRequest request,
 			Authentication authentication,
 			RedirectAttributes redirectAttr) {
 
 		try {
+			//0. 입력값 처리
 			log.debug("lecture(필드값 Set 전) = {}", lecture);
 
 			Gson gson = new Gson();
@@ -72,12 +77,32 @@ public class LectureController {
 			LecturePart[] lecturePartArr = gson.fromJson(curriculum, LecturePart[].class);
 			log.debug("lecturePartArr = {}", lecturePartArr);
 
-//			log.info("chapterVideos = {}", chapterVideos);
-
 			int[] videoChapNoArr = gson.fromJson(videoChapNoArrJsonStr, int[].class);
 			List<Integer> videoChapNoList = Arrays.stream(videoChapNoArr).boxed().collect(Collectors.toList());
 			log.debug("videoChapNoArr = {}", videoChapNoArr);
 			log.debug("videoChapNoList = {}", videoChapNoList);
+
+			//List<StreamingDate> streamingDateList = new ArrayList<>();
+			Map<String, Object>[] streamingDateArr = null;
+
+			if("S".equals(lecture.getLectureType())) {
+				log.debug("streamingDates = {}", streamingDates);
+				streamingDateArr = gson.fromJson(streamingDates, Map[].class);
+
+				log.debug("streamingDateArr = {}", streamingDateArr);
+
+//				for(Map<String, String> date : streamingDateArr) {
+//					log.debug("date = {}", date);
+//					StreamingDate streamingDate = new StreamingDate();
+//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//					streamingDate.setStreamingTitle(date.get("title"));
+//					streamingDate.setStreamingStartDate(sdf.parse(date.get("start")));
+//					streamingDate.setStreamingEndDate(sdf.parse(date.get("end")));
+//
+//					streamingDateList.add(streamingDate);
+//				}
+//				log.debug("streamingDateList = {}", streamingDateList);
+			}
 
 			//0.파일 저장 및 Attachment객체 생성/썸네일 Filename Set
 			String thumbnailsSaveDirectory =
@@ -180,6 +205,8 @@ public class LectureController {
 			Map<String, Object> param = new HashMap<>();
 			param.put("lecture", lecture);
 			param.put("lecturePartArr", lecturePartArr);
+			//param.put("streamingDateList", streamingDateList);
+			param.put("streamingDateArr", streamingDateArr);
 
 			log.debug("lecture(필드값 Set 후) = {}", lecture);
 
@@ -194,7 +221,7 @@ public class LectureController {
 			throw new AttachmentException("첨부파일 등록 오류!"); //Checked Exception은 throw로 바로 던질수 없으니, 커스팀 예외 객체를 만들어 던져준다.
 		} catch (Exception e) {
 			log.error("강의 등록 오류!", e);
-			throw e;
+			throw new LectureException("강의등록 오류!");
 		}
 
 		return "redirect:/lecture/lectureEnroll.do";
@@ -449,7 +476,7 @@ public class LectureController {
 		return mav;
 	}
 
-	
+
 	@PostMapping("/reApplyLecture.do")
 	public String reApplyLecture_(@RequestParam int lectureNo,
 							   RedirectAttributes redirectAttr) {
@@ -465,7 +492,7 @@ public class LectureController {
 		redirectAttr.addFlashAttribute("msg", msg);
 		return "redirect:/lecture/myAllLecture.do";
 	}
-	
-	
-	
+
+
+
 }

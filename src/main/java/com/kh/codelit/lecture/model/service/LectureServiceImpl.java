@@ -13,7 +13,7 @@ import com.kh.codelit.lecture.model.dao.LectureDao;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
 import com.kh.codelit.lecture.model.vo.LecturePart;
-import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,9 +63,12 @@ public class LectureServiceImpl implements LectureService {
 
 	@Override
 	public int insertLecture(Map<String, Object> param) {
+
 		int result = 0;
 		Lecture lecture = (Lecture)param.get("lecture");
 		LecturePart[] leturePartArr = (LecturePart[])param.get("lecturePartArr");
+//		List<StreamingDate> streamingDateList = (List<StreamingDate>)param.get("streamingDateList");
+		Map<String, Object>[] streamingDateArr = (Map<String, Object>[])param.get("streamingDateArr");
 
 		//1. lecture객체 등록
 		result = lectureDao.insertLecture(lecture);
@@ -79,7 +82,7 @@ public class LectureServiceImpl implements LectureService {
 			}
 		}
 		//3.쿼리큘럼 등록
-		if(leturePartArr != null || leturePartArr.length > 0) {
+		if(leturePartArr != null) {
 			for(LecturePart part : leturePartArr) {
 				part.setRefLectureNo(lecture.getLectureNo());
 				result = lectureDao.insertLecturePart(part);
@@ -87,12 +90,21 @@ public class LectureServiceImpl implements LectureService {
 
 				LectureChapter[] chapterArr = part.getChapterArr();
 
-				if(chapterArr != null || chapterArr.length > 0) {
+				if(chapterArr != null) {
 					for(LectureChapter chapter : chapterArr) {
 						chapter.setRefLecPartNo(part.getLecturePartNo());
 						result = lectureDao.insertLectureChapter(chapter);
 					}
 				}
+			}
+		}
+
+		//4.스트리밍 강의일정 등록
+		if(streamingDateArr != null) {
+			for(Map<String, Object> streamingDate : streamingDateArr) {
+				streamingDate.put("refLectureNo", lecture.getLectureNo());
+				log.debug("streamingDate = {}", streamingDate);
+				result = lectureDao.insertStreamingDate(streamingDate);
 			}
 		}
 
@@ -149,7 +161,6 @@ public class LectureServiceImpl implements LectureService {
 		return lectureDao.mainSearchResult(param);
 	}
 
-
 	@Override
 	public List<Map<String, Object>> myAllLecture(Map<String,Object> param) {
 		return lectureDao.myAllLecture(param);
@@ -195,13 +206,13 @@ public class LectureServiceImpl implements LectureService {
 	public int reApplyLecture(int lectureNo) {
 		return lectureDao.reApplyLecture(lectureNo);
 	}
-	
+
 
 	@Override
 	public List<Lecture> teacherProfileLecture(String memberId) {
 		return lectureDao.teacherProfileLecture(memberId);
 	}
-	
+
 
 
 }
