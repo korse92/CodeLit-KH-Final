@@ -496,10 +496,14 @@ public class LectureController {
 		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
 	}
 
-	@GetMapping("/selectOneCmt.do")
-	public void selectOneCmt(@ModelAttribute LectureComment lecCmt, Principal principal) {
-
+	@PostMapping("/cmtUpdate.do")
+	public String cmtUpdate(@ModelAttribute LectureComment lecCmt, RedirectAttributes redirectAttr) {
+		int result = lectureService.cmtUpdate(lecCmt);
+		String msg = "수정 성공";
+		redirectAttr.addFlashAttribute("msg", msg);
+		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
 	}
+
 
 	@PostMapping("/reApplyLecture.do")
 	public String reApplyLecture_(@RequestParam int lectureNo,

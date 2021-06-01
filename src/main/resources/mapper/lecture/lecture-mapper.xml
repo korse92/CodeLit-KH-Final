@@ -393,5 +393,17 @@
 		)
 	</insert>
 
+	<update id="cmtUpdate">
+		update
+			lecture_comment
+		set
+			lec_assessment = #{lecAssessment},
+			lec_comment = #{lecComment},
+			lec_cmt_Enroll_date = default
+		where
+			ref_member_id = #{refMemberId}
+		and
+			ref_lecture_no = #{refLectureNo}
+	</update>
 
 </mapper>

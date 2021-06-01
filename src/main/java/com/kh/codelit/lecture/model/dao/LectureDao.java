@@ -60,4 +60,6 @@ public interface LectureDao {
 
 	int cmtInsert(LectureComment lecCmt);
 
+	int cmtUpdate(LectureComment lecCmt);
+
 }

@@ -157,4 +157,9 @@ public class LectureDaoImpl implements LectureDao {
 	public int cmtInsert(LectureComment lecCmt) {
 		return session.insert("lecture.cmtInsert", lecCmt);
 	}
+
+	@Override
+	public int cmtUpdate(LectureComment lecCmt) {
+		return session.update("lecture.cmtUpdate", lecCmt);
+	}
 }
