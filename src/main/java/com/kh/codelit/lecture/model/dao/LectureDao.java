@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -48,5 +49,7 @@ public interface LectureDao {
 	int insertLecturePart(LecturePart part);
 
 	int insertLectureChapter(LectureChapter chapter);
+
+	int cmtInsert(LectureComment lecCmt);
 
 }

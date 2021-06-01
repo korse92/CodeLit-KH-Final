@@ -33,6 +33,7 @@ import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -249,10 +250,14 @@ public class LectureController {
 	public ModelAndView lectureDetail(HttpServletRequest request,
 									  @RequestParam int no,
 									  ModelAndView mav,
-									  Authentication authentication) {
+									  Authentication authentication,
+									  Principal principal) {
 		//1. 업무로직
 		Lecture lecture = lectureService.selectOneLecture(no);
 		lecture.setLectureCommentList(lectureService.selectLectureCmtList(no));
+		String memberId = principal.getName();
+		List<Object> orderedlectureNoList = lectureService.selectOrderedLectureList(memberId);
+		log.debug("orderedlectureNoList = {}", orderedlectureNoList);
 		int numPerCmtPage = 5;
 		int totalCmtPage = (int)Math.ceil((double)lecture.getLectureCommentList().size() / numPerCmtPage);
 		log.debug("lecture = {}", lecture);
@@ -278,6 +283,8 @@ public class LectureController {
 		mav.addObject("lecture", lecture);
 		mav.addObject("numPerCmtPage", numPerCmtPage);
 		mav.addObject("totalCmtPage", totalCmtPage);
+		mav.addObject("orderedlectureNoList", orderedlectureNoList);
+		mav.addObject("memberId", memberId);
 		mav.setViewName("lecture/lectureDetail");
 
 		return mav;
@@ -444,6 +451,30 @@ public class LectureController {
 	}
 
 		return mav;
+	}
+
+
+	@PostMapping("/cmtInsert.do")
+	public String cmtInsert(@ModelAttribute LectureComment lecCmt, Principal principal, RedirectAttributes redirectAttr) {
+		String memberId = principal.getName();
+		lecCmt.setRefMemberId(memberId);
+
+		int result = lectureService.cmtInsert(lecCmt);
+		boolean commented = (lecCmt == null);
+		log.debug("commented = {}", commented);
+
+		String msg = "후기 등록";
+		redirectAttr.addFlashAttribute("msg", msg);
+
+		log.debug("refMemberId = {}", principal.getName());
+		log.debug("lecCmt = {}", lecCmt);
+
+		return "redirect:/lecture/lectureDetail.do?no=" + lecCmt.getRefLectureNo();
+	}
+
+	@GetMapping("/selectOneCmt.do")
+	public void selectOneCmt(@ModelAttribute LectureComment lecCmt, Principal principal) {
+
 	}
 
 }

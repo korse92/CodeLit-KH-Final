@@ -1,6 +1,7 @@
 
 package com.kh.codelit.lecture.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
+import com.kh.codelit.lecture.model.vo.LectureComment;
 import com.kh.codelit.lecture.model.vo.LecturePart;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -139,6 +141,11 @@ public class LectureDaoImpl implements LectureDao {
 	@Override
 	public int insertLectureChapter(LectureChapter chapter) {
 		return session.insert("lecture.insertLectureChapter", chapter);
+	}
+
+	@Override
+	public int cmtInsert(LectureComment lecCmt) {
+		return session.insert("lecture.cmtInsert", lecCmt);
 	}
 
 

@@ -105,7 +105,7 @@
 					<p class="card-subtitle">${lecture.teacherName}</p>
 					<p class="card-subtitle my-1">
 						<c:forEach var="i" begin="1" end="5">
-							<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
+							<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-danger"></i>
 						</c:forEach>
 					</p>
 					<p class="card-text">
@@ -150,7 +150,7 @@
 							<c:otherwise>
 							<div class="m-1">
 								<form:form id="basketFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}" method="POST">
-		                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+		                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" />
 								<button
 									type="submit"
 									class="btn ${lecture.basketed ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"

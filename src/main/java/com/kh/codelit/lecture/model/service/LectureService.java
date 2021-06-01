@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
-import com.kh.codelit.member.model.vo.Member;
+import com.kh.codelit.lecture.model.vo.LectureComment;
 
 public interface LectureService {
 
@@ -44,4 +44,7 @@ public interface LectureService {
 
 
 	List<Object> selectOrderedLectureList(String memberId);
+
+	int cmtInsert(LectureComment lecCmt);
+
 }
