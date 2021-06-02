@@ -104,7 +104,8 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 					<c:choose>
 					<c:when test="${contains}">
 						<div class="row text-center">
-							<p id="commented" class="ps-5">수강중인 강의 입니다!</p>
+<!-- 							<p id="commented" class="ps-5">수강중인 강의 입니다!</p> -->
+							<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/lecture/lecture.do?lectureNo=${lecture.lectureNo}';">강의 듣기</button>
 						</div>
 					</c:when>
 					<c:otherwise>

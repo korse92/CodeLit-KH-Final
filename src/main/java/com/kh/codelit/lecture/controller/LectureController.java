@@ -358,7 +358,7 @@ public class LectureController {
 	@GetMapping("/lecture.do")
 	public void lecture(
 				// 강의번호와 영상챕터번호 받아옴. (영상챕터번호 없다면, 막 상세보기면 -1 배정)
-				@RequestParam(defaultValue = "71") int lectureNo,
+				@RequestParam(required=true, value="lectureNo") int lectureNo,
 				@RequestParam(defaultValue="-1") int chapterNo,
 				Model model,
 				Authentication authentication
