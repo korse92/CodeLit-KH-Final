@@ -18,8 +18,8 @@
         <div class="row mt-1 header">
           <h5 class="col-1 board-title">제목</h5>
           <p class="col-8">${notice.noticeTitle}</p>
-          <p class="col-2"><fmt:formatDate value="${list.Date}" pattern="yy/MM/dd HH:mm:ss"/></p>
-          <p class="col-1">${notice.noticeCount}</p>
+          <p class="col-2"><i class="fas fa-clock"></i> <fmt:formatDate value="${notice.noticeDate}" pattern="yy/MM/dd HH:mm:ss"/></p>
+          <p class="col-1"><i class="fas fa-eye"></i> ${notice.noticeCount}</p>
         </div>
         <div class="board-container">
           <h5 class="content-title">내용</h5>
@@ -31,9 +31,10 @@
             </p>          
         </div>
         <div class="board-footer">
+        <sec:authorize access="hasRole('ADMIN')">
           <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeUpdate.do?noticeNo=${notice.noticeNo}'">수정</button>
           <button type="button" class="btn btn-danger delete-btn" onclick="del()">삭제</button>
-        
+        </sec:authorize>
           <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeList.do'">목록으로</button>
         </div>
             

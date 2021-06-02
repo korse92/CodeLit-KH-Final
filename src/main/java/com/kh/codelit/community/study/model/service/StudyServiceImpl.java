@@ -99,4 +99,10 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 
+	@Override
+	public int deleteStdCmt(int stdBrdNo) {
+		return dao.deleteStdCmt(stdBrdNo);
+	}
+
+
 }

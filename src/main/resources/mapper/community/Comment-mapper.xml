@@ -23,6 +23,9 @@
 			study_comment
 		where
 			ref_std_brd_no = #{refStdBrdNo}
+		 order by
+            std_cmt_date
+        asc
 	</select>
 <!--  git 왜안올라가 -->
 	<select id="selectStdNo" resultType="comment">

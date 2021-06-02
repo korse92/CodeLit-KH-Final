@@ -89,13 +89,13 @@ $(() => {
             </tbody>
           </table>
         </div>
-        ${pageBar}
-        </div>
       </c:if>
-      	<div>
+        ${pageBar}
       	<sec:authorize access="isAuthenticated()">
           <button class="btn btn-primary pull-right board-write" onclick="location.href='${pageContext.request.contextPath}/community/studyWrite.do'">글쓰기</button>
       	</sec:authorize>
+        </div>
+      	<div>
       	</div>
        </div>
 
