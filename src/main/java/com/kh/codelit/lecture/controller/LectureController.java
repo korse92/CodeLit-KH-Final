@@ -288,7 +288,7 @@ public class LectureController {
 			memberId = loginMember.getMemberId();
 
 			//map객체에 담아보기
-			param.put("ref_member_id", memberId);
+			param.put("refMemberId", memberId);
 			log.debug("param = {}", param);
 
 			//강의id 담아 클릭수
@@ -368,12 +368,15 @@ public class LectureController {
 		try {
 			// 아이디 추출
 			Member loginMember = (Member)authentication.getPrincipal();
+			log.debug("loginMember = {}", loginMember);
 			String refMemberId = loginMember.getMemberId();
+			log.debug("loginMember id = {}", loginMember.getMemberId());
 
+			
 			// 매개변수
 			Map<String, Object> param = new HashMap<>();
 			param.put("refMemberId", refMemberId);
-			param.put("refLectureNo", lectureNo);
+			param.put("no", lectureNo);
 
 			// 강의 추출
 			Lecture lecture = lectureService.selectOneLecture(param);
@@ -383,7 +386,8 @@ public class LectureController {
 
 			log.debug("{}", lecture);
 			log.debug("{}", progList);
-
+			log.debug("partlist = {}", lecture.getPartList());
+			
 			int playPosition = 0;
 			// 지정된 챕터번호가 없다면 yn 보고 찾음
 			if(chapterNo == -1) {
