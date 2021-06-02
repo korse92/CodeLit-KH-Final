@@ -124,10 +124,6 @@ button:focus {
     justify-content: flex-end; */
 }
 
-.lecture .hide .addLecture .btn i {
-	color: white;
-}
-
 .lecture:hover .hide {
     /* display: block; */
     opacity: 1;

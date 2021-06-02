@@ -10,7 +10,7 @@
 
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="강의 등록" name="title"/>
+	<jsp:param value="캘린더" name="title"/>
 </jsp:include>
 
 <!-- 컨텐츠 시작 -->
@@ -59,6 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
       //    document.getElementById('loading').style.display =
       //      bool ? 'block' : 'none';
       //  },
+      events: function(info, successCallbak, failureCallback){
+			$.ajax({
+				url:'${pageContext.request.contextPath}/member/getEvents.do',
+			});
+      },
       dayHeaderContent: function (date) {
           let weekList = ["일", "월", "화", "수", "목", "금", "토"];
               return weekList[date.dow];
@@ -72,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 
     var eventArr = calendar.getEvents();
-    //console.log(eventArr);
+    console.log(eventArr);
 
     eventArr.forEach((event, idx) => {
     	console.log(idx, event);

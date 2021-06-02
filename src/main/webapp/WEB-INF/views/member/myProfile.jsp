@@ -160,7 +160,7 @@
 						</li>
 					</div>
 					<div class="text-end">
-						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/streamingCalendar.do'">
+						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/myCalendar.do'">
 							<span></span><span></span><span></span><span></span>
 							캘린더 전체보기
 						</span>

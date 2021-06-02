@@ -289,9 +289,9 @@ public class MemberController {
 	public String deleteMember(
 			@RequestParam String memberId ,
 			RedirectAttributes redirectAttr,
-			
+
 			SecurityContextHolderAwareRequestWrapper requestWrapper) {
-		
+
 		/*
 		 * List<SimpleGrantedAuthority> authorities = (List<SimpleGrantedAuthority>)
 		 * authentication.getAuthorities();
@@ -302,20 +302,20 @@ public class MemberController {
 		 * 체크(equals, hashCode 오버라이딩되서 가능) log.debug("authentication = {}",
 		 * authorities);
 		 */
-		
-		 
+
+
 		log.debug("deleteMember = {}", memberId);
 		if(requestWrapper.isUserInRole("TEACHER")) {
 			redirectAttr.addFlashAttribute("msg","회원정보를 삭제할수 없습니다");
 			} else if(!requestWrapper.isUserInRole("TEACHER")) {
-			//현준님이 만든 회원탈퇴 비지니스 로직 
+			//현준님이 만든 회원탈퇴 비지니스 로직
 				int result = memberService.deleteMember(memberId);
 				redirectAttr.addFlashAttribute("msg","성공적으로 회원정보를 삭제했습니다");
 				SecurityContextHolder.clearContext();
 			}
-		
-		
-		
+
+
+
 			return "redirect:/";
 	}
 
@@ -329,7 +329,7 @@ public class MemberController {
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		  String memberId =  ((Member) userDetails).getMemberId();
-		  
+
 		  Member member = memberService.selectOneMember(memberId);
 		  List<Lecture> lectureList = memberService.getLectureList(memberId);
 		  List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
@@ -351,13 +351,6 @@ public class MemberController {
 	  return mav;
 
 	  }
-
-
-    @GetMapping("/streamingCalendar")
-    public void streamingCalendar() {
-    	log.debug("calendar = {}", "calendar");
-    }
-
 
     @GetMapping("/memberLectureList.do")
     public String MemberLectureList(
@@ -394,4 +387,9 @@ public class MemberController {
 
 		return "/member/memberLectureList";
 	}
+
+    @GetMapping("/myCalendar")
+    public void myCalendar() {
+    	log.debug("calendar = {}", "calendar");
+    }
 }

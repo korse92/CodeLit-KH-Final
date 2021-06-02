@@ -91,7 +91,7 @@ $(() => {
 		                		<input name="lectureNo" type="hidden" value="${pick.refLectureNo}" />
 								<button
 									type="submit"
-									class="btn ${pick.basketed ? 'btn-secondary' : 'btn-outline-light'}" data-bs-toggle="tooltip"
+									class="btn ${pick.basketed ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
 									data-bs-placement="right" title="${pick.basketed ? '장바구니에서 삭제' : '장바구니에 담기'}">
 									<i class="${pick.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
 								</button>
