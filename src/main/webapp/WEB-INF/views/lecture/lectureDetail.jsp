@@ -103,7 +103,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 					</c:forEach>
 					<c:choose>
 					<c:when test="${contains}">
-						<div class="row text-center">
+						<div class="row text-end">
 							<p id="commented" class="ps-5">수강중인 강의 입니다!</p>
 						</div>
 					</c:when>
