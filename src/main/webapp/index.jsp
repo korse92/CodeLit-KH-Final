@@ -4,6 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
@@ -60,6 +64,8 @@ $(() => {
 
 </script>
 
+
+
 <div class="container">
 	<div class="col-8 row mx-auto my-lg-5">
 
@@ -93,7 +99,7 @@ $(() => {
 	<div class="row justify-content-center">
 		<div class="rollingPage">
 			<div class="rollingHead">
-				<p>인기 강의</p>
+				<spring:message code="main.bestLecture"/>
 			</div>
 			<div class="rolling">
 				<ul>
@@ -104,6 +110,18 @@ $(() => {
 				</ul>
 			</div>
 		</div>
+			<!-- 다국어 테스트  -->
+			<p>
+				<a href="<c:url value="/i18n.do?lang=ko" />">한국어</a> 
+				<a href="<c:url value="/i18n.do?lang=en" />">English</a> 
+			</p> 
+			<p>menu.join : <spring:message code="menu.join" text="default text" /></p> 
+			<p>menu.login : <spring:message code="menu.login" arguments="첫번째" text="default text" /></p> 
+			<p>site.count using EL : <spring:message code="site.count" arguments="${siteCount}" text="default text" /></p>
+			<p>not.exist : <spring:message code="not.exist" text="default text" /></p>
+			<%-- <p>not.exist 기본값 없음 : <spring:message code="not.exist" /></p> --%>
+
+			
 
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
@@ -111,7 +129,7 @@ $(() => {
 				id="mainSearch" name="mainSearch" aria-label="mainSearchLabel"
 				aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary bg-light" type="button"
-				id="mainSearchBtn">검색</button>
+				id="mainSearchBtn"><spring:message code="main.search"/></button>
 		</div>
 	</div>
 	<hr />

@@ -14,6 +14,8 @@
 		<param-value>
 			/WEB-INF/spring/application-context.xml
 			/WEB-INF/spring/security-context.xml
+			<!-- #17.2 다국어처리 message_context.xml 추가 -->
+			/WEB-INF/spring/message-context.xml
 		</param-value>
 	</context-param>
 	
