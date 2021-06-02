@@ -152,7 +152,6 @@
 	                              <option selected>카테고리 선택</option>
 	                              <c:forEach items="${categoryList}" var="category">
 	                              	<option value="${category.no}" ${param.category eq category.no ? 'selected' : ''}>${category.name}</option>
-	                              	
 	                              </c:forEach>
 	                            </select>
 	                        </td>
