@@ -40,12 +40,8 @@
 
 	<!-- base package이하의 어노테이션 : @Component, @Autowired 등 빈을 등록/연결 처리 -->
 	<context:component-scan base-package="com.kh.codelit" />
-<<<<<<< HEAD
 	
 	<!-- interceptor 는 등록된 순서대로 순차적으로 실행 된다 -->
-=======
-
->>>>>>> branch 'master' of https://github.com/korse92/CodeLit-KH-Filnal.git
 	<!-- #9.1 handler interceptor 등록 -->
 	<!-- 컨트롤러 핸들러 호출 전, 후에서 작동 (필터는 서블릿 호출 전, 후에서 작동) -->
 	<interceptors>
