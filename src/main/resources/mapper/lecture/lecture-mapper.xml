@@ -140,8 +140,8 @@
 		select
 		    l.*, p.*, c.*, t.*,
 		    round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
-		    (select count(*) from pick where ref_member_id = #{ref_member_id} and ref_lecture_no = l.lecture_no) "picked",
-			(select count(*) from basket where ref_member_id = #{ref_member_id} and ref_lecture_no = l.lecture_no) "basketed"
+		    (select count(*) from pick where ref_member_id = #{refMemberId} and ref_lecture_no = l.lecture_no) "picked",
+			(select count(*) from basket where ref_member_id = #{refMemberId} and ref_lecture_no = l.lecture_no) "basketed"
 		from
 		    lecture l
 		        left join lecture_part p
@@ -236,7 +236,7 @@
 	{
 		 call proc_upsert_lecture_click(
 						#{no},
-						#{ref_member_id}
+						#{refMemberId}
 		)
 	}
 	</update>
@@ -319,7 +319,7 @@
 			section_sign_up_yn
 		from lecture_progress
 		where ref_member_id = #{refMemberId}
-			and ref_lecture_no = #{refLectureNo}
+			and ref_lecture_no = #{no}
 		order by ref_lec_chapter_no asc
 	</select>
 
