@@ -72,7 +72,7 @@ alert("${msg}");
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
-				<div class="collapse navbar-collapse col-sm-2" id="navbarMain">
+				<div class="collapse navbar-collapse" id="navbarMain">
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown mx-2">
 							<a 	class="nav-link dropdown-toggle" href="#"
@@ -102,7 +102,6 @@ alert("${msg}");
 						</sec:authorize>
 
 
-
 						<sec:authorize access="hasRole('ADMIN')">
 						<li class="nav-item mx-2"><a class="nav-link" href="${pageContext.request.contextPath}/counsel/counselListAdmin.do">문의</a></li>
 						</sec:authorize>
@@ -126,110 +125,66 @@ alert("${msg}");
 				<!-- 일반 사용자 로그인 -->
 				<sec:authorize access="isAuthenticated()">
 
-					<div class="collapse navbar-collapse col-sm-2 flex-row-reverse" id="navbarMain">
-			            <ul class="navbar-nav">
-			            	<li class="nav-item">
-			                	<span class="fs-4 text-light">
-			                		<sec:authentication property="principal.username"/>
-			                	</span>
-			                	<span class="fs-5 text-light">&nbsp;님</span>
-			              	</li>
-			              	<li>
-			                	&nbsp;&nbsp;&nbsp;&nbsp;
-			              	</li>
-			              	<li class="nav-item dropdown">
-			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="dropdownUserMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			                  		메뉴
-			                	</a>
-			                	<ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-			                	  <form:form action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
-									 <button class="dropdown-item" type="submit">로그아웃</button>
-								  </form:form>
-								  <sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
-					                  <!-- <li><a class="dropdown-item" href="#">내 글 보기</a></li> -->
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do">장바구니</a></li>
-					                  <!-- <li><a class="dropdown-item" href="#">결제내역</a></li> -->
-				                  </sec:authorize>
-				                  <sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
-				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
-				                  </sec:authorize>
-				                  <sec:authorize access="hasRole('TEACHER')">
-				                  	  <hr/>
-				                  	  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
-					                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureEnroll.do">강의등록</a></li>
-					                  <%-- <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li> --%>
-				                  </sec:authorize>
-				                  <sec:authorize access="hasRole('ADMIN')">
-				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
-				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청 목록</a></li>
-				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의 관리</a></li>
-				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do">회원 관리</a></li>
-				                  		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/alarm/alarmList.do">알림</a></li>
-				                  </sec:authorize>
+					<div class="collapse navbar-collapse justify-content-end" id="navbarMain">
+						<span class="navbar-text fs-5 text-light">
+							<sec:authentication property="principal.username"/>
+						</span>
+						<span class="navbar-text fs-6 text-light ms-1">님</span>
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<a class="nav-link btn btn-warning dropdown-toggle text-dark mx-3 mt-1" href="#" id="dropdownUserMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									메뉴
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+									<form:form action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
+									<button class="dropdown-item" type="submit">로그아웃</button>
+									</form:form>
+									<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
+										<!-- <li><a class="dropdown-item" href="#">내 글 보기</a></li> -->
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do">장바구니</a></li>
+										<!-- <li><a class="dropdown-item" href="#">결제내역</a></li> -->
+									</sec:authorize>
+									<sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
+									</sec:authorize>
+									<sec:authorize access="hasRole('TEACHER')">
+										<hr/>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureEnroll.do">강의등록</a></li>
+										<%-- <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li> --%>
+									</sec:authorize>
+									<sec:authorize access="hasRole('ADMIN')">
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청 목록</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의 관리</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do">회원 관리</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/alarm/alarmList.do">알림</a></li>
+									</sec:authorize>
 
-				                </ul>
-			              	</li>
-			             	<li>
-			                	&nbsp;&nbsp;&nbsp;
-			              	</li>
-			              	<li class="nav-item">
-			                	<a class="nav-link px-0" href="${pageContext.request.contextPath}/alarm/alarmList.do" id="alertsDropdown" style="font-size: 1.5rem;">
-			                    	<c:if test="${readVal > 0}">
-				                    	<i class="fas fa-bell my-auto my-bell"></i>
-			                    	</c:if>
-			                    	<c:if test="${readVal == 0}">
-				                    	<i class="far fa-bell my-auto"></i>
-			                    	</c:if>
-			                    	<!-- 알림 여부에 따라 아이콘 바꾸기 -->
-			                    	<span class="badge badge-danger badge-counter"></span>
-			                	</a>
-			              	</li>
-			            </ul>
-			         </div>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link px-0" href="${pageContext.request.contextPath}/alarm/alarmList.do" id="alertsDropdown" style="font-size: 1.5rem;">
+									<c:if test="${readVal > 0}">
+										<i class="fas fa-bell my-auto my-bell"></i>
+									</c:if>
+									<c:if test="${readVal == 0}">
+										<i class="far fa-bell my-auto"></i>
+									</c:if>
+									<!-- 알림 여부에 따라 아이콘 바꾸기 -->
+									<span class="badge badge-danger badge-counter"></span>
+								</a>
+							</li>
+						</ul>
+					</div>
 				</sec:authorize>
 
 			</div>
 		</nav>
-
-
-
-		<!-- 로그인 Modal -->
-		<%-- <div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header text-center">
-						<h5 class="modal-title text-center" id="exampleModalLabel">CodeL!t</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"	aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form action="#" method="POST">
-							<table class="col-10 offset-1">
-								<tr>
-									<td colspan="3"><input type="text my-4 p-1"
-										class="form-control" name="id" placeholder="아이디"></td>
-									<td rowspan="2" colspan="2">
-										<button type="submit" class="btn btn-warning btn-xl py-4">로그인</button>
-									</td>
-								</tr>
-								<tr colspan="3">
-									<td><input type="password" class="form-control p-1"
-										name="password" placeholder="패스워드"></td>
-								</tr>
-							</table>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<p>추가내용</p>
-					</div>
-				</div>
-			</div>
-		</div> --%>
-
-
 	</header>
+
 	<section id="content">
 	<!-- header.jsp 끝 -->

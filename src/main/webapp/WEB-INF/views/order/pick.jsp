@@ -81,18 +81,27 @@ $(() => {
 	            </div> <!-- show -->
 	            <div class="hide d-flex flex-column justify-content-between p-3 m-0">
 	                <div class="link_info">
-	                    <a href="${pageContext.request.contextPath}/lecture/lectureDetail?no=${pick.refLectureNo}" class="moreInfo">
+	                    <a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${pick.refLectureNo}" class="moreInfo">
 	                        <span class="info">${pick.lectureIntro}</span>
 	                    </a>
 	                </div>
 	                <div class="addLecture d-flex justify-content-end">
 	                	<div class="m-0">
-	                		<form:form action="${pageContext.request.contextPath}/order/addBasket.do" method="POST">
+	                		<form:form action="${pageContext.request.contextPath}${pick.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}" method="POST">
+		                		<input name="lectureNo" type="hidden" value="${pick.refLectureNo}" />
+								<button
+									type="submit"
+									class="btn ${pick.basketed ? 'btn-light' : 'btn-outline-light'}" data-bs-toggle="tooltip"
+									data-bs-placement="right" title="${pick.basketed ? '장바구니에서 삭제' : '장바구니에 담기'}">
+									<i class="${pick.basketed ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'}"></i>
+								</button>
+							</form:form>
+	                		<!-- <form:form action="${pageContext.request.contextPath}/order/addBasket.do" method="POST">
 	                		<input name="lectureNo" type="hidden" value="${pick.refLectureNo}" type="hidden" />
 	                        <button type="submit" class="btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기">
 	                            <i class="fas fa-shopping-basket"></i>
 	                        </button>
-	                        </form:form>
+	                        </form:form> -->
 	                	</div>
 	                	<div class="m-0">
 	                		<form:form action="${pageContext.request.contextPath}/order/deletePick.do" method="POST">

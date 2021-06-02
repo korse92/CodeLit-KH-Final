@@ -36,10 +36,10 @@
 				            <img img src="${pageContext.request.contextPath}/resources/upload/member/${member.memberReProfile}">
 						</div>
 		          	</c:if>
-						<span class="fs-5"> 
+						<span class="fs-5">
 							<sec:authentication property="principal.username" />
-						</span> 
-						<span class="fs-5">님</span> 
+						</span>
+						<span class="fs-5">님</span>
 						<span class="fs-5">,&nbsp;안녕하세요.</span>
 					</div>
 					<div class="text-end">

@@ -75,7 +75,10 @@ public class BasketController {
 		int result = basketService.addBasket(basket.getRefLectureNo(), basket.getRefMemberId());
 		log.debug("basket = {}", basket);
 
-		return "redirect:" + request.getHeader("Referer");
+		String location = request.getHeader("Referer").contains("/lectureDetail") ?
+				"/order/basket.do" : request.getHeader("Referer");
+
+		return "redirect:" + location;
 	}
 
 	@PostMapping("deleteBasket.do")

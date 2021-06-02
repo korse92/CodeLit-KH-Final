@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -22,7 +22,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
 	<!-- #14.1 jsonView Bean 및 viewResolver 등록 -->
 	<!-- 요청한 viewName과 실제bean이름을 매핑해주는 BeanNameViewResolver를 사용함. -->
     <!-- bean아이디는 viewResolver로 반드시 지정. 처리순서를 1로 우선처리되도록함. -->
@@ -37,10 +37,10 @@
 		class="net.sf.json.spring.web.servlet.view.JsonView">
 		<beans:property name="contentType" value="application/json;charset=UTF-8" />
 	</beans:bean>
-	
+
 	<!-- base package이하의 어노테이션 : @Component, @Autowired 등 빈을 등록/연결 처리 -->
 	<context:component-scan base-package="com.kh.codelit" />
-	
+
 	<!-- #9.1 handler interceptor 등록 -->
 	<!-- 컨트롤러 핸들러 호출 전, 후에서 작동 (필터는 서블릿 호출 전, 후에서 작동) -->
 	<interceptors>
@@ -51,27 +51,27 @@
 			<beans:bean id="loggerinterceptor" class="com.kh.codelit.common.interceptor.LoggerInterceptor"/>
 		</interceptor>
 	</interceptors>
-	
+
 	<!-- #11.1 annotation aop 작성 -->
-	<!-- 
+	<!--
 		1. aop관련 annotation 처리
 		2. application-context의 aop관련 설정을 servlet-context 적용
 			- @Transactional 또는 선언적방식 모두 필수
 	-->
 	<aop:aspectj-autoproxy/>
-	
+
 	<!-- #12.1 파일업로드를 처리할 Resolver클래스 빈등록(빈이름 주의) -->
  	<beans:bean
 		id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음) -->
 		<beans:property name="maxUploadSizePerFile" value="524288000" /> <!-- 파일하나당 최대용량은 500MB(500 * 1024 * 1024)이다. 기본값: -1(제한없음) -->
 		<beans:property name="maxInMemorySize" value="10240" /> <!-- 메모리 사용최대용량. 기본값 10240. 이값을 넘어가면, 임시파일로 저장함. -->
 	</beans:bean>
-	
-	
-	
+
+
+
 	<!-- #15.1 @Responsebody사용을 위한 의존 : 빈등록 (스프링 5.x => MappingJackson2HttpMessageConverter) -->
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-	
+
 </beans:beans>
