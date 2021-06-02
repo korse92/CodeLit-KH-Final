@@ -16,6 +16,7 @@
 <!-- 컨텐츠 시작 -->
 <!-- 개인 CSS, JS 위치 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/fullcalendar-custom.css"/>
 
 <!-- full Calendar -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/main.css" />
@@ -29,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    	themeSystem: 'bootstrap',
     	headerToolbar: {
             left: 'prev,next today',
             center: 'title',
@@ -39,26 +39,26 @@ document.addEventListener('DOMContentLoaded', function() {
    		// THIS KEY WON'T WORK IN PRODUCTION!!!
       // To make your own Google API key, follow the directions here:
       // http://fullcalendar.io/docs/google_calendar/
-      googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
+      //googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
    		// US Holidays
-      events: 'en.usa#holiday@group.v.calendar.google.com',
+      //events: 'en.usa#holiday@group.v.calendar.google.com',
       initialDate: new Date(),
       locale: "ko",
       editable: false,
       selectable: true,
       selectMirror: true,
       dayMaxEvents: true, // allow "more" link when too many events
-      eventClick: function(arg) {
+      //eventClick: function(arg) {
           // opens events in a popup window
-          window.open(arg.event.url, 'google-calendar-event', 'width=700,height=600');
+      //    window.open(arg.event.url, 'google-calendar-event', 'width=700,height=600');
 
-          arg.jsEvent.preventDefault() // don't navigate in main tab
-        },
+      //    arg.jsEvent.preventDefault() // don't navigate in main tab
+      //  },
 
-        loading: function(bool) {
-          document.getElementById('loading').style.display =
-            bool ? 'block' : 'none';
-        },
+      //  loading: function(bool) {
+      //    document.getElementById('loading').style.display =
+      //      bool ? 'block' : 'none';
+      //  },
       dayHeaderContent: function (date) {
           let weekList = ["일", "월", "화", "수", "목", "금", "토"];
               return weekList[date.dow];

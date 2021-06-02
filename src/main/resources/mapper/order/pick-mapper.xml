@@ -8,7 +8,8 @@
 		select
 			p.*,
 			l.lecture_thumb_renamed, l.lecture_name, t.teacher_name, l.lecture_price, lc.lec_cat_name, l.lecture_intro,
-			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment"
+			round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
+			(select count(*) from basket where ref_member_id = #{refMemberId} and ref_lecture_no = l.lecture_no) "basketed"
 		from
 			lecture l
 				inner join

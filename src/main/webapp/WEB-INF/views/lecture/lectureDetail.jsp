@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" --%>
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -104,27 +104,22 @@ $(() => {
 								결제
 							</button>
 						</div>
-					</div>
-					</sec:authorize>
+						</sec:authorize>
+					
 				</div>
 
 			</div>
-			<div class="row lec-thumbnail w-50">
-				<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${lecture.lectureThumbRenamed}" alt="" id ="photo_img" />
 
-
-
-			</div>
 		</div>
 		<div class="card-body">
 			<ul class="nav nav-tabs mb-3" id="DetailTab" role="tablist">
 				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+					<button class="nav-link ${!reviewOpen ? 'active' : ''}" id="intro-tab" data-bs-toggle="tab"
 						data-bs-target="#intro" type="button" role="tab"
-						aria-controls="intro" aria-selected="true">강의 소개</button>
+						aria-controls="intro" aria-selected="${!reviewOpen ? 'true' : 'false'}">강의 소개</button>
 				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+					<button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
 						data-bs-target="#curriculum" type="button" role="tab"
 						aria-controls="curriculum" aria-selected="false">커리큘럼</button>
 				</li>

@@ -30,8 +30,11 @@ $((e) => {
 		document.getElementById("thumbImage").src = "https://via.placeholder.com/450x300.png?text=Thumbnail+Image";
 	});
 
+	//ckeditor 리사이징 제한
+	CKEDITOR.config.resize_enabled = false;
+
 	//ckeditor 생성
-	CKEDITOR.replace('lectureIntro', {
+	var editor = CKEDITOR.replace('lectureIntro', {
 		height: 500
 	});
 
@@ -286,7 +289,7 @@ $((e) => {
 
 	//timepicker
 	// INPUT 박스에 들어간 ID값을 적어준다.
-	$("#startTime,#endTime").timepicker({
+	$("#streamingStartTime, #streamingEndTime").timepicker({
 		'minTime': '09:00am', // 조회하고자 할 시작 시간 ( 09시 부터 선택 가능하다. )
 		'maxTime': '22:00pm', // 조회하고자 할 종료 시간 ( 20시 까지 선택 가능하다. )
 		'timeFormat': 'H:i',
@@ -307,17 +310,23 @@ $((e) => {
 		if(!$lecturePrice.val()){
 			$lecturePrice.val(0);
 		}
+		//소개글을 작성하지 않은 경우 폼제출할 수 없음.
+		//아무글자 또는 개행문자가 1개이상
+		if(/^(.|\n){1,}$/.test(editor.getData()) == false){
+			alert("강의 소개글을 작성해주세요.");
+			editor.focus();
+			return false;
+		}
 
 		var curriculum = createCurriculum();
-
 		if(!curriculum) {
 			alert("강의 커리큘럼을 등록해주세요.");
-			e.preventDefault();
+			return false;
 		}
 
 		$("[name=curriculum]").val(curriculum);
 
-		if($("[name=lectureType]").val() === 'S') {
+		if($("[name=lectureType]:checked").val() === 'S') {
 			var eventArr = calendar.getEvents();
 
 			if(eventArr.length > 0) {
@@ -327,20 +336,30 @@ $((e) => {
 
 				console.log(eventArr);
 
-				$("[name=streamingDateList]").val(JSON.stringify(eventArr));
-				console.log($("[name=streamingDateList]").val());
+				$("[name=streamingDates]").val(JSON.stringify(eventArr));
+				console.log($("[name=streamingDates]").val());
 			} else {
 				alert("스트리밍 일정을 등록해주세요.");
-				e.preventDefault();
+				return false;
+			}
+
+			var $streamingStartTime = $(streamingStartTime);
+			var $streamingEndTime = $(streamingEndTime);
+
+			if((/^(.){1,}$/.test($streamingStartTime.val()) == false)
+				|| (/^(.){1,}$/.test($streamingEndTime.val()) == false)) {
+				alert("스트리밍 강의 시작시간, 종료시간을 작성해주세요.");
+				return false;
 			}
 		}
-
 
 		//e.preventDefault();//테스트용
 	});
 
 	$(curtest).click(e => {
 		createCurriculum();
+		console.log(editor.getData());
+		console.log(/^(.|\n){1,}$/.test(editor.getData()));
 	});
 
 
@@ -352,12 +371,13 @@ $((e) => {
 		});
 
 		console.log(eventArr);
+		console.log(eventArr.length);
 
-		$("[name=streamingDateList]").val(JSON.stringify(eventArr));
-		console.log($("[name=streamingDateList]").val());
+		$("[name=streamingDates]").val(JSON.stringify(eventArr));
+		console.log($("[name=streamingDates]").val());
 
-		var startTime = $("#startTime").val();
-		var endTime = $("#endTime").val();
+		var startTime = $("#streamingStartTime").val();
+		var endTime = $("#streamingEndTime").val();
 
 		console.log(startTime);
 

@@ -38,11 +38,11 @@
 window.onload = function() {
 	const mainSearchBtn = document.getElementById("mainSearchBtn");
 	mainSearchBtn.addEventListener('click', function(e) {
-		
+
 		var searchKeyword = document.getElementById("mainSearch").value;
 		location.href=`${pageContext.request.contextPath}/lecture/mainSearchResult.do?keyword=\${searchKeyword}`;
 	});
-	
+
 };
 
 $(() => {
@@ -151,7 +151,7 @@ $(() => {
 						<p class="card-subtitle">${lecture.teacherName}</p>
 						<p class="card-subtitle my-1">
 							<c:forEach var="i" begin="1" end="5">
-								<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-warning"></i>
+								<i class="${i <= lecture.avgLecAssessment ? 'fas' : 'far'} fa-star text-danger"></i>
 							</c:forEach>
 						</p>
 						<p class="card-text">
