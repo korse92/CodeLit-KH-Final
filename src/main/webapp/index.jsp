@@ -7,11 +7,9 @@
 <!-- 다국어  -->
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-
 
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -111,7 +109,7 @@ $(() => {
 			</div>
 		</div>
 			<!-- 다국어 테스트  -->
-			<p>
+			<%-- <p>
 				<a href="<c:url value="/i18n.do?lang=ko" />">한국어</a> 
 				<a href="<c:url value="/i18n.do?lang=en" />">English</a> 
 			</p> 
@@ -119,15 +117,19 @@ $(() => {
 			<p>menu.login : <spring:message code="menu.login" arguments="첫번째" text="default text" /></p> 
 			<p>site.count using EL : <spring:message code="site.count" arguments="${siteCount}" text="default text" /></p>
 			<p>not.exist : <spring:message code="not.exist" text="default text" /></p>
-			<%-- <p>not.exist 기본값 없음 : <spring:message code="not.exist" /></p> --%>
-
+			<p>not.exist 기본값 없음 : <spring:message code="not.exist" /></p>
+ --%>
 			
 
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
-			<input type="search" class="form-control" placeholder="강의 검색"
+			
+			<spring:message code="main.search" var="searchPlaceholder"/>
+			<input type="search" class="form-control" id="mainSearch" name="mainSearch" aria-label="mainSearchLabel"
+				aria-describedby="button-addon2" placeHolder="${searchPlaceholder}">
+			<!-- <input type="search" class="form-control" placeholder="강의 검색"
 				id="mainSearch" name="mainSearch" aria-label="mainSearchLabel"
-				aria-describedby="button-addon2">
+				aria-describedby="button-addon2"> -->
 			<button class="btn btn-outline-secondary bg-light" type="button"
 				id="mainSearchBtn"><spring:message code="main.search"/></button>
 		</div>

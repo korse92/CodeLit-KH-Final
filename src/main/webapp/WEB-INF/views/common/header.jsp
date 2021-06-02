@@ -136,14 +136,14 @@ alert("${msg}");
 			                	<span class="fs-4 text-light">
 			                		<sec:authentication property="principal.username"/>
 			                	</span>
-			                	<span class="fs-5 text-light">&nbsp;<spring:message code="logined.member"/></span>
+			                	<span class="fs-5 text-light">&nbsp;님</span>
 			              	</li>
 			              	<li>
 			                	&nbsp;&nbsp;&nbsp;&nbsp;
 			              	</li>
 			              	<li class="nav-item dropdown">
 			                	<a class="btn btn-warning nav-link dropdown-toggle text-dark" href="#" id="dropdownUserMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			                  		메뉴
+			                  		<spring:message code="MainMenu"/>
 			                	</a>
 			                	<ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
 			                	  <form:form action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
