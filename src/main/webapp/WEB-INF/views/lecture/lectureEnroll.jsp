@@ -143,7 +143,7 @@ img#thumbImage {
 			<div class="row">
 				<label class="form-label mb-2" for="">강의 소개글</label>
 				<div class="col-sm">
-					<textarea name="lectureIntro" id="lectureIntro" class="form-control" required></textarea>
+					<textarea name="lectureIntro" id="lectureIntro" class="form-control"></textarea>
 				</div>
 			</div>
 			<div class="selectedVideo row">
@@ -194,7 +194,7 @@ img#thumbImage {
 							<i class="fas fa-plus-square text-primary fs-3"></i>
 						</button>
 					</div>
-					<input type="button" class="d-none" value="테스트" id="curtest"/>
+					<input type="button" class="" value="테스트" id="curtest"/>
 				</div>
 				<input type="hidden" name="curriculum" />
 				<input type="hidden" name="videoChapNoArr" />
@@ -204,7 +204,7 @@ img#thumbImage {
 				<div class="row">
 					<label class="form-label mb-2" for="">강의일정</label>
 					<div class="col-sm">
-						<input type="hidden" name="streamingDateList" />
+						<input type="hidden" name="streamingDates" />
 						<div id='calendar'></div>
 						<input type="button" class="" value="테스트" id="calTest" />
 					</div>
@@ -212,19 +212,19 @@ img#thumbImage {
 
 				<div class="row">
 					<div class="col-sm-2 align-self-center">
-						<label class="form-label" for="startTime">시작 시간</label>
+						<label class="form-label" for="streamingStartTime">시작 시간</label>
 					</div>
 					<div class="col-sm">
-						<input class="timepicker form-control" type="text" name="startTime" id="startTime" value="" maxlength="10" />
+						<input class="timepicker form-control" type="text" name="streamingStartTime" id="streamingStartTime" value="" maxlength="10" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-2 align-self-center">
-						<label class="form-label" for="endTime">종료 시간</label>
+						<label class="form-label" for="streamingEndTime">종료 시간</label>
 					</div>
 					<div class="col-sm">
-						<input class="timepicker form-control" type="text" name="endTime" id="endTime" value="" maxlength="10"/>
+						<input class="timepicker form-control" type="text" name="streamingEndTime" id="streamingEndTime" value="" maxlength="10"/>
 					</div>
 				</div>
 			</div>

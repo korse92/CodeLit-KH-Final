@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.order.model.service.PickService;
 import com.kh.codelit.order.model.vo.Pick;
@@ -31,6 +32,9 @@ public class PickController {
 
 	@Autowired
 	private PickService pickService;
+
+	@Autowired
+	private LectureService lectureService;
 
 	@GetMapping("pick.do")
 	public void pick(Model model, Principal pri) {
