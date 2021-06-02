@@ -105,8 +105,7 @@ $(() => {
 							</button>
 						</div>
 						</sec:authorize>
-					</c:otherwise>
-					</c:choose>
+					
 				</div>
 
 			</div>
