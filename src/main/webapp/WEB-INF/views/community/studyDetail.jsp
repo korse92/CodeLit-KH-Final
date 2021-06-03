@@ -31,7 +31,7 @@
 			<c:if test="${not empty attach}">
 	            <img src='${pageContext.request.contextPath}${attachPath}' />
           	</c:if>
-           <p class="content">
+           <p class="content" style=" word-break:break-all;">
            	${stdBrd.stdBrdContent}
            </p>          
        </div>
@@ -47,12 +47,16 @@
            <br>
            
            <div class="comment-title">댓글</div>
+           <c:if test="${empty listCmt}">
+           		<h2>등록된 댓글이 존재하지 않습니다.</h2>
+           </c:if>
+           <c:if test="${not empty listCmt}">
 			<c:forEach items="${listCmt}" var="listCmt">
            		<div class="row comment-body${listCmt.stdCmtNo} cmtShow">
 						<div class="col-2 comment-writer">
 							<i class="fas fa-user"></i> ${listCmt.refMemberId}  :
 	           	 	 	</div>
-		           	<div class="col-7 cmtShow" id="comment-content">
+		           	<div class="col-7 cmtShow" id="comment-content" style="word-break:break-all;">
 							${listCmt.stdCmtContent}
 		           	</div>
 		           	<div class="col-3">
@@ -77,6 +81,7 @@
 	           	</form>
 			
 			</c:forEach>
+           </c:if>
         	<form action="${pageContext.request.contextPath}/community/insertComment.do?${_csrf.parameterName}=${_csrf.token}" method="post"
         	id="commentForm" name="commentForm" onsubmit="return commentSubmit();">
              <div class="updateCmtForm mt-5">

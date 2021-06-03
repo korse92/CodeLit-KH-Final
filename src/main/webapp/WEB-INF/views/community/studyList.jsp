@@ -75,10 +75,10 @@ $(() => {
 	                [${list.lectureName}]
 						<c:choose>
 	                		<c:when test="${fn:length(list.stdBrdTitle) > 20}">
-					                <c:out value="${fn:substring(list.stdBrdTitle,0,19)}" />...()
+					                <c:out value="${fn:substring(list.stdBrdTitle,0,19)}" />...
 	                		</c:when>
 	                		<c:otherwise>
-	                				<c:out value="${list.stdBrdTitle}" />()
+	                				<c:out value="${list.stdBrdTitle}" />
 	                		</c:otherwise>
 	                	</c:choose>
 					</td>
