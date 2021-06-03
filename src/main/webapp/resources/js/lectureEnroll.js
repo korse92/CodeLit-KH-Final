@@ -188,13 +188,42 @@ $((e) => {
 		//연월 표기 한국어 설정
 		titleFormat : function(date) {
 			return date.date.year +"년 "+(date.date.month +1)+"월";
-		}
+		},
+		/* events : function(info, successCallback, failureCallback) {
+			let data = new Array();
+
+			for(let i = 0; i < 10; i++){
+				let date = new Date(1623596400000);
+				date.setDate(date.getDate() + i);
+				date.setHours(null,null,null,null);
+				var obj = {
+					"title" : "테스트"+i,
+					"start" : moment(date).format('YYYY-MM-DD'),
+					"end" : null,
+				}
+
+				data.push(obj);
+			}
+
+			console.log(data);
+
+			successCallback(data.map(function(elem) {
+				return {
+					title : elem.title,
+					start : elem.start,
+					end : elem.end,
+					display : "block"
+				}
+			}));
+		} */
 	});
 
 	$("#saveEvent").on('click', function(){
 		var title = $("#title").val();
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
+		//var startDate = $("#startDate").val();
+		//var endDate = $("#endDate").val();
+		var startDate = $("#startDate").datepicker("getDate");
+		var endDate = $("#endDate").datepicker("getDate");
 
 		if (startDate > endDate) {
 			alert('끝나는 날짜가 앞설 수 없습니다.');
@@ -385,6 +414,40 @@ $((e) => {
 	});
 
 
+	$("#title").focus((e) => {
+		let $title = $(e.target);
+		console.log($title);
+
+		const $partInput = $("#inputCurriculum").find(".partInput");
+		console.log($partInput);
+
+		let partValArr = new Array();
+
+		$.each($partInput, (idx, elem) => {
+			partValArr.push(elem.value);
+		});
+
+		console.log(partValArr);
+
+		$title.autocomplete({
+			source: partValArr,
+			minLength: 0,
+			select: function(event, ui) {
+	            console.log(ui.item);
+	        },
+	        focus: function(event, ui) {
+	            return false;
+	            //event.preventDefault();
+	        }
+		});
+
+		$("#title").autocomplete("search", "");
+	});
+
+	/*var partValArr = ["test", "auto", "complete"];
+	$("input#title").autocomplete({
+		source: partValArr
+	});*/
 
 
 });
