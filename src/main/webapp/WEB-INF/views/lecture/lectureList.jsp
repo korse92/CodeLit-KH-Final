@@ -7,6 +7,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 목록" name="title"/>
@@ -44,13 +47,13 @@
 <!-- 컨텐츠 헤더 시작 -->
 <div class="container mt-5 mb-3">
  	<div class="row">
-		<h2>강의 목록</h2>
+		<h2><spring:message code="enrollLec.LectureList" /></h2>
 	</div>
 	<div class="row mt-2">
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
 				<a  class="nav-link ${empty catNo ? 'active' : ''}"
-					href="${pageContext.request.contextPath}/lecture/lectureList.do">모든 강의</a>
+					href="${pageContext.request.contextPath}/lecture/lectureList.do"><spring:message code="menu.allLecture" /></a>
 			</li>
 			<c:forEach items="${categoryList}" var="category">
 			<li class="nav-item">
@@ -66,7 +69,9 @@
 		<div class="col-sm-auto">
 			<form action="">
 				<div class="input-group">
-					<input type="search" name="searchKeyword" class="form-control" placeholder="강의자 / 강의명" />
+				<spring:message code="main.search" var="searchPlaceholder"/>
+						<input type="search" class="form-control" id="searchKeyword" name="searchKeyword" placeHolder="${searchPlaceholder}">
+					<!-- <input type="search" name="searchKeyword" class="form-control" placeholder="강의자 / 강의명" /> -->
 					<button type="submit" class="btn btn-primary">
 						<i class="fas fa-search"></i>
 					</button>
@@ -75,9 +80,9 @@
 		</div>
 		<div class="col-sm-auto">
 			<select class="form-select">
-				<option selected>정렬</option>
-				<option value="1">인기순</option>
-				<option value="2">최신순</option>
+				<option selected><spring:message code="lec.sort" /></option>
+				<option value="1"><spring:message code="lec.best" /></option>
+				<option value="2"><spring:message code="lec.new" /></option>
 			</select>
 		</div>
 	</div>
@@ -111,7 +116,7 @@
 					<p class="card-text">
 						<c:choose>
 							<c:when test="${lecture.lecturePrice == 0}">
-							무료
+							<spring:message code="lec.free" />
 							</c:when>
 							<c:otherwise>
 							<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>

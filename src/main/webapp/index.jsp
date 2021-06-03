@@ -4,10 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-
 
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -63,20 +65,17 @@ $(() => {
 <div class="container">
 	<div class="col-8 row mx-auto my-lg-5">
 
-		<div id="carouselExampleControls" class="carousel slide"
-			data-bs-ride="carousel">
+		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">
-				<div class="carousel-item active">
+			<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
+				<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}">
 					<img
-						src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-						class="d-block w-100" alt="...">
+						src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${rolling.lectureThumbRenamed}" alt=""
+						class="d-block w-100" >
 				</div>
-				<div class="carousel-item">
-					<img
-						src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-						class="d-block w-100" alt="...">
-				</div>
-			</div>
+			</c:forEach>	
+			</div>	
+		</div>
 			<button class="carousel-control-prev" type="button"
 				data-bs-target="#carouselExampleControls" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -89,11 +88,10 @@ $(() => {
 			</button>
 		</div>
 	</div>
-
 	<div class="row justify-content-center">
 		<div class="rollingPage">
 			<div class="rollingHead">
-				<p>인기 강의</p>
+				<spring:message code="main.bestLecture"/>
 			</div>
 			<div class="rolling">
 				<ul>
@@ -104,19 +102,22 @@ $(() => {
 				</ul>
 			</div>
 		</div>
-
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
-			<input type="search" class="form-control" placeholder="강의 검색"
+			
+			<spring:message code="main.search" var="searchPlaceholder"/>
+			<input type="search" class="form-control" id="mainSearch" name="mainSearch" aria-label="mainSearchLabel"
+				aria-describedby="button-addon2" placeHolder="${searchPlaceholder}">
+			<!-- <input type="search" class="form-control" placeholder="강의 검색"
 				id="mainSearch" name="mainSearch" aria-label="mainSearchLabel"
-				aria-describedby="button-addon2">
+				aria-describedby="button-addon2"> -->
 			<button class="btn btn-outline-secondary bg-light" type="button"
-				id="mainSearchBtn">검색</button>
+				id="mainSearchBtn"><spring:message code="main.search"/></button>
 		</div>
 	</div>
 	<hr />
 	<div class="container mt-3">
-		<c:forEach items="${list}" var="lecture" varStatus="vs">
+		<c:forEach items="${list}" var="lecture" varStatus="vs" end="11">
 			<c:if test="${vs.count % 4 == 1}">
 				<div class="row row-cols-auto">
 			</c:if>
@@ -216,6 +217,9 @@ $(() => {
 	</c:if>
 	</c:forEach>
 </div>
+	</div>
+	
+
 <!-- 컨텐츠 끝 -->
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

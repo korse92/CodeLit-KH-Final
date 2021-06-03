@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <fmt:requestEncoding value="utf-8" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -69,16 +72,16 @@ $(() => {
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="title m-5">
-			<h2>강의 검색 결과</h2>
+			<h2><spring:message code="search.title"/></h2>
 		</div>
 		<hr />
 		<div class="row mt-2">
 			<div class="row p-5">
 			<!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 			<c:if test="${empty list}">
-				<h5 colspan="14" style="text-align: center;">조회된 검색 결과가 없습니다.</h5>
+				<h5 colspan="14" style="text-align: center;"><spring:message code="help.noDataMsg"/></h5>
 				<h6 style="text-align: center;">
-					<a href="${pageContext.request.contextPath}">메인으로 돌아가기</a>
+					<a href="${pageContext.request.contextPath}"><spring:message code="error.goHome"/></a>
 			   </h6>
 			</c:if>
 		<!-- 강의 리스트 시작 -->
