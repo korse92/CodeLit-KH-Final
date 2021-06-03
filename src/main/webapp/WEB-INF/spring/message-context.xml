@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		
+	<!-- #17 다국어처리를 위한 빈 등록  -->
+	<!-- spring이 지원하는 ReloadableResourceBundleMessageSource의 아이디 default값은 messageSource -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<!-- basename: 메세지 세팅이 있는 파일의 경로 등록, message_언어.properties 파일을 찾는다 (/WEB-INF 경로 or classPath: 로 지정 가능)-->
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>/WEB-INF/messages/message</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="defaultEncoding" value="UTF-8"/><!-- 한글깨짐방지 -->
+		<beans:property name="cacheSeconds" value="300"/><!-- 프로퍼티가 변경되었는지 감시하는 시간, 5분 -->
+	</beans:bean>	
+	
+	<!-- #17.1 localeResolver : Language 세팅을 세션에 유지하고 있게 도와줌
+				defaultLocale : 아무설정이 없을시, value에 등록된 기본 문자셋으로 지정 -->
+	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<beans:property name="defaultLocale" value="ko"/>
+	</beans:bean>
+		
+	</beans:beans>	

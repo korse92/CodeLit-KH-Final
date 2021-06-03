@@ -7,6 +7,9 @@
 <%--form:form 태그용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 신청리스트" name="title"/>
 </jsp:include>

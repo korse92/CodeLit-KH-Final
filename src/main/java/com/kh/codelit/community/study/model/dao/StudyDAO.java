@@ -37,4 +37,6 @@ public interface StudyDAO {
 
 	Lecture selectOneLec(int lecNo);
 
+	int deleteStdCmt(int stdBrdNo);
+
 }

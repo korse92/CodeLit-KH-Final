@@ -11,7 +11,7 @@ public interface CommentService {
 
 	int delete(int cmtNo);
 
-	int update(int stdCmtNo);
+	int update(Comment cmt);
 
 
 }

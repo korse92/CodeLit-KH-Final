@@ -156,5 +156,12 @@
         where
             lecture_no = #{lectureNo}
 	</select>	
+	<delete id="deleteStdCmt">
+		delete
+		from
+			study_comment
+		where
+			ref_std_brd_no = #{stdBrdNo}
+	</delete>
 	
 </mapper>
