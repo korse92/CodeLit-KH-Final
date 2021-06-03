@@ -28,7 +28,7 @@
 			<c:if test="${not empty attach}">
 	            <img src='${pageContext.request.contextPath}${attachPath}' />
           	</c:if>
-           <p class="content">
+           <p class="content" style=" word-break:break-all;">
            	${stdBrd.stdBrdContent}
            </p>          
        </div>
@@ -53,7 +53,7 @@
 						<div class="col-2 comment-writer">
 							<i class="fas fa-user"></i> ${listCmt.refMemberId}  :
 	           	 	 	</div>
-		           	<div class="col-7 cmtShow" id="comment-content">
+		           	<div class="col-7 cmtShow" id="comment-content" style="word-break:break-all;">
 							${listCmt.stdCmtContent}
 		           	</div>
 		           	<div class="col-3">
