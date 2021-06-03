@@ -23,7 +23,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile.css" />
 
 <style>
-
 </style>
 <section class="profile-Uclass">
 <div class="container">
