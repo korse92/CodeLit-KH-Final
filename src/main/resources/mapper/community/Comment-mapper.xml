@@ -46,7 +46,7 @@
 	
 	<update id="update">
 		update
-			stduy_comment
+			study_comment
 		set
 			std_cmt_content = #{stdCmtContent}
 		where

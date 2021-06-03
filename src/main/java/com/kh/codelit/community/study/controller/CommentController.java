@@ -58,7 +58,7 @@ public class CommentController {
 			@ModelAttribute Comment cmt,
 			RedirectAttributes redirect) {
 		try {
-			int result = service.update(cmt.getStdCmtNo());
+			int result = service.update(cmt);
 		} catch (Exception e) {
 			throw e;
 		}

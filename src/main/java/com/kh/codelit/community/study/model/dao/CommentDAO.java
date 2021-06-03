@@ -11,6 +11,6 @@ public interface CommentDAO {
 
 	int delete(int cmtNo);
 
-	int update(int stdCmtNo);
+	int update(Comment cmt);
 
 }

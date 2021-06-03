@@ -9,9 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
 </jsp:include>
-<c:if test="${not empty principal}">
 	<sec:authentication property="principal.username" var="name" />
-</c:if>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css">
 	<div class="container">
@@ -47,11 +45,11 @@
            
            <div class="comment-title">댓글</div>
 			<c:forEach items="${listCmt}" var="listCmt">
-           		<div class="row" id="REF_MEMBER_ID" name="REF_MEMBER_ID">
-					<div class="col-2 comment-writer">
-						<i class="fas fa-user"></i> ${listCmt.refMemberId}  :
-           	 	 	</div>
-		           	<div class="col-7 comment-content" id="comment-content${listCmt.stdCmtNo}">
+           		<div class="row comment-body${listCmt.stdCmtNo} cmtShow">
+						<div class="col-2 comment-writer">
+							<i class="fas fa-user"></i> ${listCmt.refMemberId}  :
+	           	 	 	</div>
+		           	<div class="col-7 cmtShow" id="comment-content">
 							${listCmt.stdCmtContent}
 		           	</div>
 		           	<div class="col-3">
@@ -59,24 +57,26 @@
                   
 		           <c:if test="${listCmt.refMemberId == name}">
 		           		<span>
-				           		<button type="button" class="btn btn-primary btn-sm" id="comment-update-btn" onclick="updateCmt(${listCmt.stdCmtNo})">수정</button>
-		               			<button type="button" class="btn btn-danger btn-sm" id="comment-delete-btn" onclick='location.href="${pageContext.request.contextPath}/community/deleteCmt.do?stdCmtNo=${listCmt.stdCmtNo}"'>삭제</button>
+				           		<button type="button" class="btn btn-primary btn-sm cmtShow" id="comment-update-btn" onclick="updateCmt(${listCmt.stdCmtNo})">수정</button>
+		               			<button type="button" class="btn btn-danger btn-sm cmtShow" id="comment-delete-btn" onclick='location.href="${pageContext.request.contextPath}/community/deleteCmt.do?stdCmtNo=${listCmt.stdCmtNo}"'>삭제</button>
 		           		</span>
 		           </c:if>
-		           	</div>
 	           	</div>
-	           	
-                  <div class="comment-form-group mt-5" id="" style="display:none;">
-			     		<textarea class="form-control rounded-0" rows="2" id="updateCmt" name="updateCmt" placeholder="댓글입력">${listCmt.stdCmtContent}</textarea>
-			    	 	<button id="cmtUpdate" class="btn btn-primary comment-submit-btn">전송</button>
-			    	 	<button id="cmtUpdateCanel" class="btn btn-danger comment-submit-btn">취소</button>
+	           	</div>
+
+	           	<form action="${pageContext.request.contextPath}/community/updateComment.do?stdCmtNo=${listCmt.stdCmtNo}&&${_csrf.parameterName}=${_csrf.token}" method="post">
+                  <div class="comment-form-group mt-5 updateCmtForm${listCmt.stdCmtNo}" id="" style="display:none;">
+			     		<textarea class="form-control rounded-0${listCmt.stdCmtNo}" rows="2" id="updateCmt" name="stdCmtContent" placeholder="댓글입력">${listCmt.stdCmtContent}</textarea>
+			    	 	<button id="cmtUpdate" class="btn btn-primary btn-sm comment-submit-btn">전송</button>
+			    	 	<input type="reset" id="cmtUpdateCanel" class="btn btn-danger btn-sm comment-submit-btn" onclick="newUpdateCmt(${listCmt.stdCmtNo})" value="취소">
 						<input type="hidden" id="refStdBrdNo" name="refStdBrdNo" value="${stdBrd.stdBrdNo}">
 					</div>
+	           	</form>
 			
 			</c:forEach>
         	<form action="${pageContext.request.contextPath}/community/insertComment.do?${_csrf.parameterName}=${_csrf.token}" method="post"
         	id="commentForm" name="commentForm" onsubmit="return commentSubmit();">
-             <div class="comment-form-group mt-5">
+             <div class="updateCmtForm mt-5">
              	<table class="table">
              		<tr>
            				<td>
@@ -113,11 +113,12 @@
 	}
 	
 	function updateCmt(no){
-		alert(no);
-		if($(this).hasClass('comment-content')){
-			$('.comment-content\${listCmt.stdCmtNo}').hide();
-			$('.comment-form-group').show;
-		}
+		$('.comment-body'+no).hide();
+		$('.updateCmtForm'+no).show();
+	}
+	function newUpdateCmt(no){
+		$('.comment-body'+no).show();
+		$('.updateCmtForm'+no).hide();
 	}
   </script>
 
