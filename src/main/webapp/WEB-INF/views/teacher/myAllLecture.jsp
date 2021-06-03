@@ -28,7 +28,7 @@
 				  <span class="fs-2">
 				 	 <sec:authentication property="principal.username" />
 				  </span>
-				  <span class="fs-5"><spring:message code="ud.sir"/></span> 
+				  <span class="fs-5"><spring:message code="ud.sir"/></span>
 				  <span class="fs-5">&nbsp;<spring:message code="enrollLec.LectureList"/></span>
 				</p>
 			</div>

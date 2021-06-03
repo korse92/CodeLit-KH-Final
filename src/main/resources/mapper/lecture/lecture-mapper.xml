@@ -6,7 +6,8 @@
 	<select id="selectCategoryList" resultMap="categoryMap">
 		select
 			lec_cat_no,
-			lec_cat_name
+			lec_cat_name,
+			lec_cat_locale_key
 		from
 			lecture_category
 		order by
@@ -17,6 +18,7 @@
 	<resultMap type="map" id="categoryMap">
 		<id column="lec_cat_no" property="no" javaType="integer"/>
 		<result column="lec_cat_name" property="name" javaType="string"/>
+		<result column="lec_cat_locale_key" property="localeKey" javaType="string"/>
 	</resultMap>
 
 	<insert id="insertLecture">
@@ -221,7 +223,7 @@
     	 (select count(*) from basket where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "basketed"
 	from lecture l
 	where
-    	l.lecture_accept_yn = 'Y' 
+    	l.lecture_accept_yn = 'Y'
 	order by l.lecture_no desc
 
 
