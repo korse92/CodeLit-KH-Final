@@ -44,6 +44,10 @@
            <br>
            
            <div class="comment-title">댓글</div>
+           <c:if test="${empty listCmt}">
+           		<h2>등록된 댓글이 존재하지 않습니다.</h2>
+           </c:if>
+           <c:if test="${not empty listCmt}">
 			<c:forEach items="${listCmt}" var="listCmt">
            		<div class="row comment-body${listCmt.stdCmtNo} cmtShow">
 						<div class="col-2 comment-writer">
@@ -74,6 +78,7 @@
 	           	</form>
 			
 			</c:forEach>
+           </c:if>
         	<form action="${pageContext.request.contextPath}/community/insertComment.do?${_csrf.parameterName}=${_csrf.token}" method="post"
         	id="commentForm" name="commentForm" onsubmit="return commentSubmit();">
              <div class="updateCmtForm mt-5">
