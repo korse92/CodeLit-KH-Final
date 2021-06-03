@@ -62,25 +62,20 @@ $(() => {
 
 </script>
 
-
-
 <div class="container">
 	<div class="col-8 row mx-auto my-lg-5">
 
-		<div id="carouselExampleControls" class="carousel slide"
-			data-bs-ride="carousel">
+		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">
-				<div class="carousel-item active">
+			<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
+				<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}">
 					<img
-						src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-						class="d-block w-100" alt="...">
+						src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${rolling.lectureThumbRenamed}" alt=""
+						class="d-block w-100" >
 				</div>
-				<div class="carousel-item">
-					<img
-						src="${pageContext.request.contextPath}/resources/images/banner1.jpg"
-						class="d-block w-100" alt="...">
-				</div>
-			</div>
+			</c:forEach>	
+			</div>	
+		</div>
 			<button class="carousel-control-prev" type="button"
 				data-bs-target="#carouselExampleControls" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -93,7 +88,6 @@ $(() => {
 			</button>
 		</div>
 	</div>
-
 	<div class="row justify-content-center">
 		<div class="rollingPage">
 			<div class="rollingHead">
@@ -108,19 +102,6 @@ $(() => {
 				</ul>
 			</div>
 		</div>
-			<!-- 다국어 테스트  -->
-			<%-- <p>
-				<a href="<c:url value="/i18n.do?lang=ko" />">한국어</a> 
-				<a href="<c:url value="/i18n.do?lang=en" />">English</a> 
-			</p> 
-			<p>menu.join : <spring:message code="menu.join" text="default text" /></p> 
-			<p>menu.login : <spring:message code="menu.login" arguments="첫번째" text="default text" /></p> 
-			<p>site.count using EL : <spring:message code="site.count" arguments="${siteCount}" text="default text" /></p>
-			<p>not.exist : <spring:message code="not.exist" text="default text" /></p>
-			<p>not.exist 기본값 없음 : <spring:message code="not.exist" /></p>
- --%>
-			
-
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
 			
@@ -236,6 +217,9 @@ $(() => {
 	</c:if>
 	</c:forEach>
 </div>
+	</div>
+	
+
 <!-- 컨텐츠 끝 -->
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

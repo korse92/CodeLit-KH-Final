@@ -109,7 +109,7 @@
 		<section class="container">
 		
 		  <div class="container" id="memberDetailDiv">
-	        <h2 class="mt-5">프로필 수정</h2>
+	        <h2 class="mt-5"><spring:message code="ud.updateProfile" /></h2>
 	        <hr/>
 			<div class="row justify-content-end">
 				<div class="col-auto">
@@ -119,7 +119,7 @@
                     				action="${pageContext.request.contextPath}/member/deleteMember.do">
                     				<input type="hidden" name="memberId" value="${member.memberId}"  />
                     		
-                    	<button type="submit" class="btn btn-warning me-auto mt-3 mb-6">탈퇴</button>
+                    	<button type="submit" class="btn btn-warning me-auto mt-3 mb-6"><spring:message code="admin.withdrawBtn" /></button>
                     				
                     </form:form>
                   
@@ -140,7 +140,7 @@
 	                      </td>
 	                      
 	                        <td colspan="1" class="td2">
-	                           <label for="memberId">ID</label>
+	                           <label for="memberId"><spring:message code="login.id" /></label>
 							</td>
 	                        
 	                        <td colspan="3" class="td3">
@@ -151,7 +151,7 @@
 	        
 	                    <tr>
 	                        <td colspan="1" class="td2">
-	                            <label for="password">비밀번호</label>
+	                            <label for="password"><spring:message code="login.pwd" /></label>
 	                        </td>
 	                        
 	                        <td colspan="3" class="td3">
@@ -165,7 +165,7 @@
 	                       	</td>
 	                        
 	                        <td colspan="1" class="td2">
-	                            <label for="chkPassword">비밀번호 확인</label>
+	                            <label for="chkPassword"><spring:message code="signUp.confirmPwd" /></label>
 	                        </td>
 	                        
 	                        <td colspan="3" class="td3">
@@ -178,8 +178,8 @@
 	                        </td>
 	        
 	                        <td colspan="2">
-	                          <button type="submit" class="btn btn-primary col-md-4 mt-3 mb-6">수정</button>
-	                          <button type="reset" class="btn btn-warning col-md-4 mt-3 mb-6">취소</button>
+	                          <button type="submit" class="btn btn-primary col-md-4 mt-3 mb-6"><spring:message code="admin.editBtn" /></button>
+	                          <button type="reset" class="btn btn-warning col-md-4 mt-3 mb-6"><spring:message code="admin.backBtn" /></button>
 				        
 	                        </td>
 	                        <td colspan="2">

@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -86,7 +89,7 @@
         <div class="container">
 
           <div class="row mt-5">
-            <h2 class=" jb-larger mt-3 col-sm-8">회원 관리</h2>
+            <h2 class=" jb-larger mt-3 col-sm-8"><spring:message code="admin.manageMember"/></h2>
             
             <!-- <div class="mt-4 col-sm-2">
               <select class="form-select">
@@ -100,7 +103,10 @@
             <div class="col-4 mt-4">
               <div class="input-group">
                 <div class="form-outline">
-                  <input type="search" id="memberSearchKeyword" class="form-control"  placeholder="아이디 포함값 검색"/>              
+                <spring:message code="main.search" var="searchPlaceholder"/>
+						<input type="search" class="form-control" id="memberSearchKeyword" aria-label="mainSearchLabel"
+							aria-describedby="button-addon2" placeHolder="${searchPlaceholder}">
+                 <!--  <input type="search" id="memberSearchKeyword" class="form-control"  placeholder="아이디 포함값 검색"/>  -->             
                 </div>
                 <button type="button" class="btn btn-primary" id="searchBtn">
                   <i class="fas fa-search"></i>
@@ -113,11 +119,10 @@
             <table class="table text-center" id="memberBoardTable">
               <thead class="table-primary">
                 <tr>
-                  <th scope="col">번호</th>
-                  <th scope="col">아이디</th>
-                  <th scope="col">강사 여부</th>
-                  <th scope="col">수강 강좌</th>
-                  <th scope="col">탈퇴 처리</th>
+                <th scope="col"><spring:message code="admin.boardNo"/></th>
+				<th scope="col"><spring:message code="admin.id"/></th>
+				<th scope="col"><spring:message code="admin.TeacherYn"/></th>
+				<th scope="col"><spring:message code="admin.manageWithdraw"/></th>
                 </tr>
               </thead>
               <tbody>
@@ -137,7 +142,7 @@
                     	<form:form method="POST" class="deleteMemberFrm"
                     				action="${pageContext.request.contextPath}/admin/deleteMember.do">
                     	<input type="hidden" name="memberId" value="${member.memberId}" />
-                        <button type="submit" class="btn btn-danger text-light">탈퇴</button>
+                        <button type="submit" class="btn btn-danger text-light"><spring:message code="admin.withdrawBtn"/></button>
                     	</form:form>
                     </td>
                 </tr>

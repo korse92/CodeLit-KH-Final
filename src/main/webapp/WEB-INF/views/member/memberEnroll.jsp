@@ -118,7 +118,7 @@
 </head>
 
   <section class="container-signup">
-    <h5>회원가입</h5>
+    <h5><spring:message code="menu.join" /></h5>
 
     <!-- 메일/비밀번호 입력 -->
     <div class="signup-input">
@@ -128,34 +128,34 @@
       		class="signupFrm">
         <!-- 이메일 -->
         <div class="row mb-3">
-          <label for="id" class="col-sm-3 col-form-label">이메일(아이디)</label>
+          <label for="id" class="col-sm-3 col-form-label"><spring:message code="signUp.email" /></label>
           <div class="col-sm-9" id="memberId">
             <input type="text" class="form-control" id="id" name="memberId" required>
-            <span class="guide ok">이 아이디는 사용 가능합니다.</span>
-            <span class="guide no">이 아이디는 이미 사용중입니다.</span>
+            <span class="guide ok"><spring:message code="signUp.emailChk1" /></span>
+            <span class="guide no"><spring:message code="signUp.emailChk2" /></span>
             <input type="hidden" id=idValid" value="0"/>
           </div>
         </div>
         <div class="row mb-3">
-          <label for="chkId" class="col-sm-3 col-form-label">이메일 확인</label>
+          <label for="chkId" class="col-sm-3 col-form-label"><spring:message code="signUp.email" /></label>
           <div class="col-sm-9">
             <input type="text" class="form-control" id="chkId" required>
           </div>
         </div>
         <!-- 비밀번호 -->
         <div class="row mb-3">
-          <label for="password" class="col-sm-3 col-form-label">비밀번호</label>
+          <label for="password" class="col-sm-3 col-form-label"><spring:message code="signUp.pwd" /></label>
           <div class="col-sm-9">
             <input type="password" class="form-control" id="password" name="memberPw" required>
           </div>
         </div>
         <div class="row mb-3">
-          <label for="chkPassword" class="col-sm-3 col-form-label">비밀번호 확인</label>
+          <label for="chkPassword" class="col-sm-3 col-form-label"><spring:message code="signUp.confirmPwd" /></label>
           <div class="col-sm-9">
             <input type="password" class="form-control" id="chkPassword" required>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary col-12 mt-3 mb-5" id="submit">가입하기</button>
+        <button type="submit" class="btn btn-primary col-12 mt-3 mb-5" id="submit"><spring:message code="signUp.signUpBtn" /></button>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       </form>
 
@@ -164,11 +164,11 @@
 
     <!-- 소셜 연동 가입 -->
     <div class="social">
-      <button type="submit" class="btn btn-primary col-5 mt-1 mb-2" data-onsuccess="onSignIn" id="google">구글 가입&nbsp;<i class="fab fa-google-plus-g"></i></button>
+      <button type="submit" class="btn btn-primary col-5 mt-1 mb-2" data-onsuccess="onSignIn" id="google"><spring:message code="signUp.GsignUpBtn" />&nbsp;<i class="fab fa-google-plus-g"></i></button>
     	<div id="name"></div>
   		<script>startApp();</script>
   		<!-- <script>onSignIn();</script> -->
-      <button type="submit" class="btn btn-primary col-5 mt-1 mb-1" id="kakao">카카오 가입&nbsp;<img src="${pageContext.request.contextPath}/resources/images/kakao.png"
+      <button type="submit" class="btn btn-primary col-5 mt-1 mb-1" id="kakao"><spring:message code="signUp.KsignUpBtn" />&nbsp;<img src="${pageContext.request.contextPath}/resources/images/kakao.png"
 						alt="" style="width: 15px;"></button>
     </div>
   </section>

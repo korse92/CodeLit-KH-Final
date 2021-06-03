@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 등록" name="title"/>
@@ -78,12 +81,12 @@ img#thumbImage {
 			<div class="row justify-content-center">
 				<!-- col-auto : 내부요소 크기에 맞게 컬럼 크기 맞춤 -->
 				<div class="col-auto">
-					<h2>강의 등록</h2>
+					<h2><spring:message code="Tmenu.enrollLecture" /></h2>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-2 align-self-center">
-					<label class="form-label" for="lectureName">강의 제목</label>
+					<label class="form-label" for="lectureName"><spring:message code="admin.lecTitle" /></label>
 				</div>
 				<div class="col-sm-4">
 					<select class="form-select" name="refLecCatNo" required>
@@ -94,24 +97,26 @@ img#thumbImage {
 					</select>
 				</div>
 				<div class="col-sm-6">
-					<input class="form-control" type="text" name="lectureName"
-						id="lectureName" placeholder="강의 제목" required>
+				<spring:message code="main.search" var="searchPlaceholder"/>
+				<input type="text" class="form-control" id="lectureName" name="lectureName" placeHolder="${searchPlaceholder}" required>
+					<!-- <input class="form-control" type="text" name="lectureName"
+						id="lectureName" placeholder="강의 제목" required> -->
 				</div>
 			</div>
 			<div class="row justify-content-between">
 				<div class="col-sm-2 align-self-center">
-					<label class="form-label">강의 종류</label>
+					<label class="form-label"><spring:message code="enrollLec.lecType" /></label>
 				</div>
 				<div class="col-sm-auto">
 					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType1" value="V" required>
-					<label class="form-check-label me-3" for="lectureType1">일반 강의</label>
+					<label class="form-check-label me-3" for="lectureType1"><spring:message code="enrollLec.lec"/></label>
 					<input class="form-check-input" type="radio" name="lectureType"	id="lectureType2" value="S">
-					<label class="form-check-label"	for="lectureType2">스트리밍 강의</label>
+					<label class="form-check-label"	for="lectureType2"><spring:message code="enrollLec.streaming"/></label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-2 align-self-center">
-					<label class="form-label" for="lecturePrice">수강료</label>
+					<label class="form-label" for="lecturePrice"><spring:message code="enrollLec.lecPrice" /></label>
 				</div>
 				<div class="col-sm">
 					<input class="form-control" type="number" name="lecturePrice" min="0"
@@ -120,7 +125,7 @@ img#thumbImage {
 			</div>
 			<div class="row">
 				<div class="col-sm-2 align-self-center">
-					<label class="form-label" for="lectureHandout">첨부파일</label>
+					<label class="form-label" for="lectureHandout"><spring:message code="enrollLec.attachedFile" /></label>
 				</div>
 				<div class="col-sm-10">
 					<input class="form-control" type="file" name="lectureHandout"
@@ -129,7 +134,7 @@ img#thumbImage {
 			</div>
 			<div class="row">
 				<div class="col-sm-2 align-self-center">
-					<label class="form-label" for="lectureThumbnail">썸네일</label>
+					<label class="form-label" for="lectureThumbnail"><spring:message code="enrollLec.thumbnail" /></label>
 				</div>
 				<div class="col-sm-10">
 					<img
@@ -141,13 +146,13 @@ img#thumbImage {
 				</div>
 			</div>
 			<div class="row">
-				<label class="form-label mb-2" for="">강의 소개글</label>
+				<label class="form-label mb-2" for=""><spring:message code="enrollLec.lecIntro" /></label>
 				<div class="col-sm">
 					<textarea name="lectureIntro" id="lectureIntro" class="form-control"></textarea>
 				</div>
 			</div>
 			<div class="selectedVideo row">
-				<label class="form-label mb-2" for="lectureGuideline">가이드라인 (권장하는 하루에 들을 영상개수)</label>
+				<label class="form-label mb-2" for="lectureGuideline"><spring:message code="enrollLec.lecGuide" /></label>
 				<div class="col-sm">
 					<input class="form-control" type="number" name="lectureGuideline" min="1" max="10"
 						id="lectureGuideline" placeholder="입력안할 시 기본값 1, 최대 10">
@@ -155,7 +160,7 @@ img#thumbImage {
 			</div>
 
 			<div class="selectedVideo row">
-				<label class="form-label mb-2" for="">커리큘럼 등록 (스트리밍 강의일 경우 영상첨부 안하셔도 됩니다.)</label>
+				<label class="form-label mb-2" for=""><spring:message code="enrollLec.enrollCurri" /></label>
 				<!-- <div class="row my-0 justify-content-end">
 					<div class="col-auto">
 						<button type="button" class="btn p-0" id="partAddBtn"><i class="fas fa-plus-square text-primary fs-3"></i></button>
@@ -202,7 +207,7 @@ img#thumbImage {
 
 			<div id="selectedStreaming" class="d-none">
 				<div class="row">
-					<label class="form-label mb-2" for="">강의일정</label>
+					<label class="form-label mb-2" for=""><spring:message code="enrollLec.schedule" /></label>
 					<div class="col-sm">
 						<input type="hidden" name="streamingDates" />
 						<div id='calendar'></div>
@@ -212,7 +217,7 @@ img#thumbImage {
 
 				<div class="row">
 					<div class="col-sm-2 align-self-center">
-						<label class="form-label" for="streamingStartTime">시작 시간</label>
+						<label class="form-label" for="streamingStartTime"><spring:message code="enrollLec.start" /></label>
 					</div>
 					<div class="col-sm">
 						<input class="timepicker form-control" type="text" name="streamingStartTime" id="streamingStartTime" value="" maxlength="10" />
@@ -221,7 +226,7 @@ img#thumbImage {
 
 				<div class="row">
 					<div class="col-sm-2 align-self-center">
-						<label class="form-label" for="streamingEndTime">종료 시간</label>
+						<label class="form-label" for="streamingEndTime"><spring:message code="enrollLec.end" /></label>
 					</div>
 					<div class="col-sm">
 						<input class="timepicker form-control" type="text" name="streamingEndTime" id="streamingEndTime" value="" maxlength="10"/>
@@ -250,21 +255,21 @@ img#thumbImage {
 				<!-- modal-body -->
 				<div class="modal-body">
 					<div class="row mb-3">
-						<label for="title" class="col-sm-2 col-form-label">일정명</label>
+						<label for="title" class="col-sm-2 col-form-label"><spring:message code="enrollLec.scheduleName" /></label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="title" required="required" />
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label for="start" class="col-sm-2 col-form-label">시작</label>
+						<label for="start" class="col-sm-2 col-form-label"><spring:message code="enrollLec.start" /></label>
 						<div class="col-sm-10 form-group">
 							<input type="text" class="datepicker form-control" id="startDate" name="startDate"/>
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label for="end" class="col-sm-2 col-form-label">끝</label>
+						<label for="end" class="col-sm-2 col-form-label"><spring:message code="enrollLec.end" /></label>
 						<div class="col-sm-10 form-group">
 							<input type="text" class="datepicker form-control" id="endDate" name="endDate"/>
 						</div>
@@ -273,13 +278,13 @@ img#thumbImage {
 
 				<!-- modal-footer -->
 				<div class="modal-footer modalBtnContainer-addEvent d-none">
-					<button type="button" class="btn btn-warning" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="saveEvent">저장</button>
+					<button type="button" class="btn btn-warning" data-bs-dismiss="modal"><spring:message code="admin.backBtn" /></button>
+					<button type="button" class="btn btn-primary" id="saveEvent"><spring:message code="admin.saveBtn" /></button>
 				</div>
 				<div class="modal-footer modalBtnContainer-modifyEvent d-none">
-					<button type="button" class="btn btn-warning" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
-					<button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+					<button type="button" class="btn btn-warning" data-bs-dismiss="modal"><spring:message code="admin.closeBtn" /></button>
+					<button type="button" class="btn btn-danger" id="deleteEvent"><spring:message code="admin.deleteBtn" /></button>
+					<button type="button" class="btn btn-primary" id="updateEvent"><spring:message code="admin.saveBtn" /></button>
 				</div>
 
 			</div><!-- /.modal-content -->

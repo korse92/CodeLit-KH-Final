@@ -245,12 +245,13 @@
 	from (select
         		c.ref_lecture_no,
         		l.lecture_name,
+        		l.lecture_thumb_renamed,
         		sum(c.click_no) as clickNo
           from
             	lecture_click c join lecture l
              		on c.ref_lecture_no = l.lecture_no
           group by
-            	c.ref_lecture_no, l.lecture_name
+            	c.ref_lecture_no, l.lecture_name,l.lecture_thumb_renamed
           order by
             	clickNo desc) e
 	where rownum <![CDATA[ <= ]]> 3
@@ -260,6 +261,7 @@
 	<resultMap type="map" id="bestLectureMap">
 		<id column="ref_lecture_no" property="refLectureNo"/>
 		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
 		<result column="click_no" property="clickNo"/>
 	</resultMap>
 

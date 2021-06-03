@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="memberOrderTable" name="title"/>
@@ -57,17 +60,17 @@
         <div class="container">
       
        
-           <h2 class=" jb-larger mt-3 col-sm-8">회원 결제내역</h2>
+           <h2 class=" jb-larger mt-3 col-sm-8"><spring:message code="admin.paymentList"/></h2>
            <div class="mt-4">
            
             <table class="table text-center" id="memberOrderTable">
               <thead class="table-primary">
                 <tr>
-                  <th scope="col">주문번호</th>
-                  <th scope="col">아이디</th>
-                  <th scope="col">금액</th>
-                  <th scope="col">강의 갯수</th>
-                  <th scope="col">결제일</th>
+                  <th scope="col"><spring:message code="admin.orderNo"/></th>
+                  <th scope="col"><spring:message code="admin.id"/></th>
+                  <th scope="col"><spring:message code="admin.orderTotalPrice"/></th>
+                  <th scope="col"><spring:message code="admin.orderLecCount"/></th>
+                  <th scope="col"><spring:message code="admin.paymentDate"/></th>
                 </tr>
         <!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 	  

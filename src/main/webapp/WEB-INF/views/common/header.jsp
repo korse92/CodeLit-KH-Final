@@ -59,6 +59,38 @@
 <c:if test="${not empty msg}">
 <script>
 alert("${msg}");
+
+$(document).ready(){
+	var url = document.location.href;
+	console.log(url);
+	//var param = document.location.href.split("?"); 
+	//	console.log(param);
+
+	
+	$("#localeChoice").on("change", function(){
+		var lang = $("#localeChoice").val();
+		
+		
+		if(lang == 'ko'){
+			${pageContext.request.contextPath}/?lang=ko
+			console.log("${pageContext.request.requestURI} = {}",${pageContext.request.requestURI});		
+		}
+		else(lang == 'en'){		
+			${pageContext.request.contextPath}/?lang=en
+			console.log("${pageContext.request.requestURI} = {}",${pageContext.request.requestURI});		
+		}			
+	});
+	//#localChange 변경시에 lang 파라미터 추가시에 요청주소가 현재페이지가 되어야 함
+	//자바스크립트를 이용해서 현재 페이지주소를 가져와 처리
+	//현재 브라우져 주소창에 적힌 주소는 location객체가 가지고 있음
+	
+});
+
+
+
+
+
+
 </script>
 </c:if>
 </head>
@@ -133,39 +165,39 @@ alert("${msg}");
 						<span class="navbar-text fs-5 text-light">
 							<sec:authentication property="principal.username"/>
 						</span>
-						<span class="navbar-text fs-6 text-light ms-1">님</span>
+						<span class="navbar-text fs-6 text-light ms-1"></span>
 						<ul class="navbar-nav">
 							<li class="nav-item dropdown">
 								<a class="nav-link btn btn-warning dropdown-toggle text-dark mx-3 mt-1" href="#" id="dropdownUserMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									메뉴
+									<spring:message code="MainMenu"/>
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
 									<form:form action="${pageContext.request.contextPath}/member/memberLogout.do" method="POST">
-									<button class="dropdown-item" type="submit">로그아웃</button>
+									<button class="dropdown-item" type="submit"><spring:message code="menu.logout"/></button>
 									</form:form>
 									<sec:authorize access="hasRole('USER') && !hasRole('ADMIN')">
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do">마이페이지</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/myProfile.do"><spring:message code="menu.myPage"/></a></li>
 										<!-- <li><a class="dropdown-item" href="#">내 글 보기</a></li> -->
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLectureList.do">수강중인 강의</a></li>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do">찜 목록</a></li>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do">장바구니</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/memberLectureList.do"><spring:message code="menu.myLecture"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/pick.do"><spring:message code="menu.favorites"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/order/basket.do"><spring:message code="menu.cart"/></a></li>
 										<!-- <li><a class="dropdown-item" href="#">결제내역</a></li> -->
 									</sec:authorize>
 									<sec:authorize access="hasRole('USER') && !hasAnyRole('TEACHER', 'ADMIN')">
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do">강사 신청</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherRequest.do"><spring:message code="menu.applyTeacher"/></a></li>
 									</sec:authorize>
 									<sec:authorize access="hasRole('TEACHER')">
 										<hr/>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do">강사페이지</a></li>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureEnroll.do">강의등록</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/teacherProfile.do"><spring:message code="Tmenu.teacherPage"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureEnroll.do"><spring:message code="Tmenu.enrollLecture"/></a></li>
 										<%-- <li><a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/lectureCalList.do">정산내역</a></li> --%>
 									</sec:authorize>
 									<sec:authorize access="hasRole('ADMIN')">
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do">강사 신청 목록</a></li>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do">강의 신청 목록</a></li>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do">강의 관리</a></li>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do">회원 관리</a></li>
-										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/alarm/alarmList.do">알림</a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyTeacherList.do"><spring:message code="Amenu.applyTeacherList"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/applyLectureList.do"><spring:message code="Amenu.applyLectureList"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do"><spring:message code="Amenu.manageLecture"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do"><spring:message code="Amenu.manageMember"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/alarm/alarmList.do"><spring:message code="Amenu.notification"/></a></li>
 									</sec:authorize>
 
 				                </ul>
@@ -188,8 +220,22 @@ alert("${msg}");
 			            </ul>
 			         </div>
 				</sec:authorize>
-
-			</div>
+			<!-- 다국어 : 추후 아이콘으로 변경 -->
+			 <nav aria-label="breadcrumb">
+			   <ol class="breadcrumb mt-3">
+			    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/?lang=ko"><spring:message code="lang.languageKorean"/></a></li>
+			    <li class="breadcrumb-item active" aria-current="page"><a href="${pageContext.request.contextPath}/?lang=en"><spring:message code="lang.languageEnglish"/></a></li>
+			  </ol>
+			</nav> 
+		
+			<%-- <div>
+				<!-- text속성 :일치하는 key값이 없을 때 사용하는 default 표현 -->
+				<select class="form-control" id="localeChoice">
+				<option selected disabled ><spring:message code="lang.choiceLanguageText" text="*"/></option>
+				<option value="ko"><spring:message code="lang.languageKorean" text="*"/></option>
+				<option value="en"><spring:message code="lang.languageEnglish" text="*"/></option>
+				</select>
+			</div> --%>
 		</nav>
 	</header>
 

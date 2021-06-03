@@ -9,6 +9,9 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 관리 게시판" name="title" />
 </jsp:include>
@@ -31,7 +34,7 @@ $(() => {
 <!-- 컨텐츠 시작 -->
 <div class="container">
 	<div class="mt-5">
-		<h2 class=" jb-larger mt-3">강의 관리</h2>
+		<h2 class=" jb-larger mt-3"><spring:message code="Amenu.manageLecture"/></h2>
 		<form method="GET" id="searchFrm"
 			action="${pageContext.request.contextPath}/admin/manageLectureBoard.do">
 			<div class="row mt-5 ms-1">
@@ -48,7 +51,7 @@ $(() => {
 				<div class="col-sm-2">
 					<select class="form-select" id="searchType" name="searchType"
 						required>
-						<option value="" selected disabled>검색</option>
+						<option value="" selected disabled><spring:message code="main.search"/></option>
 						<option value="ref_member_id"
 							${param.searchType eq 'ref_member_id' ? 'selected' : ''}>강의자</option>
 						<option value="lecture_name"
@@ -58,8 +61,11 @@ $(() => {
 				<div class="col-sm-4">
 					<div class="input-group">
 						<div class="form-outline">
-							<input type="search" id="searchKeyword" name="searchKeyword"
-								class="form-control" placeholder="강의자 / 강의명" />
+						<spring:message code="main.search" var="searchPlaceholder"/>
+						<input type="search" class="form-control" id="searchKeyword" name="searchKeyword" aria-label="mainSearchLabel"
+							aria-describedby="button-addon2" placeHolder="${searchPlaceholder}">
+							<!-- <input type="search" id="searchKeyword" name="searchKeyword"
+								class="form-control" placeholder="강의자 / 강의명" /> -->
 						</div>
 						<button type="submit" class="btn btn-primary" id="searchBtn">
 							<i class="fas fa-search"></i>
@@ -72,17 +78,17 @@ $(() => {
 		<table class="table mt-3 col-sm text-center">
 			<thead class="thead-light">
 				<tr>
-					<th scope="col">글 번호</th>
-					<th scope="col">카테고리</th>
-					<th scope="col">강의자 아이디</th>
-					<th scope="col">강의명</th>
-					<th scope="col">강의 링크</th>
-					<th scope="col">비고</th>
+					<th scope="col"><spring:message code="admin.boardNo"/></th>
+					<th scope="col"><spring:message code="admin.category"/></th>
+					<th scope="col"><spring:message code="admin.id"/></th>
+					<th scope="col"><spring:message code="enrollLec.lecTitle"/></th>
+					<th scope="col"><spring:message code="admin.link"/></th>
+					<th scope="col"><spring:message code="admin.check"/></th>
 				</tr>
 				<!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 하세요 -->
 				<c:if test="${empty lecBoardList}">
 					<tr>
-						<td colspan="14" style="text-align: center;">조회된 데이터가 없습니다.</td>
+						<td colspan="14" style="text-align: center;"><spring:message code="admin.noData"/></td>
 					</tr>
 				</c:if>
 			</thead>
@@ -98,11 +104,11 @@ $(() => {
 								</c:forEach></td>
 							<td>${lec.refMemberId}</td>
 							<td>${lec.lectureName}</td>
-							<td><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lec.lectureNo}">강의상세보기</a></td>
+							<td><a href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lec.lectureNo}"><spring:message code="admin.lecDetail"/></a></td>
 							<td>
 								<button type="button" class="btn btn-warning btn-sm"
 									onclick="location.href='${pageContext.request.contextPath}/admin/rejectPlayingLecture.do?no=${lec.lectureNo}';">
-									정지</button>
+									<spring:message code="admin.stopBtn"/></button>
 							</td>
 						</tr>
 						<input type="hidden" name="memberId" value="${lec.refMemberId}" />

@@ -61,7 +61,7 @@
 	        <div class="modal-dialog" role="document">
 	          <div class="modal-content">
 	            <div class="modal-header">
-	              <h5 class="modal-title" id="loginModalLabel">로그인</h5>
+	              <h5 class="modal-title" id="loginModalLabel"><spring:message code="menu.login"/></h5>
 	              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	                <span aria-hidden="true">&times;</span>
 	              </button>
@@ -70,7 +70,7 @@
 	            <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
 	              <div class="modal-body">
 	          		<c:if test="${param.error != null}">
-						<span class="text-danger">아이디 또는 비밀번호가 일치하지 않습니다.</span>
+						<span class="text-danger"><spring:message code="login.error"/></span>
 					</c:if>
 	                <input type="text" class="form-control" name="id"
 	                  placeholder="아이디" required>
@@ -86,8 +86,8 @@
 <!-- 						<label for="remember-me" class="form-check-label">Remember me</label> -->
 					</div>
 					<div>
-		                <button type="submit" class="btn btn-outline-primary">로그인</button>
-		                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">취소</button>
+		                <button type="submit" class="btn btn-outline-primary"><spring:message code="login.loginBtn"/></button>
+		                <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><spring:message code="login.cancel"/></button>
 					</div>
 	              </div>
 	          </div>

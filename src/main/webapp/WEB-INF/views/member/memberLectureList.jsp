@@ -32,7 +32,7 @@
 <!-- 컨텐츠 헤더 시작 -->
 <div class="container mt-5 mb-3">
  	<div class="row">
-		<h2>수강중인 강의</h2>
+		<h2><spring:message code="ud.myLecture" /></h2>
 	</div>
 	<div class="row mt-2">
 	</div>
@@ -42,7 +42,7 @@
 <div class="container mt-3">
 	<c:if test="${empty list}">
 	<div class="d-flex justify-content-center mt-3">
-		<h1>수강중인 강의가 없습니다.</h1>
+		<h1><spring:message code="ud.noLecture" /></h1>
 	</div>
 	</c:if>
 	<c:if test="${not empty list}">
@@ -90,13 +90,13 @@
 						<p class="card-subtitle my-1">
 					</c:when>
 					<c:when test='${lecture.lectureAcceptYn == "W"}'>
-						<h5 class="card-title">현재 정지되어있는 강의입니다.</h5>
-						<p class="card-subtitle">현재 정지되어있는 강의입니다.</p>
+						<h5 class="card-title"><spring:message code="lec.stopLec"/></h5>
+						<p class="card-subtitle"><spring:message code="lec.stopLec"/></p>
 						<p class="card-subtitle my-1">
 					</c:when>
 					<c:when test="${lecture.lectureAcceptYn == null}">
-						<h5 class="card-title">삭제된 강의입니다.</h5>
-						<p class="card-subtitle">삭제된 강의입니다.</p>
+						<h5 class="card-title"><spring:message code="lec.deleteLec"/></h5>
+						<p class="card-subtitle"><spring:message code="lec.deleteLec"/></p>
 						<p class="card-subtitle my-1">
 					</c:when>
 					</c:choose>
@@ -128,14 +128,14 @@
 					<div class="row my-1">
 						<div class="col-auto">
 							<h5>${lecture.lectureName}</h5>
-							<h4>정지 되어있는 상태입니다.</h4>
+							<h4><spring:message code="lec.stopLec"/></h4>
 						</div>
 					</div>
 				</c:when>
 				<c:when test="${lecture.lectureAcceptYn == null}">
 					<div class="row my-1">
 						<div class="col-auto">
-							<h5>삭제된 강의입니다.</h5>
+							<h5><spring:message code="lec.deleteLec"/></h5>
 						</div>
 					</div>
 				</c:when>

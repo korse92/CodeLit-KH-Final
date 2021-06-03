@@ -7,6 +7,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 상세페이지" name="title"/>
@@ -61,9 +64,9 @@ $(review-tab).trigger("click");
 		<!-- 분기처리 -->
 			<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 				<ol class="breadcrumb mb-0">
-					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/lecture/lectureList.do" class="text-decoration-none">전체 목록</a></li>
+					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/lecture/lectureList.do" class="text-decoration-none"><spring:message code="lec.All"/></a></li>
 					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/lecture/lectureList.do/${lecture.refLecCatNo}" class="text-decoration-none">${categoryMap.get(lecture.refLecCatNo)}</a></li>
-					<li class="breadcrumb-item active" aria-current="page">현재 페이지</li>
+					<li class="breadcrumb-item active" aria-current="page"><spring:message code="lec.Current"/></li>
 				</ol>
 			</nav>
 		</div>
@@ -107,14 +110,14 @@ $(review-tab).trigger("click");
 						<c:choose>
 						<c:when test="${contains}">
 <!-- 							<p id="commented" class="text-center ps-5">수강중인 강의 입니다!</p> -->
-							<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/lecture/lecture.do?lectureNo=${lecture.lectureNo}';">강의 듣기</button>
+							<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/lecture/lecture.do?lectureNo=${lecture.lectureNo}';"><spring:message code="lec.takeCourse"/></button>
 						</c:when>
 						<c:otherwise>
 							<div class="row">
 								<p class="h3 text-end">
 								<c:choose>
 									<c:when test="${lecture.lecturePrice == 0}">
-									무료
+									<spring:message code="lec.free"/>
 									</c:when>
 									<c:otherwise>
 									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
@@ -132,7 +135,7 @@ $(review-tab).trigger("click");
 								</div>
 								<div class="col-sm p-0">
 									<button type="button" class="btn btn-warning w-100" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기">
-										결제
+										<spring:message code="admin.payment"/>
 									</button>
 								</div>
 							</div>
@@ -148,18 +151,18 @@ $(review-tab).trigger("click");
 				<li class="nav-item" role="presentation">
 					<button class="nav-link active" id="intro-tab" data-bs-toggle="tab"
 						data-bs-target="#intro" type="button" role="tab"
-						aria-controls="intro" aria-selected="true">강의 소개</button>
+						aria-controls="intro" aria-selected="true"><spring:message code="enrollLec.introduction"/></button>
 				</li>
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
 						data-bs-target="#curriculum" type="button" role="tab"
-						aria-controls="curriculum" aria-selected="false">커리큘럼</button>
+						aria-controls="curriculum" aria-selected="false"><spring:message code="enrollLec.curriculum"/></button>
 				</li>
 				<sec:authorize access="!hasRole('ADMIN')">
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="review-tab" data-bs-toggle="tab"
 						data-bs-target="#review" type="button" role="tab"
-						aria-controls="review" aria-selected="false">강의 후기</button>
+						aria-controls="review" aria-selected="false"><spring:message code="enrollLec.review"/></button>
 				</li>
 				</sec:authorize>
 			</ul>
@@ -255,16 +258,16 @@ $(review-tab).trigger("click");
 						<div class="input-group my-3">
 							<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 							<input class="form-control" id="lecComment" name="lecComment" type="text" placeholder="후기 작성">
-							<button type="submit" class="btn btn-primary" id="cmtInsertBtn"><i class="fas fa-edit"></i> 입력 </button>
+							<button type="submit" class="btn btn-primary" id="cmtInsertBtn"><i class="fas fa-edit"></i><spring:message code="help.writeBtn" /></button>
 							</form:form>
 						</div>
 					</div>
 					</c:when>
 					<c:when test="${commented}">
-						<p id="commented" class="text-center ps-5 my-3">이미 수강후기를 남기셨습니다.</p>
+						<p id="commented" class="text-center ps-5 my-3"><spring:message code="lec.leftReview" /></p>
 					</c:when>
 					<c:otherwise>
-						<p id="noPayment" class="text-center ps-5 my-3">수강하지 않은 강의 입니다.</p>
+						<p id="noPayment" class="text-center ps-5 my-3"><spring:message code="lec.notApplied" /></p>
 					</c:otherwise>
 					</c:choose>
 					<!-- 후기 작성 row 끝 -->
@@ -311,7 +314,7 @@ $(review-tab).trigger("click");
 								<!-- 후기리스트 tabpane 끝 -->
 							</c:when>
 							<c:otherwise>
-								<p id="noReview" class="text-center ps-5">아직 후기가 없습니다.</p>
+								<p id="noReview" class="text-center ps-5"><spring:message code="lec.noReview" /></p>
 							</c:otherwise>
 						</c:choose>
 

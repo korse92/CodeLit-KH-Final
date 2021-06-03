@@ -6,6 +6,9 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -59,13 +62,13 @@
 
 		<div class="container">
 		
-	        <h2 id="manageIndexH2">회원 관리</h2>
+	        <h2 id="manageIndexH2"><spring:message code="admin.manageMember"/></h2>
 	
 	        <div id="manageIndexDiv" class="col-6 mx-auto text-center my-5 row">
 	            
-	            <button type="button" id="manageMember" class="btn btn-outline-primary col-3 mx-auto mt-5 fs-4">회원 관리</button>
-	            <button type="button" id="manageTeacher" class="btn btn-outline-secondary col-3 mt-5 fs-4">강사 관리</button>
-	            <button type="button" id="manageOrder" class="btn btn-outline-success col-3 mx-auto mt-5 fs-4">결제 내역</button>
+	            <button type="button" id="manageMember" class="btn btn-outline-primary col-3 mx-auto mt-5 fs-4"><spring:message code="admin.manageMember"/></button>
+	            <button type="button" id="manageTeacher" class="btn btn-outline-secondary col-3 mt-5 fs-4"><spring:message code="admin.manageTeacher"/></button>
+	            <button type="button" id="manageOrder" class="btn btn-outline-success col-3 mx-auto mt-5 fs-4"><spring:message code="admin.paymentList"/></button>
 	
 	        </div>
         
