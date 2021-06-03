@@ -32,15 +32,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.codelit.attachment.model.vo.Attachment;
+import com.google.gson.Gson;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.order.model.service.BasketService;
@@ -324,23 +324,26 @@ public class MemberController {
     @GetMapping("/myProfile.do")
     public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper,
 		  							ModelAndView mav,
-		  							Authentication authentication) {
+		  							Authentication authentication, Principal principal) {
 
 	  try {
 		  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		  String memberId =  ((Member) userDetails).getMemberId();
+		  String refMemberId = principal.getName();
 
 		  Member member = memberService.selectOneMember(memberId);
 		  List<Lecture> lectureList = memberService.getLectureList(memberId);
 		  List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
 		  List<Pick> pickList = pickService.selectPickList(memberId);
 		  List<Basket> basketList = basketService.selectBasketList(memberId);
+		  List<StreamingDate> streamingDateList = memberService.selectStreamingDateList(refMemberId);
 
 		  mav.addObject("member",member);
 		  mav.addObject("basketList", basketList);
 		  mav.addObject("message", msgList);
 		  mav.addObject("pickList", pickList);
 		  mav.addObject("lectureList",lectureList);
+		  mav.addObject("streamingDateList", streamingDateList);
 
 		  mav.setViewName("/member/myProfile");
 
@@ -388,8 +391,29 @@ public class MemberController {
 		return "/member/memberLectureList";
 	}
 
-    @GetMapping("/myCalendar")
-    public void myCalendar() {
+    @GetMapping("/myCalendar.do")
+    public void myCalendar(Model model, HttpServletRequest request) {
     	log.debug("calendar = {}", "calendar");
+
+//    	Gson gson = new Gson();
+
+//    	model.addAttribute("streamingDateList", streamingDateList);
+
+//    	String streamingDates = gson.toJson(streamingDateList);
+//    	model.addAttribute("streamingDates", streamingDates);
+//    	log.debug("streamingDates = {}", streamingDates);
+    }
+
+    @GetMapping("/myStreaming.do")
+    @ResponseBody
+    public List<StreamingDate> myStreaming(HttpServletRequest request, Principal principal) {
+
+    	String refMemberId = principal.getName();
+    	log.debug("refMemberId = {}", refMemberId);
+
+    	List<StreamingDate> streamingDateList = memberService.selectStreamingDateList(refMemberId);
+    	log.debug("streamingDateList = {}", streamingDateList);
+
+    	return streamingDateList;
     }
 }

@@ -155,9 +155,20 @@
 				<h3 class="card-header">캘린더</h3>
 				<div class="card-body">
 					<div class="card-text">
-						<li>
-							구체적인 계획 미정
-						</li>
+						<c:choose>
+							<c:when test="${empty streamingDateList}">
+								<h6>다음 일정이 없습니다.</h6>
+							</c:when>
+							<c:when test="${not empty streamingDateList}">
+								<c:forEach items="${streamingDateList}" var="streamingDateList" end="2">
+									<li >
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${streamingDateList.refLectureNo}'">
+											${streamingDateList.lectureName}
+										</span>
+									</li>
+								</c:forEach>
+							</c:when>
+						</c:choose>
 					</div>
 					<div class="text-end">
 						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/myCalendar.do'">

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
 
 public interface MemberDao {
@@ -38,6 +39,9 @@ public interface MemberDao {
 
 
 	List<Lecture> getLectureList(String memberId);
+
+
+	List<StreamingDate> selectStreamingDateList(String refMemberId);
 
 
 }
