@@ -148,10 +148,10 @@
 	                            <label for="refLecCatNo">희망분야</label>
 	                        </td>
 	                        <td colspan="5">
-	                            <select class="form-select" name="refLecCatNo" id="refLecCatNo">
-	                              <option selected>카테고리 선택</option>
+	                            <select class="form-select" name="refLecCatNo" required>
+	                              <option value="" disabled selected>카테고리 선택</option>
 	                              <c:forEach items="${categoryList}" var="category">
-	                              	<option value="${category.no}" ${param.category eq category.no ? 'selected' : ''}>${category.name}</option>
+	                              	<option value="${category.no}" >${category.name}</option>
 	                              </c:forEach>
 	                            </select>
 	                        </td>
