@@ -44,17 +44,17 @@
 	<div class="col-8 mx-auto">
 
 		<div class="row mt-5">
-		 	<h2 class=" jb-larger mt-3 col-2">문의사항</h2>
+		 	<h2 class=" jb-larger mt-3 col-2"><spring:message code="counsel.asking"/></h2>
 		</div>
 		<hr>
 		<div class="col-10 mx-auto mt-5" id="detailDiv">
 			<div class="row header ps-2">
-		    	<h5 class="col-1 board-title fs-4">제목 : </h5>
+		    	<h5 class="col-1 board-title fs-4"><spring:message code="user.boardTitle"/> : </h5>
 		    	<p class="col-9 fs-4">${counsel.counselTitle}</p>
 		    	<p class="col-2 fs-5"><fmt:formatDate value="${counsel.counselDate}" pattern="yy/MM/dd" /></p>
 		  	</div>
 		  	<div class="row mb-2 ps-2">
-		  		<span class="col-1 fs-5">작성자 : </span><span class="col-11 fs-5">${counsel.refMemberId}</span>
+		  		<span class="col-1 fs-5"><spring:message code="user.boardWriter"/> : </span><span class="col-11 fs-5">${counsel.refMemberId}</span>
 		  	</div>
 		    <div class="board-container mt-3 ps-2" id="conuselContent">
 		    	<c:if test="${not empty attach}">
@@ -71,7 +71,7 @@
 		<sec:authorize access="hasRole('ADMIN')">
 			<c:if test="${counsel.counselQNo eq 0 && counsel.counselLevel eq 1}" >
 				<div class="col-2 mx-auto mt-5">
-				    <button type="button" id="answerBtn" class="btn btn-primary col-12">답글</button>
+				    <button type="button" id="answerBtn" class="btn btn-primary col-12"><spring:message code="counsel.answer"/></button>
 				</div>
 			</c:if>
 		</sec:authorize>

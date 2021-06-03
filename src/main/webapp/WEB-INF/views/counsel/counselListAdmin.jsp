@@ -22,13 +22,13 @@
 	
 		<div class="container List-container" >
 	        <div class="row mt-5">
-	          	<h2 class=" jb-larger mt-1 col-3">1:1문의 </h2>
+	          	<h2 class=" jb-larger mt-1 col-3"><spring:message code="counsel.inqury"/></h2>
 	        </div>
 	        
 	        <div class="my-5">
 	        
 	          	<c:if test="${empty list}">
-	          		<h1 style="text-align: center">등록된 문의가 없습니다.</h1>
+	          		<h1 style="text-align: center"><spring:message code="counsel.noData"/></h1>
 	          	</c:if>
 	          	
 	          	<c:if test="${not empty list}">
@@ -36,10 +36,10 @@
 	          		<table class="table text-center table-hover">
 	            		<thead class="primary table-primary">
 	              			<tr>
-	                			<th scope="col">번호</th>
-	                			<th scope="col">제목</th>
-	                			<th scope="col">작성자</th>
-	                			<th scope="col">등록일</th>
+	                			<th scope="col"><spring:message code="user.boardNo"/></th>
+	                			<th scope="col"><spring:message code="user.boardTitle"/></th>
+	                			<th scope="col"><spring:message code="user.boardWriter"/></th>
+	                			<th scope="col"><spring:message code="user.boardDate"/></th>
 	              			</tr>
 			            </thead>
 			            

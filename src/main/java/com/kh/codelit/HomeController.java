@@ -149,6 +149,18 @@ public class HomeController {
         // Servers 하위에 있는 web.xml에서 웰컴파일 지정하던 것을 여기서 직접 설정해줌.
 	}
 	
+	@GetMapping("/changeLocale")
+	public String changeLocale(
+			@RequestParam String lang,
+			Model model,
+			HttpServletRequest request) {
+		
+		model.addAttribute("lang", lang);
+		
+		return "redirect:" + request.getHeader("Referer");
+	}
+	
+	
 	
 	
 	

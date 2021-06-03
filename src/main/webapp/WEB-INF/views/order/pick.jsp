@@ -39,19 +39,19 @@ $(() => {
 });
 </script>
 <div class="container-pick">
-    <h2 class="mt-5">찜 목록</h2>
+    <h2 class="mt-5"><spring:message code="menu.favorites" /></h2>
     <hr/>
 
     <div class="orderBy mb-5">
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                정렬 기준
+                <spring:message code="lec.sort" />
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><button class="dropdown-item" type="button">최신순</button></li>
-                <li><button class="dropdown-item" type="button">제목순</button></li>
-                <li><button class="dropdown-item" type="button">카테고리순</button></li>
-                <li><button class="dropdown-item" type="button">수강료순</button></li>
+                <li><button class="dropdown-item" type="button"><spring:message code="lec.new" /></button></li>
+                <li><button class="dropdown-item" type="button"><spring:message code="lec.asc" /></button></li>
+                <li><button class="dropdown-item" type="button"><spring:message code="lec.category" /></button></li>
+                <li><button class="dropdown-item" type="button"><spring:message code="lec.pay" /></button></li>
             </ul>
         </div>
     </div>
@@ -79,7 +79,7 @@ $(() => {
 	                    <span class="name">${pick.teacherName}</span>
 	                    <span class="price">${pick.lecturePrice}</span>
 	                    <span class="avgLecAssessment">${pick.avgLecAssessment}</span>
-	                	<span class="category">카테고리 : ${pick.lecCatName}</span>
+	                	<span class="category"><spring:message code="admin.category" /> : ${pick.lecCatName}</span>
 	                </div>
 	            </div> <!-- show -->
 	            <div class="hide d-flex flex-column justify-content-between p-3 m-0">
