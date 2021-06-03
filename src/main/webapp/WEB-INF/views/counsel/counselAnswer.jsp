@@ -47,17 +47,17 @@
 	<div class="col-8 mx-auto">
 
 		<div class="row mt-5">
-		 	<h2 class=" jb-larger mt-3 col-2">문의사항</h2>
+		 	<h2 class=" jb-larger mt-3 col-2"><spring:message code="counsel.asking"/></h2>
 		</div>
 		<hr>
 		<div class="col-10 mx-auto mt-5" id="detailDiv">
 			<div class="row header ps-2">
-		    	<h5 class="col-1 board-title fs-4">제목 : </h5>
+		    	<h5 class="col-1 board-title fs-4"><spring:message code="user.boardTitle"/> : </h5>
 		    	<p class="col-9 fs-4">${counsel.counselTitle}</p>
 		    	<p class="col-2 fs-5"><fmt:formatDate value="${counsel.counselDate}" pattern="yy/MM/dd" /></p>
 		  	</div>
 		  	<div class="row mb-2 ps-2">
-		  		<span class="col-1 fs-5">작성자 : </span><span class="col-11 fs-5">${counsel.refMemberId}</span>
+		  		<span class="col-1 fs-5"><spring:message code="user.boardWriter"/> : </span><span class="col-11 fs-5">${counsel.refMemberId}</span>
 		  	</div>
 		    <div class="board-container mt-3 ps-2" id= "conuselContent">
 		    	<c:if test="${not empty attach}">
@@ -82,7 +82,7 @@
 					<table class="mx-auto col-11 text-center">
 						<tr class="col-10 py-3">
 							<td>
-								<label for="counselTitle">제목</label>
+								<label for="counselTitle"><spring:message code="user.boardTitle"/></label>
 							</td>
 							<td>
 								<input type="text" name="counselTitle" class="form-control" placeholder="제목" value="Re: ${counsel.counselTitle}"/>
@@ -90,7 +90,7 @@
 						</tr>
 						<tr class="col-10 py-3">
 							<td>
-								<label for="upFile">첨부파일 </label>
+								<label for="upFile"><spring:message code="enrollLec.attachedFile"/> </label>
 							</td>
 							<td>
 								<input type="file" name="upFile" class="form-control"/>
@@ -98,7 +98,7 @@
 						</tr>
 						<tr class="col-10 py-3">
 							<td>
-								<label for="counselContent">내용</label>
+								<label for="counselContent"><spring:message code="user.boardContent"/></label>
 							</td>
 							<td>
 								<textarea name="counselContent" id="content" class="form-control"></textarea>

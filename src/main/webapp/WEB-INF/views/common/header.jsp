@@ -59,40 +59,34 @@
 <c:if test="${not empty msg}">
 <script>
 alert("${msg}");
-
-$(document).ready(){
-	var url = document.location.href;
-	console.log(url);
-	//var param = document.location.href.split("?"); 
-	//	console.log(param);
-
-	
-	$("#localeChoice").on("change", function(){
-		var lang = $("#localeChoice").val();
-		
-		
-		if(lang == 'ko'){
-			${pageContext.request.contextPath}/?lang=ko
-			console.log("${pageContext.request.requestURI} = {}",${pageContext.request.requestURI});		
-		}
-		else(lang == 'en'){		
-			${pageContext.request.contextPath}/?lang=en
-			console.log("${pageContext.request.requestURI} = {}",${pageContext.request.requestURI});		
-		}			
-	});
-	//#localChange 변경시에 lang 파라미터 추가시에 요청주소가 현재페이지가 되어야 함
-	//자바스크립트를 이용해서 현재 페이지주소를 가져와 처리
-	//현재 브라우져 주소창에 적힌 주소는 location객체가 가지고 있음
-	
-});
-
-
-
-
-
-
 </script>
 </c:if>
+
+<script>
+//#localChange 변경시에 lang 파라미터 추가시에 요청주소가 현재페이지가 되어야 함
+//자바스크립트를 이용해서 현재 페이지주소를 가져와 처리
+//현재 브라우져 주소창에 적힌 주소는 location객체가 가지고 있음
+function changeLocale(lang) {
+	
+	var url;
+	
+	if(location.href.indexOf("lang=") > -1) {
+		url = location.href.substring(0, location.href.indexOf("lang=") - 1);		
+	} else {
+		url = location.href;
+	}
+	
+	if(url.indexOf("?") > -1)
+		url += "&";
+	else
+		url += "?";
+	
+	location.href = url + "lang=" + lang;
+	
+}
+</script>
+
+
 </head>
 <body>
 	<header class="sticky-top">
@@ -129,7 +123,7 @@ $(document).ready(){
 								aria-labelledby="navlinkDropdownLecture">
 								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do"><spring:message code="menu.allLecture"/></a></li>
 								<c:forEach items="${categoryList}" var="category">
-									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}">${category.name}</a></li>
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}"><spring:message code="${category.name}"/></a></li>
 								</c:forEach>
 							</ul>
 						</li>
@@ -202,9 +196,6 @@ $(document).ready(){
 
 				                </ul>
 			              	</li>
-			             	<li>
-			                	&nbsp;&nbsp;&nbsp;
-			              	</li>
 			              	<li class="nav-item">
 			                	<a class="nav-link px-0" href="${pageContext.request.contextPath}/alarm/alarmList.do" id="alertsDropdown" style="font-size: 1.5rem;">
 			                    	<c:if test="${readVal > 0}">
@@ -221,21 +212,21 @@ $(document).ready(){
 			         </div>
 				</sec:authorize>
 			<!-- 다국어 : 추후 아이콘으로 변경 -->
-			 <nav aria-label="breadcrumb">
+			 <nav class="ms-4" aria-label="breadcrumb">
 			   <ol class="breadcrumb mt-3">
-			    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/?lang=ko"><spring:message code="lang.languageKorean"/></a></li>
-			    <li class="breadcrumb-item active" aria-current="page"><a href="${pageContext.request.contextPath}/?lang=en"><spring:message code="lang.languageEnglish"/></a></li>
+			    <li class="breadcrumb-item"><a class="text-light text-decoration-none" href="javascript:changeLocale('ko')"><spring:message code="lang.languageKorean"/></a></li>
+			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en')"><spring:message code="lang.languageEnglish"/></a></li>
 			  </ol>
-			</nav> 
+			</nav>
 		
-			<%-- <div>
+			<%--  <div>
 				<!-- text속성 :일치하는 key값이 없을 때 사용하는 default 표현 -->
 				<select class="form-control" id="localeChoice">
 				<option selected disabled ><spring:message code="lang.choiceLanguageText" text="*"/></option>
 				<option value="ko"><spring:message code="lang.languageKorean" text="*"/></option>
 				<option value="en"><spring:message code="lang.languageEnglish" text="*"/></option>
 				</select>
-			</div> --%>
+			</div>  --%>
 		</nav>
 	</header>
 

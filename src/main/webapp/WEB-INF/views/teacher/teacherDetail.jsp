@@ -93,7 +93,7 @@
 		<section class="container">
 		
 		  <div class="container" id="teacherDetailDiv">
-	        <h2 class="mt-5">강사 수정</h2>
+	        <h2 class="mt-5"><spring:message code="teacher.edit"/></h2>
 	        <hr/>
 	
 	            
@@ -112,7 +112,7 @@
 	                      </td>
 	                      
 	                        <td colspan="1" class="td2">
-	                           <label for="teacherName">이름</label>
+	                           <label for="teacherName"><spring:message code="teacher.name"/></label>
 							</td>
 	                        
 	                        <td colspan="3" class="td3">
@@ -123,7 +123,7 @@
 	        
 	                    <tr>
 	                        <td colspan="1" class="td2">
-	                            <label for="teacherPhone">전화번호</label>
+	                            <label for="teacherPhone"><spring:message code="teacher.phone"/></label>
 	                        </td>
 	                        
 	                        <td colspan="3" class="td3">
@@ -137,7 +137,7 @@
 	                        </td>
 	                        
 	                        <td colspan="1" class="td2">
-	                            <label for="teacherLink">깃허브(블로그)</label>
+	                            <label for="teacherLink"><spring:message code="teacher.git"/></label>
 	                        </td>
 	                        
 	                        <td colspan="3" class="td3">
@@ -148,7 +148,7 @@
 	                    
 	                    <tr>
 	                        <td colspan="1">
-	                            <label for="refLecCatNo">희망분야</label>
+	                            <label for="refLecCatNo"><spring:message code="teacher.lecPart"/></label>
 	                        </td>
 	                        <td colspan="5">
 	                            <select class="form-select" name="refLecCatNo" id="refLecCatNo">
@@ -162,7 +162,7 @@
 	
 	                    <tr>
 	                      <td colspan="1" class="td">
-	                        <label for="teacherBank">은행명</label>
+	                        <label for="teacherBank"><spring:message code="teacher.bank"/></label>
 	                      </td>
 	                      
 	                      <td colspan="5">
@@ -172,7 +172,7 @@
 	                    
 	                    <tr>
 	                        <td colspan="1" class="td">
-	                            <label for="teacherAccount">계좌번호</label>
+	                            <label for="teacherAccount"><spring:message code="teacher.account"/></label>
 	                        </td>
 	                        <td colspan="5">
 	                            <input type="text" class="form-control"  name="teacherAccount" id="teacherAccount"   value ="${teacher.teacherAccount}"  >
@@ -181,7 +181,7 @@
 	                    
 	                    <tr>
 	                        <td colspan="1" class="td">
-	                            <label for="teacherAccName">예금주</label>
+	                            <label for="teacherAccName"><spring:message code="teacher.bankName"/></label>
 	                        </td>
 	                        <td colspan="5">
 	                            <input type="text" class="form-control" name="teacherAccName" id="teacherAccName" value ="${teacher.teacherAccName}" >
@@ -190,7 +190,7 @@
 	                    
 	                    <tr>
 	                        <td colspan="1" class="td">
-	                            <label for="teacherIntroduce">강사소개</label>
+	                            <label for="teacherIntroduce"><spring:message code="teacher.intro"/></label>
 	                        </td>
 	                        <td colspan="5">
 	                            <textarea name="teacherIntroduce" id="teacherIntroduce" class="form-control" cols="30" rows="10"  >${teacher.teacherIntroduce}</textarea>
@@ -203,8 +203,8 @@
 	                        </td>
 	        
 	                        <td colspan="2">
-	                          <button type="submit" class="btn btn-primary col-4 mt-3 mb-6">수정</button>
-                       		  <button type="reset" class="btn btn-warning col-6 mt-3 mb-6">뒤로가기</button>
+	                          <button type="submit" class="btn btn-primary col-4 mt-3 mb-6"><spring:message code="admin.editBtn"/></button>
+                       		  <button type="reset" class="btn btn-warning col-6 mt-3 mb-6"><spring:message code="admin.backBtn"/></button>
 	                       
 	                        </td>
 	                        <td colspan="2">
