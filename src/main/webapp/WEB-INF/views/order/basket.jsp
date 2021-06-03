@@ -199,7 +199,7 @@
 								<!-- <button type="button" class="btn bt text-light me-2">찜이동</button> -->
 								<div class="col-auto">
 <!-- 								<button type="button" class="btn bt text-light mb-2">찜이동</button> -->
-									<button type="button" class="btn bt text-light" onclick="deleteDiv(${vs.count}, ${basket.basketNo});">삭제</button> <!-- bt text-light me-2 -->
+									<button type="button" class="btn bt text-light" onclick="deleteDiv(${vs.count}, ${basket.basketNo});"><spring:message code="admin.deleteBtn"/></button> <!-- bt text-light me-2 -->
 								</div>
 							</div>
 						</div>
