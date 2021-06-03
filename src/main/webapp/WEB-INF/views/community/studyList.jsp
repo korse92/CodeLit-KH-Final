@@ -5,6 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -27,7 +30,7 @@ $(() => {
         <form method="GET" id="searchFrm"  
          action="${pageContext.request.contextPath}/community/studyList.do">
         <div class="row mt-5">
-          <h2 class=" jb-larger mt-3 col-sm-3">공부 게시판</h2>
+          <h2 class=" jb-larger mt-3 col-sm-3"><spring:message code="menu.community"/></h2>
           <div class="mt-4 col-sm-2">
             <select class="form-select" id="searchType" name="searchType">
               <option value="std_brd_title" ${param.searchType eq 't' ? 'selected' : ''}>제목</option>
@@ -45,7 +48,7 @@ $(() => {
             </div>
           </div>
           <c:if test="${empty list}">
-          	<h1 style="text-align: center; margin-top: 3rem;" >등록된 게시글이 존재하지 않습니다.</h1>
+          	<h1 style="text-align: center; margin-top: 3rem;" ><spring:message code="admin.noData"/></h1>
           </c:if>
           <c:if test="${not empty list}">
         </div>
@@ -57,11 +60,11 @@ $(() => {
           <table class="table text-center table-hover">
             <thead class="table-primary">
               <tr>
-                <th scope="col">번호</th>
-                <th scope="col">제목</th>
-                <th scope="col">등록일</th>
-                <th scope="col">조회수</th>
-                <th scope="col">작성자</th>
+              	 <th scope="col"><spring:message code="admin.boardNo"/></th>
+	              <th scope="col"><spring:message code="user.boardTitle"/></th>
+	              <th scope="col"><spring:message code="user.boardDate"/></th>
+	              <th scope="col"><spring:message code="user.boardCount"/></th>
+	              <th scope="col"><spring:message code="admin.id"/></th>
               </tr>
             </thead>
             <tbody>
@@ -89,13 +92,13 @@ $(() => {
             </tbody>
           </table>
         </div>
-        ${pageBar}
-        </div>
       </c:if>
-      	<div>
+        ${pageBar}
       	<sec:authorize access="isAuthenticated()">
-          <button class="btn btn-primary pull-right board-write" onclick="location.href='${pageContext.request.contextPath}/community/studyWrite.do'">글쓰기</button>
+          <button class="btn btn-primary pull-right board-write" onclick="location.href='${pageContext.request.contextPath}/community/studyWrite.do'"><spring:message code="help.writeBtn"/></button>
       	</sec:authorize>
+        </div>
+      	<div>
       	</div>
        </div>
 

@@ -6,6 +6,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="장바구니" name="title"/>
 </jsp:include>
@@ -169,7 +172,7 @@
 	
 
 <div class="container">
-	<h2>장바구니</h2>
+	<h2><spring:message code="menu.cart"/></h2>
    	<hr>
 	<div class="row">
 		<div id="orderDiv_left me-3" class="col-7">
@@ -212,11 +215,11 @@
 				<div id="orderTableTop" class="row fs-4">
 					<c:choose>
 						<c:when test="${not empty basketList}">
-							<span class="col-3">ID : </span><p id="memberId" class="col-9 text-start ps-3">${refMemberId}</p>
-				            <span class="col-3">강의 : </span><p id="orderName" class="col-9 text-start ps-3">${basketList.get(0).lectureName} 외 ${basketList.size() - 1}종</p>
+							<span class="col-3"><spring:message code="login.id"/></span><p id="memberId" class="col-9 text-start ps-3">${refMemberId}</p>
+				            <span class="col-3"><spring:message code="order.lecture"/>: </span><p id="orderName" class="col-9 text-start ps-3">${basketList.get(0).lectureName} 외 ${basketList.size() - 1}종</p>
 						</c:when>
 						<c:otherwise>
-							<p id="noneBasket" class="text-center ps-5">장바구니에 담긴 강의가 없습니다.</p>
+							<p id="noneBasket" class="text-center ps-5"><spring:message code="ud.noCartLecture"/></p>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -225,7 +228,7 @@
 	            	<hr>
 	            	<div class="row">
 			            <span id="money" class="offset-6 col-4 fs-4 me-2">${sumBasket}</span><span class="col-1 fs-4 me-2">원</span>
-			            <button type="button" id="orderBtn" class="btn btn-primary text-light fs-5 mt-3">결 제</button>
+			            <button type="button" id="orderBtn" class="btn btn-primary text-light fs-5 mt-3"><spring:message code="admin.payment"/></button>
 	            	</div>
 	            </div>
 			</div>

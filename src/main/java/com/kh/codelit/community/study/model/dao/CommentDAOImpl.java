@@ -29,8 +29,8 @@ public class CommentDAOImpl implements CommentDAO {
 	}
 
 	@Override
-	public int update(int stdCmtNo) {
-		return session.update("cmt.update", stdCmtNo);
+	public int update(Comment cmt) {
+		return session.update("cmt.update", cmt);
 	}
 
 }

@@ -7,6 +7,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 상세페이지" name="title"/>
@@ -20,7 +23,6 @@
 	padding-left: 3rem;
 	padding-right: 3rem;
 }
-
 .star-input>.input,
 .star-input>.input>label:hover,
 .star-input>.input>input:focus+label,
@@ -49,7 +51,6 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 		if($(".accordion-collapse").hasClass('show'))
 			$(allCollapseBtn).text('모두 펼치기');
 	}); */
-
 </script>
 
 <div class="container my-3">
@@ -58,9 +59,9 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 		<!-- 분기처리 -->
 			<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 				<ol class="breadcrumb mb-0">
-					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/lecture/lectureList.do" class="text-decoration-none">전체 목록</a></li>
+					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/lecture/lectureList.do" class="text-decoration-none"><spring:message code="lec.All"/></a></li>
 					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/lecture/lectureList.do/${lecture.refLecCatNo}" class="text-decoration-none">${categoryMap.get(lecture.refLecCatNo)}</a></li>
-					<li class="breadcrumb-item active" aria-current="page">현재 페이지</li>
+					<li class="breadcrumb-item active" aria-current="page"><spring:message code="lec.Current"/></li>
 				</ol>
 			</nav>
 		</div>
@@ -96,30 +97,31 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 						</div>
 					</div>
 					<c:set var="contains" value="false"/>
-					<c:forEach var="item" items="${orderedlectureNoList}">
-						<c:if test="${item eq lecture.lectureNo}">
-							<c:set var="contains" value="true"/>
-						</c:if>
-					</c:forEach>
-					<c:choose>
-					<c:when test="${contains}">
+						<c:forEach var="item" items="${orderedlectureNoList}">
+							<c:if test="${item eq lecture.lectureNo}">
+								<c:set var="contains" value="true"/>
+							</c:if>
+						</c:forEach>
+						<c:choose>
+						<c:when test="${contains}">
 						<div class="row text-center">
-							<p id="commented" class="ps-5">수강중인 강의 입니다!</p>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="row">
-							<p class="h3 text-end">
-							<c:choose>
-								<c:when test="${lecture.lecturePrice == 0}">
-								무료
-								</c:when>
-								<c:otherwise>
-								<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
-								</c:otherwise>
-							</c:choose>
-							</p>
-						</div>
+<!-- 						<!-- <p id="commented" class="text-center ps-5">수강중인 강의 입니다!</p> -->
+							<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/lecture/lecture.do?lectureNo=${lecture.lectureNo}';"><spring:message code="lec.takeCourse"/></button>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="row">
+								<p class="h3 text-end">
+								<c:choose>
+									<c:when test="${lecture.lecturePrice == 0}">
+									<spring:message code="lec.free"/>
+									</c:when>
+									<c:otherwise>
+									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
+									</c:otherwise>
+								</c:choose>
+								</p>
+							</div>
 
 						<sec:authorize access="!hasRole('ADMIN') && isAuthenticated()">
 						<div class="row">
@@ -160,18 +162,18 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 				<li class="nav-item" role="presentation">
 					<button class="nav-link ${!reviewOpen ? 'active' : ''}" id="intro-tab" data-bs-toggle="tab"
 						data-bs-target="#intro" type="button" role="tab"
-						aria-controls="intro" aria-selected="${!reviewOpen ? 'true' : 'false'}">강의 소개</button>
+						aria-controls="intro" aria-selected="${!reviewOpen ? 'true' : 'false'}"><spring:message code="enrollLec.introduction"/></button>
 				</li>
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
 						data-bs-target="#curriculum" type="button" role="tab"
-						aria-controls="curriculum" aria-selected="false">커리큘럼</button>
+						aria-controls="curriculum" aria-selected="false"><spring:message code="enrollLec.curriculum"/></button>
 				</li>
 				<sec:authorize access="!hasRole('ADMIN')">
 				<li class="nav-item" role="presentation">
 					<button class="nav-link ${!reviewOpen ? '' : 'active'}" id="review-tab" data-bs-toggle="tab"
 						data-bs-target="#review" type="button" role="tab"
-						aria-controls="review" aria-selected="${!reviewOpen ? 'false' : 'true'}">강의 후기</button>
+						aria-controls="review" aria-selected="${!reviewOpen ? 'false' : 'true'}"><spring:message code="enrollLec.review"/></button>
 				</li>
 				</sec:authorize>
 			</ul>
@@ -267,17 +269,17 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 						<div class="input-group my-3">
 							<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 							<input class="form-control" id="lecComment" name="lecComment" type="text" placeholder="후기 작성">
-							<button type="submit" class="btn btn-primary" id="cmtInsertBtn"><i class="fas fa-edit"></i> 입력 </button>
+							<button type="submit" class="btn btn-primary" id="cmtInsertBtn"><i class="fas fa-edit"></i><spring:message code="help.writeBtn" /></button>
 							</form:form>
 						</div>
 					</div>
 					</c:when>
 					<c:when test="${commented}">
-						<p id="commented" class="text-center ps-5 my-3">이미 수강후기를 남기셨습니다.</p>
+						<p id="commented" class="text-center ps-5 my-3"><spring:message code="lec.leftReview" /></p>
 					</c:when>
 					<c:when test="${empty memberId}"></c:when>
 					<c:otherwise>
-						<p id="noPayment" class="text-center ps-5 my-3">수강하지 않은 강의 입니다.</p>
+						<p id="noPayment" class="text-center ps-5 my-3"><spring:message code="lec.notApplied" /></p>
 					</c:otherwise>
 					</c:choose>
 					<!-- 후기 작성 row 끝 -->
@@ -324,7 +326,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 								<!-- 후기리스트 tabpane 끝 -->
 							</c:when>
 							<c:otherwise>
-								<p id="noReview" class="text-center ps-5">아직 후기가 없습니다.</p>
+								<p id="noReview" class="text-center ps-5"><spring:message code="lec.noReview" /></p>
 							</c:otherwise>
 						</c:choose>
 
@@ -370,38 +372,28 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 $("#cmtInsertBtn").on('click', function(){
 	var lecComment = $("#lecComment").val();
 	var checked = $('input:radio[name="lecAssessment"]:checked').length;
-
 	if(lecComment === ''){
 		alert('후기를 작성해 주세요!');
 		return false;
 	}
-
 	if(checked == 0){
 		alert('점수를 남겨주세요!');
 		return false;
 	}
 });
-
 function updateCmt(e){
 	$("#updateCmt").modal("show");
 	var $cardParent = $(e.target).parents(".cmtGroup");
-
 	var $lecAssessment = $cardParent.find('.lecAssessment').val();
 	var $lecComment = $cardParent.find('.lecComment').text();
-
 	console.log($cardParent);
-
 	console.log($lecAssessment);
 	console.log($lecComment);
-
 	$("#updateCmt #lecComment").val($lecComment);
 	$("#updateCmt #p" + $lecAssessment + "[name=lecAssessment]").prop("checked", true);
-
 	//var lecAssessment = $('input:radio[name="lecAssessment"]:checked').val();
-
 	//console.log(content);
 	//console.log(lecAssessment);
-
 	//$("#lecComment").val(content);
 	//$('input:radio[name="lecAssessment"]').val(lecAssessment);
 }

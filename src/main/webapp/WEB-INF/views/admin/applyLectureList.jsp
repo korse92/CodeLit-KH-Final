@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
@@ -35,22 +38,22 @@
 	<section class="container">
 		<div class="page-header">
 			<div class="row mt-5">
-				<h2 class=" jb-larger m-3 col-sm-3">강의 신청 목록</h2>
+				<h2 class=" jb-larger m-3 col-sm-3"><spring:message code="admin.applyLectureList"/></h2>
 			</div>
 			<table class="table mt-3 col-sm text-center">
 				<thead class="thead-light">
 					<tr>
-						<td class="" style="display: none">강의 번호</td>
-						<th scope="col">카테고리</th>
-						<th scope="col">강사 아이디</th>
-						<th scope="col">강의명</th>
-						<th scope="col">강의 링크</th>
-						<th scope="col">비고</th>
+						<td class="" style="display: none"></td>
+						<th scope="col"><spring:message code="admin.category"/></th>
+						<th scope="col"><spring:message code="admin.id"/></th>
+						<th scope="col"><spring:message code="admin.lecTitle"/></th>
+						<th scope="col"><spring:message code="admin.link"/></th>
+						<th scope="col"><spring:message code="admin.check"/></th>
 					</tr>
 					<!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="14" style="text-align: center;">조회된 데이터가 없습니다.</td>
+							<td colspan="14" style="text-align: center;"><spring:message code="admin.noData"/></td>
 						</tr>
 					</c:if>
 				</thead>
@@ -63,13 +66,13 @@
 								<td>${lectureList.refMemberId}</td>
 								<td>${lectureList.lectureName}</td>
 								<td><a
-									href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureList.lectureNo}">강의
-										상세보기</a></td>
+									href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureList.lectureNo}">
+										<spring:message code="admin.lecDetail"/></a></td>
 								<td>
 									<button type="button" class="btn btn-warning btn-sm"
-										onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?no=${lectureList.lectureNo}';">승인</button>
+										onclick="location.href ='${pageContext.request.contextPath}/admin/approveLecture.do?no=${lectureList.lectureNo}';"><spring:message code="admin.approveBtn"/></button>
 									<button type="button" class="btn btn-secondary btn-sm"
-										onclick="deleteLecture('${lectureList.lectureNo}');">거절</button>
+										onclick="deleteLecture('${lectureList.lectureNo}');"><spring:message code="admin.rejectBtn"/></button>
 								</td>
 							</tr>
 

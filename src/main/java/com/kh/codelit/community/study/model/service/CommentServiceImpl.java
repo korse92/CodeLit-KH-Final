@@ -29,11 +29,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public int update(int stdCmtNo) {
-		return dao.update(stdCmtNo);
+	public int update(Comment cmt) {
+		return dao.update(cmt);
 	}
 
-
-
-	
 }

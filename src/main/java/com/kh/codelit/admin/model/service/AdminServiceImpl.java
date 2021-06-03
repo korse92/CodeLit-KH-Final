@@ -135,6 +135,24 @@ public class AdminServiceImpl implements AdminService {
 
 	}
 
+	@Override
+	public List<Map<String, Object>> selectClickRank() {
+
+		return adminDao.selectClickRank();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectCategorySales() {
+
+		return adminDao.selectCategorySales();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectUserClick(String userName) {
+
+		return adminDao.selectUserClick(userName);
+	}
+
 
 	
 

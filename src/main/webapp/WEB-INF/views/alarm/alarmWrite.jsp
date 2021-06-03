@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -12,10 +16,10 @@
 
     <div class="container">
         <div class="row mt-5">
-          <h2 class=" jb-larger mt-3 col-sm-4">알림 작성</h2>
+          <h2 class=" jb-larger mt-3 col-sm-4"><spring:message code="noti.write"/></h2>
         </div>
           <div class="row title-group">
-            <h5 class="col-sm-2 board-title">제목</h5>
+            <h5 class="col-sm-2 board-title"><spring:message code="user.boardTitle"/></h5>
             <div class="col-sm-9">
               <input class="form-control" type="text" name="msgTitle" id="msgTitle" placeholder="title">
    	 		  <input type="hidden" value="/app/user" id="url">
@@ -27,7 +31,7 @@
             </div>
           </div>
           <div class="board-footer">
-            <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/alarm/alarmList.do';">취소</button>
+            <button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/alarm/alarmList.do';"><spring:message code="admin.backBtn"/></button>
             <button type="button" class="btn btn-primary sendBtn" id="sendBtn">완료</button>
           </div>
       </div>
