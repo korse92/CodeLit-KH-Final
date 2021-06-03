@@ -66,9 +66,9 @@ $(() => {
 	<div class="col-8 row mx-auto my-lg-5">
 
 		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-inner">
+			<div class="carousel-inner" style="height: 500px;" >
 			<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
-				<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}">
+				<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}" style="object-fit:cover;">
 					<img
 						src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${rolling.lectureThumbRenamed}" alt=""
 						class="d-block w-100" >
