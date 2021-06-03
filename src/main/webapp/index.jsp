@@ -66,16 +66,15 @@ $(() => {
 	<div class="col-8 row mx-auto my-lg-5">
 
 		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-inner">
+			<div class="carousel-inner" style="height: 500px;" >
 			<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
-				<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}">
+				<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}" style="object-fit:cover;">
 					<img
 						src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${rolling.lectureThumbRenamed}" alt=""
 						class="d-block w-100" >
 				</div>
-			</c:forEach>	
-			</div>	
-		</div>
+			</c:forEach>
+			</div>
 			<button class="carousel-control-prev" type="button"
 				data-bs-target="#carouselExampleControls" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -88,6 +87,7 @@ $(() => {
 			</button>
 		</div>
 	</div>
+</div>
 	<div class="row justify-content-center">
 		<div class="rollingPage">
 			<div class="rollingHead">
@@ -104,7 +104,7 @@ $(() => {
 		</div>
 		<div class="input-group mb-3 col-3"
 			style="width: 20rem; height: 3rem;">
-			
+
 			<spring:message code="main.search" var="searchPlaceholder"/>
 			<input type="search" class="form-control" id="mainSearch" name="mainSearch" aria-label="mainSearchLabel"
 				aria-describedby="button-addon2" placeHolder="${searchPlaceholder}">
@@ -218,7 +218,7 @@ $(() => {
 	</c:forEach>
 </div>
 	</div>
-	
+
 
 <!-- 컨텐츠 끝 -->
 

@@ -52,7 +52,16 @@ $(() => {
             <c:forEach items="${message}" var="message">
 	            <tr data-no="${message.msgNo}">
 	              <td>${message.rownum}</td>
-	              <td>${message.msgTitle}</td>
+	              <td>
+   	                <c:choose>
+                		<c:when test="${fn:length(message.msgTitle) > 30}">
+				                <c:out value="${fn:substring(message.msgTitle,0,29)}" />...
+                		</c:when>
+                		<c:otherwise>
+                				<c:out value="${message.msgTitle}" />
+                		</c:otherwise>
+	            	</c:choose>
+	              </td>
 	              <td><fmt:formatDate value="${message.msgDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
 	              <td>${message.refWriterId}</td>
 	              <td>${message.readYN eq 'N' ? '읽지않음' : '읽음'}</td>

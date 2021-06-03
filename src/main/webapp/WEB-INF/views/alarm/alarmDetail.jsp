@@ -26,7 +26,7 @@
         </div>
         <div class="board-container">
           <h5 class="content-title"><spring:message code="user.boardContent"/></h5>
-            <p class="content">
+            <p class="content" style=" word-break:break-all;">
               ${message.msgContent}
             </p>          
         </div>
