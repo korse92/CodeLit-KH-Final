@@ -67,22 +67,22 @@ alert("${msg}");
 //자바스크립트를 이용해서 현재 페이지주소를 가져와 처리
 //현재 브라우져 주소창에 적힌 주소는 location객체가 가지고 있음
 function changeLocale(lang) {
-	
+
 	var url;
-	
+
 	if(location.href.indexOf("lang=") > -1) {
-		url = location.href.substring(0, location.href.indexOf("lang=") - 1);		
+		url = location.href.substring(0, location.href.indexOf("lang=") - 1);
 	} else {
 		url = location.href;
 	}
-	
+
 	if(url.indexOf("?") > -1)
 		url += "&";
 	else
 		url += "?";
-	
+
 	location.href = url + "lang=" + lang;
-	
+
 }
 </script>
 
@@ -123,7 +123,7 @@ function changeLocale(lang) {
 								aria-labelledby="navlinkDropdownLecture">
 								<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do"><spring:message code="menu.allLecture"/></a></li>
 								<c:forEach items="${categoryList}" var="category">
-									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}"><spring:message code="${category.name}"/></a></li>
+									<li><a class="dropdown-item" href="${pageContext.request.contextPath}/lecture/lectureList.do/${category.no}"><spring:message code="${category.localeKey}"/></a></li>
 								</c:forEach>
 							</ul>
 						</li>
@@ -218,7 +218,7 @@ function changeLocale(lang) {
 			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en')"><spring:message code="lang.languageEnglish"/></a></li>
 			  </ol>
 			</nav>
-		
+
 			<%--  <div>
 				<!-- text속성 :일치하는 key값이 없을 때 사용하는 default 표현 -->
 				<select class="form-control" id="localeChoice">
