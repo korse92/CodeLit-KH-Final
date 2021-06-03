@@ -38,5 +38,7 @@ public interface StudyService {
 
 	Lecture selectOneLec(int lecNo);
 
+	int deleteStdCmt(int stdBrdNo);
+
 
 }

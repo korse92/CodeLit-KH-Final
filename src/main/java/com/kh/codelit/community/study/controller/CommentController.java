@@ -58,19 +58,19 @@ public class CommentController {
 			@ModelAttribute Comment cmt,
 			RedirectAttributes redirect) {
 		try {
-			int result = service.update(cmt.getStdCmtNo());
+			int result = service.update(cmt);
 		} catch (Exception e) {
 			throw e;
 		}
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
-	@PostMapping("/deleteCmt.do")
-	public String deleteCmt(@RequestParam int cmtNo) {
+	@GetMapping("/deleteCmt.do")
+	public String deleteCmt(@RequestParam int stdCmtNo) {
 		Comment cmt = null;
 		try {
 			
-			cmt = service.selectStdNo(cmtNo);
-			int result = service.delete(cmtNo);
+			cmt = service.selectStdNo(stdCmtNo);
+			int result = service.delete(stdCmtNo);
 		} catch (Exception e) {
 			throw e;
 		}		
