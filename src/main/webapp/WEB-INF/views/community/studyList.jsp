@@ -33,8 +33,8 @@ $(() => {
           <h2 class=" jb-larger mt-3 col-sm-3"><spring:message code="menu.community"/></h2>
           <div class="mt-4 col-sm-2">
             <select class="form-select" id="searchType" name="searchType">
-              <option value="std_brd_title" ${param.searchType eq 't' ? 'selected' : ''}>제목</option>
-              <option value="ref_member_id" ${param.searchType eq 'w' ? 'selected' : ''}>작성자</option>
+              <option value="std_brd_title" ${param.searchType eq 't' ? 'selected' : ''}><spring:message code="user.boardTitle"/></option>
+              <option value="ref_member_id" ${param.searchType eq 'w' ? 'selected' : ''}><spring:message code="user.boardWriter"/></option>
             </select>
           </div>
           <div class="col-4 mt-4">
