@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -87,7 +90,7 @@
         <div class="container">
 
           <div class="mt-5">
-            <h2 class=" jb-larger mt-3">강사 관리</h2>
+            <h2 class=" jb-larger mt-3"><spring:message code="admin.manageTeacher"/></h2>
             
 	        <form method="GET" id="teacherSearchFrm" action="${pageContext.request.contextPath}/admin/manageTeacher.do">
             	<div class="row col-8 mt-5 ms-1">
@@ -96,14 +99,17 @@
 		            	<tr>
 		            		<td class="col-2">
 		            			<select class="form-select" name="category">
-					                <option selected>주 강의분야</option>
+					                <option selected><spring:message code="admin.lecturePart"/></option>
 					                <c:forEach items="${categoryList}" var="cat">
 					                	<option value="${cat.no}">${cat.name}</option>
 					                </c:forEach>
 					        	</select>
 		            		</td>
 		            		<td class="col-3">
-		            			<input type="search" id="form1" name="keyword" class="form-control offset-1"  placeholder="아이디"/>              
+		            		<spring:message code="main.search" var="searchPlaceholder"/>
+							<input type="search" class="form-control offset-1" id="form1" name="keyword" aria-label="mainSearchLabel"
+								aria-describedby="button-addon2" placeHolder="${searchPlaceholder}">
+		            			<!-- <input type="search" id="form1" name="keyword" class="form-control offset-1"  placeholder="아이디"/> -->              
 		            		</td>
 		            		<td>
 			               		<button type="submit" class="btn btn-primary offset-4" id="searchBtn">
@@ -125,11 +131,11 @@
             <table class="table text-center" id="teacherBoardTable">
               <thead class="table-primary">
                 <tr>
-                  <th scope="col">번호</th>
-                  <th scope="col">주 강의분야</th>
-                  <th scope="col">아이디</th>
-                  <th scope="col">개설강의</th>
-                  <th scope="col">권한</th>
+                  <th scope="col"><spring:message code="admin.boardNo"/></th>
+                  <th scope="col"><spring:message code="admin.lecturePart"/></th>
+                  <th scope="col"><spring:message code="admin.id"/></th>
+                  <th scope="col"><spring:message code="admin.lecTitle"/></th>
+                  <th scope="col"><spring:message code="admin.manageRight"/></th>
                 </tr>
               </thead>
               <tbody>
@@ -153,7 +159,7 @@
                     	<form:form method="POST" class="deleteTeacherFrm"
                     				action="${pageContext.request.contextPath}/admin/deleteTeacherAndAuth.do">
 	                    	<input type="hidden" name = "refMemberId" value="${teacher.refMemberId}" />		
-	                        <button type="submit" class="btn btn-danger text-light">권한삭제</button>
+	                        <button type="submit" class="btn btn-danger text-light"><spring:message code="admin.manageRightBtn"/></button>
                     	</form:form>
                     </td>
                 </tr>
