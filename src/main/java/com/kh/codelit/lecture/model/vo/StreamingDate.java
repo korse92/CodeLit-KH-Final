@@ -11,9 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StreamingDate {
 
-	int refLectureNo;
-	String streamingTitle;
-	Date streamingStartDate;
-	Date streamingEndDate;
+	private int refLectureNo;
+	private String streamingTitle;
+	private Date streamingStartDate;
+	private Date streamingEndDate;
+
+	private String refMemberId;
+	private String lectureName;
+	private String teacherName;
+	private String streamingStartTime;
+	private String streamingEndTime;
+	private String lectureThumbRenamed;
 
 }

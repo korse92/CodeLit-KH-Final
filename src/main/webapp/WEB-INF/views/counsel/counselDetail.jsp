@@ -56,7 +56,7 @@
 		  	<div class="row mb-2 ps-2">
 		  		<span class="col-1 fs-5"><spring:message code="user.boardWriter"/> : </span><span class="col-11 fs-5">${counsel.refMemberId}</span>
 		  	</div>
-		    <div class="board-container mt-3 ps-2" id="conuselContent">
+		    <div class="board-container mt-3 ps-2" id="conuselContent" style=" word-break:break-all;">
 		    	<c:if test="${not empty attach}">
 		    		<img src="${pageContext.request.contextPath}${attach.contentsAttachPath}/${attach.renamedFilename}" alt="">
 		    	</c:if>

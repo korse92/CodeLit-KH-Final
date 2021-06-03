@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.dao.MemberDao;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -21,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-	
+
 	@Autowired
 	private MemberDao memberDao;
-	
-	
+
+
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		Member member = memberDao.selectOneMember(id);
@@ -45,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
 	// 아이디를 통해 멤버 테이블 한 줄 가져오는 메소드
 	@Override
 	public Member selectOneMember(String id) {
-		
+
 		return memberDao.selectOneMember(id);
 
 	}
@@ -70,14 +71,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member selectDetail(String memberId) {
-		
+
 		return memberDao.selectDetail(memberId);
 	}
 
 
 
 	@Override
-	public int updateMember(Member member) {	
+	public int updateMember(Member member) {
 		return memberDao.updateMember(member);
 	}
 
@@ -105,6 +106,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Lecture> getLectureList(String memberId) {
 		return memberDao.getLectureList(memberId);
+	}
+
+
+
+	@Override
+	public List<StreamingDate> selectStreamingDateList(String refMemberId) {
+		return memberDao.selectStreamingDateList(refMemberId);
 	}
 
 

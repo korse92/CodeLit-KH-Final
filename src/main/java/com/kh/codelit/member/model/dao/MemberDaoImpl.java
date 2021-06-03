@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,7 @@ public class MemberDaoImpl implements MemberDao {
 		log.debug("insertmemberDao = {}", member);
 		return session.insert("member.insertMember", member);
 	}
-	
+
 	@Override
 	public int updateMemberProfile(Map<String, String> map) {
 		return session.update("member.updateMemberProfile", map);
@@ -57,21 +58,21 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public Member selectDetail(String memberId) {
-		
+
 		return session.selectOne("member.selectDetail",memberId);
 	}
 
 	@Override
 	public int updateMember(Member member) {
-	
+
 		return session.update("member.updateMember", member);
 	}
 
-	
+
 
 	@Override
 	public int deleteMember(String memberId) {
-	
+
 		return session.delete("member.deleteMember",memberId);
 	}
 
@@ -94,6 +95,11 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Lecture> getLectureList(String memberId) {
 		return session.selectList("member.getLectureList", memberId);
+	}
+
+	@Override
+	public List<StreamingDate> selectStreamingDateList(String refMemberId) {
+		return session.selectList("member.selectStreamingDateList", refMemberId);
 	}
 
 }
