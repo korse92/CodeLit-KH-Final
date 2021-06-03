@@ -23,7 +23,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile.css" />
 
 <style>
-
 </style>
 <section class="profile-Uclass">
 <div class="container">
@@ -175,7 +174,7 @@
 				<div class="card-body">
 					<div class="card-text">
 					<c:if test="${empty message}">
-						작성된 알림 없음
+						<p><spring:message code="ud.noNoti"/></p>
 					</c:if>
 					<c:if test="${not empty message}">
 						<c:forEach items="${message}" var="message" end="2">
