@@ -37,7 +37,6 @@ $(() => {
               <tr>
                 <th scope="col">번호</th>
                 <th scope="col">제목</th>
-                <th scope="col">작성자</th>
                 <th scope="col">등록일</th>
                 <th scope="col">조회수</th>
                 <th scope="col">작성자</th>
@@ -56,7 +55,6 @@ $(() => {
                 				<c:out value="${list.noticeTitle}" />
                 		</c:otherwise>
                 	</c:choose>
-                <td>${list.refMemberId}</td>
                 <td><fmt:formatDate value="${list.noticeDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
               	<td>${list.noticeCount}</td>
               	<td>${list.refMemberId}</td>

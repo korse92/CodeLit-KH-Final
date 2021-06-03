@@ -105,6 +105,12 @@ public class StudyDAOImpl implements StudyDAO {
 	}
 
 
+	@Override
+	public int deleteStdCmt(int stdBrdNo) {
+		return session.delete("studyBoard.deleteStdCmt", stdBrdNo);
+	}
+
+
 
 
 }
