@@ -175,7 +175,7 @@
 				<div class="card-body">
 					<div class="card-text">
 					<c:if test="${empty message}">
-						<p><spring:message code="ud.noNoti"/></p>
+						작성된 알림 없음
 					</c:if>
 					<c:if test="${not empty message}">
 						<c:forEach items="${message}" var="message" end="2">
