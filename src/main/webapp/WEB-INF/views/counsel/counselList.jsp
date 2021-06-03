@@ -67,7 +67,7 @@
 		       		
 	          	</c:if>
 	          	
-		        <button class="btn btn-primary boardList-footer" onclick="location.href='${pageContext.request.contextPath}/counsel/counselWrite.do'"><th scope="col"><spring:message code="admin.saveBtn"/></th></button>		       
+		        <button class="btn btn-primary boardList-footer" onclick="location.href='${pageContext.request.contextPath}/counsel/counselWrite.do'"><th scope="col"><spring:message code="noti.writeBtn"/></th></button>		       
 			</div>
 		</div>
 	</sec:authorize>
