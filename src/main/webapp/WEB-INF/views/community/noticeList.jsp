@@ -58,6 +58,7 @@ $(() => {
                 				<c:out value="${list.noticeTitle}" />
                 		</c:otherwise>
                 	</c:choose>
+                </td>	
                 <td><fmt:formatDate value="${list.noticeDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
               	<td>${list.noticeCount}</td>
               	<td>${list.refMemberId}</td>
