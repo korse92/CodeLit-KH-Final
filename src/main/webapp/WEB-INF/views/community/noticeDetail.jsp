@@ -29,7 +29,7 @@
           	<c:if test="${not empty attach}">
 	            <img src='${pageContext.request.contextPath}${attachPath}'>
           	</c:if>
-            <p class="content">
+            <p class="content" style="word-break:break-all;">
               ${notice.noticeContent}
             </p>          
         </div>

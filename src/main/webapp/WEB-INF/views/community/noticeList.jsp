@@ -51,13 +51,14 @@ $(() => {
                 <td scope="row">${list.rownum}</td>
                 <td>
                 	<c:choose>
-                		<c:when test="${fn:length(list.noticeTitle) > 20}">
-				                <c:out value="${fn:substring(list.noticeTitle,0,19)}" />...
+                		<c:when test="${fn:length(list.noticeTitle) > 40}">
+				                <c:out value="${fn:substring(list.noticeTitle,0,39)}" />...
                 		</c:when>
                 		<c:otherwise>
                 				<c:out value="${list.noticeTitle}" />
                 		</c:otherwise>
                 	</c:choose>
+                </td>	
                 <td><fmt:formatDate value="${list.noticeDate}" pattern="yy/MM/dd HH:mm:ss"/></td>
               	<td>${list.noticeCount}</td>
               	<td>${list.refMemberId}</td>

@@ -191,11 +191,25 @@ public class AdminDaoImpl implements AdminDao {
 
 	}
 
+	@Override
+	public List<Map<String, Object>> selectClickRank() {
+
+		return session.selectList("admin.selectClickRank");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectCategorySales() {
+
+		return session.selectList("admin.selectCategorySales");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectUserClick(String userName) {
+
+		return session.selectList("admin.selectUserClick", userName);
+	}
 
 
-
-
-	
 
 
 }
