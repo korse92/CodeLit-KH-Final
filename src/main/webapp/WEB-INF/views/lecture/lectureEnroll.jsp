@@ -28,7 +28,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/main.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/locales/ko.js"></script>
 
-<!-- datepicker -->
+<!-- jquery ui (datepicker, autocomplete, ...) -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -36,6 +36,9 @@
 <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.min.js" ></script><!-- 타이머js -->
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/jquery.timepicker.css" media=""/><!-- 타이머css -->
 
@@ -67,6 +70,10 @@ img#thumbImage {
 	width: 65%;
 	margin-bottom: 10px;
 	justify-content: end;
+}
+
+.ui-autocomplete {
+	z-index:2147483647;
 }
 </style>
 
