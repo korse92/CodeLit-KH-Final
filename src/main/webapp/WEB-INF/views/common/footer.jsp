@@ -13,6 +13,7 @@
   		margin-top: 6rem;
   	}
   </style>
+  
 
 <footer id = "commonFooter" class="d-flex align-items-center justify-content-center">
   <div class="container">
