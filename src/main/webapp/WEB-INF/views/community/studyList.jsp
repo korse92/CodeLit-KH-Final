@@ -75,10 +75,10 @@ $(() => {
 	                [${list.lectureName}]
 						<c:choose>
 	                		<c:when test="${fn:length(list.stdBrdTitle) > 20}">
-					                <c:out value="${fn:substring(list.stdBrdTitle,0,19)}" />...
+					                <c:out value="${fn:substring(list.stdBrdTitle,0,19)}" />...()
 	                		</c:when>
 	                		<c:otherwise>
-	                				<c:out value="${list.stdBrdTitle}" />
+	                				<c:out value="${list.stdBrdTitle}" />()
 	                		</c:otherwise>
 	                	</c:choose>
 					</td>
@@ -92,13 +92,13 @@ $(() => {
             </tbody>
           </table>
         </div>
-        ${pageBar}
-        </div>
       </c:if>
-      	<div>
+        ${pageBar}
       	<sec:authorize access="isAuthenticated()">
           <button class="btn btn-primary pull-right board-write" onclick="location.href='${pageContext.request.contextPath}/community/studyWrite.do'"><spring:message code="help.writeBtn"/></button>
       	</sec:authorize>
+        </div>
+      	<div>
       	</div>
        </div>
 

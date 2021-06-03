@@ -32,11 +32,11 @@ window.onload = function() {
 function checkContent() {
 	const $title = $("#msgTitle");
 	const $content = $("#msgContent");
-	if(/^(.|\n)+$/.test(title.val()) == false){
+	if(/^(.|\n)+$/.test($title.val()) == false){
 		alert("제목을 입력하세요");
 		return false;
 	}
-	if(/^(.|\n)+$/.test(content.val()) == false){
+	if(/^(.|\n)+$/.test($content.val()) == false){
 		alert("내용을 입력하세요");
 		return false;
 	}

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.codelit.attachment.model.vo.Attachment;
 import com.kh.codelit.common.HelloSpringUtils;
+import com.kh.codelit.community.study.model.service.CommentService;
 import com.kh.codelit.community.study.model.service.StudyService;
 import com.kh.codelit.community.study.model.vo.Comment;
 import com.kh.codelit.community.study.model.vo.StudyBoard;
@@ -37,6 +38,8 @@ public class StudyBoardController {
 	
 	@Autowired
 	private StudyService service;
+	@Autowired
+	private CommentService cmtService;
 	
 	@GetMapping("/studyList.do")
 	public ModelAndView selectBoard(
@@ -220,8 +223,10 @@ public class StudyBoardController {
 	@GetMapping("/studyDelete.do")
 	public String BoardDelete(@RequestParam int stdBrdNo, RedirectAttributes redirect) {
 		try {
-			int attDel = service.deleteAttach(stdBrdNo);
+			service.deleteAttach(stdBrdNo);
+			service.deleteStdCmt(stdBrdNo);
 			int result = service.delete(stdBrdNo);
+			
 			String msg = result > 0 ?"삭제 성공" : "삭제 실패";
 			redirect.addFlashAttribute("msg", msg);
 		}catch (Exception e) {

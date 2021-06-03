@@ -28,7 +28,7 @@ public class MessengerController {
 	public Messenger user(@RequestBody Messenger msg, Principal pri) {
 		try {
 			// 알림 작성
-			log.debug("================ msg {}", msg);
+			log.debug("###================ msg {}", msg);
 			msg.setRefWriterId(pri.getName());
 			String auth = "ROLE_USER";
 			List<Map<String, String>> user = service.selectAuth(auth);
@@ -49,7 +49,6 @@ public class MessengerController {
 	@SendTo("/topic/success/{memberId}")
 	public Messenger teacherSuccessAlarm(@DestinationVariable String memberId, Messenger msg,Principal pri) {
 		try {
-			log.debug("###################### 강사신청 = {}", msg);
 			msg.setRefWriterId(pri.getName());
 			msg.setRefReceiverId(memberId);
 			service.insertMsg(msg);

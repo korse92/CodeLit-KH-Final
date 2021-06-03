@@ -52,11 +52,6 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 			$(allCollapseBtn).text('모두 펼치기');
 	}); */
 </script>
-<c:if test="${not empty commentInserted}">
-<script>
-$(review-tab).trigger("click");
-</script>
-</c:if>
 
 <div class="container my-3">
 	<div class="card mx-auto">
@@ -109,8 +104,10 @@ $(review-tab).trigger("click");
 						</c:forEach>
 						<c:choose>
 						<c:when test="${contains}">
-<!-- 							<p id="commented" class="text-center ps-5">수강중인 강의 입니다!</p> -->
+						<div class="row text-center">
+<!-- 						<!-- <p id="commented" class="text-center ps-5">수강중인 강의 입니다!</p> -->
 							<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/lecture/lecture.do?lectureNo=${lecture.lectureNo}';"><spring:message code="lec.takeCourse"/></button>
+							</div>
 						</c:when>
 						<c:otherwise>
 							<div class="row">
@@ -126,22 +123,36 @@ $(review-tab).trigger("click");
 								</p>
 							</div>
 
-							<sec:authorize access="!hasRole('ADMIN')">
-							<div class="row">
-								<div class="col-sm-2 p-0 me-2">
-									<button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="찜하기">
-										<i class="fas fa-heart"></i>
+						<sec:authorize access="!hasRole('ADMIN') && isAuthenticated()">
+						<div class="row">
+							<div class="col-sm-2 p-0 me-2">
+								<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
+			                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" />
+									<button type="submit" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="찜하기">
+										<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
 									</button>
-								</div>
-								<div class="col-sm p-0">
-									<button type="button" class="btn btn-warning w-100" data-bs-toggle="tooltip" data-bs-placement="right" title="장바구니에 담기">
-										<spring:message code="admin.payment"/>
-									</button>
-								</div>
+								</form:form>
 							</div>
-							</sec:authorize>
-						</c:otherwise>
-						</c:choose>
+							<div class="col-sm p-0">
+								<form:form id="basketFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}" method="POST">
+									<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+									<button
+										type="submit" class="btn btn-warning w-100" data-bs-toggle="tooltip"
+										data-bs-placement="right" title="장바구니에 담기"
+										${lecture.basketed ? 'disabled' : ''}>
+										${lecture.basketed ? '이미 장바구니에 담겨 있습니다.' : '결제'}
+									</button>
+								</form:form>
+							</div>
+						</div>
+						</sec:authorize>
+						<sec:authorize access="isAnonymous()">
+						<div class="row text-center my-3">
+							<h5>로그인 후 이용해주세요!</h5>
+						</div>
+						</sec:authorize>
+					</c:otherwise>
+					</c:choose>
 				</div>
 
 			</div>
@@ -149,9 +160,9 @@ $(review-tab).trigger("click");
 		<div class="card-body">
 			<ul class="nav nav-tabs mb-3" id="DetailTab" role="tablist">
 				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="intro-tab" data-bs-toggle="tab"
+					<button class="nav-link ${!reviewOpen ? 'active' : ''}" id="intro-tab" data-bs-toggle="tab"
 						data-bs-target="#intro" type="button" role="tab"
-						aria-controls="intro" aria-selected="true"><spring:message code="enrollLec.introduction"/></button>
+						aria-controls="intro" aria-selected="${!reviewOpen ? 'true' : 'false'}"><spring:message code="enrollLec.introduction"/></button>
 				</li>
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="curriculum-tab" data-bs-toggle="tab"
@@ -160,14 +171,14 @@ $(review-tab).trigger("click");
 				</li>
 				<sec:authorize access="!hasRole('ADMIN')">
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="review-tab" data-bs-toggle="tab"
+					<button class="nav-link ${!reviewOpen ? '' : 'active'}" id="review-tab" data-bs-toggle="tab"
 						data-bs-target="#review" type="button" role="tab"
-						aria-controls="review" aria-selected="false"><spring:message code="enrollLec.review"/></button>
+						aria-controls="review" aria-selected="${!reviewOpen ? 'false' : 'true'}"><spring:message code="enrollLec.review"/></button>
 				</li>
 				</sec:authorize>
 			</ul>
 			<div class="tab-content p-2" id="DetailTabContent" style="min-height: 500px;">
-				<div class="tab-pane fade show active" id="intro" role="tabpanel"
+				<div class="tab-pane fade ${!reviewOpen ? 'show active' : ''}" id="intro" role="tabpanel"
 					aria-labelledby="intro-tab">
 					${lecture.lectureIntro}
 				</div>
@@ -207,7 +218,7 @@ $(review-tab).trigger("click");
 					</div>
 				</div>
 				<!-- #review.tab-pane -->
-				<div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+				<div class="tab-pane fade ${!reviewOpen ? '' : 'show active'}" id="review" role="tabpanel" aria-labelledby="review-tab">
 					<!-- Nav tabs -->
 					<c:if test="${!empty lecture.lectureCommentList}">
 					<ul class="nav nav-pills justify-content-end" id="reviewList-tab" role="tablist">
@@ -266,6 +277,7 @@ $(review-tab).trigger("click");
 					<c:when test="${commented}">
 						<p id="commented" class="text-center ps-5 my-3"><spring:message code="lec.leftReview" /></p>
 					</c:when>
+					<c:when test="${empty memberId}"></c:when>
 					<c:otherwise>
 						<p id="noPayment" class="text-center ps-5 my-3"><spring:message code="lec.notApplied" /></p>
 					</c:otherwise>
@@ -319,6 +331,37 @@ $(review-tab).trigger("click");
 						</c:choose>
 
 					</div><!-- 후기리스트 tab-content -->
+
+					<!-- 댓글 수정 모달 -->
+					<div class="modal fade" tabindex="-1" id="updateCmt" aria-hidden="true" aria-labelledby="eventModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<!-- modal-body -->
+								<div class="modal-body">
+								<form:form id="cmtFrm" action="${pageContext.request.contextPath}/lecture/cmtUpdate.do" method="POST">
+									<input name="refMemberId" id="refMemberId" type="hidden" value="${memberId}" type="hidden" />
+									<input name="refLectureNo" id="refLectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
+									<span class="star-input">
+										<span class="input">
+									    	<input type="radio" name="lecAssessment" value="1" id="p1">
+									    	<label for="p1">1</label>
+									    	<input type="radio" name="lecAssessment" value="2" id="p2">
+									    	<label for="p2">2</label>
+									    	<input type="radio" name="lecAssessment" value="3" id="p3">
+									    	<label for="p3">3</label>
+									    	<input type="radio" name="lecAssessment" value="4" id="p4">
+									    	<label for="p4">4</label>
+									    	<input type="radio" name="lecAssessment" value="5" id="p5">
+									    	<label for="p5">5</label>
+									  	</span>
+									</span>
+									<input class="form-control input- my-3" id="lecComment" name="lecComment" type="text">
+									<button type="submit" class="btn btn-primary my-3" id="updateBtn"><i class="fas fa-edit"></i> 수정 </button>
+									</form:form>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+
 				</div><!-- #review.tab-pane -->
 			</div>
 		</div>
