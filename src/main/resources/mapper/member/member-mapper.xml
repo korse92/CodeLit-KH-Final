@@ -14,7 +14,7 @@
 		null
 	)
 	</insert>
-	
+
 	<insert id="insertMemberByGoogle">
 	insert into
 		member
@@ -25,7 +25,7 @@
 		null
 	)
 	</insert>
-	
+
 <!-- 	<select id="loginByGoogle" resultType="member">
 		select
 			*
@@ -41,32 +41,32 @@
 		from member
 		where member_id = #{id}
 	</select>
-		
+
 	<select id="selectOne" resultType="member">
 		select *
 		from member
 		where member_id = #{id}
 	</select>
-		
+
 	<update id="updateMemberProfile">
 		update member
 		set member_profile = #{memberProfile},
 			member_re_profile = #{memberReProfile}
 		where member_id = #{meberId}
 	</update>
-	
+
 	<update id="updateMember">
-		update 
+		update
 		    member
-		set 	
+		set
 			member_pw =	#{memberPw},
 		    member_profile = #{memberProfile},
-			member_re_profile = #{memberReProfile}			
+			member_re_profile = #{memberReProfile}
 		where
 		member_id = #{memberId}
-		
+
 	</update>
-	
+
 	<delete id="deleteMember">
 		delete
 		from
@@ -132,5 +132,39 @@
            	desc,
 	            l.lecture_name
             asc
+	</select>
+
+	<select id="selectStreamingDateList" resultType="streamingDate">
+		select
+			p.ref_member_id,
+			pl.ref_lecture_no,
+			t.teacher_name,
+			l.lecture_name,
+			l.streaming_start_time,
+			l.streaming_end_time,
+			s.streaming_title,
+			s.streaming_start_date,
+			s.streaming_end_date,
+			l.lecture_thumb_renamed
+		from
+			payment p
+				join
+			pay_lecture pl
+				on
+					p.pay_code = pl.pay_code
+				join
+			lecture l
+				on
+					l.lecture_no = pl.ref_lecture_no
+				join
+			teacher t
+				on
+					t.ref_member_id = l.ref_member_id
+				join
+			streaming_date s
+				on
+					s.ref_lecture_no = pl.ref_lecture_no
+		where
+			p.ref_member_id = #{refMemberId}
 	</select>
 </mapper>

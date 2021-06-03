@@ -39,6 +39,7 @@ import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
 import com.kh.codelit.lecture.model.vo.LectureChapter;
 import com.kh.codelit.lecture.model.vo.LecturePart;
+import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
 import com.kh.codelit.teacher.model.service.TeacherService;
@@ -64,7 +65,7 @@ public class TeacherController {
 
 	@Autowired
 	private MessengerService msgService;
-	
+
 	@GetMapping("/teacherRequest.do")
 	public ModelAndView teacherRequest(Authentication authentication, ModelAndView mav) {
 		log.debug("강사등록 요청 {}", "컨트롤러 매핑 도착");
@@ -275,18 +276,21 @@ public class TeacherController {
 
 	@GetMapping("/teacherProfile.do")
 	public ModelAndView myProfile(SecurityContextHolderAwareRequestWrapper requestWrapper, ModelAndView mav,
-			Authentication authentication) {
+			Authentication authentication, Principal principal) {
 		try {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			String memberId = ((Member) userDetails).getMemberId();
+			String refMemberId = principal.getName();
 
 			List<Lecture> list = lectureService.teacherProfileLecture(memberId);
 			List<Messenger> msgList = msgService.alarmListMyprofile(memberId);
 			Member member = memberService.selectOneMember(memberId);
-			
+			List<StreamingDate> streamingDateList = memberService.selectStreamingDateList(refMemberId);
+
 			mav.addObject("member",member);
 			mav.addObject("list", list);
 			mav.addObject("message",msgList);
+			mav.addObject("streamingDateList", streamingDateList);
 			mav.setViewName("/teacher/teacherProfile");
 
 		} catch (Exception e) {

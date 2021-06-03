@@ -8,7 +8,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	
+
 <!-- 다국어  -->
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
@@ -157,12 +157,26 @@
 				<h3 class="card-header"><spring:message code="ud.calendar"/></h3>
 				<div class="card-body">
 					<div class="card-text">
+						<c:choose>
+							<c:when test="${empty streamingDateList}">
+								<h6>다음 일정이 없습니다.</h6>
+							</c:when>
+							<c:when test="${not empty streamingDateList}">
+								<c:forEach items="${streamingDateList}" var="streamingDateList" end="2">
+									<li >
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${streamingDateList.refLectureNo}'">
+											${streamingDateList.lectureName}
+										</span>
+									</li>
+								</c:forEach>
+							</c:when>
+						</c:choose>
 						<li>
 							<spring:message code="ud.noPlan"/>
 						</li>
 					</div>
 					<div class="text-end">
-						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/streamingCalendar.do'">
+						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/myCalendar.do'">
 							<span></span><span></span><span></span><span></span>
 							<spring:message code="ud.calendarMore"/>
 						</span>
