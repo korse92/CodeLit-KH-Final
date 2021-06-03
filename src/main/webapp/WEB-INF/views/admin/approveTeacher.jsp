@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" crossorigin="anonymous"></script>
 <!-- bootstrap js: jquery load 이후에 작성할것.-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -56,11 +59,11 @@
            <!-- https://getbootstrap.com/docs/4.1/components/forms/#overview -->
 	              <div class="modal-body">
 	              <input type="hidden" name="id" value="${id}">
-					<p class="text-center mt-5"> 해당 강사신청을 승인하시겠습니까?</p>
+					<p class="text-center mt-5"><spring:message code="admin.approveMsg"/></p>
 	              </div>
 					<div class="d-grid gap-2 d-md-flex m-3 justify-content-md-end">
-		                <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='${pageContext.request.contextPath}/admin/applyTeacherList.do';">취소</button>
-		                <button type="submit" class="btn btn-outline-danger m-2">승인</button>
+		                <button type="button" class="btn btn-outline-primary m-2" onclick="location.href='${pageContext.request.contextPath}/admin/applyTeacherList.do';"><spring:message code="admin.backBtn"/></button>
+		                <button type="submit" class="btn btn-outline-danger m-2"><spring:message code="admin.approveBtn"/></button>
 		                <!-- 취소 버튼 클릭시 강의관리게시판페이지로 이동처리 필요 or 모달창 없앨거면 data-dismiss="modal" 속성 주기  -->
 					</div>
 					<!-- 지헌 / 알림관련 태그 추가 -->
