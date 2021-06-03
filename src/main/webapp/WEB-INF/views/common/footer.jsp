@@ -14,7 +14,7 @@
   <div class="container">
     <div class="row">
       <p class="mb-0 text-center">
-      	<a href="${pageContext.request.contextPath}/lecture/lecture.do">
+      	<a href="${pageContext.request.contextPath}/admin/data.do">
       	&lt;Copyright 2017. <strong>KH정보교육원</strong>. All rights reserved.&gt;
       	</a>
       </p>

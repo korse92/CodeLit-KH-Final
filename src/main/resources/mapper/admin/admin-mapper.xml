@@ -245,4 +245,80 @@
 	where lecture_no = #{no}
 	
 	</update>
+	
+	<select id="selectClickRank" resultMap="selectClickRankMap">
+		select
+		    sum(click_no) sum,
+		    rank() over(order by sum(click_no) desc) rank,
+		    c.ref_lecture_no lecture_no,
+		    l.lecture_name lecture_name,
+		    lc.lec_cat_name lec_cat_name
+		from lecture_click c
+		    join lecture l
+		        on ref_lecture_no = lecture_no
+		    join lecture_category lc
+		        on l.ref_lec_cat_no = lc.lec_cat_no
+		group by ref_lecture_no, lecture_name, lec_cat_name
+	</select>
+	
+	<resultMap id="selectClickRankMap" type="map">
+		<id property="lectureNo" column="lecture_no" />
+		<result property="clickCount" column="sum" />
+		<result property="rank" column="rank" />
+		<result property="lectureName" column="lecture_name" />	
+		<result property="lecCatName" column="lec_cat_name" />	
+	</resultMap>
+	
+	<select id="selectCategorySales" resultMap="selectCategorySalesMap">
+		select lec_cat_name,
+		        sum(lecture_price) sum,
+		        rank() over(order by sum(lecture_price) desc) rank
+		from lecture l
+		    join lecture_category lc
+		        on l.ref_lec_cat_no = lc.lec_cat_no
+		    join pay_lecture pl
+		        on l.lecture_no = pl.ref_lecture_no
+		group by lc.lec_cat_name
+	</select>
+
+	<resultMap id="selectCategorySalesMap" type="map">
+		<id property="lecCatName" column="lec_cat_name" />
+		<result property="rank" column="rank" />
+		<result property="sales" column="sum" />
+	</resultMap>
+
+
+
+	<select id="selectUserClick" resultMap="selectUserClickMap">
+		select a.*, b.avg
+		
+		from
+			(select
+			    rank() over(order by lc.click_no desc) rank,
+			    lc.ref_lecture_no,
+			    l.lecture_name,
+			    lc.click_no
+			from lecture_click lc
+			    join lecture l
+			        on lc.ref_lecture_no = l.lecture_no
+			where lc.ref_member_id = #{userName}) a
+			
+		join
+			(select round(avg(click_no), 1) avg,
+			    ref_lecture_no
+			from lecture_click
+			group by ref_lecture_no) b
+			
+		    on a.ref_lecture_no = b.ref_lecture_no
+		    
+		order by a.rank
+	</select>
+	<resultMap type="map" id="selectUserClickMap">
+		<id column="ref_lecture_no" property="refLectureNo" />
+		<result column="lecture_name" property="lectureName" />
+		<result column="rank" property="rank" />
+		<result column="click_no" property="clickNo" />
+		<result column="avg" property="avg" />
+	</resultMap>
+
 </mapper>
