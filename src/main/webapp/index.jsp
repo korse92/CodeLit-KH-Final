@@ -87,7 +87,7 @@ $(() => {
 			</button>
 		</div>
 	</div>
-</div>
+<!-- </div> -->
 	<div class="row justify-content-center">
 		<div class="rollingPage">
 			<div class="rollingHead">
@@ -216,11 +216,11 @@ $(() => {
 				</div>
 			</div>
 			<c:if test="${(vs.count%4 == 0) || vs.last}">
+		</div>
+		</c:if>
+		</c:forEach>
 	</div>
-	</c:if>
-	</c:forEach>
 </div>
-	</div>
 
 
 <!-- 컨텐츠 끝 -->

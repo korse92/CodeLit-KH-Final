@@ -192,6 +192,7 @@ function changeLocale(lang) {
 										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do"><spring:message code="Amenu.manageLecture"/></a></li>
 										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do"><spring:message code="Amenu.manageMember"/></a></li>
 										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/alarm/alarmList.do"><spring:message code="Amenu.notification"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/data.do">데이터 현황</a></li>
 									</sec:authorize>
 
 				                </ul>
