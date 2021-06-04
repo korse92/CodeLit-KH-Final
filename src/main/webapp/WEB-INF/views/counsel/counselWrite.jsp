@@ -7,6 +7,10 @@
 <%-- 로그인 검증용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의 등록" name="title"/>
 </jsp:include>
@@ -40,12 +44,12 @@
             <div class="row justify-content-center">
               <!-- col-auto : 내부요소 크기에 맞게 컬럼 크기 맞춤 -->
               <div class="col-auto">
-                <h2>고객 센터 </h2>
+                <h2><spring:message code="counsel.help"/></h2>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-2 align-self-center">
-                <label class="form-label" for="counselTitle">제목</label>
+                <label class="form-label" for="counselTitle"><spring:message code="user.boardTitle"/></label>
               </div>
              
               <div class="col-sm-10">
@@ -56,7 +60,7 @@
                
             <div class="row">
               <div class="col-sm-2 align-self-center">
-                <label class="form-label" for="cousnelHandout">첨부파일</label>
+                <label class="form-label" for="cousnelHandout"><spring:message code="enrollLec.attachedFile"/></label>
               </div>
               <div class="col-sm">
                 <input class="form-control" type="file" name="upFile"
@@ -65,7 +69,7 @@
             </div>
                
             <div class="row">
-				<label class="form-label mb-2" for="counselContent">내용</label>
+				<label class="form-label mb-2" for="counselContent"><spring:message code="user.boardContent"/></label>
 				<div class="col-sm">
 					<textarea name="counselContent" id="counselContent" class="form-control" required></textarea>
 				</div>
@@ -73,8 +77,8 @@
                 
             <div class="row form-group justify-content-end">
             	<div class="col-sm-auto">
-            		<button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/counsel/counselList.do'">취소</button>
-                	<button type="submit" class="btn btn-primary complete-btn">완료</button>
+            		<button type="reset" class="btn btn-danger cancel-btn" onclick="location.href='${pageContext.request.contextPath}/counsel/counselList.do'"><spring:message code="admin.backBtn"/></button>
+                	<button type="submit" class="btn btn-primary complete-btn"><spring:message code="admin.saveBtn"/></button>
               	</div>
             </div>
     	</form:form>

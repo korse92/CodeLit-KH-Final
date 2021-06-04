@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+    
 <!-- footer.jsp 시작 -->
 </section>
 
@@ -9,13 +13,14 @@
   		margin-top: 6rem;
   	}
   </style>
+  
 
 <footer id = "commonFooter" class="d-flex align-items-center justify-content-center">
   <div class="container">
     <div class="row">
       <p class="mb-0 text-center">
-      	<a href="${pageContext.request.contextPath}/lecture/lecture.do">
-      	&lt;Copyright 2017. <strong>KH정보교육원</strong>. All rights reserved.&gt;
+      	<a href="${pageContext.request.contextPath}/admin/data.do">
+      	&lt;<spring:message code="footer.msg"/>&gt;
       	</a>
       </p>
     </div>

@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
@@ -27,12 +31,12 @@ window.onload = function() {
 
     <div class="container">
         <div class="row mt-5">
-          <h2 class=" jb-larger mt-3 col-sm-4">공부 게시판</h2>
+          <h2 class=" jb-larger mt-3 col-sm-4"><spring:message code="menu.community"/></h2>
         </div>
         <!-- 파일전송-->
         <form action="">
           <div class="row title-group">
-            <h5 class="col-sm-2 board-title">제목</h5>
+            <h5 class="col-sm-2 board-title"><spring:message code="user.boardTitle"/></h5>
             <div class="col-sm-10">
               <input class="form-control " type="text" placeholder="title">
             </div>
@@ -47,8 +51,8 @@ window.onload = function() {
           </div>
           <div class="board-footer">
             <!-- 관리자-->
-            <button type="button" class="btn btn-danger cancel-btn" onclick="location.href='./studentBoardList.html'">취소</button>
-            <button type="submit" class="btn btn-primary complete-btn">완료</button>
+            <button type="button" class="btn btn-danger cancel-btn" onclick="location.href='./studentBoardList.html'"><spring:message code="admin.backBtn"/></button>
+            <button type="submit" class="btn btn-primary complete-btn"><spring:message code="admin.saveBtn"/></button>
           </div>
         </form>
       </div>

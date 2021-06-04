@@ -56,6 +56,12 @@ public interface AdminDao {
 
 	int deleteTeacherAndAuth2(String refMemberId);
 
+	List<Map<String, Object>> selectClickRank();
+
+	List<Map<String, Object>> selectCategorySales();
+
+	List<Map<String, Object>> selectUserClick(String userName);
+
 
 
 

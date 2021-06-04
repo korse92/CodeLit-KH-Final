@@ -8,6 +8,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="teacherRequest" name="title"/>
@@ -98,7 +101,7 @@
 		<section class="container">
 
 		<div class="container" id="teacherRequestDiv">
-	        <h2 class="mt-5">강사 등록</h2>
+	        <h2 class="mt-5"><spring:message code="Tmenu.enrollTeacher" /></h2>
 	        <hr/>
 	            <div id="formDiv" class="mx-auto">
 	            
@@ -115,7 +118,7 @@
 		                        </td>
 		                        
 		                        <td colspan="1" class="td2">
-		                            <label for="teacherName">이름</label>
+		                            <label for="teacherName"><spring:message code="teacher.name" /></label>
 		                        </td>
 		                        <td colspan="3" class="td3">
 		                            <input type="text" class="form-control" placeholder="이름을 입력해주세요." name="teacherName" id="teacherName" />
@@ -124,7 +127,7 @@
 		        
 		                    <tr>
 		                        <td colspan="1" class="td2">
-		                            <label for="teacherPhone">전화번호</label>
+		                            <label for="teacherPhone"><spring:message code="teacher.phone" /></label>
 		                        </td>
 		                        <td colspan="3" class="td3">
 		                            <input type="text" class="form-control" placeholder="전화번호 (- 없이)" name="teacherPhone" id="teacherPhone">
@@ -135,7 +138,7 @@
 		                          <input type="file" name="upFile" id="upFile" accept="image/jpeg, image/jpg, image/png">
 		                        </td>
 		                        <td colspan="1" class="td2">
-		                            <label for="teacherLink">깃허브(블로그)</label>
+		                            <label for="teacherLink"><spring:message code="teacher.git" /></label>
 		                        </td>
 		                        <td colspan="3" class="td3">
 		                            <input type="text" class="form-control" placeholder="깃허브 또는 블로그 주소" name="teacherLink" id="teacherLink">
@@ -143,7 +146,7 @@
 		                    </tr>
 		                    <tr>
 		                        <td colspan="1">
-		                            <label for="refLecCatNo">희망분야</label>
+		                            <label for="refLecCatNo"><spring:message code="teacher.lecPart" /></label>
 		                        </td>
 		                        <td colspan="5">
 		                            <select class="form-select" aria-label="희망분야" name="refLecCatNo" id="refLecCatNo">
@@ -157,7 +160,7 @@
 		
 		                    <tr>
 		                      <td colspan="1" class="td">
-		                        <label for="teacherBank">은행명</label>
+		                        <label for="teacherBank"><spring:message code="teacher.bank" /></label>
 		                      </td>
 		                      <td colspan="5">
 		                        <input type="text" class="form-control" placeholder="은행명" name="teacherBank" id="teacherBank">
@@ -165,7 +168,7 @@
 		                    </tr>
 		                    <tr>
 		                        <td colspan="1" class="td">
-		                            <label for="teacherAccount">계좌번호</label>
+		                            <label for="teacherAccount"><spring:message code="teacher.account" /></label>
 		                        </td>
 		                        <td colspan="5">
 		                            <input type="text" class="form-control" placeholder="계좌번호 (- 없이)" name="teacherAccount" id="teacherAccount">
@@ -173,7 +176,7 @@
 		                    </tr>
 		                    <tr>
 		                        <td colspan="1" class="td">
-		                            <label for="teacherAccName">예금주</label>
+		                            <label for="teacherAccName"><spring:message code="teacher.bankName" /></label>
 		                        </td>
 		                        <td colspan="5">
 		                            <input type="text" class="form-control" placeholder="예금주" name="teacherAccName" id="teacherAccName">
@@ -181,7 +184,7 @@
 		                    </tr>
 		                    <tr>
 		                        <td colspan="1" class="td">
-		                            <label for="teacherIntroduce">강사소개</label>
+		                            <label for="teacherIntroduce"><spring:message code="teacher.intro" /></label>
 		                        </td>
 		                        <td colspan="5">
 		                            <textarea name="teacherIntroduce" id="teacherIntroduce" class="form-control" cols="30" rows="10"></textarea>
@@ -194,8 +197,8 @@
 		                        </td>
 		        
 		                        <td colspan="2">
-		                          <button type="reset" class="btn btn-warning col-4 mt-3 mb-5">취소</button>
-		                          <button type="submit" class="btn btn-primary col-4 mt-3 mb-5">신청</button>
+		                          <button type="reset" class="btn btn-warning col-5 mt-3 mb-5"><spring:message code="admin.backBtn" /></button>
+		                          <button type="submit" class="btn btn-primary col-5 mt-3 mb-5"><spring:message code="admin.applyBtn" /></button>
 		                        </td>
 		                        <td colspan="2">
 		                            

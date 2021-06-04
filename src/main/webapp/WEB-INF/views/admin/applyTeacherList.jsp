@@ -9,6 +9,9 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="강의자 신청리스트" name="title" />
 </jsp:include>
@@ -33,21 +36,21 @@ function deleteTeacher(id){
 	<section class="container">
 		<div class="page-header">
 			<div class="row mt-5">
-				<h2 class=" jb-larger m-3 col-sm-3">강의자 신청 목록</h2>
+				<h2 class=" jb-larger m-3 col-sm-3"><spring:message code="admin.applyTeacherList"/></h2>
 			</div>
 			<table class="table mt-3 col-sm text-center">
 				<thead class="thead-light">
 					<tr>
-						<th scope="col">카테고리</th>
-						<th scope="col">아이디</th>
-						<th scope="col">신청자</th>
-						<th scope="col">GitHub</th>
-						<th scope="col">비고</th>
+						<th scope="col"><spring:message code="admin.category"/></th>
+						<th scope="col"><spring:message code="admin.id"/></th>
+						<th scope="col"><spring:message code="admin.name"/></th>
+						<th scope="col"><spring:message code="admin.gitHub"/></th>
+						<th scope="col"><spring:message code="admin.check"/></th>
 					</tr>
 					<!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="14" style="text-align: center;">조회된 데이터가 없습니다.</td>
+							<td colspan="14" style="text-align: center;"><spring:message code="admin.noData"/></td>
 						</tr>
 					</c:if>
 				</thead>
@@ -61,9 +64,9 @@ function deleteTeacher(id){
 								<td><a href="${teacherList.teacherLink}">${teacherList.teacherLink}</a></td>
 								<td>
 									<button type="button" class="btn btn-warning btn-sm"
-										onclick="location.href ='${pageContext.request.contextPath}/admin/approveTeacher.do?id=${teacherList.refMemberId}';">승인</button>
+										onclick="location.href ='${pageContext.request.contextPath}/admin/approveTeacher.do?id=${teacherList.refMemberId}';"><spring:message code="admin.approveBtn"/></button>
 									<button type="button" class="btn btn-secondary btn-sm"
-										onclick="deleteTeacher('${teacherList.refMemberId}');">거절</button>
+										onclick="deleteTeacher('${teacherList.refMemberId}');"><spring:message code="admin.rejectBtn"/></button>
 								</td>
 							</tr>
 						</c:forEach>

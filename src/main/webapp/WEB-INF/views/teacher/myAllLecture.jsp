@@ -8,6 +8,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<!-- 다국어  -->
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="내 강의 리스트" name="title" />
@@ -26,23 +28,23 @@
 				  <span class="fs-2">
 				 	 <sec:authentication property="principal.username" />
 				  </span>
-				  <span class="fs-5">님</span> 
-				  <span class="fs-5">의&nbsp;강의목록</span>
+				  <span class="fs-5"><spring:message code="ud.sir"/></span>
+				  <span class="fs-5">&nbsp;<spring:message code="enrollLec.LectureList"/></span>
 				</p>
 			</div>
 			<table class="table mx-3 my-3 col-sm text-center">
 				<thead class="thead-light">
 					<tr>
-						<th scope="col">글 번호</th>
-						<th scope="col">강의 종류</th>
-						<th scope="col">카테고리</th>
-						<th scope="col">강의 제목</th>
-						<th scope="col">승인 여부</th>
+						<th scope="col"><spring:message code="admin.boardNo"/></th>
+						<th scope="col"><spring:message code="enrollLec.lecType"/></th>
+						<th scope="col"><spring:message code="admin.category"/></th>
+						<th scope="col"><spring:message code="enrollLec.lecTitle"/></th>
+						<th scope="col"><spring:message code="admin.check"/></th>
 					</tr>
 					<!-- 조회된 데이터가 있는 경우와 없는 경우를 분기처리 -->
 					<c:if test="${empty list}">
 						<tr>
-							<td colspan="14" style="text-align: center;">조회된 데이터가 없습니다.</td>
+							<td colspan="14" style="text-align: center;"><spring:message code="admin.noData"/></td>
 						</tr>
 					</c:if>
 				</thead>
@@ -52,10 +54,10 @@
 							<tr>
 								<td>${vs.count}</td>
 								<c:if test="${teacher.lectureType eq 'V'}">
-									<td>일반 강의</td>
+									<td><spring:message code="enrollLec.lec"/></td>
 								</c:if>
 								<c:if test="${teacher.lectureType eq 'S'}">
-									<td>스트리밍 강의</td>
+									<td><spring:message code="enrollLec.streaming"/></td>
 								</c:if>
 								<c:forEach items="${categoryList}" var="category">
 									<c:if test="${category.no eq teacher.refLecCatNo}">

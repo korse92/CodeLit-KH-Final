@@ -6,7 +6,8 @@
 	<select id="selectCategoryList" resultMap="categoryMap">
 		select
 			lec_cat_no,
-			lec_cat_name
+			lec_cat_name,
+			lec_cat_locale_key
 		from
 			lecture_category
 		order by
@@ -17,6 +18,7 @@
 	<resultMap type="map" id="categoryMap">
 		<id column="lec_cat_no" property="no" javaType="integer"/>
 		<result column="lec_cat_name" property="name" javaType="string"/>
+		<result column="lec_cat_locale_key" property="localeKey" javaType="string"/>
 	</resultMap>
 
 	<insert id="insertLecture">
@@ -214,17 +216,15 @@
 	<select id="mainLecture" resultType="lecture">
 
 	select
-		  rownum,
     	  l.*,
     	  round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
    		 (select teacher_name from teacher where ref_member_id = l.ref_member_id) "teacher_name",
     	 (select count(*) from pick where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "picked",
     	 (select count(*) from basket where ref_member_id = #{memberId} and ref_lecture_no = l.lecture_no) "basketed"
 	from lecture l
-	<where>
-    	lecture_accept_yn = 'Y' and rownum <![CDATA[ <= ]]> 8
-    </where>
-	order by rownum desc
+	where
+    	l.lecture_accept_yn = 'Y'
+	order by l.lecture_no desc
 
 
 	</select>
@@ -247,12 +247,13 @@
 	from (select
         		c.ref_lecture_no,
         		l.lecture_name,
+        		l.lecture_thumb_renamed,
         		sum(c.click_no) as clickNo
           from
             	lecture_click c join lecture l
              		on c.ref_lecture_no = l.lecture_no
           group by
-            	c.ref_lecture_no, l.lecture_name
+            	c.ref_lecture_no, l.lecture_name,l.lecture_thumb_renamed
           order by
             	clickNo desc) e
 	where rownum <![CDATA[ <= ]]> 3
@@ -262,6 +263,7 @@
 	<resultMap type="map" id="bestLectureMap">
 		<id column="ref_lecture_no" property="refLectureNo"/>
 		<result column="lecture_name" property="lectureName"/>
+		<result column="lecture_thumb_renamed" property="lectureThumbRenamed"/>
 		<result column="click_no" property="clickNo"/>
 	</resultMap>
 
