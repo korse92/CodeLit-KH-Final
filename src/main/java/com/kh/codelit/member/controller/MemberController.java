@@ -207,7 +207,6 @@ public class MemberController {
 
 
 	@PostMapping("/memberUpdate.do")
-
 	public String membetUpdate(
 						@ModelAttribute Member member,
 						RedirectAttributes redirectAttr,
