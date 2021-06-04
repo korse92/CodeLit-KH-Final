@@ -159,7 +159,7 @@
 					<div class="card-text">
 						<c:choose>
 							<c:when test="${empty streamingDateList}">
-								<h6>다음 일정이 없습니다.</h6>
+								<h6><spring:message code="ud.noPlan"/></h6>
 							</c:when>
 							<c:when test="${not empty streamingDateList}">
 								<c:forEach items="${streamingDateList}" var="streamingDateList" end="2">
@@ -171,9 +171,6 @@
 								</c:forEach>
 							</c:when>
 						</c:choose>
-						<li>
-							<spring:message code="ud.noPlan"/>
-						</li>
 					</div>
 					<div class="text-end">
 						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/myCalendar.do'">
