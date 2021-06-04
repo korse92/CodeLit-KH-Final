@@ -79,9 +79,10 @@
 						    buyer_email : 'asrisk@naver.com',	// 회원아이디 메일 사용시 memberId 지정 가능
 						    buyer_name : memberId
 						}, function(rsp) {
+							var msg = null;
 						    if ( rsp.success ) {
 						        console.log('결제가 완료되었습니다.');
-						        
+						        msg = '결제에 성공했습니다.';
 						        payCode.value = rsp.apply_num;
 						        refMemberId.value = memberId;
 						        payCost.value = money;
@@ -93,7 +94,7 @@
 		// 				        msg += '결제 금액 : ' + rsp.paid_amount;
 		// 				        msg += '카드 승인번호 : ' + rsp.apply_num;
 						    } else {
-						        var msg = '결제에 실패하였습니다.';
+						        msg = '결제에 실패하였습니다.';
 						        msg += '에러내용 : ' + rsp.error_msg;
 						    }
 						    alert(msg);
@@ -185,7 +186,7 @@
 		               			<img src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image" alt="..." id="lectureImg">
 		                	</c:when>
 		                	<c:otherwise>
-		                    	<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${basket.lectureThumbRenamed}" alt="" id="lectureImg">
+		                    	<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${basket.lectureThumbRenamed}" alt="" id="lectureImg" onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${basket.refLectureNo}'">
 		                	</c:otherwise>
 	                	</c:choose>
 					</div>
@@ -195,6 +196,7 @@
 								<div class="col">
 									<h5 class="card-title">${basket.lectureName}</h5>
 									<h6 class="card-subtitle">${basket.teacherName}</h6>
+									<h6 class="card-subtitle py-2">${basket.lecturePrice} 원</h6>
 								</div>
 								<!-- <button type="button" class="btn bt text-light me-2">찜이동</button> -->
 								<div class="col-auto">
