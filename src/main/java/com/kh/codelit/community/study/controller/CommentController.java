@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/community")
 @Slf4j
 public class CommentController {
-	
+
 	@Autowired
 	private CommentService service;
 	@Autowired
@@ -52,7 +52,7 @@ public class CommentController {
 			throw e;
 		}
 	}
-	
+
 	@PostMapping("/updateComment.do")
 	public String updateCmt(
 			@ModelAttribute Comment cmt,
@@ -68,13 +68,13 @@ public class CommentController {
 	public String deleteCmt(@RequestParam int stdCmtNo) {
 		Comment cmt = null;
 		try {
-			
+
 			cmt = service.selectStdNo(stdCmtNo);
 			int result = service.delete(stdCmtNo);
 		} catch (Exception e) {
 			throw e;
-		}		
+		}
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
-	
+
 }

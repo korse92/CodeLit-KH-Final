@@ -143,7 +143,8 @@
 		    l.*, p.*, c.*, t.*,
 		    round((select avg(lec_assessment) from lecture_comment where ref_lecture_no = l.lecture_no), 1) "avg_lec_assessment",
 		    (select count(*) from pick where ref_member_id = #{refMemberId} and ref_lecture_no = l.lecture_no) "picked",
-			(select count(*) from basket where ref_member_id = #{refMemberId} and ref_lecture_no = l.lecture_no) "basketed"
+			(select count(*) from basket where ref_member_id = #{refMemberId} and ref_lecture_no = l.lecture_no) "basketed",
+			(select count(*) from payment p join pay_lecture pl on p.pay_code = pl.pay_code where ref_lecture_no = #{no} and ref_member_id = #{refMemberId}) "enrolled"
 		from
 		    lecture l
 		        left join lecture_part p
@@ -170,6 +171,7 @@
 		<result column="avg_lec_assessment" property="avgLecAssessment"/>
 		<result column="picked" property="picked"/>
 		<result column="basketed" property="basketed"/>
+		<result column="enrolled" property="enrolled"/>
 
 		<association property="teacher" javaType="teacher">
 			<id column="ref_member_id" property="refMemberId"/>
