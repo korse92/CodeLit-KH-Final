@@ -32,11 +32,11 @@
 				            <img img src="${pageContext.request.contextPath}/resources/upload/member/${member.memberReProfile}">
 						</div>
 		          	</c:if>
+			            <span class="fs-5">&nbsp;<spring:message code="ud.greeting"/>,&nbsp;</span>
 						<span class="fs-5">
 			               <sec:authentication property="principal.username"/>
 			            </span>
 			            <span class="fs-5"><spring:message code="ud.sir"/></span>
-			            <span class="fs-5">,&nbsp;</span>
 					</div>
 					<div class="text-end">
 						<sapn class="link-box" onclick="location.href='${pageContext.request.contextPath}/teacher/teacherDetail.do'">
@@ -118,7 +118,6 @@
 					<div class="text-end">
 						<span class="link-box" onclick="location.href='${pageContext.request.contextPath}/member/myCalendar.do'">
 							<span></span><span></span><span></span><span></span>
-							캘린더 전체보기
 							<spring:message code="td.calendarMore"/>
 						</span>
 					</div>
