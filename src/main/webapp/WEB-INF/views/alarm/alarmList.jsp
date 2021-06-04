@@ -31,7 +31,7 @@ $(() => {
    <h2 class=" jb-larger mt-3 col-4"><spring:message code="ud.listOfNoti" /></h2>
   </div>
   <sec:authorize access="hasRole('ADMIN')">
-	<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/alarm/alarmWrite.do'">알림작성</button>
+	<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/alarm/alarmWrite.do'"><spring:message code="noti.write"/></button>
   </sec:authorize>
       <div class="mt-5 text-center">
         <table class="table text-center table-hover">
