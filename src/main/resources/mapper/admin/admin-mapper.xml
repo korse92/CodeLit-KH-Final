@@ -321,4 +321,23 @@
 		<result column="avg" property="avg" />
 	</resultMap>
 
+	<select id="categorySalesSummary" resultMap="categorySalesSummaryMap">
+		select 
+		    l.lecture_no,
+		    l.lecture_name,
+		    lc.lec_cat_name,
+		    p.pay_date,
+		    l.lecture_price
+		from pay_lecture pl
+		    join payment p on pl.pay_code = p.pay_code
+		    join lecture l on pl.ref_lecture_no = l.lecture_no
+		    join lecture_category lc on l.ref_lec_cat_no = lc.lec_cat_no
+	</select>
+	<resultMap type="map" id="categorySalesSummaryMap">
+		<id column="lecture_no" property="lectureNo" />
+		<result column="lecture_name" property="lectureName" />
+		<result column="lec_cat_name" property="lecCatName" />
+		<result column="pay_date" property="payDate" />
+		<result column="lecture_price" property="price" />
+	</resultMap>
 </mapper>

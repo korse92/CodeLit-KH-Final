@@ -58,6 +58,8 @@ public interface AdminService {
 
 	List<Map<String, Object>> selectUserClick(String userName);
 
+	List<Map<String, Object>> selectCategorySalesSummary();
+
 
 
 

@@ -153,6 +153,12 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectUserClick(userName);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectCategorySalesSummary() {
+
+		return adminDao.categorySalesSummary();
+	}
+
 
 	
 
