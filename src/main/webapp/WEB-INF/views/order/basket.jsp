@@ -195,7 +195,7 @@
 								<div class="col">
 									<h5 class="card-title">${basket.lectureName}</h5>
 									<h6 class="card-subtitle">${basket.teacherName}</h6>
-									<p class="card-subtitle">${basket.lecturePrice}</h6>
+									<h6 class="card-subtitle py-2">${basket.lecturePrice} 원</h6>
 								</div>
 								<!-- <button type="button" class="btn bt text-light me-2">찜이동</button> -->
 								<div class="col-auto">

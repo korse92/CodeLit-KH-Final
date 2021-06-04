@@ -61,12 +61,10 @@ document.addEventListener('DOMContentLoaded', function() {
       eventDidMount: function(info) {
             tippy(info.el, {
             	content: '<div class=p-2>강의명 : ' + info.event.extendedProps.lectureName + '<hr/>'
-            			+ '스트리밍 타이틀 : ' + info.event.extendedProps.sTitle + '<hr/>'
+            			+ '일정이름 : ' + info.event.extendedProps.sTitle + '<hr/>'
             			+ '강사명 : ' + info.event.extendedProps.teacherName + '<hr/>'
-            			+ '시작일 : ' + info.event.extendedProps.sDate + '<hr/>'
-            			+ '종료일 : ' + info.event.extendedProps.eDate + '<hr/>'
-            			+ '시작시간 : ' + info.event.extendedProps.sTime + '<hr/>'
-            			+ '종료시간 : ' + info.event.extendedProps.eTime + '<hr/>'
+            			+ '강의일자 : ' + info.event.extendedProps.sDate + ' - ' + info.event.extendedProps.eDate + '<hr/>'
+            			+ '강의시간 : ' + info.event.extendedProps.sTime + ' - ' + info.event.extendedProps.eTime + '<hr/>'
             			+ '<img src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image" alt="..." id="thumbNailNull" class="w-100" >'
             			+ '<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/' + info.event.extendedProps.thumbNail + '></div>',
             	allowHTML: true,
