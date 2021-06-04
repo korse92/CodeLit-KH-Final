@@ -25,51 +25,51 @@
 
 	<script>
 		window.onload = function() {
-			IMP.init('imp94594446');	
-			
+			IMP.init('imp94594446');
+
 			const orderBtn = document.getElementById("orderBtn");
-			
+
 			orderBtn.addEventListener('click', function(e) {
 
 				// noneBasket 문구가 있는지 여부로 결제 가능 여부 확인
 				if(document.getElementById("noneBasket")) {
 					e.preventDefault;
 					alert("결제할 내역이 없습니다.");
-					
+
 				} else {
 
 					var money = document.getElementById("money").innerText;
-					
+
 			        var payCode = document.getElementById("payCode");
 			        var refMemberId = document.getElementById("refMemberId");
 			        var payCost = document.getElementById("payCost");
-			        
+
 			        // 무료강의만 담아서 결제비용 0원일 때 처리
 					if(money == 0) {
-						
+
 						if(!confirm("0원 결제는 자동 수강됩니다. 진행하시겠습니까?")) {
 							e.preventDefault;
 						}
-						
+
 						const ms = new Date().getTime();
 						const random1 = Math.floor(Math.random() * 10);
 						const random2 = Math.floor(Math.random() * 10);
-						
-						
+
+
 				        payCode.value = "" + ms + random1 + random2;
-				        refMemberId.value = 
+				        refMemberId.value =
 				        	"<sec:authentication property='principal.username'/>";
 				        payCost.value = money;
-				        
+
 				        $("#orderFrm").submit();
-						
-				        
+
+
 				    // 장바구니 있고, 결제금액 있을 때의 정상 결제처리
 					} else {
-						
+
 						var orderName = document.getElementById("orderName").innerText;
 						var memberId = document.getElementById("memberId").innerText;
-						
+
 						IMP.request_pay({
 						    pg : 'inicis', // version 1.1.0부터 지원.
 						    pay_method : 'card',
@@ -81,13 +81,13 @@
 						}, function(rsp) {
 						    if ( rsp.success ) {
 						        console.log('결제가 완료되었습니다.');
-						        
+
 						        payCode.value = rsp.apply_num;
 						        refMemberId.value = memberId;
 						        payCost.value = money;
-						        
+
 						        $("#orderFrm").submit();
-						        
+
 		// 				        msg += '고유ID : ' + rsp.imp_uid;
 		// 				        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		// 				        msg += '결제 금액 : ' + rsp.paid_amount;
@@ -98,21 +98,21 @@
 						    }
 						    alert(msg);
 						});
-						
-						
+
+
 					} // money==0  else
-					
+
 				} // document.getElementById("noneBasket")  else
-				
+
 			}); // 결제버튼 클릭
-			
+
 		} // window.onload
-		
-		
+
+
 		// 삭제버튼 ajax
 		function deleteDiv(n, basketNo) {
 
-			// db 삭제 ajax	
+			// db 삭제 ajax
 			$.ajax({
 				url : "${pageContext.request.contextPath}/order/deleteBasketAjax.do",
 				data :  {
@@ -123,11 +123,11 @@
 				success : function(data) {
 					console.log("삭제 ajax 성공. basketNo");
 					console.log(data);
-					
+
 					// 화면에서 삭제
 					let basketDiv = document.getElementById(`basketDiv\${n}`);
 					basketDiv.remove();
-					
+
 					// 이름 및 금액 조정
 					let orderName = document.getElementById("orderName");
 					let money = document.getElementById("money");
@@ -140,36 +140,36 @@
 					} else if(data.length == 1) {
 						orderName.innerText = data[0].lectureName;
 						money.innerText = data[0].lecturePrice;
-						
+
 					} else {
 						orderName.innerText = data[0].lectureName + " 외 " + (data.length - 1) + "종";
-						
+
 						let cash = 0;
 						for(var i=0 in data) {
 							cash += data[i].lecturePrice;
 						}
 						money.innerText = cash;
 					}
-	
+
 				},
 				error : function() {
-					console.log("삭제 ajax 실패");					
+					console.log("삭제 ajax 실패");
 				},
 				complete : function() {
 					console.log("삭제 ajax 완료");
 				}
 			});
 		}
-		
+
 	</script>
-	
+
 	<form:form id="orderFrm" method="post"
 		action="${pageContext.request.contextPath}/order/paymentHandling.do">
 		<input type="hidden" id="payCode" name="payCode"/>
 		<input type="hidden" id="refMemberId" name="refMemberId"/>
 		<input type="hidden" id="payCost" name="payCost"/>
 	</form:form>
-	
+
 
 <div class="container">
 	<h2><spring:message code="menu.cart"/></h2>
@@ -185,7 +185,7 @@
 		               			<img src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image" alt="..." id="lectureImg">
 		                	</c:when>
 		                	<c:otherwise>
-		                    	<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${basket.lectureThumbRenamed}" alt="" id="lectureImg">
+		                    	<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${basket.lectureThumbRenamed}" alt="" id="lectureImg" onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${basket.refLectureNo}'">
 		                	</c:otherwise>
 	                	</c:choose>
 					</div>
@@ -195,6 +195,7 @@
 								<div class="col">
 									<h5 class="card-title">${basket.lectureName}</h5>
 									<h6 class="card-subtitle">${basket.teacherName}</h6>
+									<h6 class="card-subtitle py-2">${basket.lecturePrice} 원</h6>
 								</div>
 								<!-- <button type="button" class="btn bt text-light me-2">찜이동</button> -->
 								<div class="col-auto">
