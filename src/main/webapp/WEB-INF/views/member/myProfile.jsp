@@ -188,7 +188,7 @@
 				<div class="card-body">
 					<div class="card-text">
 					<c:if test="${empty message}">
-						<p><spring:message code="ud.noNoti"/></p>
+						<p><spring:message code="td.noNoti"/></p>
 					</c:if>
 					<c:if test="${not empty message}">
 						<c:forEach items="${message}" var="message" end="2">
