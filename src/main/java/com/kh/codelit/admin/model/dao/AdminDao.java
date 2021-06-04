@@ -62,6 +62,8 @@ public interface AdminDao {
 
 	List<Map<String, Object>> selectUserClick(String userName);
 
+	List<Map<String, Object>> categorySalesSummary();
+
 
 
 

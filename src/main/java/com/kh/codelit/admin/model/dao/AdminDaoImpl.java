@@ -209,6 +209,12 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectList("admin.selectUserClick", userName);
 	}
 
+	@Override
+	public List<Map<String, Object>> categorySalesSummary() {
+
+		return session.selectList("admin.categorySalesSummary");
+	}
+
 
 
 
