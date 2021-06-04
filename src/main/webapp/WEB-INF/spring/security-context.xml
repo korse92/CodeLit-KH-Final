@@ -28,6 +28,54 @@
 
 	<intercept-url pattern="/" access="permitAll" />
 	<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+	<intercept-url pattern="/community/noticeWrite.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/community/noticeInsert.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/community/noticeUpdate.do" access="hasRole('ADMIN')" method="GET"/>
+	<intercept-url pattern="/community/noticeUpdate.do" access="hasRole('ADMIN')" method="POST"/>
+	<intercept-url pattern="/community/noticeDelete.do" access="hasRole('ADMIN')"/>
+
+	<intercept-url pattern="/community/studyWrite.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/community/studyInsert.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/community/insertComment.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/community/studyUpdate.do" access="isAuthenticated()" method="GET"/>
+	<intercept-url pattern="/community/studyUpdate.do" access="isAuthenticated()" method="POST"/>
+	<intercept-url pattern="/community/studyDelete.do" access="isAuthenticated()" method="POST"/> <!-- Get핸들러였는데 POST로 수정예정 -->
+	<intercept-url pattern="/community/updateComment.do" access="isAuthenticated()" method="GET"/>
+	<intercept-url pattern="/community/updateComment.do" access="isAuthenticated()" method="POST"/>
+	<intercept-url pattern="/community/deleteCmt.do" access="isAuthenticated()" method="POST"/> <!-- Get핸들러였는데 POST로 수정 예정 -->
+
+	<intercept-url pattern="/counsel/**" access="isAuthenticated()"/>
+	<intercept-url pattern="/counsel/counselListAdmin.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/counsel/counselListAdmin.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/counsel/counselAnswer.do" access="hasRole('ADMIN')" method="GET"/>
+	<intercept-url pattern="/counsel/counselAnswer.do" access="hasRole('ADMIN')" method="POST"/>
+
+	<intercept-url pattern="/lecture/lectureEnroll.do" access="hasRole('TEACHER')" method="GET"/>
+	<intercept-url pattern="/lecture/lectureEnroll.do" access="hasRole('TEACHER')" method="POST"/>
+	<intercept-url pattern="/lecture/myAllLecture.do" access="hasRole('TEACHER')"/>
+	<intercept-url pattern="/lecture/reApplyLecture.do" access="hasRole('TEACHER')"/>
+
+	<intercept-url pattern="/lecture/lecture.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/lecture/cmtInsert.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/lecture/cmtUpdate.do" access="isAuthenticated()"/>
+
+	<intercept-url pattern="/member/memberDetail.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/memberUpdate.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/deleteMember.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/myProfile.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/memberLectureList.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/myCalendar.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/myStreaming.do" access="isAuthenticated()"/>
+
+	<intercept-url pattern="/order/**" access="isAuthenticated()"/>
+
+	<intercept-url pattern="/teacher/**" access="hasRole('TEACHER')"/>
+	<intercept-url pattern="/teacher/teacherRequest.do" access="isAuthenticated()" method="GET"/>
+	<intercept-url pattern="/teacher/teacherRequest.do" access="isAuthenticated()" method="POST"/>
+
+	<intercept-url pattern="/alarm/**" access="isAuthenticated()"/>
+
+	<!-- 게시글 수정  /studyUpdate(GET,POST) /studyDelete.do(POST)은 작성자만 접근할 수 있도록 인터셉터 수동 처리 -->
 
 
 	<!-- 	<intercept-url pattern="/" access="permitAll" />
