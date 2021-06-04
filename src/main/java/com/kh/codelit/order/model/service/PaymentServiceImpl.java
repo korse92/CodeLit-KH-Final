@@ -31,9 +31,8 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	
 	
-	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int paymentHandling(Payment payment) {
+	public int insertPayment(Payment payment) {
 		
 		
 		
