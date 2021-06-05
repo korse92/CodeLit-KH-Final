@@ -64,7 +64,7 @@ public class CommentController {
 		}
 		return "redirect:/community/studyDetail.do?stdBrdNo="+cmt.getRefStdBrdNo();
 	}
-	@GetMapping("/deleteCmt.do")
+	@PostMapping("/deleteCmt.do")
 	public String deleteCmt(@RequestParam int stdCmtNo) {
 		Comment cmt = null;
 		try {
