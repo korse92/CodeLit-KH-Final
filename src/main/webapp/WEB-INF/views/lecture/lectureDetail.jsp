@@ -128,7 +128,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 							<div class="col-sm-2 p-0 me-2">
 								<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
 			                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" />
-									<button type="submit" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="찜하기">
+									<button type="submit" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="${lecture.picked ? '찜삭제' : '찜하기'}">
 										<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
 									</button>
 								</form:form>

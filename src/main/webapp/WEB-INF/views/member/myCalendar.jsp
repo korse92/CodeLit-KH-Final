@@ -65,26 +65,25 @@ document.addEventListener('DOMContentLoaded', function() {
       eventDidMount: function(info) {
 
 			//console.log(info.event.id);
+			//스트리밍강의
 			if(info.event.id == 'slecture'){
 	            tippy(info.el, {
 	            	content: '<div class=p-2>강의명 : ' + info.event.extendedProps.lectureName + '<hr/>'
 	            			+ '일정이름 : ' + info.event.extendedProps.sTitle + '<hr/>'
 	            			+ '강사명 : ' + info.event.extendedProps.teacherName + '<hr/>'
 	            			+ '강의일자 : ' + info.event.extendedProps.sDate + ' - ' + info.event.extendedProps.eDate + '<hr/>'
-	            			+ '강의시간 : ' + info.event.extendedProps.sTime + ' - ' + info.event.extendedProps.eTime + '<hr/>'
-	            			+ '<img class="w-100" src="' + info.event.extendedProps.thumbNail + '"></div>',
+	            			+ '강의시간 : ' + info.event.extendedProps.sTime + ' - ' + info.event.extendedProps.eTime + '<hr/></div>',
 	            	allowHTML: true,
 	            	placement: 'bottom',
 	            	duration: 1000
 	            });
 			} else {
+				//일반강의
 				tippy(info.el, {
 	            	content: '<div class=p-2>강의명 : ' + info.event.extendedProps.lectureName + '<hr/>'
-	            			+ '일정이름 : ' + info.event.extendedProps.sTitle + '<hr/>'
+	            			+ '일정이름 : ' + info.event.extendedProps.lecturePartTitle + " - " + info.event.extendedProps.lecChapterTitle + '<hr/>'
 	            			+ '강사명 : ' + info.event.extendedProps.teacherName + '<hr/>'
-	            			+ '강의일자 : ' + info.event.extendedProps.sDate + ' - ' + info.event.extendedProps.eDate + '<hr/>'
-	            			+ '강의시간 : ' + info.event.extendedProps.sTime + ' - ' + info.event.extendedProps.eTime + '<hr/>'
-	            			+ '<img class="w-100" src="' + info.event.extendedProps.thumbNail + '"></div>',
+	            			+ '강의일자 : ' + info.event.extendedProps.sDate + '<hr/></div>',
 	            	allowHTML: true,
 	            	placement: 'bottom',
 	            	duration: 1000
@@ -122,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									var lectureNo = elem.refLectureNo;
 
 									events.push({
-										title: lectureName + " : " + sTitle,
+										title: lectureName,
 										start: startDate,
 										end: endDate,
 										lectureName: lectureName,
@@ -221,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									//프론트
 									if(refLecCatNo == '5'){
 										events.push({
-											title: lectureName + " : " + lecturePartTitle + " : " + lecChapterTitle,
+											title: lectureName,
 											start: sDate,
 											lectureName: lectureName,
 											teacherName: teacherName,
@@ -229,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											guideline: guideline,
 											lecturePartNo: lecturePartNo,
 											lecturePartTitle: lecturePartTitle,
+											lecChapterTitle: lecChapterTitle,
 											sDate: moment(sDate).format('YYYY-MM-DD'),
 											display : "block",
 											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										//백엔드
 									} else if(refLecCatNo == '6'){
 										events.push({
-											title: lectureName + " : " + lecturePartTitle + " : " + lecChapterTitle,
+											title: lectureName,
 											start: sDate,
 											lectureName: lectureName,
 											teacherName: teacherName,
@@ -246,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											guideline: guideline,
 											lecturePartNo: lecturePartNo,
 											lecturePartTitle: lecturePartTitle,
+											lecChapterTitle: lecChapterTitle,
 											sDate: moment(sDate).format('YYYY-MM-DD'),
 											display : "block",
 											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
@@ -254,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										//빅데이터
 									} else {
 										events.push({
-											title: lectureName + " : " + lecturePartTitle + " : " + lecChapterTitle,
+											title: lectureName,
 											start: sDate,
 											lectureName: lectureName,
 											teacherName: teacherName,
@@ -262,6 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											guideline: guideline,
 											lecturePartNo: lecturePartNo,
 											lecturePartTitle: lecturePartTitle,
+											lecChapterTitle: lecChapterTitle,
 											sDate: moment(sDate).format('YYYY-MM-DD'),
 											display : "block",
 											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
@@ -335,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	<div id='loading'>loading...</div>
 	<div id='calendar'></div>
 
-	<input type="button" value="테스트" id="calTest"/>
+	<!-- <input type="button" value="테스트" id="calTest"/> -->
 </div> <!-- container -->
 
 
