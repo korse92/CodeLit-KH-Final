@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureDate;
 import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.dao.MemberDao;
 import com.kh.codelit.member.model.vo.Member;
@@ -113,6 +114,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<StreamingDate> selectStreamingDateList(String refMemberId) {
 		return memberDao.selectStreamingDateList(refMemberId);
+	}
+
+
+
+	@Override
+	public List<LectureDate> selectLectureDateList(String refMemberId) {
+		return memberDao.selectLectureDateList(refMemberId);
 	}
 
 

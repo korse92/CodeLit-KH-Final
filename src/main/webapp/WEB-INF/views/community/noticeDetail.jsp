@@ -36,20 +36,15 @@
         <div class="board-footer">
         <sec:authorize access="hasRole('ADMIN')">
           <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeUpdate.do?noticeNo=${notice.noticeNo}'"><spring:message code="admin.editBtn"/></button>
-          <button type="button" class="btn btn-danger delete-btn" onclick="del()"><spring:message code="admin.deleteBtn"/></button>
+          
+          <form action="${pageContext.request.contextPath}/community/noticeDelete.do?${_csrf.parameterName}=${_csrf.token}" method="POST" style="display:inline">
+          	<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
+          	<button type="submit" class="btn btn-danger delete-btn"><spring:message code="admin.deleteBtn"/></button>
+          </form>
+          
         </sec:authorize>
           <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/noticeList.do'"><spring:message code="admin.backBtn"/></button>
         </div>
             
       </div>
-
-	<script type="text/javascript">
-		function del(){
-			if(confirm("삭제 하실거예요?")){
-				location.href=`${pageContext.request.contextPath}/community/noticeDelete.do?noticeNo=${notice.noticeNo}`;
-			} else{
-				return false;
-			}
-		}
-	</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
