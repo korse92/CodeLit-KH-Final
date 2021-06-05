@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureDate;
 import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -37,5 +38,7 @@ public interface MemberService extends UserDetailsService{
 	List<Lecture> getLectureList(String memberId);
 
 	List<StreamingDate> selectStreamingDateList(String refMemberId);
+
+	List<LectureDate> selectLectureDateList(String refMemberId);
 
 }
