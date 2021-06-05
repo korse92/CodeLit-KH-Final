@@ -166,5 +166,51 @@
 					s.ref_lecture_no = pl.ref_lecture_no
 		where
 			p.ref_member_id = #{refMemberId}
+		and
+			l.lecture_type = 'S'
+	</select>
+
+	<select id="selectLectureDateList" resultType="lectureDate">
+		select
+		    p.ref_member_id,
+		    p.pay_date,
+		    l.lecture_no,
+		    l.ref_lec_cat_no,
+		    t.teacher_name,
+		    l.lecture_name,
+		    l.lecture_thumb_renamed,
+		    l.lecture_guideline,
+		    lp.lecture_part_no,
+		    lp.lecture_part_title,
+		    lc.lec_chapter_no,
+		    lc.lec_chapter_title
+		from
+		    payment p
+		        join
+		    pay_lecture pl
+		        on
+		            p.pay_code = pl.pay_code
+		        join
+		    lecture l
+		        on
+		            l.lecture_no = pl.ref_lecture_no
+		        join
+		    lecture_part lp
+		        on
+		            l.lecture_no = lp.ref_lecture_no
+		        join
+		    teacher t
+		        on
+		            l.ref_member_id = t.ref_member_id
+		        join
+		    lecture_chapter lc
+		        on
+		            lp.lecture_part_no = lc.ref_lec_part_no
+		where
+		    p.ref_member_id = #{refMemberId}
+		and
+			l.lecture_type = 'V'
+		order by
+    		p.pay_date, l.lecture_no, lp.lecture_part_no, lc.lec_chapter_no
 	</select>
 </mapper>

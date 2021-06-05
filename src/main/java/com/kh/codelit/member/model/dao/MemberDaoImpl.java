@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureDate;
 import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.vo.Member;
 
@@ -100,6 +101,11 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<StreamingDate> selectStreamingDateList(String refMemberId) {
 		return session.selectList("member.selectStreamingDateList", refMemberId);
+	}
+
+	@Override
+	public List<LectureDate> selectLectureDateList(String refMemberId) {
+		return session.selectList("member.selectLectureDateList", refMemberId);
 	}
 
 }

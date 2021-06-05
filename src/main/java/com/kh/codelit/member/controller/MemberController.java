@@ -36,10 +36,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.gson.Gson;
 import com.kh.codelit.common.HelloSpringUtils;
 import com.kh.codelit.lecture.model.service.LectureService;
 import com.kh.codelit.lecture.model.vo.Lecture;
+import com.kh.codelit.lecture.model.vo.LectureDate;
 import com.kh.codelit.lecture.model.vo.StreamingDate;
 import com.kh.codelit.member.model.service.MemberService;
 import com.kh.codelit.member.model.vo.Member;
@@ -403,9 +403,9 @@ public class MemberController {
 //    	log.debug("streamingDates = {}", streamingDates);
     }
 
-    @GetMapping("/myStreaming.do")
+    @GetMapping("/myStreamingCal.do")
     @ResponseBody
-    public List<StreamingDate> myStreaming(HttpServletRequest request, Principal principal) {
+    public List<StreamingDate> myStreamingCal(HttpServletRequest request, Principal principal) {
 
     	String refMemberId = principal.getName();
     	log.debug("refMemberId = {}", refMemberId);
@@ -414,5 +414,18 @@ public class MemberController {
     	log.debug("streamingDateList = {}", streamingDateList);
 
     	return streamingDateList;
+    }
+
+    @GetMapping("/myLectureCal.do")
+    @ResponseBody
+    public List<LectureDate> myLectureCal(HttpServletRequest request, Principal principal) {
+
+    	String refMemberId = principal.getName();
+    	log.debug("refMemberId", refMemberId);
+
+    	List<LectureDate> lectureDateList = memberService.selectLectureDateList(refMemberId);
+    	log.debug("lectureDateList = {}", lectureDateList);
+
+    	return lectureDateList;
     }
 }
