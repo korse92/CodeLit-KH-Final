@@ -117,7 +117,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 									<spring:message code="lec.free"/>
 									</c:when>
 									<c:otherwise>
-									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
+									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency" currencySymbol="￦" maxFractionDigits="0"/>
 									</c:otherwise>
 								</c:choose>
 								</p>

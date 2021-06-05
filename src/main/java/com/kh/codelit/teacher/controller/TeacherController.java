@@ -166,7 +166,7 @@ public class TeacherController {
 		FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
 		flashMap.put("msg", msg);
 
-		mav.setViewName("redirect:/teacher/teacherDetail.do");
+		mav.setViewName("redirect:/");
 
 		return mav;
 	}
