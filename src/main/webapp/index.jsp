@@ -145,8 +145,8 @@ $(() => {
 								<c:otherwise>
 									<%-- <c:set var="localeValue" value="${pageContext.request.locale.language}"/>
 									<fmt:setLocale value="${pageContext.request.locale.language}"/> --%>
-									${pageContext.request.locale}
-									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency"/>
+									<%-- ${pageContext.request.locale} --%>
+									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency" currencySymbol="￦" maxFractionDigits="0"/>
 								</c:otherwise>
 							</c:choose>
 						</p>
