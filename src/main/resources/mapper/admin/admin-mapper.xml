@@ -62,9 +62,9 @@
 	</delete>
 	
 	<delete id="deleteTeacherAndAuth2">
-		delete from teacher
+		delete from authorities
 		where member_id = #{refMemberId}
-			and auth = "ROLE_TEACHER"
+			and auth = 'ROLE_TEACHER'
 	</delete>
 
 	 <select id="selectMemberOrderList"  resultMap="paymentMap">
