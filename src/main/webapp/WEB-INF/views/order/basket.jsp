@@ -186,7 +186,7 @@
 		               			<img src="https://via.placeholder.com/450x300.png?text=Thumbnail+Image" alt="..." id="lectureImg">
 		                	</c:when>
 		                	<c:otherwise>
-		                    	<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${basket.lectureThumbRenamed}" alt="" id="lectureImg" onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${basket.refLectureNo}'">
+		                    	<img src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/${basket.lectureThumbRenamed}" alt="" id="lectureImg">
 		                	</c:otherwise>
 	                	</c:choose>
 					</div>

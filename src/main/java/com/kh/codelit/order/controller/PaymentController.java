@@ -50,7 +50,7 @@ public class PaymentController {
 		String msg = null;
 		
 		try {
-			int result = paymentService.paymentHandling(payment);
+			int result = paymentService.insertPayment(payment);
 			msg = result > 0 ? "주문에 성공했습니다." : "문제가 발생했습니다. 관리자에게 문의하십시오.";
 //			address = result > 0 ? "redirect:/order/orderSuccess.do" : "redirect:/";
 			address = result > 0 ? "redirect:/" : "redirect:/";

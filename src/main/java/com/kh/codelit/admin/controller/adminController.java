@@ -445,9 +445,11 @@ public class adminController {
 			// 클릭 상위 강의
 			List<Map<String, Object>> clickList = adminService.selectClickRank();
 			List<Map<String, Object>> categorySales = adminService.selectCategorySales();
+			List<Map<String, Object>> categorySalesSummary = adminService.selectCategorySalesSummary();
 			
 			model.addAttribute("clickList", clickList);
 			model.addAttribute("categorySales", categorySales);
+			model.addAttribute("categorySalesSummary", categorySalesSummary);
 			
 		} catch(Exception e) {
 			throw e;

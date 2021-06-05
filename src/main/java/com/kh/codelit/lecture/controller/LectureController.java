@@ -372,7 +372,7 @@ public class LectureController {
 			String refMemberId = loginMember.getMemberId();
 			log.debug("loginMember id = {}", loginMember.getMemberId());
 
-			
+
 			// 매개변수
 			Map<String, Object> param = new HashMap<>();
 			param.put("refMemberId", refMemberId);
@@ -381,13 +381,17 @@ public class LectureController {
 			// 강의 추출
 			Lecture lecture = lectureService.selectOneLecture(param);
 
+			if(!lecture.isEnrolled()) {
+				throw new RuntimeException("수강 중인 강의가 아닙니다.");
+			}
+
 			// 챕터번호와 영상시청여부 추출 (chapterNo, yn)
 			List<Map<String, Object>> progList = lectureService.selectLectureProgress(param);
 
 			log.debug("{}", lecture);
 			log.debug("{}", progList);
 			log.debug("partlist = {}", lecture.getPartList());
-			
+
 			int playPosition = 0;
 			// 지정된 챕터번호가 없다면 yn 보고 찾음
 			if(chapterNo == -1) {

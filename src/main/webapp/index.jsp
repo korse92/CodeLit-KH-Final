@@ -143,6 +143,9 @@ $(() => {
 									무료
 							   </c:when>
 								<c:otherwise>
+									<%-- <c:set var="localeValue" value="${pageContext.response.locale}"/>
+									<fmt:setLocale value="${localeValue eq 'ko' ? 'ko_kr' : 'en_us'}" />
+									${localeValue} --%>
 									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency" />
 								</c:otherwise>
 							</c:choose>

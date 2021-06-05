@@ -31,9 +31,8 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	
 	
-	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int paymentHandling(Payment payment) {
+	public int insertPayment(Payment payment) {
 		
 		
 		
@@ -101,7 +100,7 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		
 		
-		// progress 집어넣기
+		// progress 집어넣기 (수강진도)
 		param.put("chapList", chapList);
 		int e = paymentDao.insertPayChapter(param);
 		

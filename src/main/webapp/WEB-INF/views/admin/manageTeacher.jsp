@@ -117,8 +117,8 @@
 			               		</button>
 		            		</td>
 		            		<td>
-		            			<span>둘 중 하나만 설정 후 검색도 가능</span>
-		            		</td>
+		            			<span><spring:message code="admin.searchMsg"/></span>
+		            		</td> 
 		            	</tr>
         
 		            </table>

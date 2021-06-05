@@ -24,7 +24,7 @@ $(() => {
 });
 </script>
 
-<sec:authorize access="isAuthenticated()">
+
   <div class="container List-container" >
         <div class="row mt-3">
           <h2 class=" jb-larger mt-1 col-3"><spring:message code="menu.notice"/></h2>
@@ -73,5 +73,5 @@ $(() => {
          </sec:authorize>
       </div>
    </div>
-</sec:authorize>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

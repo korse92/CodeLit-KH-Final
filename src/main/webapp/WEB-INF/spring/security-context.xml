@@ -7,33 +7,84 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!--  기본 namespace security로 설정  -->
-	
+
 	<!-- #4. 패스워드암호화관련 빈등록 -->
 	<beans:bean id="bcryptPasswordEncoder"
 				class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-				
+
 	<beans:bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="1073741824" /> <!-- multipart/form-data 요청당 최대 파일 크기는 1GB(1024 * 1024 * 1024)이다. default: -1(제한없음) -->
 		<beans:property name="maxUploadSizePerFile" value="524288000" /> <!-- 파일하나당 최대용량은 500MB(500 * 1024 * 1024)이다. 기본값: -1(제한없음) -->
 		<beans:property name="maxInMemorySize" value="10240" /> <!-- 메모리 사용최대용량. 기본값 10240. 이값을 넘어가면, 임시파일로 저장함. -->
 		<beans:property name="defaultEncoding" value="UTF-8" />
 	</beans:bean>
-	
-	<!-- #5. 정적자원 요청은 security 인증/인가에서 제외한다. -->			
+
+	<!-- #5. 정적자원 요청은 security 인증/인가에서 제외한다. -->
 	<http security="none" pattern="/resources/**"/>
-	
+
 	<!-- #6. HttpSecurity 설정 -->
 	<http auto-config="true">
 
 
-	
+	<intercept-url pattern="/" access="permitAll" />
+	<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+	<intercept-url pattern="/community/noticeWrite.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/community/noticeInsert.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/community/noticeUpdate.do" access="hasRole('ADMIN')" method="GET"/>
+	<intercept-url pattern="/community/noticeUpdate.do" access="hasRole('ADMIN')" method="POST"/>
+	<intercept-url pattern="/community/noticeDelete.do" access="hasRole('ADMIN')"/>
+
+	<intercept-url pattern="/community/studyWrite.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/community/studyInsert.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/community/insertComment.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/community/studyUpdate.do" access="isAuthenticated()" method="GET"/>
+	<intercept-url pattern="/community/studyUpdate.do" access="isAuthenticated()" method="POST"/>
+	<intercept-url pattern="/community/studyDelete.do" access="isAuthenticated()" method="POST"/> <!-- Get핸들러였는데 POST로 수정예정 -->
+	<intercept-url pattern="/community/updateComment.do" access="isAuthenticated()" method="GET"/>
+	<intercept-url pattern="/community/updateComment.do" access="isAuthenticated()" method="POST"/>
+	<intercept-url pattern="/community/deleteCmt.do" access="isAuthenticated()" method="POST"/> <!-- Get핸들러였는데 POST로 수정 예정 -->
+
+	<intercept-url pattern="/counsel/**" access="isAuthenticated()"/>
+	<intercept-url pattern="/counsel/counselListAdmin.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/counsel/counselListAdmin.do" access="hasRole('ADMIN')"/>
+	<intercept-url pattern="/counsel/counselAnswer.do" access="hasRole('ADMIN')" method="GET"/>
+	<intercept-url pattern="/counsel/counselAnswer.do" access="hasRole('ADMIN')" method="POST"/>
+
+	<intercept-url pattern="/lecture/lectureEnroll.do" access="hasRole('TEACHER')" method="GET"/>
+	<intercept-url pattern="/lecture/lectureEnroll.do" access="hasRole('TEACHER')" method="POST"/>
+	<intercept-url pattern="/lecture/myAllLecture.do" access="hasRole('TEACHER')"/>
+	<intercept-url pattern="/lecture/reApplyLecture.do" access="hasRole('TEACHER')"/>
+
+	<intercept-url pattern="/lecture/lecture.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/lecture/cmtInsert.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/lecture/cmtUpdate.do" access="isAuthenticated()"/>
+
+	<intercept-url pattern="/member/memberDetail.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/memberUpdate.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/deleteMember.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/myProfile.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/memberLectureList.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/myCalendar.do" access="isAuthenticated()"/>
+	<intercept-url pattern="/member/myStreaming.do" access="isAuthenticated()"/>
+
+	<intercept-url pattern="/order/**" access="isAuthenticated()"/>
+
+	<intercept-url pattern="/teacher/**" access="hasRole('TEACHER')"/>
+	<intercept-url pattern="/teacher/teacherRequest.do" access="isAuthenticated()" method="GET"/>
+	<intercept-url pattern="/teacher/teacherRequest.do" access="isAuthenticated()" method="POST"/>
+
+	<intercept-url pattern="/alarm/**" access="isAuthenticated()"/>
+
+	<!-- 게시글 수정  /studyUpdate(GET,POST) /studyDelete.do(POST)은 작성자만 접근할 수 있도록 인터셉터 수동 처리 -->
+
+
 	<!-- 	<intercept-url pattern="/" access="permitAll" />
 		<intercept-url pattern="/index.jsp" access="permitAll" /> forwarding 하는 path도 등록함.
 		<intercept-url pattern="/member/memberLogin.do" access="isAnonymous()" />
 		<intercept-url pattern="/member/memberEnroll.do" access="isAnonymous()" />
 		<intercept-url pattern="/member/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/board/**" access="hasRole('USER')"/>
-	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />	    
+	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 	    <intercept-url pattern="/**" access="isAuthenticated()" />
 	     -->
 
@@ -43,7 +94,7 @@
 		<intercept-url pattern="/member/memberLogin.do" access="isAnonymous()" />
 		<intercept-url pattern="/member/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/board/**" access="hasRole('USER')"/>
-	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />	    
+	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 	    <intercept-url pattern="/**" access="isAuthenticated()" /> -->
 
 <!-- 		<intercept-url pattern="/" access="permitAll" /> -->
@@ -55,7 +106,7 @@
 <!-- 	    <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />	     -->
 <!--	    <intercept-url pattern="/teacher/**" access="hasRole('TEACHER')" /> -->
 <!-- 	    <intercept-url pattern="/**" access="isAuthenticated()" /> -->
-	    
+
 	    <!-- login-page="/member/memberLogin.do" GET 로그인폼페이지   -->
         <!-- login-processing-url="/member/memberLogin.do" POST 로그인폼 제출 url. 이 속성은 반드시 작성하되, 이를 처리할 핸들러메소드는 작성할 필요없음.-->
 	    <!-- default-target-url="/" 로그인성공후 redirect url. 지정하지 않으면, 자동으로 root -->
@@ -64,11 +115,11 @@
 		<form-login login-page="/member/memberLogin.do"
 					login-processing-url="/member/memberLogin.do"
 					default-target-url="/"
-					always-use-default-target="false"  
-					username-parameter="id" 
+					always-use-default-target="false"
+					username-parameter="id"
 					password-parameter="password"
 					/>
-					
+
         <!-- logout-url은 로그아웃 POST 요청할 url로 핸들러 메소드 작성불필요 -->
         <!-- invalidate-session="true" 기본값 true -->
         <!-- logout-success-url="/" 기본값 /login?logout-->
@@ -76,26 +127,26 @@
 				invalidate-session="true"
 				delete-cookies="JSESSIONID"
 				logout-success-url="/"/>
-				
+
 		<!-- remember me 설정 -->
 		<remember-me
-			data-source-ref="dataSource" 
+			data-source-ref="dataSource"
 			token-validity-seconds="1209600"/> <!-- 초단위 기입 2419200 (60*60*24*14 : 4 주) -->
 
 		<!-- 접근권한이 없는 경우, forwarding할 url -->
 		<access-denied-handler error-page="/error/accessDenied.do"/>
-		
+
 		<!-- csrf[disabled=false] 기본값. 모든 post요청은 csrf토큰 값을 인증해야 한다. -->
 	    <!-- <csrf disabled="false"/> -->
 	</http>
-	
+
 	<authentication-manager>
 		<!-- UserDetailsService 구현체. 같은 application-context에 등록된 빈이어야 함. -->
-		<authentication-provider user-service-ref="securityService" >			
+		<authentication-provider user-service-ref="securityService" >
 			<password-encoder ref="bcryptPasswordEncoder"/>
 		</authentication-provider>
 	</authentication-manager>
-	
+
 	<!-- com.kh.security 패키지 빈으로 등록 -->
 	<!-- application-context에 등록된 빈으로 servlet-context의 빈은 참조불가하다. -->
 	<context:component-scan base-package="com.kh.security"/>
