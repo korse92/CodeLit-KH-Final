@@ -65,7 +65,7 @@
 							alt="..."
 							style="height: 13rem;"/>
 				</c:when>
-				<c:when test='${lecture.lectureAcceptYn == "W"}'>
+				<c:when test='${lecture.lectureAcceptYn == "N"}'>
 					<div class="card mx-auto position-relative" style="cursor: no-drop;">
 					<img
 						src="${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/stop.jpg"
@@ -89,7 +89,7 @@
 						<p class="card-subtitle">${lecture.refMemberId}</p>
 						<p class="card-subtitle my-1">
 					</c:when>
-					<c:when test='${lecture.lectureAcceptYn == "W"}'>
+					<c:when test='${lecture.lectureAcceptYn == "N"}'>
 						<h5 class="card-title"><spring:message code="lec.stopLec"/></h5>
 						<p class="card-subtitle"><spring:message code="lec.stopLec"/></p>
 						<p class="card-subtitle my-1">
@@ -124,7 +124,7 @@
 					<div class="d-flex justify-content-end">
 					</div>
 				</c:when>
-				<c:when test='${lecture.lectureAcceptYn == "W"}'>
+				<c:when test='${lecture.lectureAcceptYn == "N"}'>
 					<div class="row my-1">
 						<div class="col-auto">
 							<h5>${lecture.lectureName}</h5>
