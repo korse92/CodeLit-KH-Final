@@ -137,7 +137,6 @@
                     	</c:if>
                     	</c:forEach>
                     </td>
-                    <td>대기</td>
                     <td>
                     	<form:form method="POST" class="deleteMemberFrm"
                     				action="${pageContext.request.contextPath}/admin/deleteMember.do">

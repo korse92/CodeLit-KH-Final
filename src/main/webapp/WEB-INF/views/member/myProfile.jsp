@@ -38,11 +38,11 @@
 				            <img img src="${pageContext.request.contextPath}/resources/upload/member/${member.memberReProfile}">
 						</div>
 		          	</c:if>
+						<span class="fs-5">&nbsp;<spring:message code="ud.greeting"/>,&nbsp;</span>
 						<span class="fs-5">
 							<sec:authentication property="principal.username" />
 						</span>
-						<span class="fs-5">님</span>
-						<span class="fs-5">&nbsp;안녕하세요.</span>
+						<span class="fs-5"><spring:message code="ud.sir"/></span>
 					</div>
 					<div class="text-end">
 						<sapn class="link-box profile-update-box" onclick="location.href='${pageContext.request.contextPath}/member/memberDetail.do'">

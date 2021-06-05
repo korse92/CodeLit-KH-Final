@@ -19,9 +19,7 @@
   <div class="container">
     <div class="row">
       <p class="mb-0 text-center">
-      	<a href="${pageContext.request.contextPath}/admin/data.do">
       	&lt;<spring:message code="footer.msg"/>&gt;
-      	</a>
       </p>
     </div>
   </div>

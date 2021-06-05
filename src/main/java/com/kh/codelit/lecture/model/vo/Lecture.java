@@ -52,4 +52,7 @@ public class Lecture {
 	//강의 클릭 수
 	private int clickNo;
 
+	//수강 확인
+	private boolean enrolled;
+
 }

@@ -192,6 +192,7 @@ function changeLocale(lang) {
 										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageLectureBoard.do"><spring:message code="Amenu.manageLecture"/></a></li>
 										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/manageMemberIndex.do"><spring:message code="Amenu.manageMember"/></a></li>
 										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/alarm/alarmList.do"><spring:message code="Amenu.notification"/></a></li>
+										<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/data.do">데이터 현황</a></li>
 									</sec:authorize>
 
 				                </ul>
@@ -214,8 +215,8 @@ function changeLocale(lang) {
 			<!-- 다국어 : 추후 아이콘으로 변경 -->
 			 <nav class="ms-4" aria-label="breadcrumb">
 			   <ol class="breadcrumb mt-3">
-			    <li class="breadcrumb-item"><a class="text-light text-decoration-none" href="javascript:changeLocale('ko')"><spring:message code="lang.languageKorean"/></a></li>
-			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en')"><spring:message code="lang.languageEnglish"/></a></li>
+			    <li class="breadcrumb-item"><a class="text-light text-decoration-none" href="javascript:changeLocale('ko_kr')"><spring:message code="lang.languageKorean"/></a></li>
+			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en_us')"><spring:message code="lang.languageEnglish"/></a></li>
 			  </ol>
 			</nav>
 

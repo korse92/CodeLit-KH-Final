@@ -87,7 +87,7 @@ $(() => {
 			</button>
 		</div>
 	</div>
-</div>
+<!-- </div> -->
 	<div class="row justify-content-center">
 		<div class="rollingPage">
 			<div class="rollingHead">
@@ -143,6 +143,9 @@ $(() => {
 									무료
 							   </c:when>
 								<c:otherwise>
+									<%-- <c:set var="localeValue" value="${pageContext.response.locale}"/>
+									<fmt:setLocale value="${localeValue eq 'ko' ? 'ko_kr' : 'en_us'}" />
+									${localeValue} --%>
 									<fmt:formatNumber value="${lecture.lecturePrice}" type="currency" />
 								</c:otherwise>
 							</c:choose>
@@ -213,11 +216,11 @@ $(() => {
 				</div>
 			</div>
 			<c:if test="${(vs.count%4 == 0) || vs.last}">
+		</div>
+		</c:if>
+		</c:forEach>
 	</div>
-	</c:if>
-	</c:forEach>
 </div>
-	</div>
 
 
 <!-- 컨텐츠 끝 -->

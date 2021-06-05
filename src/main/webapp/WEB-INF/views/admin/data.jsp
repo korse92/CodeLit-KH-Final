@@ -62,6 +62,11 @@
                 margin: 0 auto;
             }
 
+			/**********************/
+			
+			pivotgrid {
+            	margin-top: 20px;
+        	}
         </style>
 
         <script>
@@ -85,41 +90,6 @@
                         enabled: true
                     }
                 });
-
-
-
-                // // side-bar chart
-                // $("#sideChart").dxChart({
-                //     dataSource: sideSource,
-                //     commonSeriesSettings: {
-                //         argumentField: "state",
-                //         type: "bar",
-                //         hoverMode: "allArgumentPoints",
-                //         selectionMode: "allArgumentPoints",
-                //         label: {
-                //             visible: true,
-                //             format: {
-                //                 type: "fixedPoint",
-                //                 precision: 0
-                //             }
-                //         }
-                //     },
-                //     series: [
-                //         { valueField: "user", name: "유저이름" },
-                //         { valueField: "avg", name: "평균" }
-                //     ],
-                //     title: "유저 클릭 상위 및 전체 평균 비교",
-                //     legend: {
-                //         verticalAlignment: "bottom",
-                //         horizontalAlignment: "center"
-                //     },
-                //     "export": {
-                //         enabled: true
-                //     },
-                //     onPointClick: function (e) {
-                //         e.target.select();
-                //     }
-                // });
 
 
 
@@ -166,6 +136,89 @@
                         item.show();
                     }
                 }
+                
+                
+                
+                // pivot-grid
+                var pivotGridChart = $("#pivotgrid-chart").dxChart({
+                    commonSeriesSettings: {
+                        type: "bar"
+                    },
+                    tooltip: {
+                        enabled: true,
+                        customizeTooltip: function (args) {
+                            var valueText = 
+                            	(args.seriesName.indexOf("Total") != -1)
+                            	? args.originalValue + "원"
+                            	: args.originalValue + "개";
+                
+                            return {
+                                html: args.seriesName + "<div>"
+                                    + valueText + "</div>"
+                            };
+                        }
+                    },
+                    size: {
+                        height: 320
+                    },
+                    adaptiveLayout: {
+                        width: 450
+                    }
+                }).dxChart("instance");
+                
+                var pivotGrid = $("#pivotgrid").dxPivotGrid({
+                    allowSortingBySummary: true,
+                    allowFiltering: true,
+                    showBorders: true,
+                    showColumnGrandTotals: false,
+                    showRowGrandTotals: false,
+                    showRowTotals: false,
+                    showColumnTotals: false,
+                    fieldChooser: {
+                        enabled: true
+                    },
+                    dataSource: {
+                        fields: [{
+                            caption: "category",
+                            width: 120,
+                            dataField: "category",
+                            area: "row"
+                        }, {
+                        	caption: "lectureName",
+                        	width: 200,
+                        	dataField: "lectureName",
+                        	area: "row"
+                        }, {
+                            caption: "Total",
+                            dataField: "price",
+                            dataType: "number",
+                            summaryType: "sum",
+                            format: {
+                                formatter: function (originalValue) {
+                                    return "&#8361; " + originalValue;
+                                }
+                            },
+                            area: "data"
+                        }, {
+                            summaryType: "count",
+                            area: "data"
+                        }, {
+                            dataField: "date",
+                            dataType: "date",
+                            area: "column"
+                        }, {
+                            groupName: "date",
+                            groupInterval: "day"
+                        }
+                      ],
+                        store: sales
+                    }
+                }).dxPivotGrid("instance");
+                
+                pivotGrid.bindChart(pivotGridChart, {
+                    dataFieldsDisplayMode: "splitPanes",
+                    alternateDataFields: false
+                });
 
             }); // $()
 
@@ -173,19 +226,7 @@
             
             function search(e) {
 
-            	
-            	
                 let searchKeyword = document.getElementById("searchKeyword").value;
-                
-//                 let count = 0;
-//                 for(let i=0; i<${memberList.size()}; i++) {
-//                 	if(memberList[i] == searchKeyword) {
-//                 		count = 1; break;
-//                 	}
-//                 }
-//                 if(count == 0) {
-//                 	return;
-//                 }
 
 				var flag = true;
                 var data_ = null;
@@ -258,10 +299,7 @@
 	                                e.target.select();
 	                            }
 	                        });
-                			
                 		}
-                		
-
                 	},
                 	error: function(xhr, status, err) {
                 		console.log("ajax 오류");
@@ -271,7 +309,6 @@
                 	}
                 		
                 });
-
 
             } // search()
 
@@ -310,7 +347,28 @@
                 sales: ${categorySales[2].sales}
             }];
 
+            
+           
+            
+                        
+           // pivot grid 변수 (기간별 카테고리별 매출)
+           var sales = [];
+           
         </script>
+        
+        <c:forEach items="${categorySalesSummary}" var="css">
+        	<script>
+	        	var elem = {
+	        			"lectureNo": "${css.lectureNo}",
+	        			"lectureName": "${css.lectureName}",
+	        			"category": "${css.lecCatName}",
+	        			"date": "${css.payDate}",
+	        			"price": ${css.price}
+	        	};
+	        	sales.push(elem);
+        	</script>
+        </c:forEach>
+        
         
 <!-- 개인 CSS, JS 위치 -->
 
@@ -322,9 +380,10 @@
 
         <nav class="my-5">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="true">강의 통산 클릭수 상위</button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-2" aria-selected="false">유저별 강의 클릭 수 상위</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">카테고리별 매출비중</button>
+                <button class="nav-link active" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="true">강의 통산 클릭수 상위</button>
+                <button class="nav-link" id="nav-2-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-2" aria-selected="false">유저별 강의 클릭 수 상위</button>
+                <button class="nav-link" id="nav-3-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">카테고리별 매출비중</button>
+                <button class="nav-link" id="nav-4-tab" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">기간별 카테고리별 매출</button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -343,9 +402,9 @@
                 <!-- <span class="input-group-text mb-5" onclick="search();">검색</span> -->
               </div>
 
-              <div class="demo-container">
-                <div id="sideChart" class="mx-auto mt-5"></div>
-            </div>
+              	<div class="demo-container">
+                	<div id="sideChart" class="mx-auto mt-5"></div>
+            	</div>
             </div>
 
             <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
@@ -354,6 +413,14 @@
                 </div>
             </div>
 
+			<div class="tab-pane fade active" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
+				<div class="demo-container">
+				  <div id="pivotgrid-demo">
+				      <div id="pivotgrid-chart" class="mx-auto"></div>
+				      <div id="pivotgrid" class="mx-auto"></div>
+				  </div>
+				</div>
+            </div>
         </div>
 
 
