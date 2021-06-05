@@ -25,9 +25,6 @@
 	<!-- #6. HttpSecurity 설정 -->
 	<http auto-config="true">
 
-
-	<intercept-url pattern="/" access="permitAll" />
-	<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 	<intercept-url pattern="/community/noticeWrite.do" access="hasRole('ADMIN')"/>
 	<intercept-url pattern="/community/noticeInsert.do" access="hasRole('ADMIN')"/>
 	<intercept-url pattern="/community/noticeUpdate.do" access="hasRole('ADMIN')" method="GET"/>
@@ -44,7 +41,6 @@
 	<intercept-url pattern="/community/updateComment.do" access="isAuthenticated()" method="POST"/>
 	<intercept-url pattern="/community/deleteCmt.do" access="isAuthenticated()" method="POST"/> <!-- Get핸들러였는데 POST로 수정 예정 -->
 
-	<intercept-url pattern="/counsel/**" access="isAuthenticated()"/>
 	<intercept-url pattern="/counsel/counselListAdmin.do" access="hasRole('ADMIN')"/>
 	<intercept-url pattern="/counsel/counselListAdmin.do" access="hasRole('ADMIN')"/>
 	<intercept-url pattern="/counsel/counselAnswer.do" access="hasRole('ADMIN')" method="GET"/>
@@ -67,12 +63,14 @@
 	<intercept-url pattern="/member/myCalendar.do" access="isAuthenticated()"/>
 	<intercept-url pattern="/member/myStreaming.do" access="isAuthenticated()"/>
 
-	<intercept-url pattern="/order/**" access="isAuthenticated()"/>
-
-	<intercept-url pattern="/teacher/**" access="hasRole('TEACHER')"/>
 	<intercept-url pattern="/teacher/teacherRequest.do" access="isAuthenticated()" method="GET"/>
 	<intercept-url pattern="/teacher/teacherRequest.do" access="isAuthenticated()" method="POST"/>
 
+	<intercept-url pattern="/" access="permitAll" />
+	<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+	<intercept-url pattern="/counsel/**" access="isAuthenticated()"/>
+	<intercept-url pattern="/order/**" access="isAuthenticated()"/>
+	<intercept-url pattern="/teacher/**" access="hasRole('TEACHER')"/>
 	<intercept-url pattern="/alarm/**" access="isAuthenticated()"/>
 
 	<!-- 게시글 수정  /studyUpdate(GET,POST) /studyDelete.do(POST)은 작성자만 접근할 수 있도록 인터셉터 수동 처리 -->
