@@ -220,7 +220,7 @@ public class StudyBoardController {
 		return "redirect:/community/studyDetail.do?stdBrdNo="+stdBrd.getStdBrdNo();
 	}
 	
-	@GetMapping("/studyDelete.do")
+	@PostMapping("/studyDelete.do")
 	public String BoardDelete(@RequestParam int stdBrdNo, RedirectAttributes redirect) {
 		try {
 			service.deleteAttach(stdBrdNo);

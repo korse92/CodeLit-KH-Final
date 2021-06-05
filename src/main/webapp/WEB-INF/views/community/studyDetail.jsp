@@ -38,7 +38,10 @@
          <div class="board-footer">
          <c:if test="${stdBrd.refMemberId == name}">
            <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/studyUpdate.do?stdBrdNo=${stdBrd.stdBrdNo}'"><spring:message code="admin.editBtn"/></button>
-           <button type="button" class="btn btn-danger delete-btn" onclick='del();'><spring:message code="admin.deleteBtn"/></button>
+   			<form action="${pageContext.request.contextPath}/community/studyDelete.do?${_csrf.parameterName}=${_csrf.token}" method="post" style="display:inline">
+  				<input type="hidden" value="${stdBrd.stdBrdNo}" name="stdBrdNo">
+    			<button  type="submit" class="btn btn-danger cmtShow" id="comment-delete-btn"><spring:message code="admin.deleteBtn"/></button>
+   			</form>
          </c:if>
            <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/studyList.do'"><spring:message code="admin.backBtn"/></button>
          </div>
@@ -65,7 +68,10 @@
 		           <c:if test="${listCmt.refMemberId == name}">
 		           		<span>
 				           		<button type="button" class="btn btn-primary btn-sm cmtShow" id="comment-update-btn" onclick="updateCmt(${listCmt.stdCmtNo})">수정</button>
-		               			<button type="button" class="btn btn-danger btn-sm cmtShow" id="comment-delete-btn" onclick='location.href="${pageContext.request.contextPath}/community/deleteCmt.do?stdCmtNo=${listCmt.stdCmtNo}"'>삭제</button>
+		               			<form action="${pageContext.request.contextPath}/community/deleteCmt.do?${_csrf.parameterName}=${_csrf.token}" method="post" style="display:inline">
+		               				<input type="hidden" value="${listCmt.stdCmtNo}" name="stdCmtNo">
+			               			<button  type="submit" class="btn btn-danger btn-sm cmtShow" id="comment-delete-btn">삭제</button>
+		               			</form>
 		           		</span>
 		           </c:if>
 	           	</div>
@@ -106,7 +112,7 @@
   <script>
 	function del(){
 		if(confirm("삭제 하시겠습니까?")){
-			location.href=`${pageContext.request.contextPath}/community/studyDelete.do?stdBrdNo=${stdBrd.stdBrdNo}`;
+			return true;
 		} else{
 			return false;
 		}

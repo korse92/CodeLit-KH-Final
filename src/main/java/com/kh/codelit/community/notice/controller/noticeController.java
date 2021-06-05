@@ -128,7 +128,7 @@ public class noticeController {
 		}
 	}
 	
-	@GetMapping("/noticeDelete.do")
+	@PostMapping("/noticeDelete.do")
 	public String deleteNotice(@RequestParam int noticeNo, RedirectAttributes redirect) {
 		try {	
 			int attDel = service.deleteAttach(noticeNo);
