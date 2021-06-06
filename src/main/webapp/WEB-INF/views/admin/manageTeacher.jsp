@@ -69,6 +69,7 @@
 						    
 							//지헌 - 알림관련 추가 스크립트
 						    const $id = $("[name=memberId]").val();
+							alert($id);
 						    sendMessage("/app/reject/"+$id);
 							
 						    return true;
