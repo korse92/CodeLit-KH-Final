@@ -336,6 +336,7 @@ public class MemberController {
 		  List<Pick> pickList = pickService.selectPickList(memberId);
 		  List<Basket> basketList = basketService.selectBasketList(memberId);
 		  List<StreamingDate> streamingDateList = memberService.selectStreamingDateList(refMemberId);
+		  List<LectureDate> lectureDateList = memberService.selectLectureDateList(refMemberId);
 
 		  mav.addObject("member",member);
 		  mav.addObject("basketList", basketList);
@@ -343,6 +344,7 @@ public class MemberController {
 		  mav.addObject("pickList", pickList);
 		  mav.addObject("lectureList",lectureList);
 		  mav.addObject("streamingDateList", streamingDateList);
+		  mav.addObject("lectureDateList", lectureDateList);
 
 		  mav.setViewName("/member/myProfile");
 
@@ -425,6 +427,9 @@ public class MemberController {
 
     	List<LectureDate> lectureDateList = memberService.selectLectureDateList(refMemberId);
     	log.debug("lectureDateList = {}", lectureDateList);
+
+    	int count = memberService.countMyLecture(refMemberId);
+    	log.debug("count = {}", count);
 
     	return lectureDateList;
     }

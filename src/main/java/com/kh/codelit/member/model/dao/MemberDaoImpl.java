@@ -108,4 +108,9 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectList("member.selectLectureDateList", refMemberId);
 	}
 
+	@Override
+	public int countMyLecture(String refMemberId) {
+		return session.selectOne("member.countMyLecture", refMemberId);
+	}
+
 }

@@ -51,6 +51,16 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 		if($(".accordion-collapse").hasClass('show'))
 			$(allCollapseBtn).text('모두 펼치기');
 	}); */
+	$(() => {
+		//$("#input-id").rating();
+		//$("#input-id").rating({min:1, max:10, step:2, size:'lg'});
+
+		//Bootstrap Tooltip을 사용하기 위한 tooltip 초기화 코드
+		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+		  return new bootstrap.Tooltip(tooltipTriggerEl)
+		});
+	});
 </script>
 
 <div class="container my-3">
@@ -128,7 +138,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 							<div class="col-sm-2 p-0 me-2">
 								<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
 			                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" />
-									<button type="submit" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="찜하기">
+									<button type="submit" class="btn btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-placement="left" title="${lecture.picked ? '찜삭제' : '찜하기'}">
 										<i class="${lecture.picked ? 'far fa-trash-alt' : 'fas fa-heart'}"></i>
 									</button>
 								</form:form>

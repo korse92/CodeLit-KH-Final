@@ -12,7 +12,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="CodeLit" name="title"/>
 </jsp:include>
+<c:if test="${not empty principal}">
 	<sec:authentication property="principal.username" var="name" />
+</c:if>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css">
 	<div class="container">
