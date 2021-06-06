@@ -20,7 +20,10 @@
 <title>${param.title}</title>
 
 <!-- jQuery -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
 
 
 <!-- Bootstrap JS : JQuery load 이후에 작성할것.-->
@@ -215,8 +218,8 @@ function changeLocale(lang) {
 			<!-- 다국어 : 추후 아이콘으로 변경 -->
 			 <nav class="ms-4" aria-label="breadcrumb">
 			   <ol class="breadcrumb mt-3">
-			    <li class="breadcrumb-item"><a class="text-light text-decoration-none" href="javascript:changeLocale('ko_kr')"><spring:message code="lang.languageKorean"/></a></li>
-			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en_us')"><spring:message code="lang.languageEnglish"/></a></li>
+			    <li class="breadcrumb-item"><a class="text-light text-decoration-none" href="javascript:changeLocale('ko')"><spring:message code="lang.languageKorean"/></a></li>
+			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en')"><spring:message code="lang.languageEnglish"/></a></li>
 			  </ol>
 			</nav>
 

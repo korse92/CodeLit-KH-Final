@@ -8,7 +8,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	
+
 <!-- 다국어  -->
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
@@ -115,7 +115,7 @@ $(() => {
 								</c:when>
 								<c:otherwise>
 									<fmt:formatNumber value="${lecture.lecturePrice}"
-										type="currency" />
+										type="currency" currencySymbol="￦" maxFractionDigits="0"/>
 								</c:otherwise>
 							</c:choose>
 						</p>
