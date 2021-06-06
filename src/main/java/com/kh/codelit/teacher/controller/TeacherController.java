@@ -266,7 +266,7 @@ public class TeacherController {
 
 		return mav;
 	}
-
+	
 
 
 	@GetMapping("/lectureCalList.do")
