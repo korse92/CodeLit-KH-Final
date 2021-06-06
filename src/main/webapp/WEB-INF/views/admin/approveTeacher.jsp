@@ -67,7 +67,7 @@
 		                <!-- 취소 버튼 클릭시 강의관리게시판페이지로 이동처리 필요 or 모달창 없앨거면 data-dismiss="modal" 속성 주기  -->
 					</div>
 					<!-- 지헌 / 알림관련 태그 추가 -->
-					<input type="hidden" id="msgTitle" value="강사신청이 승인되었습니다/">
+					<input type="hidden" id="msgTitle" value="강사신청이 승인되었습니다.">
 					<input type="hidden" id="msgContent" value="신청하신 강사신청이 승인되었습니다.">
               		<!-- 알림관련 태그 종료 -->
               </div>

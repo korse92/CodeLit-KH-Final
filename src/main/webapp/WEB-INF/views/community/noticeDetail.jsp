@@ -20,14 +20,14 @@
         </div>
         <div class="row mt-1 header">
           <h5 class="col-1 board-title"><spring:message code="user.boardTitle" /></h5>
-          <p class="col-8">${notice.noticeTitle}</p>
+          <p class="col-8" style="word-break:break-all;">${notice.noticeTitle}</p>
           <p class="col-2"><i class="fas fa-clock"></i> <fmt:formatDate value="${notice.noticeDate}" pattern="yy/MM/dd HH:mm:ss"/></p>
           <p class="col-1"><i class="fas fa-eye"></i> ${notice.noticeCount}</p>
         </div>
         <div class="board-container">
           <h5 class="content-title"><spring:message code="user.boardContent" /></h5>
           	<c:if test="${not empty attach}">
-	            <img src='${pageContext.request.contextPath}${attachPath}'>
+	            <img style="width: 15rem; height: 15rem;" src='${pageContext.request.contextPath}${attachPath}'>
           	</c:if>
             <p class="content" style="word-break:break-all;">
               ${notice.noticeContent}
