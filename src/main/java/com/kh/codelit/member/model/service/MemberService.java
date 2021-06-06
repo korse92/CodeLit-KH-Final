@@ -41,4 +41,6 @@ public interface MemberService extends UserDetailsService{
 
 	List<LectureDate> selectLectureDateList(String refMemberId);
 
+	int countMyLecture(String refMemberId);
+
 }

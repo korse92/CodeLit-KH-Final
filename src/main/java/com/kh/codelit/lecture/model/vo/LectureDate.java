@@ -24,4 +24,6 @@ public class LectureDate {
 	private String lecChapterTitle;
 	private Date payDate;
 
+	private int count;
+
 }

@@ -213,4 +213,13 @@
 		order by
     		p.pay_date, l.lecture_no, lp.lecture_part_no, lc.lec_chapter_no
 	</select>
+
+	<select id="countMyLecture" resultType="_int">
+		select
+			count(*)
+		from
+			payment
+		where
+			ref_member_id = #{refMemberId}
+	</select>
 </mapper>
