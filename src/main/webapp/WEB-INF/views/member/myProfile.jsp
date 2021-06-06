@@ -102,7 +102,7 @@
 						<c:when test="${not empty pickList}">
 							<c:forEach items="${pickList}" var="pickList" end="2">
 								<li>
-									<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${pickList.refLectureNo}'">
+									<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${pickList.pickNo}'">
 											${pickList.lectureName} / ${pickList.teacherName} / ${pickList.lecturePrice != 0 ? pickList.lecturePrice : "무료"}
 									</span>
 								</li>
@@ -133,7 +133,7 @@
 							<c:when test="${not empty basketList}">
 								<c:forEach items="${basketList}" var="basketList" end="2">
 									<li >
-										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${basketList.refLectureNo}'">
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${basketList.lectureNo}'">
 											${basketList.lectureName}
 										</span>
 									</li>
@@ -164,7 +164,7 @@
 							<c:when test="${not empty streamingDateList}">
 								<c:forEach items="${streamingDateList}" var="streamingDateList" end="2">
 									<li >
-										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${streamingDateList.refLectureNo}'">
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${streamingDateList.lectureNo}'">
 											${streamingDateList.lectureName}
 										</span>
 									</li>
@@ -173,7 +173,7 @@
 							<c:when test="${not empty lectureDateList}">
 								<c:forEach items="${lectureDateList}" var="lectureDateList" end="2">
 									<li >
-										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureDateList.refLectureNo}'">
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureDateList.lectureNo}'">
 											${lectureDateList.lectureName}
 										</span>
 									</li>
