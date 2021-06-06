@@ -65,26 +65,25 @@ document.addEventListener('DOMContentLoaded', function() {
       eventDidMount: function(info) {
 
 			//console.log(info.event.id);
+			//스트리밍강의
 			if(info.event.id == 'slecture'){
 	            tippy(info.el, {
 	            	content: '<div class=p-2>강의명 : ' + info.event.extendedProps.lectureName + '<hr/>'
 	            			+ '일정이름 : ' + info.event.extendedProps.sTitle + '<hr/>'
 	            			+ '강사명 : ' + info.event.extendedProps.teacherName + '<hr/>'
 	            			+ '강의일자 : ' + info.event.extendedProps.sDate + ' - ' + info.event.extendedProps.eDate + '<hr/>'
-	            			+ '강의시간 : ' + info.event.extendedProps.sTime + ' - ' + info.event.extendedProps.eTime + '<hr/>'
-	            			+ '<img class="w-100" src="' + info.event.extendedProps.thumbNail + '"></div>',
+	            			+ '강의시간 : ' + info.event.extendedProps.sTime + ' - ' + info.event.extendedProps.eTime + '<hr/></div>',
 	            	allowHTML: true,
 	            	placement: 'bottom',
 	            	duration: 1000
 	            });
 			} else {
+				//일반강의
 				tippy(info.el, {
 	            	content: '<div class=p-2>강의명 : ' + info.event.extendedProps.lectureName + '<hr/>'
-	            			+ '일정이름 : ' + info.event.extendedProps.sTitle + '<hr/>'
+	            			+ '일정이름 : ' + info.event.extendedProps.lecturePartTitle + " - " + info.event.extendedProps.lecChapterTitle + '<hr/>'
 	            			+ '강사명 : ' + info.event.extendedProps.teacherName + '<hr/>'
-	            			+ '강의일자 : ' + info.event.extendedProps.sDate + ' - ' + info.event.extendedProps.eDate + '<hr/>'
-	            			+ '강의시간 : ' + info.event.extendedProps.sTime + ' - ' + info.event.extendedProps.eTime + '<hr/>'
-	            			+ '<img class="w-100" src="' + info.event.extendedProps.thumbNail + '"></div>',
+	            			+ '강의일자 : ' + info.event.extendedProps.sDate + '<hr/></div>',
 	            	allowHTML: true,
 	            	placement: 'bottom',
 	            	duration: 1000
@@ -122,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									var lectureNo = elem.refLectureNo;
 
 									events.push({
-										title: lectureName + " : " + sTitle,
+										title: lectureName,
 										start: startDate,
 										end: endDate,
 										lectureName: lectureName,
@@ -159,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							if(result != null){
 								var sDate;
 								//var colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-								var colorIdx = 0;
+								//var colorIdx = 0;
 
 								$.each(result, function(index, elem){
 									var lectureNo = elem.lectureNo;
@@ -180,8 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
 									//console.log("index = ", index);
 									//console.log("elem.payDate=", elem.payDate);
 									//console.log(moment(sDate).format('YYYY-MM-DD'));
-									var colorCode;
 
+									//var colorCode;
+									/*
 									if(first) {
 										if(index > 0){
 											if(result[index].lectureNo != result[index-1].lectureNo) {
@@ -206,9 +206,10 @@ document.addEventListener('DOMContentLoaded', function() {
 											colorCode = globalColorCode[colorIdx];
 											console.log("colorCode = ", colorCode);
 										}
+									*/
+									//console.log(index);
 
-
-									if(index == 0){
+									if(index == 0 || result[index].lectureNo != result[index-1].lectureNo){
 										sDate = moment(elem.payDate);
 										//console.log("payDate = ", sDate);
 									}
@@ -218,61 +219,40 @@ document.addEventListener('DOMContentLoaded', function() {
 											//console.log("sDate = ", sDate);
 										}
 									}
-									//프론트
-									if(refLecCatNo == '5'){
-										events.push({
-											title: lectureName + " : " + lecturePartTitle + " : " + lecChapterTitle,
-											start: sDate,
-											lectureName: lectureName,
-											teacherName: teacherName,
-											thumbNail: thumbNail,
-											guideline: guideline,
-											lecturePartNo: lecturePartNo,
-											lecturePartTitle: lecturePartTitle,
-											sDate: moment(sDate).format('YYYY-MM-DD'),
-											display : "block",
-											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
-											color: colorCode,
-											id: 'vlecture'
-										});
-										//백엔드
-									} else if(refLecCatNo == '6'){
-										events.push({
-											title: lectureName + " : " + lecturePartTitle + " : " + lecChapterTitle,
-											start: sDate,
-											lectureName: lectureName,
-											teacherName: teacherName,
-											thumbNail: thumbNail,
-											guideline: guideline,
-											lecturePartNo: lecturePartNo,
-											lecturePartTitle: lecturePartTitle,
-											sDate: moment(sDate).format('YYYY-MM-DD'),
-											display : "block",
-											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
-											color: colorCode
-										});
-										//빅데이터
-									} else {
-										events.push({
-											title: lectureName + " : " + lecturePartTitle + " : " + lecChapterTitle,
-											start: sDate,
-											lectureName: lectureName,
-											teacherName: teacherName,
-											thumbNail: thumbNail,
-											guideline: guideline,
-											lecturePartNo: lecturePartNo,
-											lecturePartTitle: lecturePartTitle,
-											sDate: moment(sDate).format('YYYY-MM-DD'),
-											display : "block",
-											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
-											color: colorCode
-										});
 
+									var colorVal;
+									if(refLecCatNo == '5'){
+										//프론트
+										colorVal = "#ff3399";
+									} else if(refLecCatNo == '6'){
+										//백엔드
+										colorVal = "#2a67b7";
+									} else {
+										//빅데이터
+										colorVal = "#2a67b7";
 									}
+
+									events.push({
+										title: lectureName + " : " + lecChapterTitle,
+										start: sDate,
+										lectureName: lectureName,
+										teacherName: teacherName,
+										thumbNail: thumbNail,
+										guideline: guideline,
+										lecturePartNo: lecturePartNo,
+										lecturePartTitle: lecturePartTitle,
+										lecChapterTitle: lecChapterTitle,
+										sDate: moment(sDate).format('YYYY-MM-DD'),
+										display : "block",
+										url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
+										color: colorVal,
+										id: 'vlecture'
+									});
+
 									//console.log(elem);
 								}); //.each()
 									//console.log(events);
-								first = false;
+								//first = false;
 							}//if
 							successCallback(events);
 						}//success:function
@@ -335,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	<div id='loading'>loading...</div>
 	<div id='calendar'></div>
 
-	<input type="button" value="테스트" id="calTest"/>
+	<!-- <input type="button" value="테스트" id="calTest"/> -->
 </div> <!-- container -->
 
 
