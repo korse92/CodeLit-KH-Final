@@ -173,7 +173,7 @@
 							<c:when test="${not empty lectureDateList}">
 								<c:forEach items="${lectureDateList}" var="lectureDateList" end="2">
 									<li >
-										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureDateList.refLectureNo}'">
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureDateList.lectureNo}'">
 											${lectureDateList.lectureName}
 										</span>
 									</li>
