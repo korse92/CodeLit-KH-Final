@@ -451,16 +451,17 @@ $((e) => {
 
 
 });
+
 function LecturePart(lecturePartNo, lecturePartTitle) {
 	this.lecturePartNo = lecturePartNo;
 	this.lecturePartTitle = lecturePartTitle;
 	this.chapterArr = new Array();
 }
 
-function LectureChapter(lecChapterNo, lecChapterTitle, lecChapterVideo) {
+function LectureChapter(lecChapterNo, lecChapterTitle) {
 	this.lecChapterNo = lecChapterNo;
 	this.lecChapterTitle = lecChapterTitle;
-	this.lecChapterVideo = lecChapterVideo;
+	//this.lecChapterVideo = lecChapterVideo;
 }
 
 //챕터 추가버튼 리스너
@@ -578,7 +579,7 @@ function createCurriculum(){
 				return true;// jQuery의 each에서 true리턴 : continue, false리턴 : break;
 			}
 
-			let lectureChapter = new LectureChapter(cIdx, $(elem).val(), null);
+			let lectureChapter = new LectureChapter(cIdx, $(elem).val());
 			//chapArr.push(lectureChapter);
 
 			//첨부파일이 있을경우 form데이터 videoChapterNo에 참조할 챕터번호(임시) 삽입
