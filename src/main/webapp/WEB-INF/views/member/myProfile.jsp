@@ -102,7 +102,7 @@
 						<c:when test="${not empty pickList}">
 							<c:forEach items="${pickList}" var="pickList" end="2">
 								<li>
-									<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${pickList.pickNo}'">
+									<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${pickList.refLectureNo}'">
 											${pickList.lectureName} / ${pickList.teacherName} / ${pickList.lecturePrice != 0 ? pickList.lecturePrice : "무료"}
 									</span>
 								</li>
@@ -133,7 +133,7 @@
 							<c:when test="${not empty basketList}">
 								<c:forEach items="${basketList}" var="basketList" end="2">
 									<li >
-										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${basketList.lectureNo}'">
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${basketList.refLectureNo}'">
 											${basketList.lectureName}
 										</span>
 									</li>
@@ -164,7 +164,7 @@
 							<c:when test="${not empty streamingDateList}">
 								<c:forEach items="${streamingDateList}" var="streamingDateList" end="2">
 									<li >
-										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${streamingDateList.lectureNo}'">
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${streamingDateList.refLectureNo}'">
 											${streamingDateList.lectureName}
 										</span>
 									</li>
