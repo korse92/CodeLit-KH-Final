@@ -70,7 +70,7 @@
 			<form action="">
 				<div class="input-group">
 				<spring:message code="main.search" var="searchPlaceholder"/>
-						<input type="search" class="form-control" id="searchKeyword" name="searchKeyword" placeHolder="${searchPlaceholder}">
+						<input type="search" class="form-control" id="searchKeyword" name="searchKeyword" placeHolder="${searchPlaceholder}" value="${param.searchKeyword}">
 					<!-- <input type="search" name="searchKeyword" class="form-control" placeholder="강의자 / 강의명" /> -->
 					<button type="submit" class="btn btn-primary">
 						<i class="fas fa-search"></i>
