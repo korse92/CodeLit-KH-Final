@@ -46,9 +46,6 @@ public interface AdminDao {
 
 	int selectMemberOrderCount(Map<String, Object> param);
 
-
-	List<Member> selectMemberOrderList(String memberId);
-
 	List<Payment> selectMemberOrderList(Map<String, Object> param);
 
 
