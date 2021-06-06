@@ -124,4 +124,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+
+	@Override
+	public int countMyLecture(String refMemberId) {
+		return memberDao.countMyLecture(refMemberId);
+	}
+
+
 }
