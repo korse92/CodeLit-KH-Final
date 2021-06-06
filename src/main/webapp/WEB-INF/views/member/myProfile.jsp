@@ -158,7 +158,7 @@
 				<div class="card-body">
 					<div class="card-text">
 						<c:choose>
-							<c:when test="${empty streamingDateList}">
+							<c:when test="${empty streamingDateList and empty lectureDateList}">
 								<h6><spring:message code="ud.noPlan"/></h6>
 							</c:when>
 							<c:when test="${not empty streamingDateList}">
@@ -166,6 +166,15 @@
 									<li >
 										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${streamingDateList.refLectureNo}'">
 											${streamingDateList.lectureName}
+										</span>
+									</li>
+								</c:forEach>
+							</c:when>
+							<c:when test="${not empty lectureDateList}">
+								<c:forEach items="${lectureDateList}" var="lectureDateList" end="2">
+									<li >
+										<span onclick="location.href='${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${lectureDateList.refLectureNo}'">
+											${lectureDateList.lectureName}
 										</span>
 									</li>
 								</c:forEach>
