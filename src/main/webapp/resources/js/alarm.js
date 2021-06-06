@@ -6,7 +6,6 @@ toastr.options.progressBar = true;
 let ws = new SockJS("/codelit/stomp");
 let stompClient = Stomp.over(ws);
 
-//2.connect핸들러 작성. 구독
 stompClient.connect({}, (frame) => {
 	
 	stompClient.subscribe("/topic/user", (frame) => {
