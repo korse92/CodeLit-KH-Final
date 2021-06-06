@@ -48,4 +48,7 @@ public interface MemberDao {
 	List<LectureDate> selectLectureDateList(String refMemberId);
 
 
+	int countMyLecture(String refMemberId);
+
+
 }

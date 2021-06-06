@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							if(result != null){
 								var sDate;
 								//var colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-								var colorIdx = 0;
+								//var colorIdx = 0;
 
 								$.each(result, function(index, elem){
 									var lectureNo = elem.lectureNo;
@@ -179,8 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
 									//console.log("index = ", index);
 									//console.log("elem.payDate=", elem.payDate);
 									//console.log(moment(sDate).format('YYYY-MM-DD'));
-									var colorCode;
 
+									//var colorCode;
+									/*
 									if(first) {
 										if(index > 0){
 											if(result[index].lectureNo != result[index-1].lectureNo) {
@@ -205,9 +206,10 @@ document.addEventListener('DOMContentLoaded', function() {
 											colorCode = globalColorCode[colorIdx];
 											console.log("colorCode = ", colorCode);
 										}
+									*/
+									//console.log(index);
 
-
-									if(index == 0){
+									if(index == 0 || result[index].lectureNo != result[index-1].lectureNo){
 										sDate = moment(elem.payDate);
 										//console.log("payDate = ", sDate);
 									}
@@ -217,64 +219,40 @@ document.addEventListener('DOMContentLoaded', function() {
 											//console.log("sDate = ", sDate);
 										}
 									}
-									//프론트
-									if(refLecCatNo == '5'){
-										events.push({
-											title: lectureName,
-											start: sDate,
-											lectureName: lectureName,
-											teacherName: teacherName,
-											thumbNail: thumbNail,
-											guideline: guideline,
-											lecturePartNo: lecturePartNo,
-											lecturePartTitle: lecturePartTitle,
-											lecChapterTitle: lecChapterTitle,
-											sDate: moment(sDate).format('YYYY-MM-DD'),
-											display : "block",
-											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
-											color: colorCode,
-											id: 'vlecture'
-										});
-										//백엔드
-									} else if(refLecCatNo == '6'){
-										events.push({
-											title: lectureName,
-											start: sDate,
-											lectureName: lectureName,
-											teacherName: teacherName,
-											thumbNail: thumbNail,
-											guideline: guideline,
-											lecturePartNo: lecturePartNo,
-											lecturePartTitle: lecturePartTitle,
-											lecChapterTitle: lecChapterTitle,
-											sDate: moment(sDate).format('YYYY-MM-DD'),
-											display : "block",
-											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
-											color: colorCode
-										});
-										//빅데이터
-									} else {
-										events.push({
-											title: lectureName,
-											start: sDate,
-											lectureName: lectureName,
-											teacherName: teacherName,
-											thumbNail: thumbNail,
-											guideline: guideline,
-											lecturePartNo: lecturePartNo,
-											lecturePartTitle: lecturePartTitle,
-											lecChapterTitle: lecChapterTitle,
-											sDate: moment(sDate).format('YYYY-MM-DD'),
-											display : "block",
-											url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
-											color: colorCode
-										});
 
+									var colorVal;
+									if(refLecCatNo == '5'){
+										//프론트
+										colorVal = "#ff3399";
+									} else if(refLecCatNo == '6'){
+										//백엔드
+										colorVal = "#2a67b7";
+									} else {
+										//빅데이터
+										colorVal = "#2a67b7";
 									}
+
+									events.push({
+										title: lectureName + " : " + lecChapterTitle,
+										start: sDate,
+										lectureName: lectureName,
+										teacherName: teacherName,
+										thumbNail: thumbNail,
+										guideline: guideline,
+										lecturePartNo: lecturePartNo,
+										lecturePartTitle: lecturePartTitle,
+										lecChapterTitle: lecChapterTitle,
+										sDate: moment(sDate).format('YYYY-MM-DD'),
+										display : "block",
+										url: "${pageContext.request.contextPath}/lecture/lectureDetail.do?no=" + lectureNo,
+										color: colorVal,
+										id: 'vlecture'
+									});
+
 									//console.log(elem);
 								}); //.each()
 									//console.log(events);
-								first = false;
+								//first = false;
 							}//if
 							successCallback(events);
 						}//success:function

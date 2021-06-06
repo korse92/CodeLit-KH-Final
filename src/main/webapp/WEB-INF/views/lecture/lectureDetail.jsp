@@ -51,6 +51,16 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 		if($(".accordion-collapse").hasClass('show'))
 			$(allCollapseBtn).text('모두 펼치기');
 	}); */
+	$(() => {
+		//$("#input-id").rating();
+		//$("#input-id").rating({min:1, max:10, step:2, size:'lg'});
+
+		//Bootstrap Tooltip을 사용하기 위한 tooltip 초기화 코드
+		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+		  return new bootstrap.Tooltip(tooltipTriggerEl)
+		});
+	});
 </script>
 
 <div class="container my-3">
