@@ -48,7 +48,7 @@ public class adminController {
 	}
 	@GetMapping("/manageOrder.do")
 	public ModelAndView manageOrder(
-				@RequestParam(defaultValue = "1") int cPage,
+				@RequestParam(defaultValue = "1", value="cPage") int cPage,
 				Principal principal,
 				HttpServletRequest request,
 				ModelAndView mav
@@ -64,13 +64,11 @@ public class adminController {
 
 		try {
 			int totalContents = adminService.selectMemberOrderCount(param);
-			List<Member> member = adminService.selectMemberOrderList(memberId);
 			List<Payment> list = adminService.selectMemberOrderList(param);
-
+			
 			String url = HelloSpringUtils.convertToParamUrl(request);
 			String pageBar = HelloSpringUtils.getPageBar(totalContents, cPage, numPerPage, url);
 
-			mav.addObject("member",member);
 			mav.addObject("manageOrderList", list);
 			mav.addObject("pageBar", pageBar);
 			mav.setViewName("/admin/manageOrder");
