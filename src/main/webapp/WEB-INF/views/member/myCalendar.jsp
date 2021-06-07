@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										teacherName: teacherName,
 										sTime: sTime,
 										eTime: eTime,
-										thumbNail: "${pageContext.request.contextPath}/resources/upload/lecture/thumbnails/" + thumbNail,
+										thumbNail: "${pageContext.request.contextPath}/resources/images/" + thumbNail,
 										sTitle: sTitle,
 										sDate: startDate,
 										eDate: endDate,
