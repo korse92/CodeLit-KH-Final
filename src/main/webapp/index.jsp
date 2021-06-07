@@ -97,7 +97,8 @@ $(() => {
 				<ul>
 					<c:forEach items="${rollingList}" var="rolling" varStatus="vs">
 						<li><a
-							href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${rolling.refLectureNo}">${vs.count}.&nbsp;&nbsp;${rolling.lectureName}</a></li>
+							href="${pageContext.request.contextPath}/lecture/lectureDetail.do?no=${rolling.refLectureNo}">
+								${vs.count}.&nbsp;&nbsp;${rolling.lectureName}</a></li>
 					</c:forEach>
 				</ul>
 			</div>
