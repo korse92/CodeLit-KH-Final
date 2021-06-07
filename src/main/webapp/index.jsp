@@ -130,7 +130,7 @@ $(() => {
 							: pageContext.request.contextPath += '/resources/upload/lecture/thumbnails/' += lecture.lectureThumbRenamed}"
 						class="card-img-top" alt="..." style="height: 13rem;" />
 						<div class="card-body">
-						<h5 class="card-title">${lecture.lectureName}</h5>
+						<h5 class="card-title" style="">${lecture.lectureName}</h5>
 						<p class="card-subtitle">${lecture.teacherName}</p>
 						<p class="card-subtitle my-1">
 							<c:forEach var="i" begin="1" end="5">
