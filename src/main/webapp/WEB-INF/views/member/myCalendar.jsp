@@ -221,15 +221,15 @@ document.addEventListener('DOMContentLoaded', function() {
 									}
 
 									var colorVal;
-									if(refLecCatNo == '5'){
+									if(refLecCatNo == '1'){
 										//프론트
 										colorVal = "#ff3399";
-									} else if(refLecCatNo == '6'){
+									} else if(refLecCatNo == '2'){
 										//백엔드
 										colorVal = "#2a67b7";
 									} else {
 										//빅데이터
-										colorVal = "#2a67b7";
+										colorVal = "#008d62";
 									}
 
 									events.push({
