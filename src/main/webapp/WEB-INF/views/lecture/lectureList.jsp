@@ -154,7 +154,9 @@
 							</c:when>
 							<c:otherwise>
 							<div class="m-1">
-								<form:form id="basketFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.basketed ? '/order/deleteBasket.do' : '/order/addBasket.do'}" method="POST">
+								<form:form id="basketFrm${lecture.lectureNo}"
+								action="${pageContext.request.contextPath}${lecture.basketed?'/order/deleteBasket.do':'/order/addBasket.do'}"
+								method="POST">
 		                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" />
 								<button
 									type="submit"
@@ -165,7 +167,9 @@
 								</form:form>
 							</div>
 							<div class="m-1">
-		                		<form:form id="pickFrm${lecture.lectureNo}" action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}" method="POST">
+		                		<form:form id="pickFrm${lecture.lectureNo}"
+                				action="${pageContext.request.contextPath}${lecture.picked ? '/order/deletePick.do' : '/order/addPick.do'}"
+                				method="POST">
 		                		<input name="lectureNo" type="hidden" value="${lecture.lectureNo}" type="hidden" />
 								<button
 									type="submit"

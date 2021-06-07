@@ -81,7 +81,6 @@ public class MemberController {
 	}
 
 	@PostMapping("/memberEnroll.do")
-//	@RequestMapping(value = "/memberEnroll.do", method = RequestMethod.POST)
 	public String memberEnroll(
 						@ModelAttribute Member member,
 						RedirectAttributes redirectAttr

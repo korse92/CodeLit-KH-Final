@@ -35,7 +35,7 @@
 	    attachSignin(document.getElementById('google'));
 	  });
 	};
-	
+
 	//구글 로그인 api2
 	function attachSignin(element) {
 	  //console.log(element.id);
@@ -70,16 +70,16 @@
 	        alert(JSON.stringify(error, undefined, 2));
 	      });
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
 /*	var googleUser = {};
 	var startApp = function() {
 	  gapi.load('auth2', function(){
@@ -93,7 +93,7 @@
 	    attachSignin(document.getElementById('google'));
 	  });
 	};
-	
+
  	function attachSignin(element) {
 	  console.log(element.id);
 	  auth2.attachClickHandler(element, {},
@@ -106,7 +106,7 @@
 	        alert(JSON.stringify(error, undefined, 2));
 	      });
 	}
-	
+
  	var onSignIn = function(googleUser) {
 		  var profile = googleUser.getBasicProfile();
 		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -122,9 +122,9 @@
 
     <!-- 메일/비밀번호 입력 -->
     <div class="signup-input">
-      <form name="memberEnrollFrm" 
-      		action="${pageContext.request.contextPath}/member/memberEnroll.do" 
-      		method="POST" 
+      <form name="memberEnrollFrm"
+      		action="${pageContext.request.contextPath}/member/memberEnroll.do"
+      		method="POST"
       		class="signupFrm">
         <!-- 이메일 -->
         <div class="row mb-3">
@@ -180,14 +180,13 @@ $("#id").keyup(e => {
 	const $no = $(".guide.no");
 	const $ok = $(".guide.ok");
 	const $idValid = $("#idValid");
-	
-	//아이디 처음 작성하거나, 다시 작성하는 경우
+
 	if(id.length < 4){
 		$(".guide").hide();
 		$idValid.val(0);
 		return;
 	}
-	
+
 	$.ajax({
 		url: "${pageContext.request.contextPath}/member/chkIdDupl.do",
 		data: {id},
@@ -240,9 +239,9 @@ $("[name=memberEnrollFrm]").submit(function(){
 		alert("아이디 중복 검사해주세요.");
 		return false;
 	}
-	
+
 	return true;
 });
-</script>  
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
