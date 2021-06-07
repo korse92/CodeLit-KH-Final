@@ -155,16 +155,20 @@ $((e) => {
 
 			$("#eventModal").modal("show");
 			var date = info.dateStr
-			$("#eventModal").find("#startDate").val(date);
-			$("#eventModal").find("#endDate").val(date);
+			//$("#eventModal").find("#startDate").val(date);
+			//$("#eventModal").find("#endDate").val(date);
+			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 		},
 		select : function(info) {
 			$(".modalBtnContainer-addEvent").removeClass("d-none");
 			$(".modalBtnContainer-modifyEvent").addClass("d-none");
 
 			$("#eventModal").modal("show");
-			$("#eventModal").find("#startDate").val(info.startStr);
-			$("#eventModal").find("#endDate").val(info.endStr);
+			//$("#eventModal").find("#startDate").val(info.startStr);
+			//$("#eventModal").find("#endDate").val(info.endStr);
+			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 		},
 		eventClick: function(info){
 			$(".modalBtnContainer-modifyEvent").removeClass("d-none");
@@ -172,8 +176,10 @@ $((e) => {
 
 			$("#eventModal").modal("show");
 			$("#eventModal").find("#title").val(info.event.title)
-			$("#eventModal").find("#startDate").val(info.event.startStr);
-			$("#eventModal").find("#endDate").val(info.event.endStr);
+			//$("#eventModal").find("#startDate").val(info.event.startStr);
+			//$("#eventModal").find("#endDate").val(info.event.endStr);
+			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 
 			console.log(info);
 
@@ -247,8 +253,10 @@ $((e) => {
 
 	function updateEvent(calendarEvent) {
 		var title = $("#title").val();
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
+		//var startDate = $("#startDate").val();
+		//var endDate = $("#endDate").val();
+		var startDate = $("#startDate").datepicker("getDate");
+		var endDate = $("#endDate").datepicker("getDate");
 
 		if (startDate > endDate) {
 			alert('끝나는 날짜가 앞설 수 없습니다.');
@@ -279,7 +287,7 @@ $((e) => {
 
 	//datepicker
 	$.datepicker.setDefaults({
-		dateFormat : 'yy-mm-dd',
+		dateFormat : 'yyyy-mm-dd',
 		startDate: '7d', //달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
 		endDate: '6m',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
 		showOtherMonths : true,
@@ -451,16 +459,17 @@ $((e) => {
 
 
 });
+
 function LecturePart(lecturePartNo, lecturePartTitle) {
 	this.lecturePartNo = lecturePartNo;
 	this.lecturePartTitle = lecturePartTitle;
 	this.chapterArr = new Array();
 }
 
-function LectureChapter(lecChapterNo, lecChapterTitle, lecChapterVideo) {
+function LectureChapter(lecChapterNo, lecChapterTitle) {
 	this.lecChapterNo = lecChapterNo;
 	this.lecChapterTitle = lecChapterTitle;
-	this.lecChapterVideo = lecChapterVideo;
+	//this.lecChapterVideo = lecChapterVideo;
 }
 
 //챕터 추가버튼 리스너
@@ -578,7 +587,7 @@ function createCurriculum(){
 				return true;// jQuery의 each에서 true리턴 : continue, false리턴 : break;
 			}
 
-			let lectureChapter = new LectureChapter(cIdx, $(elem).val(), null);
+			let lectureChapter = new LectureChapter(cIdx, $(elem).val());
 			//chapArr.push(lectureChapter);
 
 			//첨부파일이 있을경우 form데이터 videoChapterNo에 참조할 챕터번호(임시) 삽입

@@ -149,7 +149,7 @@ img#thumbImage {
 						class="img-thumbnail w-100" id="thumbImage" alt="썸네일 이미지">
 					<input
 						class="form-control d-none" type="file" name="lectureThumbnail"
-						id="lectureThumbnail">
+						id="lectureThumbnail" accept="image/*">
 				</div>
 			</div>
 			<div class="row">
@@ -206,7 +206,7 @@ img#thumbImage {
 							<i class="fas fa-plus-square text-primary fs-3"></i>
 						</button>
 					</div>
-					<input type="button" class="" value="테스트" id="curtest"/>
+					<input type="button" class="d-none" value="테스트" id="curtest"/>
 				</div>
 				<input type="hidden" name="curriculum" />
 				<input type="hidden" name="videoChapNoArr" />
@@ -218,7 +218,7 @@ img#thumbImage {
 					<div class="col-sm">
 						<input type="hidden" name="streamingDates" />
 						<div id='calendar'></div>
-						<input type="button" class="" value="테스트" id="calTest" />
+						<input type="button" class="d-none" value="테스트" id="calTest" />
 					</div>
 				</div>
 

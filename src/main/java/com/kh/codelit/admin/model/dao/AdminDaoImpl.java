@@ -174,11 +174,6 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-
-	public List<Member> selectMemberOrderList(String memberId) {
-		
-		return session.selectList("admin.selectMemberOrderList",memberId);
-	}
 	public int deleteTeacherAndAuth(String refMemberId) {
 
 		return session.delete("admin.deleteTeacherAndAuth", refMemberId);
