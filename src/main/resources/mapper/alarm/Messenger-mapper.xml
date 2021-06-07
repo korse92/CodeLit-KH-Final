@@ -49,12 +49,14 @@
 		)
 	</insert>
 	<select id="selectAuth" resultMap="selMember">
-		select 
-		    *
-		from
-		    authorities
-		where
-		    auth = #{auth}
+	select 
+		* 
+	from 
+		authorities
+	where
+	    AUTH = 'ROLE_USER'
+    OR
+	    AUTH = 'ROLE_ADMIN'
 	</select>
 	
 	<select id="alarmList" resultType="Messenger">

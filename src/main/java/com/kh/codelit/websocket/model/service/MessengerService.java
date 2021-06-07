@@ -9,8 +9,6 @@ public interface MessengerService {
 
 	int insertMsg(Messenger msg);
 
-	List<Map<String, String>> selectAuth(String auth);
-
 	List<Messenger> arlarmList(Map<String, Object> param);
 
 	int getListCount(String name);
@@ -26,5 +24,7 @@ public interface MessengerService {
 	List<String> selectAuthTeacher();
 
 	List<Messenger> alarmListMyprofile(String memberId);
+
+	List<Map<String, String>> selectAuth();
 	
 }

@@ -23,11 +23,6 @@ public class MessengerServiceImpl implements MessengerService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectAuth(String auth) {
-		return dao.selectAuth(auth);
-	}
-
-	@Override
 	public List<Messenger> arlarmList(Map<String, Object> param) {
 		return dao.alarmList(param);
 	}
@@ -66,6 +61,11 @@ public class MessengerServiceImpl implements MessengerService {
 	@Override
 	public List<Messenger> alarmListMyprofile(String memberId) {
 		return dao.alarmListMyprofile(memberId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectAuth() {
+		return dao.selectAuth();
 	}
 
 }	
