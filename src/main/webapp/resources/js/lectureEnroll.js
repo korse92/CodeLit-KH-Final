@@ -155,20 +155,20 @@ $((e) => {
 
 			$("#eventModal").modal("show");
 			var date = info.dateStr
-			//$("#eventModal").find("#startDate").val(date);
-			//$("#eventModal").find("#endDate").val(date);
-			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
-			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
+			$("#eventModal").find("#startDate").val(date);
+			$("#eventModal").find("#endDate").val(date);
+			//$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			//$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 		},
 		select : function(info) {
 			$(".modalBtnContainer-addEvent").removeClass("d-none");
 			$(".modalBtnContainer-modifyEvent").addClass("d-none");
 
 			$("#eventModal").modal("show");
-			//$("#eventModal").find("#startDate").val(info.startStr);
-			//$("#eventModal").find("#endDate").val(info.endStr);
-			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
-			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
+			$("#eventModal").find("#startDate").val(info.startStr);
+			$("#eventModal").find("#endDate").val(info.endStr);
+			//$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			//$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 		},
 		eventClick: function(info){
 			$(".modalBtnContainer-modifyEvent").removeClass("d-none");
@@ -176,10 +176,10 @@ $((e) => {
 
 			$("#eventModal").modal("show");
 			$("#eventModal").find("#title").val(info.event.title)
-			//$("#eventModal").find("#startDate").val(info.event.startStr);
-			//$("#eventModal").find("#endDate").val(info.event.endStr);
-			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
-			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
+			$("#eventModal").find("#startDate").val(info.event.startStr);
+			$("#eventModal").find("#endDate").val(info.event.endStr);
+			//$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			//$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 
 			console.log(info);
 
@@ -226,10 +226,10 @@ $((e) => {
 
 	$("#saveEvent").on('click', function(){
 		var title = $("#title").val();
-		//var startDate = $("#startDate").val();
-		//var endDate = $("#endDate").val();
-		var startDate = $("#startDate").datepicker("getDate");
-		var endDate = $("#endDate").datepicker("getDate");
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+		//var startDate = $("#startDate").datepicker("getDate");
+		//var endDate = $("#endDate").datepicker("getDate");
 
 		if (startDate > endDate) {
 			alert('끝나는 날짜가 앞설 수 없습니다.');
@@ -253,10 +253,10 @@ $((e) => {
 
 	function updateEvent(calendarEvent) {
 		var title = $("#title").val();
-		//var startDate = $("#startDate").val();
-		//var endDate = $("#endDate").val();
-		var startDate = $("#startDate").datepicker("getDate");
-		var endDate = $("#endDate").datepicker("getDate");
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+		//var startDate = $("#startDate").datepicker("getDate");
+		//var endDate = $("#endDate").datepicker("getDate");
 
 		if (startDate > endDate) {
 			alert('끝나는 날짜가 앞설 수 없습니다.');
