@@ -38,10 +38,10 @@
          <div class="board-footer">
          <c:if test="${stdBrd.refMemberId == name}">
            <button type="button" class="btn btn-primary update-btn" onclick="location.href='${pageContext.request.contextPath}/community/studyUpdate.do?stdBrdNo=${stdBrd.stdBrdNo}'"><spring:message code="admin.editBtn"/></button>
-   			<form:form action="${pageContext.request.contextPath}/community/studyDelete.do?${_csrf.parameterName}=${_csrf.token}" method="post" style="display:inline">
+   			<form action="${pageContext.request.contextPath}/community/studyDelete.do?${_csrf.parameterName}=${_csrf.token}" method="post" style="display:inline">
   				<input type="hidden" value="${stdBrd.stdBrdNo}" name="stdBrdNo">
     			<button  type="submit" class="btn btn-danger cmtShow" id="comment-delete-btn"><spring:message code="admin.deleteBtn"/></button>
-   			</form:form>
+   			</form>
          </c:if>
            <button type="button" class="btn btn-primary list-btn" onclick="location.href='${pageContext.request.contextPath}/community/studyList.do'"><spring:message code="admin.backBtn"/></button>
          </div>

@@ -22,11 +22,6 @@ public class MessengerDAOImpl implements MessengerDAO{
 	}
 
 	@Override
-	public List<Map<String, String>> selectAuth(String auth) {
-		return session.selectList("msg.selectAuth", auth);
-	}
-
-	@Override
 	public List<Messenger> alarmList(Map<String, Object> param) {
 		int cPage = (int) param.get("cPage");
 		int limit = (int) param.get("numPerPage");
@@ -70,6 +65,11 @@ public class MessengerDAOImpl implements MessengerDAO{
 	@Override
 	public List<Messenger> alarmListMyprofile(String memberId) {
 		return session.selectList("msg.alarmListMyprofile", memberId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectAuth() {
+		return session.selectList("msg.selectAuth");
 	}
 
 	

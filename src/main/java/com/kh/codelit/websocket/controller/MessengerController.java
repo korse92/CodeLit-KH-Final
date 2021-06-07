@@ -28,14 +28,12 @@ public class MessengerController {
 	public Messenger user(@RequestBody Messenger msg, Principal pri) {
 		try {
 			// 알림 작성
-			log.debug("###================ msg {}", msg);
 			msg.setRefWriterId(pri.getName());
-			String auth = "ROLE_USER";
-			List<Map<String, String>> user = service.selectAuth(auth);
-						
+			
+			List<Map<String, String>> user = service.selectAuth();
+			
 				 for(int i =0; i< user.size(); i++) {
 					 msg.setRefReceiverId(user.get(i).get("memberId").toString());
-					 log.debug("보낼사람 {}",msg.getRefReceiverId());
 					 service.insertMsg(msg); 
 				 } 
 		} catch (Exception e) {
