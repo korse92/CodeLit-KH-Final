@@ -179,7 +179,7 @@
 
 	                        <td colspan="4">
 	                          <button type="submit" class="btn btn-primary mt-3 mb-6"><spring:message code="admin.editBtn" /></button>
-	                          <button type="reset" class="btn btn-warning mt-3 mb-6"><spring:message code="admin.backBtn" /></button>
+	                          <button type="reset" class="btn btn-warning mt-3 mb-6" onclick="location.href='${pageContext.request.contextPath}/member/myProfile.do'"><spring:message code="admin.backBtn" /></button>
 	                        </td>
 	                        <td colspan="1">
 
