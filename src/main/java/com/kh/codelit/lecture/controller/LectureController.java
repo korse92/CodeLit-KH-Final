@@ -242,10 +242,11 @@ public class LectureController {
 		log.debug("catNo = {}", catNo);
 		log.debug("cPage = {}", cPage);
 		log.debug("memberId = {}", memberId);
+
 		Map<String, Object> param = new HashMap<>();
 		param.put("numPerPage", numPerPage);
-		param.put("catNo", catNo);
 		param.put("cPage", cPage);
+		param.put("catNo", catNo);
 		param.put("memberId", memberId);
 		param.put("searchKeyword", searchKeyword);
 
