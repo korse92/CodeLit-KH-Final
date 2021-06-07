@@ -65,6 +65,7 @@ alert("${msg}");
 //#localChange 변경시에 lang 파라미터 추가시에 요청주소가 현재페이지가 되어야 함
 //자바스크립트를 이용해서 현재 페이지주소를 가져와 처리
 //현재 브라우져 주소창에 적힌 주소는 location객체가 가지고 있음
+
 function changeLocale(lang) {
 
 	var url;
@@ -214,8 +215,10 @@ function changeLocale(lang) {
 			<!-- 다국어 : 추후 아이콘으로 변경 -->
 			 <nav class="ms-4" aria-label="breadcrumb">
 			   <ol class="breadcrumb mt-3">
-			    <li class="breadcrumb-item"><a class="text-light text-decoration-none" href="javascript:changeLocale('ko')"><spring:message code="lang.languageKorean"/></a></li>
-			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en')"><spring:message code="lang.languageEnglish"/></a></li>
+			    <li class="breadcrumb-item"><a class="text-light text-decoration-none" href="javascript:changeLocale('ko')">
+			   		 <spring:message code="lang.languageKorean"/></a></li>
+			    <li class="breadcrumb-item active" aria-current="page"><a class="text-light text-decoration-none" href="javascript:changeLocale('en')">
+			    	<spring:message code="lang.languageEnglish"/></a></li>
 			  </ol>
 			</nav>
 
