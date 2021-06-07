@@ -89,6 +89,8 @@ public class StudyBoardController {
 			List<Lecture> lec = service.selectLec();
 			List<Comment> listCmt = service.selectCmt(stdBrdNo);
 			
+			log.debug("stdBrd ===========###===== {}", stdBrd);
+			
 			model.addAttribute("stdBrd",stdBrd);
 			model.addAttribute("list",lec);
 			if(listCmt != null) {
