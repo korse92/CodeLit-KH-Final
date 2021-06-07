@@ -9,8 +9,6 @@ public interface MessengerDAO {
 
 	int insertMsg(Messenger msg);
 
-	List<Map<String, String>> selectAuth(String auth);
-
 	List<Messenger> alarmList(Map<String, Object> param);
 
 	int getListCount(String name);
@@ -26,6 +24,8 @@ public interface MessengerDAO {
 	List<String> selectAuthTeacher();
 
 	List<Messenger> alarmListMyprofile(String memberId);
+
+	List<Map<String, String>> selectAuth();
 
 
 }
