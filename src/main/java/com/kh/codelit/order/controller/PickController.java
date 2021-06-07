@@ -49,25 +49,24 @@ public class PickController {
 
 	@PostMapping("addPick.do")
 	public String addPick(
-						@ModelAttribute Pick pick,
-						@ModelAttribute Lecture lecture,
+						@RequestParam int lectureNo,
 						RedirectAttributes redirectAttr,
 						Principal principal,
 						HttpServletRequest request
-			) throws IllegalStateException, IOException {
+						) {
+
+		String refMemberId = principal.getName();
+		int result = pickService.addPick(lectureNo, refMemberId);
+		return "redirect:" + request.getHeader("Referer");
+	}
+
 
 //		pick.setRefMemberId(pri.getName());
-		String refMemberId = principal.getName();
-		pick.setRefLectureNo(lecture.getLectureNo());
-		log.debug("pick = {}", pick);
-		log.debug("refMemberIdAddPick = {}", pick.getRefMemberId());
-		log.debug("memberIdAddPick = {}", refMemberId);
-		log.debug("refLectureNoAddPick = {}", pick.getRefLectureNo());
-		log.debug("lectureNoAddPick = {}", lecture.getLectureNo());
+//		pick.setRefLectureNo(lecture.getLectureNo());
+//		log.debug("memberIdAddPick = {}", refMemberId);
+//		log.debug("lectureNoAddPick = {}", lecture.getLectureNo());
 
-		int result = pickService.addPick(pick.getRefLectureNo(), refMemberId);
 
-			log.debug("pick = {}", pick);
 //			int count = pickService.countPick(pick.getRefLectureNo(), pick.getRefMemberId());
 //			log.debug("count = {}", count);
 //			if(count == 0) {
@@ -78,8 +77,6 @@ public class PickController {
 //				log.debug("delete = {}", delete);
 //			}
 
-		return "redirect:" + request.getHeader("Referer");
-	}
 
 	@PostMapping("deletePick.do")
 	public String deletePick(
@@ -89,17 +86,17 @@ public class PickController {
 						HttpServletRequest request
 			) {
 		String memberId = principal.getName();
-		log.debug("lectureNo = {}", lectureNo);
 		Map<String, Object> param = new HashMap<>();
 		param.put("memberId", memberId);
 		param.put("lectureNo", lectureNo);
 
 		int delete = pickService.deletePick(param);
-		log.debug("delete = {}", delete);
 
 		return "redirect:" + request.getHeader("Referer");
-
 	}
+
+//	log.debug("delete = {}", delete);
+//	log.debug("lectureNo = {}", lectureNo);
 
 //	@GetMapping("selectPickOne.do")
 //	public int selectPickOne(@ModelAttribute Pick pick) {

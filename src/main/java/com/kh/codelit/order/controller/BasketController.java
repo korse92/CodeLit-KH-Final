@@ -55,25 +55,14 @@ public class BasketController {
 
 	@PostMapping("addBasket.do")
 	public String addBasket(
-			@ModelAttribute Basket basket,
-			@ModelAttribute Lecture lecture,
+			@RequestParam int lectureNo,
 			RedirectAttributes redirectAttr,
 			Principal principal,
 			HttpServletRequest request
-			) throws IllegalStateException, IOException, NullPointerException {
+			) {
 
-
-		basket.setRefMemberId(principal.getName());
-		basket.setRefLectureNo(lecture.getLectureNo());
-		basket.setBasketNo(basket.getBasketNo());
-
-		log.debug("refMemberId = {}", basket.getRefMemberId());
-		log.debug("refLectureNo = {}", basket.getRefLectureNo());
-		log.debug("lectureNo = {}", lecture.getLectureNo());
-		log.debug("basketNo = {}", basket.getBasketNo());
-
-		int result = basketService.addBasket(basket.getRefLectureNo(), basket.getRefMemberId());
-		log.debug("basket = {}", basket);
+		String refMemberId = principal.getName();
+		int result = basketService.addBasket(lectureNo, refMemberId);
 
 		String location = request.getHeader("Referer").contains("/lectureDetail") ?
 				"/order/basket.do" : request.getHeader("Referer");
@@ -89,16 +78,17 @@ public class BasketController {
 						HttpServletRequest request
 			) {
 		String memberId = principal.getName();
-		log.debug("lectureNo = {}", lectureNo);
 		Map<String, Object> param = new HashMap<>();
 		param.put("memberId", memberId);
 		param.put("lectureNo", lectureNo);
 
 		int result = basketService.deleteBasket(param);
-		log.debug("delete = {}", result);
 
 		return "redirect:" + request.getHeader("Referer");
 	}
+
+//		log.debug("lectureNo = {}", lectureNo);
+//		log.debug("delete = {}", result);
 
 //	@GetMapping("selectBasketOne.do")
 //	public int selectBasketOne(@ModelAttribute Basket basket) {
