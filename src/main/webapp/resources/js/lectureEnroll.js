@@ -155,16 +155,20 @@ $((e) => {
 
 			$("#eventModal").modal("show");
 			var date = info.dateStr
-			$("#eventModal").find("#startDate").val(date);
-			$("#eventModal").find("#endDate").val(date);
+			//$("#eventModal").find("#startDate").val(date);
+			//$("#eventModal").find("#endDate").val(date);
+			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 		},
 		select : function(info) {
 			$(".modalBtnContainer-addEvent").removeClass("d-none");
 			$(".modalBtnContainer-modifyEvent").addClass("d-none");
 
 			$("#eventModal").modal("show");
-			$("#eventModal").find("#startDate").val(info.startStr);
-			$("#eventModal").find("#endDate").val(info.endStr);
+			//$("#eventModal").find("#startDate").val(info.startStr);
+			//$("#eventModal").find("#endDate").val(info.endStr);
+			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 		},
 		eventClick: function(info){
 			$(".modalBtnContainer-modifyEvent").removeClass("d-none");
@@ -172,8 +176,10 @@ $((e) => {
 
 			$("#eventModal").modal("show");
 			$("#eventModal").find("#title").val(info.event.title)
-			$("#eventModal").find("#startDate").val(info.event.startStr);
-			$("#eventModal").find("#endDate").val(info.event.endStr);
+			//$("#eventModal").find("#startDate").val(info.event.startStr);
+			//$("#eventModal").find("#endDate").val(info.event.endStr);
+			$("#eventModal").find("#startDate").datepicker("setDate", info.start);
+			$("#eventModal").find("#endDate").datepicker("setDate", info.end);
 
 			console.log(info);
 
@@ -247,8 +253,10 @@ $((e) => {
 
 	function updateEvent(calendarEvent) {
 		var title = $("#title").val();
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
+		//var startDate = $("#startDate").val();
+		//var endDate = $("#endDate").val();
+		var startDate = $("#startDate").datepicker("getDate");
+		var endDate = $("#endDate").datepicker("getDate");
 
 		if (startDate > endDate) {
 			alert('끝나는 날짜가 앞설 수 없습니다.');
@@ -279,7 +287,7 @@ $((e) => {
 
 	//datepicker
 	$.datepicker.setDefaults({
-		dateFormat : 'yy-mm-dd',
+		dateFormat : 'yyyy-mm-dd',
 		startDate: '7d', //달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
 		endDate: '6m',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
 		showOtherMonths : true,

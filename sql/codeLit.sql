@@ -93,7 +93,8 @@ CREATE TABLE "STUDY_BOARD" (
 DROP TABLE "LECTURE_CATEGORY" CASCADE CONSTRAINTS;
 CREATE TABLE "LECTURE_CATEGORY" (
 	"LEC_CAT_NO"	NUMBER		NOT NULL,
-	"LEC_CAT_NAME"	VARCHAR2(50)		NOT NULL
+	"LEC_CAT_NAME"	VARCHAR2(50)		NOT NULL,
+    "LEC_CAT_LOCALE_KEY" VARCHAR2(35) NOT NULL
 );
 
 COMMENT ON COLUMN "LECTURE_CATEGORY"."LEC_CAT_NO" IS 'SEQ_LEC_CAT_NO';
@@ -858,9 +859,9 @@ insert into member values ('test', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUI
 insert into authorities values ('ROLE_USER', 'test');
 
 -- 강의 카테고리
-insert into lecture_category values(seq_lec_cat_no.nextval, '프런트');
-insert into lecture_category values(seq_lec_cat_no.nextval, '백엔드');
-insert into lecture_category values(seq_lec_cat_no.nextval, '빅데이터');
+insert into lecture_category values(seq_lec_cat_no.nextval, '프런트', 'lec.FrontEnd');
+insert into lecture_category values(seq_lec_cat_no.nextval, '백엔드', 'lec.BackEnd');
+insert into lecture_category values(seq_lec_cat_no.nextval, '빅데이터', 'lec.BigData');
 
 --컨텐츠 그룹
 insert into contents_group values('LH', '강의 첨부파일', '/resources/upload/lecture/handouts');
