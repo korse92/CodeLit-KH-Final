@@ -76,7 +76,7 @@
             width: 10rem;
         }
         .td2 {
-            width: 10rem;
+            width: 12rem;
         }
         .td3 {
           width: 22rem;
@@ -204,9 +204,8 @@
 	        
 	                        <td colspan="2">
 	                          <button type="submit" class="btn btn-primary col-4 mt-3 mb-6"><spring:message code="admin.editBtn"/></button>
-                       		  <button type="reset" class="btn btn-warning col-6 mt-3 mb-6"><spring:message code="admin.backBtn"/></button>
-	                       
-	                        </td>
+                       		  <button type="reset" class="btn btn-warning col-4 mt-3 mb-6"><spring:message code="admin.backBtn"/></button>
+	                   </td>
 	                        <td colspan="2">
 	                            
 	                        </td>
