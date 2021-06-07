@@ -149,7 +149,7 @@ img#thumbImage {
 						class="img-thumbnail w-100" id="thumbImage" alt="썸네일 이미지">
 					<input
 						class="form-control d-none" type="file" name="lectureThumbnail"
-						id="lectureThumbnail">
+						id="lectureThumbnail" accept="image/*">
 				</div>
 			</div>
 			<div class="row">
