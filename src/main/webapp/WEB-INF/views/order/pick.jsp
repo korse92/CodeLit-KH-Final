@@ -38,7 +38,7 @@ $(() => {
 	}); */
 });
 </script>
-<div class="container-pick">
+<div class="container-pick container">
     <h2 class="mt-5"><spring:message code="menu.favorites" /></h2>
     <hr/>
 

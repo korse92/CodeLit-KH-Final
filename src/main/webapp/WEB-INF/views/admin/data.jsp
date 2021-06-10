@@ -28,7 +28,7 @@
         <style>
             #chart {
                 height: 30rem;
-                width: 50rem;
+                width: 60rem;
             }
 
             h3 {
@@ -105,11 +105,18 @@
                             argumentField: "category",
                             valueField: "sales",
                             label: {
-                                visible: true,
-                                connector: {
-                                    visible: false,
-                                    width: 1
-                                }
+		                        visible: true,
+		                        font: {
+		                            size: 16
+		                        },
+		                        connector: {
+		                            visible: true,
+		                            width: 0.5
+		                        },
+		                        position: "columns",
+		                        customizeText: function(arg) {
+		                            return arg.valueText + " (" + arg.percentText + ")";
+		                        }
                             }
                         }
                     ],
@@ -244,28 +251,24 @@
                 			
                 		} else {
                 			
+                			console.log(data);
+                			
                             // side by side bar 변수
-                            var sideSource = [{
-                                state: data[0].lectureName,
-                                user: data[0].clickNo,
-                                avg: data[0].avg
-                            }, {
-                                state: data[1].lectureName,
-                                user: data[1].clickNo,
-                                avg: data[1].avg
-                            }, {
-                                state: data[2].lectureName,
-                                user: data[2].clickNo,
-                                avg: data[2].avg
-                            }, {
-                                state: data[3].lectureName,
-                                user: data[3].clickNo,
-                                avg: data[3].avg
-                            }, {
-                                state: data[4].lectureName,
-                                user: data[4].clickNo,
-                                avg: data[4].avg
-                            }];
+                            var sideSource = [];
+                            
+                            for(var i=0; i<5; i++) {
+                            	
+                            	if(i >= data.length) { break; }
+                            	
+                            	var elem = {
+                            		"state" : data[i].lectureName,
+                            		"user" : data[i].clickNo,
+                            		"avg" : data[i].avg
+                            	};
+                            	sideSource.push(elem);
+                            }
+                            
+
                 			
 	                        // side-bar chart
 	                        $("#sideChart").dxChart({
@@ -313,49 +316,45 @@
             } // search()
 
 
+            
 
-
-            // standard bar 변수
-            var barSource = [{
-                lecture: "${clickList[0].lectureName}",
-                click: ${clickList[0].clickCount}
-            }, {
-                lecture: "${clickList[1].lectureName}",
-                click: ${clickList[1].clickCount}
-            }, {
-                lecture: "${clickList[2].lectureName}",
-                click: ${clickList[2].clickCount}
-            }, {
-                lecture: "${clickList[3].lectureName}",
-                click: ${clickList[3].clickCount}
-            }, {
-                lecture: "${clickList[4].lectureName}",
-                click: ${clickList[4].clickCount}
-            }];
-
-
-
+            
+			// standard bar 변수
+			var barSource = [];
+            
             // pie chart 변수
-            var pieSource = [{
-                category: "${categorySales[0].lecCatName}",
-                sales: ${categorySales[0].sales}
-            }, {
-                category: "${categorySales[1].lecCatName}",
-                sales: ${categorySales[1].sales}
-            }, {
-                category: "${categorySales[2].lecCatName}",
-                sales: ${categorySales[2].sales}
-            }];
-
-            
-           
-            
-                        
-           // pivot grid 변수 (기간별 카테고리별 매출)
-           var sales = [];
+            var pieSource = [];
+                     
+			// pivot grid 변수 (기간별 카테고리별 매출)
+			var sales = [];
            
         </script>
         
+        <!-- 바 차트 -->
+        <c:forEach begin="1" end="5" varStatus="vs">
+        	<script>
+        		var elem = {
+        				"lecture" : "${clickList[vs.index].lectureName}",
+        				"click" : ${clickList[vs.index].clickCount}
+        		};
+        		barSource.push(elem);
+        		
+        	</script>
+
+        </c:forEach>
+        
+        <!-- 파이차트 -->
+		<c:forEach items="${categorySales}" var="cs">
+			<script>
+				var elem = {
+					"category" : "${cs.lecCatName}",
+					"sales" : ${cs.sales}
+				};
+				pieSource.push(elem);
+			</script>		
+		</c:forEach>
+        
+        <!-- 피벗그리드 -->
         <c:forEach items="${categorySalesSummary}" var="css">
         	<script>
 	        	var elem = {
