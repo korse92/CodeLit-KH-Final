@@ -52,7 +52,7 @@
 		update member
 		set member_profile = #{memberProfile},
 			member_re_profile = #{memberReProfile}
-		where member_id = #{meberId}
+		where member_id = #{id}
 	</update>
 
 	<update id="updateMember">
