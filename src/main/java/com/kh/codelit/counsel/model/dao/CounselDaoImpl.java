@@ -37,10 +37,6 @@ public class CounselDaoImpl implements CounselDao {
 		int cPage = (int)param.get("cPage");
 		String memberId = (String)param.get("memberId");
 
-		
-	
-		
-
 		int limit = (int)param.get("numPerPage");
 		int offset = (cPage - 1) * limit;
 		
