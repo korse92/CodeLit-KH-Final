@@ -4,6 +4,8 @@ toastr.options.newestOnTop = false;
 toastr.options.progressBar = true;
 
 let ws = new SockJS("/codelit/stomp");
+// 메시지-컨피그 통해서 stomp로 웹소켓 연결
+
 let stompClient = Stomp.over(ws);
 
 stompClient.connect({}, (frame) => {
