@@ -21,6 +21,29 @@ framework : spring, bootstrap, mybatis
 ide : sts4, vsCode
 
 ------------------------------------------
+구동시 필요 자료
+<br/>
+src/main/resources 아래 data-source.properties 파일 필요.
+ - datasource.driver
+ - datasource.url
+ - datasource.username
+ - datasource.password
+
+키값으로 로컬디비를 만들어서 쓰셔야합니다.
+<br/><br/>
+
+src - main - webapp - WEB-INF - lib 아래
+ - ojdbc6.jar
+ - spring-security-taglibs-5.1.4.RELEASE.jar
+ - spring-webmvc-5.1.5RELEASE.jar
+ - taglib-standard-compat-1.2.5.jar
+ - taglib-standard-impl-1.2.5.jar
+ - taglib-standard-jstlel-1.2.5.jar
+ - taglib-standard-spec-1.2.5.jar
+
+파일을 넣어야 합니다.
+
+------------------------------------------
 개발 과정
 <br/><br/>
 
@@ -57,6 +80,8 @@ ide : sts4, vsCode
 
 2021.05.18
 * 강의 관리 페이지 완성
+* 강의신청 목록 완성
+* 강사신청 목록 완성
 <br/>
 
 2021.05.21
@@ -67,6 +92,7 @@ ide : sts4, vsCode
 
 2021.05.21
 * 강의목록 페이지 최종 완성
+* 사용자 대시보드, 강의자 대시보드 페이지 구현
 <br/>
 
 2021.05.23

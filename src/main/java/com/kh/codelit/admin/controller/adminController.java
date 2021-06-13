@@ -445,6 +445,7 @@ public class adminController {
 			List<Map<String, Object>> categorySales = adminService.selectCategorySales();
 			List<Map<String, Object>> categorySalesSummary = adminService.selectCategorySalesSummary();
 			
+			log.debug("categorySales = {}", categorySales);
 			model.addAttribute("clickList", clickList);
 			model.addAttribute("categorySales", categorySales);
 			model.addAttribute("categorySalesSummary", categorySalesSummary);
@@ -460,6 +461,7 @@ public class adminController {
 				@RequestParam String userName
 			) {
 		
+		log.debug("userClick.do = {}", "도착 : " + userName);
 		List<Map<String, Object>> userClickList = null;
 		
 		try {

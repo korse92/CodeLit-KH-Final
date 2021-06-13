@@ -87,9 +87,13 @@ public class TeacherController {
 	}
 
 	@PostMapping("/teacherRequest.do")
-	public ModelAndView teacherRequest(@ModelAttribute Teacher teacher,
-			@RequestParam(value = "upFile", required = false) MultipartFile upFile, ModelAndView mav,
-			HttpServletRequest request, Authentication authentication) {
+	public ModelAndView teacherRequest(
+				@ModelAttribute Teacher teacher,
+				@RequestParam(value = "upFile", required = false) MultipartFile upFile, 
+				ModelAndView mav,
+				HttpServletRequest request, 
+				Authentication authentication
+			) {
 
 		int result = 0;
 		String msg = null;
@@ -137,8 +141,10 @@ public class TeacherController {
 				// 티처 정보 및 파일네임을 담은 메소드
 				result = teacherService.insertTeacherRequest(teacher, map);
 
-				if (oldFile != null)
-					oldFile.delete(); // 기존 파일 삭제
+				if (oldFile.isFile()) {
+					log.debug("oldFile not null = {}", oldFile);
+					oldFile.delete(); // 기존 파일 삭제					
+				}
 				upFile.transferTo(renamedFile); // 업로드한 파일데이터를 지정한 파일에 저장한다.
 
 				// authentication에 담긴 멤버 정보 변경
@@ -149,17 +155,17 @@ public class TeacherController {
 						authentication.getCredentials(), authentication.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
-				log.debug("강사신청 후 변경된 프로필 확인 = {}", ((Member) authentication.getPrincipal()).getMemberProfile());
+				log.debug("강사신청 후 변경된 프로필 확인 = {}", ((Member) newAuthentication.getPrincipal()).getMemberProfile());
 
 			} // upfile.isEmpty()
 
-			msg = "수정되었습니다";
+			msg = "신청되었습니다";
 
 		} catch (IOException | IllegalStateException e) {
-			log.error("강사 수정 첨부파일 오류", e);
-			throw new RuntimeException("강사수정 첨부파일 저장 오류");
+			log.error("강사 신청 첨부파일 오류", e);
+			throw new RuntimeException("강사신청 첨부파일 저장 오류");
 		} catch (Exception e) {
-			msg = "수정에 실패했습니다.";
+			msg = "신청에 실패했습니다.";
 			throw e;
 		}
 

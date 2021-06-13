@@ -843,10 +843,9 @@ end;
 --=============================================
 
 
---회원
+--회원 (비밀번호 1234 통일)
 insert into member values ('admin', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
 insert into authorities values ('ROLE_ADMIN', 'admin');
-insert into authorities values ('ROLE_USER', 'admin');
 
 insert into member values ('user', '$2a$10$X8GL750RHq/TpQh9hVPnd.Krj13dW5QlKAvUIbIIVI.dPVzPYUmd2', null, null);
 insert into authorities values ('ROLE_USER', 'user');
@@ -870,88 +869,3 @@ insert into contents_group values('SB', '공부 게시판', '/resources/upload/s
 insert into contents_group values('C', '1대1문의', '/resources/upload/counsel');
 
 commit;
-
---강의 테스트 데이터 50개 삽입 프로시저
-begin
-    for n in 1..50 loop
-        insert into
-			lecture
-		values (
-			seq_lec_no.nextval,
-			trunc(dbms_random.value(5,8)),
-			'teacher',
-			'테스트 강의' || n,
-			'V',
-			'테스트 강의' || n || ' 입니다',
-			'banner1.jpg',
-			'20210517_134626520_001.jpg',
-			0,
-			'Y',
-			default
-        );
-    end loop;
-    commit;
-end;
-/
-
---강의후기 테스트 데이터 150개
-begin
-    for n in 1..150 loop
-        insert into
-			lecture_comment
-		values (
-			trunc(dbms_random.value(3,20)), -- 실제로 있는 강의 번호값 중에 난수 뽑을 것
-			'user', -- 실제로 있는 member_id 쓸것
-			trunc(dbms_random.value(1,6)),
-			'좋은 강의네여',
-			default
-        );
-    end loop;
-    commit;
-end;
-/
-
---강의커리큘럼 삽입 프로시저
-begin
-    for n in 1..10 loop
-        insert into lecture_part
-        values(
-            seq_lec_part_no.nextval,
-            3,
-            '파트 ' || n
-        );
-    end loop;
-    commit;
-end;
-/
-
---강의커리큘럼 삽입 프로시저
-begin
-    for n in 1..10 loop
-        insert into lecture_part
-        values(
-            seq_lec_part_no.nextval,
-            3,
-            '파트 ' || n
-        );
-    end loop;
-    commit;
-end;
-/
-
-begin
-    for n in 1..11 loop
-        for m in 1..10 loop
-            insert into lecture_chapter
-            values(
-                seq_lec_chapter_no.nextval,
-                n,
-                '챕터 ' || m,
-                null,
-                null
-            );
-        end loop;
-    end loop;
-    commit;
-end;
-/
