@@ -168,6 +168,11 @@ public class LectureController {
 			for(int i = 0; i < lecturePartArr.length; i++) {
 				log.debug("lecturePart[{}] = {}", i, lecturePartArr[i]);
 
+				//파트 1: 챕터 1~3 012
+				//파트 2: 챕터 1~3 012
+				//파트 3: 챕터 1~3 012
+				//videoChapNoArr = [0, 2, 7, 8]
+
 				LectureChapter[] lectureChapterArr = lecturePartArr[i].getChapterArr();
 				int ChapterArrlength = lectureChapterArr.length;
 
@@ -175,6 +180,9 @@ public class LectureController {
 					prevChapterArrlength += lecturePartArr[i-1].getChapterArr().length;
 
 				for(int j = 0; j < ChapterArrlength; j++) {
+					//파트3 차롄데 : prev : 6 + 챕터 012
+
+					//인덱스 : 6+0 = 6;
 					if(videoChapNoList.contains(prevChapterArrlength + j)) {
 						while(chapterVideos[vIdx].isEmpty() || chapterVideos[vIdx].getSize() == 0) {
 							vIdx++;
