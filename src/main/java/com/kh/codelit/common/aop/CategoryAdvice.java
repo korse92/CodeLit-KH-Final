@@ -15,13 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-@SessionAttributes(value = { "categoryList"})
+//@SessionAttributes(value = { "categoryList"})
 public class CategoryAdvice {
 
 	@Autowired
 	private LectureService lectureService;
-
-
 
 	@ModelAttribute
 	public void getCategoryList(Model model) {
@@ -34,8 +32,7 @@ public class CategoryAdvice {
 
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryMap", categoryMap);
-
 	}
-	
+
 
 }

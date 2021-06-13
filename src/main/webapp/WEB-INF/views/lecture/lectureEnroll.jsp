@@ -166,16 +166,6 @@ img#thumbImage {
 				</div>
 			</div>
 
-			<div class="selectedVideo row">
-				<label class="form-label mb-2" for=""><spring:message code="enrollLec.enrollCurri" /></label>
-				<!-- <div class="row my-0 justify-content-end">
-					<div class="col-auto">
-						<button type="button" class="btn p-0" id="partAddBtn"><i class="fas fa-plus-square text-primary fs-3"></i></button>
-						<button type="button" class="btn p-0" id="partDelBtn"><i class="fas fa-minus-square text-warning fs-3"></i></button>
-					</div>
-				</div> -->
-				<div class="col-sm">
-					<div class="d-flex flex-column align-items-start" id="inputCurriculum">
 						<!--
 						<div class="part-group w-100">
 							<div class="input-group">
@@ -201,6 +191,19 @@ img#thumbImage {
 							</button>
 						</div>
 						-->
+
+			<!-- 커리큘럼 값 쓰는 곳 -->
+			<div class="selectedVideo row">
+				<label class="form-label mb-2" for=""><spring:message code="enrollLec.enrollCurri" /></label>
+				<!-- <div class="row my-0 justify-content-end">
+					<div class="col-auto">
+						<button type="button" class="btn p-0" id="partAddBtn"><i class="fas fa-plus-square text-primary fs-3"></i></button>
+						<button type="button" class="btn p-0" id="partDelBtn"><i class="fas fa-minus-square text-warning fs-3"></i></button>
+					</div>
+				</div> -->
+				<div class="col-sm">
+					<div class="d-flex flex-column align-items-start" id="inputCurriculum">
+
 						<button type="button" class="btn p-0 mt-1 partAddBtn"
 								data-bs-toggle="tooltip" data-bs-placement="left" title="파트 추가">
 							<i class="fas fa-plus-square text-primary fs-3"></i>
