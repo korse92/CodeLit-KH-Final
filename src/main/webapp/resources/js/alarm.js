@@ -3,7 +3,8 @@ toastr.options.closeButton = true;
 toastr.options.newestOnTop = false;
 toastr.options.progressBar = true;
 
-let ws = new SockJS("/codelit/stomp");
+//let ws = new SockJS("/codelit/stomp");
+let ws = new SockJS(`${getContextPath()}/stomp`);
 // 메시지-컨피그 통해서 stomp로 웹소켓 연결
 
 let stompClient = Stomp.over(ws);
@@ -41,4 +42,10 @@ stompClient.connect({}, (frame) => {
 	};
 	
 	stompClient.send(url, {}, JSON.stringify(message));
+	
+}
+
+function getContextPath() {
+	var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+	return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
 }

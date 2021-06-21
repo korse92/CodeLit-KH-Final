@@ -18,7 +18,8 @@ function loadXHR(url) {
 	return new Promise((resolve, reject) => {
 		try {
 			const xhr = new XMLHttpRequest();
-			xhr.open("GET", "http://localhost:9090/codelit/resources/upload/lecture/mp4/" + url);
+			//xhr.open("GET", "http://localhost:9090/codelit/resources/upload/lecture/mp4/" + url);
+			xhr.open("GET", getContextPath() + "/resources/upload/lecture/mp4/" + url);
 			xhr.responseType = "blob";
 			xhr.onerror = event => {
 				reject(`Network error : ${event}`);
