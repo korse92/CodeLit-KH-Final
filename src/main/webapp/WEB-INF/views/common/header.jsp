@@ -49,6 +49,9 @@
 
 <!-- 사용자작성 JS -->
 <script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
+<script>
+	const contextPath = "${pageContext.request.contextPath}"; //js파일에서 서버단의 contextPath를 사용하기위해 변수 선언
+</script>
 <script src="${pageContext.request.contextPath}/resources/js/alarm.js"></script>
 
 <!-- 사용자작성 CSS -->
