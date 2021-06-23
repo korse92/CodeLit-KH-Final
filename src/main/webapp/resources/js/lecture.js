@@ -1,5 +1,5 @@
 
-	
+
 /**
 *	서버의 동영상을 비동기요청을 통해, 응답(blob타입)으로부터 blob url을 생성하고
 *	video.src에 적용하여 재생
@@ -10,16 +10,16 @@ const blobUrlCreator = blob => {
 	const url = window.URL.createObjectURL(blob);
 	return url;
 };
-  
+
 
 // 동영상 불러오는 함수
 function loadXHR(url) {
-	
+
 	return new Promise((resolve, reject) => {
 		try {
 			const xhr = new XMLHttpRequest();
 			//xhr.open("GET", "http://localhost:9090/codelit/resources/upload/lecture/mp4/" + url);
-			xhr.open("GET", getContextPath() + "/resources/upload/lecture/mp4/" + url);
+			xhr.open("GET", `${contextPath}/resources/upload/lecture/mp4/${url}`); //header.jsp에서 선언한 contextPath변수 사용
 			xhr.responseType = "blob";
 			xhr.onerror = event => {
 				reject(`Network error : ${event}`);
@@ -36,6 +36,6 @@ function loadXHR(url) {
 			reject(err.message);
 		}
 	});
-	
+
 }	// function loadXHR(url)
-	
+
