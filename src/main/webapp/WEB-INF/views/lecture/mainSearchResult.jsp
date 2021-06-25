@@ -81,7 +81,7 @@ $(() => {
 			<c:if test="${empty list}">
 				<h5 colspan="14" style="text-align: center;"><spring:message code="help.noDataMsg"/></h5>
 				<h6 style="text-align: center;">
-					<a href="${pageContext.request.contextPath}"><spring:message code="error.goHome"/></a>
+					<a href="${empty pageContext.request.contextPath ? '/' : pageContext.request.contextPath}"><spring:message code="error.goHome"/></a>
 			   </h6>
 			</c:if>
 		<!-- 강의 리스트 시작 -->

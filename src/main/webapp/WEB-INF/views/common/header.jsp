@@ -96,7 +96,7 @@ function changeLocale(lang) {
 
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="container">
-				<a class="navbar-brand me-4" href="${pageContext.request.contextPath}">CodeL!t</a>
+				<a class="navbar-brand me-4" href="${empty pageContext.request.contextPath ? '/' : pageContext.request.contextPath}">CodeL!t</a>
 
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarMain"
