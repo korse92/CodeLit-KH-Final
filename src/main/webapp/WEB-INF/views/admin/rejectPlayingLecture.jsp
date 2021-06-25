@@ -22,7 +22,7 @@
 		$("#rejectPlayingLecture").modal("show")
 		.on('hide.bs.modal', e => {
 			// modal 비활성화시 (X, 취소, 모달외 영역 클릭)
-			location.href = '${pageContext.request.contextPath}';
+			location.href = '${pageContext.request.contextPath}/admin/manageLectureBoard.do';
 		});
 		//$("#rejectPlayingLecture").modal()
 		//hide.bs.modal은 이벤트 이름

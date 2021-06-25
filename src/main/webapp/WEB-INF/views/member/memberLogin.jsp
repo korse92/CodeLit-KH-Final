@@ -43,7 +43,7 @@
           .modal()
           .on('hide.bs.modal', e => {
             // modal 비활성화시 (X, 취소, 모달외 영역 클릭)
-            location.href = '${pageContext.request.contextPath}';
+            location.href = '${empty pageContext.request.contextPath ? '/' : pageContext.request.contextPath}';
           });
       //hide.bs.modal은 이벤트 이름
       });
